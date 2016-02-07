@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+/* ************* header ************* */
+
+.menu-cabecera{
+	background: #36A7E1;
+}
+
+.menu-cabecera .navbar-nav > li > a:hover {
+    color: #FFF;
+    background: #1F9FE1;
+}
+
+.menu-cabecera .navbar-nav > .open > a, .menu-cabecera .navbar-nav > .open > a:hover, .menu-cabecera .navbar-nav > .open > a:focus {
+    color: #FFF;
+    background-color: #1F9FE1;
+   }
+   
+   .menu-cabecera .navbar-nav > li > a:focus {
+    color: #FFF;
+    background-color: #1F9FE1;
+    outline: 0px none;
+    }
+
+/* ************* fin del header ************* */
+
+
+/**** Login Admin ***/
+.login-admin{
+	background-color: #79CCF6;
+	border: #666 1px solid;
+}
+
+
+/**** Fin Login Admin ***/
+
+
+
+/**************** Modales **************/
+.modal-header{
+	min-height: 16.4286px;
+	padding: 15px;
+	color: #FFF;
+	background: transparent linear-gradient(to bottom, #00C3EC 0%, #2D70B6 100%) repeat scroll 0% 0%;
+	box-shadow: 0px 5px 21px -2px rgba(0, 0, 0, 0.5);
+}
+
+/**************** Fin de Modales **************/
