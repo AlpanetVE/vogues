@@ -92,10 +92,12 @@ if($alertas==0 or $visto==1){
 					</ul>
 				</li>							
 <?php }?>
-				<li><a href="favoritos.php" data-toggle="" data-target="" class="marT10"><i
-						class="fa fa-heart"></i> </a></li>
+				
 					
-					<?php if ($_SESSION["id_rol"] == 3 ) { ?> 	
+					<?php if ($_SESSION["id_rol"] == 3 ) { ?>
+						 	
+					<li><a href="favoritos.php" data-toggle="" data-target="" class="marT10"><i
+						class="fa fa-heart"></i> </a></li>	
 					 <li><a href="#" data-toggle="modal" data-target="#contacto" class="marT10"><i
 						class="fa fa-envelope"></i> </a></li>
 						<?php } ?>

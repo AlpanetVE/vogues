@@ -41,7 +41,7 @@ $(document ).ready(function() {
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method, // la información a enviar
-            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
+            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
             dataType: 'json', // el tipo de información que se espera de respuesta
             success: function (data) {
 //	            	alert(data);
@@ -122,7 +122,7 @@ $(document ).ready(function() {
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method, // la información a enviar
-            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
+            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
             dataType: 'json', // el tipo de información que se espera de respuesta
             success: function (data) {
             	// código a ejecutar si la petición es satisfactoria;
@@ -242,7 +242,7 @@ $(document ).ready(function() {
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + foto + method, // la información a enviar
-            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
+            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
             dataType: 'json', // el tipo de información que se espera de respuesta		           
             success: function (data) {
             	// código a ejecutar si la petición es satisfactoria;	
@@ -369,7 +369,7 @@ $(document ).ready(function() {
 			
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method + sendurl, // la información a enviar
-            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
+            type: 'POST', // especifica si ser�&iexcl; una petición POST o GET
             dataType: 'json', // el tipo de información que se espera de respuesta            
             success: function (data) {            	
             	// código a ejecutar si la petición es satisfactoria;
@@ -395,7 +395,7 @@ $(document ).ready(function() {
 	            	swal({
 	            		//html:true, //se debe agregar en true para que permita entidades hmtl
 						title: "Bienvenido", 
-						text: "&iexcl;Compra y vende lo que quieras!",
+						text: "&iexcl;A Vogues Eshop!",
 						imageUrl: "galeria/img/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true

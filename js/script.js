@@ -1,5 +1,5 @@
 $(document ).ready(function() {
-/* Considerar borrar este código y llamar a configuracion-js*>*/
+/* Considerar borrar este cï¿½digo y llamar a configuracion-js*>*/
 	$('#usr-act-form-nat').formValidation({
 		locale: 'es_ES',
 		framework : 'bootstrap',
@@ -282,7 +282,7 @@ $(document ).ready(function() {
 	            		}else{   //si es un registro de usuario publico
 		            			swal({
 							title: "Bienvenido", 
-							text: "&iexcl;Compra y vende lo que quieras!",
+							text: "&iexcl;A Vogues Eshop!",
 							imageUrl: "galeria/img/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
@@ -412,7 +412,7 @@ $(document ).ready(function() {
 	            } else{
 	            	swal({
 						title: "Bienvenido", 
-						text: "&iexcl;Compra y vende lo que quieras!",
+						text: "&iexcl;A Vogues Eshop!",
 						imageUrl: "galeria/img/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
