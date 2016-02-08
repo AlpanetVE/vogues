@@ -65,7 +65,9 @@
   			<?php  } ?>
 				<!--  Fin de la condicion-->
 				<?php if ($_SESSION["id_rol"] == 1 ) { ?>
-					<li><a href="admin-usr.php" data-toggle="" data-target="" class="marT10">Usuarios</a></li>
+					<li><a href="admin-usr.php" data-toggle="" data-target="" class="marT10">
+						<i class="fa fa-user"></i> </a></li>
+				
 					<?php  } ?>
 				<li>
 				
