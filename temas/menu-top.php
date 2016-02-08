@@ -49,12 +49,12 @@
 							<li style="padding: 10px; margin-top: -20px"><button id="usr-log-submit" type="submit" 
 									class="btn2 btn-primary2 btn-group-justified">Ingresar</button>
 									<br>
-								<!--	<button id="fb_log_button"
+									<button id="fb_log_button"
 									class="btn2 btn-facebook btn-group-justified marT5 t12">Ingresar con Facebook</button>
 									
 									<button id="tw_log_button"
 									class="btn2 btn-twitter btn-group-justified marT5 t12">Ingresar con Twitter</button>
-								-->
+								
 									</li>
 						<!--	<li class="divider"></li>
 							<li style="padding: 10px;"><p class="t12 text-center">&#191;Eres

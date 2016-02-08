@@ -3,10 +3,7 @@
 			<div class="link"  ><a href="resumen.php"><i class="fa fa-list-ul" ></i><b>Resumen</b></a></div>
 			
 		</li>
-		<li class="hidden reputacion">
-			<div class="link"  ><a href="#" class=""><i class="glyphicon glyphicon-thumbs-up hvr-icon"></i>Reputacion</a></div>
-			
-		</li>
+		
 		<li class="hidden admin-usuarios">
 			<div class="link"><a href="admin-usr.php" class=""><i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</a></div>			 
 		</li>
