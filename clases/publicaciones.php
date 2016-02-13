@@ -291,6 +291,13 @@ class publicaciones{
 				return " $dias d";	
 		}	
 	}
+	/*public function getTiempoPublicacion(){		
+		$bd=new bd();		
+		$strCondicion="publicaciones_id=$this->id";		
+		$result=$bd->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");		
+		$segundos=strtotime('now')-strtotime($result["fecha"]);		
+		return $this -> getTiempo($segundos);		
+	}*/
 	
 	public function getFotos(){
 		$bd=new bd();

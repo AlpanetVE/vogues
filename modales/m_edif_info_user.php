@@ -35,10 +35,8 @@
 							</div>
 							<div class=" form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 								<input type="email" class="form-input noseleccionable" id="update_email" name="update_email"
-									placeholder=" Ingresa tu correo electronico..." oncontextmenu="return false"/>
-							</div>
-							
-							
+									placeholder=" Ingresa correo electronico..." oncontextmenu="return false"/>
+							</div> 
 							<div class="col-xs-12   ">
 								<span class="marL10"><i class="fa fa-lock"></i> Rol de Usuario</span>
 							</div>
@@ -48,18 +46,17 @@
 									<option value="2">Administrador</option> 
 								</select> 
 							</div>
-							
 						<div class="password_container col-xs-12" >
 							<div class="col-xs-12 marT10 btn btn-default talign-left btn-container-password ">
 								<span ><i class="fa fa-lock"></i>  Actualizar Contrase&ntildea</span>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input hidden">
 								<input type="password" class="form-input noseleccionable" id="update_password" name="update_password"
-									placeholder=" Ingresa tu contrase&ntilde;a..." oncontextmenu="return false" disabled="disabled"/>
+									placeholder=" Ingresa contrase&ntilde;a..." oncontextmenu="return false" disabled="disabled"/>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input hidden">
 								<input type="password" class="form-input noseleccionable" id="update_password_val" name="update_password_val"
-									placeholder=" Repite tu contrase&ntilde;a..." oncontextmenu="return false" disabled="disabled"/>
+									placeholder=" Repite la contrase&ntilde;a..." oncontextmenu="return false" disabled="disabled"/>
 							</div>
 							
 						</div>

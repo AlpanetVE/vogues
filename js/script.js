@@ -242,7 +242,7 @@ $(document ).ready(function() {
 		
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
-            data: form.serialize() + foto + method , // la información a enviar
+            data: form.serialize() + foto + method, // la información a enviar
             type: 'POST', // especifica si será una petición POST o GET
             dataType: 'json', // el tipo de información que se espera de respuesta		           
             success: function (data) {
@@ -556,7 +556,79 @@ $(document ).ready(function() {
 		loadingAjax();
 	}
 	
-	
+	/* Validador de Formulario de recuperar contrase&oacute;a */	
+$('#recover-password').formValidation({
+		locale: 'es_ES',
+		excluded: ':disabled',
+		framework : 'bootstrap',
+		icon : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		addOns: { i18n: {} },
+		err: { container: 'tooltip' },
+		fields : {			
+			rec_usuario : {validators : {
+				notEmpty : {},
+				blank: {}}}
+		}
+	}).on('success.field.fv', function(e, data) {
+        if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            data.fv.disableSubmitButtons(true);
+        }
+    }).on('err.form.fv', function(e,data) {
+    	//$(".dropdown-toggle").dropdown('toggle');
+    }).on('success.form.fv', function(e) {
+		e.preventDefault();
+		//var url=$(this).data("url");
+		//var sendurl="&url="+url;
+		var form = $(e.target);
+		var fv = form.data('formValidation');
+		var method = "&method=recover";
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+           data: form.serialize() + method, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta            
+            success: function (data) {            	
+            	// código a ejecutar si la petición es satisfactoria;
+            	// código a ejecutar si la petición es satisfactoria;
+            	// console.log(data);
+	            if (data.result === 'error'){
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	        			setTimeout(function(){
+	        				$("#"+field).focus();	       			
+	        			}, 10);
+	            	}
+	            	$(".dropdown-toggle").dropdown('toggle');
+	            	
+	            } else if(data.result==="Actualice") {
+					elId=data.id;
+	            	$("#actualizar").modal('show');
+	            } else{
+	            	swal({
+						title: "Excelente", 
+						text: "&iexcl;Revisa tu correo!",
+						imageUrl: "galeria/img/logos/bill-ok.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+							location.reload();
+										
+						});
+                } 
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+	});		
  
 /*	$(".izquierda").click(function(){
 		var elDiv=$("#listaPublicaciones");
@@ -739,6 +811,33 @@ $("#enviar").click(function(e){
 		});
 	});
 	
+	/*$("#btnPersona2").click(function(e){
+		/*$("#btn_sin_cuenta").data("tipo","1");
+		$("#tw_reg_button").data("tipo","1");
+	    $("#actualizar2").data("tipo","1");
+	   
+		$("#actualizar2").modal('hide');
+		
+		$("#usr-reg-title").html($("section[data-type='p']").data("title"));
+			$("#usr-reg-submit").data("type","p");
+			$("section[data-type='p']").fadeIn();
+			$("#type").val("p");
+	});	*/
+	
+	/*$("#btnEmpresa2").click(function(e){
+		/*$("#btn_sin_cuenta").data("tipo","2");
+		$("#tw_reg_button").data("tipo","2");
+		$("#actualizar2").data("tipo","2"); 
+		$("#actualizar2").modal('hide');
+		$("#usr-reg-title").html($("section[data-type='e']").data("title"));
+			$("#usr-reg-submit").data("type","e");
+			$("section[data-type='e']").fadeIn();
+			$("#type").val("e");
+		
+	});		
+	
+	*/
+	
 	$("#btnPersona2").click(function(e){
 		/*$("#btn_sin_cuenta").data("tipo","1");
 		$("#tw_reg_button").data("tipo","1");
@@ -762,6 +861,7 @@ $("#enviar").click(function(e){
 			$("#type").val("e");
 		
 	});		
+	
 	$("#info-personal").on("hidden.bs.modal",function(){
 		$("#actualizar").modal('show');
 	});

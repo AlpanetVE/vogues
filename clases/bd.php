@@ -151,6 +151,16 @@ class bd extends PDO {
 			return $sql->fetchAll ();
 		}
 	}
+	public function getAllDatos($table, $row) {
+		
+		$consulta = "SELECT * FROM $table WHERE 1" ; 
+		if (isset ( $row['indice'] ) and isset ( $row['value'])) {			
+			$consulta .= ' and '.$row['indice'].' = '. $row['value'];
+		}  
+		$sql = $this->query ( $consulta );
+		$this->rowcount = $sql->rowCount ();
+		return $sql->fetchAll ();
+	}
 	/**
 	 * Funciones Magicas*
 	 */

@@ -24,34 +24,35 @@ $(function() {
 
 	var accordion = new Accordion($('#accordion'), false);
 	
-	
-	
-	//############SCRIPT PARA MOSTRAR EL MENU#############
-	
-	if ($('.show-menu-left').length){ 
+	//############SCRIPT PARA RESTRICCIONES DE USUARIOS#############
+	if ($('.show-menu-left').length){   //asegurar que este script efectivamente este mostrado o no//
 		var id_rol=parseInt($('.show-menu-left').data("id_rol"));
 		
-		//#######USUARIO SUPER ADMIN#######
+		//#######USUARIO ROL 1#######
 		if(id_rol==1){
-			$(".resumen, .reputacion, .venta, .factura, .red, .configurar, .admin-usuarios").removeClass("hidden");
+			$(".resumen, .factura, .fact-cobrar, .configurar, .admin-usuarios").removeClass("hidden");
 		}
-		//#######USUARIO ADMIN#######
+		//#######USUARIO ROL 2#######
 		else if(id_rol==2){
-			$(".resumen, .reputacion, .venta, .factura, .red, .configurar").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar").removeClass("hidden");
 		}
-		//#######USUARIO COMPRADOR#######
+		//#######USUARIO ROL 3#######
 		else if(id_rol==3 || id_rol==0){
-			$(".resumen, .reputacion, .compra, .factura, .configurar").removeClass("hidden");
+			$(".resumen, .compra,  .configurar").removeClass("hidden");
 		}
 				
+    }else{
+    	var id_rol=parseInt($('.nosequedatadequediv').data("id_rol"));
+    	//#######USUARIO ROL 1#######
+    	if(id_rol==1){
+			window.open("resumen.php","_self");
+		}
     }
-	
-	
 });
 /*FUNCIONES*/
 function SweetError(text){
 	swal({
-		title: "Error mi pana", 
+		title: "Error, intenta de nuevo", 
 		text: "Codigo:"+  text,
 		imageUrl: "galeria/img/logos/bill-error.png",
 		showConfirmButton: true

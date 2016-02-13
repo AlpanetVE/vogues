@@ -791,7 +791,7 @@ function comprobarToken($token){
 		return $row["totaF"];
 	}
 	
-	public function getUsuarios($condicion=NULL, $orden=NULL,$pagina=NULL){
+	public function getUsuarios($status=NULL, $orden=NULL,$pagina=NULL){
 		
 		$bd=new bd();
 		
@@ -799,11 +799,12 @@ function comprobarToken($token){
 		from usuarios inner join usuarios_accesos ON usuarios.id=usuarios_accesos.usuarios_id 
 		inner join usuarios_naturales ON usuarios.id=usuarios_naturales.usuarios_id 
 		inner join roles ON usuarios_accesos.id_rol=roles.id
-		where (usuarios_accesos.id_rol=1 or usuarios_accesos.id_rol=2 or usuarios_accesos.id_rol=3) ";
+		where (usuarios_accesos.id_rol=1 or usuarios_accesos.id_rol=2) ";
 		
-		if(!is_null($condicion))
-			$consulta.=" and $condicion";
 		
+		if(!empty($status)){
+			$consulta.=" and usuarios_accesos.status_usuarios_id =  '$status' ";
+		}
 		if(!empty($orden)){
 			$orden=is_null($orden)?"":" order by $orden";
 			$consulta.=" $orden";   
@@ -811,11 +812,8 @@ function comprobarToken($token){
 		if(!empty($pagina)){
 			$inicio=is_null($pagina)?"":($pagina - 1) * 25;
 			$consulta.=" limit 25 OFFSET $inicio"; 
-		}else{
-			//$consulta.=" limit 25 OFFSET 0";
-		}
+		} 
 		
- 		//die($consulta);
 		$result=$bd->query($consulta);
 		if(!empty($result)){
 			return $result;
@@ -831,10 +829,10 @@ function comprobarToken($token){
 		return $result;
 	}
 	
-	public function updateUserGeneral($usuarios_id, $seudonimo=NULL, $email=NULL,$id_rol=NULL,$password=NULL){
+	public function updateUserGeneral($usuarios_id, $seudonimo=NULL, $email=NULL,$password=NULL,$id_rol=NULL){
 		$bd=new bd();		
 		$actualizar=array( 'seudonimo'=>$seudonimo,'email'=>$email,'id_rol'=>$id_rol);
-		//si cambiaron la contraseña	
+		//si cambiaron la contraseï¿½a	
 		if(!empty($password)){
 			$password = hash ( "sha256", $password );
 			$actualizar['password']=$password;

@@ -1,14 +1,18 @@
 	<ul id="accordion" class="accordion vin-listados show-menu-left" data-id_rol="<?php echo $_SESSION["id_rol"]; ?>">
 		<li class="hidden resumen">
-			<div class="link"  ><a href="resumen.php"><i class="fa fa-list-ul" ></i><b>Resumen</b></a></div>
+			<a href="resumen.php"><div class="link"  ><i class="fa fa-list-ul" ></i><b>Resumen</b></div></a>
 			
 		</li>
-		
+		<!--<li class="hidden reputacion">
+			<div class="link"  ><a href="#" class=""><i class="glyphicon glyphicon-thumbs-up hvr-icon"></i>Reputacion</a></div>
+			
+		</li>-->
 		<li class="hidden admin-usuarios">
-			<div class="link"><a href="admin-usr.php" class=""><i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</a></div>			 
+			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Tiendas</div></a>			 
 		</li>
+		
 		<li class="hidden venta">
-			<div class="link"><i class="fa fa-tags   " ></i>Ventas<i class="fa fa-chevron-down"></i></div>
+			<div class="link"><i class="fa fa-tags" ></i>Ventas<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu submenu-active" id="ventas" name="ventas">
 				<li  ><a href="ventas.php" class="" id="uno1"> Publicaciones</a></li>
 				<li><a href="#" >Ventas</a></li>
@@ -26,16 +30,15 @@
 			</ul>
 		</li>
 		<li class="hidden factura">
-			<div class="link " ><i class="fa fa-credit-card"></i>Facturaci&oacute;n<i class="fa fa-chevron-down"></i></div>
-			<ul class="submenu ">
-				<li ><a href="#">Cuentas por pagar</a></li>
-				
-				
-			</ul>
-		</li>
+			<div class="link"><i class="fa fa-credit-card"></i>Facturaci&oacute;n<i class="fa fa-chevron-down"></i></div>
+			<ul class="submenu">
+				<li class="hidden fact-pagar" ><a href="#">Cuentas por pagar</a></li> 
+				<li class="hidden fact-cobrar"><a href="#">Cuentas por cobrar</a></li> 
+			</ul>			 
+		</li> 
 		<li class="hidden red">
 			<div class="link"><i class="fa fa-share-alt"></i>Gesti&oacute;n de Redes<i class="fa fa-chevron-down"></i></div>
-			<ul class="submenu ">
+			<ul class="submenu">
 				<li><a href="redes.php?tipo=1">Vincular Red Social</a></li>
 				<li><a href="redes.php?tipo=2">Publicaciones automatizadas</a></li>
 				<li><a href="redes.php?tipo=3" >Campa&ntilde;as publicitarias</a></li>
@@ -49,4 +52,3 @@
 		</li>
 		
 		</ul>
- 	

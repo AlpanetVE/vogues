@@ -80,11 +80,11 @@
 						</div>
 					</section>	
 					<section class="form-apdp" style="display: none"
-						data-title="Informaciï&iquest;½n Empresarial" data-step="1" data-type="e"  >
+						data-title="InformaciÃ¯&iquest;Â½n Empresarial" data-step="1" data-type="e"  >
 						<div class="row">
 							<div class="col-xs-12 ">
 								<span class="marL10"><i class="fa fa-list-alt"></i>
-									Identificaci&oacute;nn</span>
+									Identificaci&oacute;n</span>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 input" >
 								<select class=" form-select" id="e_tipo" name="e_tipo">
@@ -197,9 +197,7 @@
 							</div>
 							<input type="hidden" id="ingresoUsuario" name="ingresoUsuario" value="1" />
 							
-							<input type="hidden" id="id_rol_hidden" name="id_rol" value="3" />
-							 
-							
+							<input type="hidden" id="id_rol_hidden" name="id_rol" value="3" />					
 						</div>
 					</section>
 				</div>

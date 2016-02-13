@@ -61,6 +61,9 @@ switch ($_POST["method"]) {
 	case "restablecer":
 		restablecerPassword();
 		break;	
+	case "admin_reg_user":		
+		RegistrarUser();		
+		break;
 	default :
 		echo "error";
 		break;
@@ -344,8 +347,6 @@ function newUser() {
 	$foto = new fotos ();
 	$bd = new bd ();
 	
-	
-	
 	if (isset ( $_POST ["type"] )) {
 		$ingresoUsuario = filter_input ( INPUT_POST, "ingresoUsuario" );
 		
@@ -553,24 +554,115 @@ function restablecerPassword(){
 	}
 	
  }	
-	function updateUser(){ 
-		$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );		 
-		$seudonimo=		filter_input ( INPUT_POST, "update_seudonimo" );
-		$email	=		filter_input ( INPUT_POST, "update_email" );
-		$id_rol=		filter_input ( INPUT_POST, "update_id_rol_select" );		
-		
-		$password= 		filter_input ( INPUT_POST, "update_password" );  
- 
-
-		$usuario = new usuario($usuarios_id);
-		
-		//modificamos el estatus del usuario si ya existe el registro
-		$result = $usuario ->updateUserGeneral($usuarios_id, $seudonimo, $email,$id_rol,$password); 
-		 
-			echo json_encode ( array (
-					"result" => "OK" 
-			) );
-			
-		 
-	}		
+function updateUser(){
+	$bd = new bd ();	
+	$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );		 
+	$seudonimo=		strtoupper(filter_input ( INPUT_POST, "update_seudonimo" ));
+	$email	=		filter_input ( INPUT_POST, "update_email" );
+	$password= 		filter_input ( INPUT_POST, "update_password" );  
+	$id_rol=		filter_input ( INPUT_POST, "update_id_rol_select" );
+	$validado=		true;
+	$usuario = new usuario($usuarios_id);
 	
+	if ($bd->valueExist ( "usuarios_accesos", $seudonimo, "seudonimo" ) && $usuario->a_seudonimo != $seudonimo) {
+		$fields ["update_seudonimo"] = "El seudonimo no esta disponible";	 
+		$validado=false;
+	}
+	if ($bd->valueExist ( "usuarios_accesos", $email, "email" ) && $usuario->a_email != $email) {
+		$fields ["update_email"] = "Este correo electronico ya esta en uso";	
+		 $validado=false;
+	} 
+	
+	
+	
+	if($validado) {
+			//modificamos el estatus del usuario si ya existe el registro
+			$result = $usuario ->updateUserGeneral($usuarios_id, $seudonimo, $email,$password, $id_rol);
+			 
+				echo json_encode ( array (
+						"result" => "OK" 
+				) );
+		 
+	}else{
+		echo json_encode ( array (		
+					"result" => "error",		
+					"fields" => $fields 		
+			) );		
+			exit ();
+	}
+		
+}	
+	 
+	
+function RegistrarUser(){	
+	$usuario = new usuario (); 		 
+	$bd = new bd ();		
+			
+	if (isset ( $_POST ["type_admin"] )) {		
+		$ingresoUsuario = filter_input ( INPUT_POST, "ingresoUsuario_admin" );				
+		$seudonimo = filter_input ( INPUT_POST, "seudonimo_admin" );		
+		$id_sede = filter_input ( INPUT_POST, "id_sede" );		
+				
+		if ($bd->valueExist ( $usuario->a_table, $seudonimo, "seudonimo" )) {		
+			$fields ["seudonimo_admin"] = "El seudonimo no esta disponible";		
+		}		
+		$email = filter_input ( INPUT_POST, "email_admin" );		
+		if ($bd->valueExist ( $usuario->a_table, $email, "email" )) {		
+			$fields ["email_admin"] = "El email no esta disponible";		
+		}		
+		$id_rol = filter_input ( INPUT_POST, "id_rol_admin" ); 		
+		$status_usuarios_id = 1;		
+		$password = filter_input ( INPUT_POST, "password_admin" );		
+		$descripcion = filter_input ( INPUT_POST, "descripcion_admin" );		
+				
+				
+		if ($descripcion == "") {		
+			$descripcion = NULL;		
+		}		
+		if (filter_input ( INPUT_POST, "type_admin" ) == "e") {		
+			$rif = filter_input ( INPUT_POST, "e_rif_admin" );		
+			if ($bd->valueExist ( $usuario->j_table, $rif, "rif" )) {		
+				$fields ["e_rif_admin"] = "El RIF ya esta en uso";		
+			}		
+			$telefono = filter_input ( INPUT_POST, "e_telefono_admin" );		
+			$estado = filter_input ( INPUT_POST, "e_estado_admin" );		
+			$direccion = filter_input ( INPUT_POST, "e_direccion_admin" );		
+			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0, $id_sede ); 		
+			$usuario->datosJuridico ( filter_input ( INPUT_POST, "e_rif_admin" ), filter_input ( INPUT_POST, "e_razonsocial_admin" ), filter_input ( INPUT_POST, "e_tipo_admin" ), filter_input ( INPUT_POST, "e_categoria_admin" ) );		
+		} else {		
+			$cedula = filter_input ( INPUT_POST, "e_identificacion_admin" );		
+			if ($bd->valueExist ( $usuario->n_table, $cedula, "identificacion" )) {		
+				$fields ["e_identificacion_admin"] = "El numero de identificacion ya esta en uso";		
+			}		
+			$telefono = filter_input ( INPUT_POST, "e_telefono_admin" );		
+			$estado = filter_input ( INPUT_POST, "e_estado_admin" );		
+			$direccion = filter_input ( INPUT_POST, "e_direccion_admin" );		
+					
+			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0, $id_sede ); 		
+			$usuario->datosNatural ( $cedula, filter_input ( INPUT_POST, "e_nombre_admin" ), filter_input ( INPUT_POST, "e_apellido_admin" ), filter_input ( INPUT_POST, "e_tipo_admin" ) );		
+		}		
+		if (isset ( $fields )) {		
+			echo json_encode ( array (		
+					"result" => "error",		
+					"fields" => $fields 		
+			) );		
+			exit ();		
+		}		
+		$usuario->datosAcceso ( $seudonimo, $email, $password ,0, $id_rol, $status_usuarios_id);		
+		$usuario->datosStatus ();		
+		$usuario->crearUsuario();		
+		 		
+				
+		if($ingresoUsuario=='1'){		
+			$usuario->ingresoUsuario( array (		
+				"seudonimo" => filter_input ( INPUT_POST, "seudonimo_admin" ) 		
+				), filter_input ( INPUT_POST, "password_admin" ) ,NULL);		
+				
+		}			
+		echo json_encode ( array (		
+				"result" => "ok" 		
+		) );		
+	}		
+					
+		 		
+	}		
