@@ -12,7 +12,7 @@
 class bd extends PDO {
 	private $driver = "mysql";
 	private $host = "localhost";
-	private $bd_name = "vogues";
+	private $bd_name = "vogues2";
 	private $bd_charset = "utf8";
 	private $user = "root";
 	private $password = "";
@@ -87,7 +87,8 @@ class bd extends PDO {
 		//var_dump($params);
 		if ($vars = $this->prepareParams ( $params )) {
 			$stament = "INSERT INTO {$table}({$vars['columns']}) VALUES ({$vars['values']})";
-		//	die($stament);
+			
+			//var_dump($stament.' - '. $params);
 			try {
 				
 				$sql = $this->prepare ( $stament );
@@ -97,6 +98,8 @@ class bd extends PDO {
 				
 				return $sql->execute ();
 			} catch ( PDOException $ex ) {
+					
+				echo ($this->showError ( $ex )); 	
 				return $this->showError ( $ex );
 			}
 		}

@@ -124,7 +124,7 @@ $clasificado = new clasificados($_POST["id"]);
 						<b>M&aacute;s especificaciones</b>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+			<!--	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
 					<div class="input-group marB10">
 						<span class="input-group-addon">Condici&oacute;n</span>
 						<select
@@ -139,7 +139,7 @@ $clasificado = new clasificados($_POST["id"]);
 							?>
 						</select>
 					</div>
-				</div>
+			</div> -->
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
 					<div class="input-group marB10">
 						<span class="input-group-addon">Unidades</span>
@@ -195,7 +195,7 @@ $clasificado = new clasificados($_POST["id"]);
 					</div>
 				</div>
 				<!-- Factura-->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+			<!-- 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 					<div class="text-left marL20 marT10 ">
 						<table>
 							<tr>
@@ -209,9 +209,9 @@ $clasificado = new clasificados($_POST["id"]);
 							</tr>
 						</table>
 					</div>
-				</div>
+			</div> -->
 				<!-- Tienda Fisica -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<!--	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 					<div class="text-left marL20 marT10 ">
 						<table>
 							<tr>
@@ -228,7 +228,7 @@ $clasificado = new clasificados($_POST["id"]);
 							</tr>
 						</table>
 					</div>
-				</div>
+				</div>  -->
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 					<div class="text-right">
 						<button class="btn3 btn-primary2" type="submit" id="btnContinuar" name="btnContinuar">

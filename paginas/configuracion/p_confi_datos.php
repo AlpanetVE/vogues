@@ -11,11 +11,11 @@ endif;
 <div class="contenedor">
 <input type="file" class="hidden" id="input_foto">
 	
-		<div style='overflow: hidden; height: 150px; width: 150px; margin-top: -30px;'
+		<!--<div style='overflow: hidden; height: 150px; width: 150px; margin-top: -30px;'
 		class="pull-right borderS foto-resumen marco-foto-conf ">		
 		 <img id="foto-usuario" src="<?php echo $foto;?>" style='height: 100%; width: 100%; '>	
 		 <div  style="position: absolute; bottom:-25px; right:50px;" class="t14">Ver Perfil</div>
-		</div>
+		</div> -->
 		
 	
 	<h3 class=" marL20 marR20 negro text-center" style="padding: 10px;">

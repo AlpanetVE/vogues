@@ -34,7 +34,7 @@ $(document ).ready(function() {
 				stringLength : {min: 10,max : 1024}}}
 		}
 	}).on('success.form.fv', function(e) {
-		e.preventDefault();	
+		e.preventDefault();
 		var form = $(e.target);
 		var fv = form.data('formValidation');
 		var method = "&id=" + $("#p_id").val() + "&method=act-nat";

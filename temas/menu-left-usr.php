@@ -8,7 +8,7 @@
 			
 		</li>-->
 		<li class="hidden admin-usuarios">
-			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Tiendas</div></a>			 
+			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</div></a>			 
 		</li>
 		
 		<li class="hidden venta">

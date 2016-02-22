@@ -594,7 +594,7 @@ function updateUser(){
 }	
 	 
 	
-function RegistrarUser(){	
+function RegistrarUser(){
 	$usuario = new usuario (); 		 
 	$bd = new bd ();		
 			
@@ -616,10 +616,10 @@ function RegistrarUser(){
 		$descripcion = filter_input ( INPUT_POST, "descripcion_admin" );		
 				
 				
-		if ($descripcion == "") {		
-			$descripcion = NULL;		
+		if ($descripcion == "") {
+			$descripcion = NULL;
 		}		
-		if (filter_input ( INPUT_POST, "type_admin" ) == "e") {		
+		if (filter_input ( INPUT_POST, "type_admin" ) == "e") {
 			$rif = filter_input ( INPUT_POST, "e_rif_admin" );		
 			if ($bd->valueExist ( $usuario->j_table, $rif, "rif" )) {		
 				$fields ["e_rif_admin"] = "El RIF ya esta en uso";		
@@ -627,19 +627,19 @@ function RegistrarUser(){
 			$telefono = filter_input ( INPUT_POST, "e_telefono_admin" );		
 			$estado = filter_input ( INPUT_POST, "e_estado_admin" );		
 			$direccion = filter_input ( INPUT_POST, "e_direccion_admin" );		
-			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0, $id_sede ); 		
+			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0 ); 		
 			$usuario->datosJuridico ( filter_input ( INPUT_POST, "e_rif_admin" ), filter_input ( INPUT_POST, "e_razonsocial_admin" ), filter_input ( INPUT_POST, "e_tipo_admin" ), filter_input ( INPUT_POST, "e_categoria_admin" ) );		
-		} else {		
-			$cedula = filter_input ( INPUT_POST, "e_identificacion_admin" );		
+		} else {	
+			$cedula = filter_input ( INPUT_POST, "p_identificacion_admin" );		
 			if ($bd->valueExist ( $usuario->n_table, $cedula, "identificacion" )) {		
-				$fields ["e_identificacion_admin"] = "El numero de identificacion ya esta en uso";		
+				$fields ["p_identificacion_admin"] = "El numero de identificacion ya esta en uso";		
 			}		
 			$telefono = filter_input ( INPUT_POST, "e_telefono_admin" );		
 			$estado = filter_input ( INPUT_POST, "e_estado_admin" );		
 			$direccion = filter_input ( INPUT_POST, "e_direccion_admin" );		
 					
-			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0, $id_sede ); 		
-			$usuario->datosNatural ( $cedula, filter_input ( INPUT_POST, "e_nombre_admin" ), filter_input ( INPUT_POST, "e_apellido_admin" ), filter_input ( INPUT_POST, "e_tipo_admin" ) );		
+			$usuario->datosUsuario ( $direccion, $telefono, $descripcion, $estado, NULL, NULL,  NULL,  0 ); 		
+			$usuario->datosNatural ( $cedula, filter_input ( INPUT_POST, "p_nombre_admin" ), filter_input ( INPUT_POST, "p_apellido_admin" ), filter_input ( INPUT_POST, "p_tipo_admin" ) );		
 		}		
 		if (isset ( $fields )) {		
 			echo json_encode ( array (		
@@ -649,7 +649,7 @@ function RegistrarUser(){
 			exit ();		
 		}		
 		$usuario->datosAcceso ( $seudonimo, $email, $password ,0, $id_rol, $status_usuarios_id);		
-		$usuario->datosStatus ();		
+		$usuario->datosStatus();		
 		$usuario->crearUsuario();		
 		 		
 				

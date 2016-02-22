@@ -106,10 +106,7 @@ class usuario {
 						$result += $bd->doInsert ( $this->j_table, $this->serializarDatos ( "j_", $this->u_table ) );
 					}
 						$result += $bd->doInsert ( $this->a_table, $this->serializarDatos ( "a_", $this->u_table ) );
-						$result += $bd->doInsert ( $this->s_table, $this->serializarDatos ( "s_", array (
-							$this->s_f_table,
-							$this->u_table 
-					) ) );
+						$result += $bd->doInsert ( $this->s_table, $this->serializarDatos ( "s_", $this->u_table ) );
 					if ($result >= 3) {
 						return true;
 					} else {						 
@@ -799,21 +796,20 @@ function comprobarToken($token){
 		from usuarios inner join usuarios_accesos ON usuarios.id=usuarios_accesos.usuarios_id 
 		inner join usuarios_naturales ON usuarios.id=usuarios_naturales.usuarios_id 
 		inner join roles ON usuarios_accesos.id_rol=roles.id
-		where (usuarios_accesos.id_rol=1 or usuarios_accesos.id_rol=2) ";
-		
+		where (usuarios_accesos.id_rol=1 or usuarios_accesos.id_rol=2) ";		
 		
 		if(!empty($status)){
 			$consulta.=" and usuarios_accesos.status_usuarios_id =  '$status' ";
 		}
 		if(!empty($orden)){
 			$orden=is_null($orden)?"":" order by $orden";
-			$consulta.=" $orden";   
+			$consulta.=" $orden";
 		}
 		if(!empty($pagina)){
 			$inicio=is_null($pagina)?"":($pagina - 1) * 25;
 			$consulta.=" limit 25 OFFSET $inicio"; 
-		} 
-		
+		}
+	
 		$result=$bd->query($consulta);
 		if(!empty($result)){
 			return $result;

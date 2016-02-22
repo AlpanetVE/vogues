@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php
+	<?php	
 	include "fcn/incluir-css-js.php";
 	?>
 	<body >
-		<?php
-		include "temas/header.php";
+		<?php include "temas/header.php";
 		?>		
 		<div style="margin-top: -40px;margin-bottom:25px;"><?php include('paginas/index/apdp-principal.php'); ?></div>
 		
 			<div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-					<?php
+					<?php 
 					include "paginas/index/p_index.php";
 					?>
 					<br>

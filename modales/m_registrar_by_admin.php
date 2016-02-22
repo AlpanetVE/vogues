@@ -22,42 +22,32 @@
 					<section class="form-apdp" data-title="Informaci&oacute;presarial" data-step="1" data-type="e"  >
 						<div class="row">
 							<div class="col-xs-12 ">
-								<span class="marL10"><i class="fa fa-list-alt"></i>
-									Identificaci&oacute;n</span>
+								<div class="marL10"><i class="fa fa-list-alt"></i>
+									Identificaci&oacute;n</div>
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 input" >
-								<select class=" form-select" id="e_tipo_admin" name="e_tipo_admin">
+							<div  class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3 input" >
+								<select class="form-select" id="p_tipo_admin" name="p_tipo_admin">
 									<option>V</option>
 									<option>E</option>
 									<option>P</option>
-									<option>J</option>
-									<option>G</option>
-									<option>C</option>
 								</select>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-9 col-lg-9 input" >
-								<input autofocus type="text"
-									placeholder="Ingresa el numero de documento..." name="e_rif_admin"
-									class="form-input " id="e_rif_admin">
+								<input type="text"
+									placeholder="Ingresa el numero de documento..." name="p_identificacion_admin"
+									class="form-input" id="p_identificacion_admin">
 							</div>
 							<div class="col-xs-12">
-								<span class="marL10"><i class="fa fa-industry"></i> Nombre de la Tienda</span>
+								<span class="marL10"><i class="fa fa-user"></i> Nombre y
+									Apellido</span>
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 input">
-								<input type="text" placeholder="Ingresa la razon social..." name="e_razonsocial_admin"
-									class=" form-input " id="e_razonsocial_admin">
+							<div class=" form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 input" >
+								<input type="text" placeholder="Ingresa tu nombre..." name="p_nombre_admin"
+									class=" form-input " id="p_nombre_admin">
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 input">
-								<select 
-									class=" form-select " id="e_categoria_admin" name="e_categoria_admin">
-									<option value="" disabled selected>Area de la empresa</option>
-									<?php								
-							$estados = new bd ();
-							foreach ( $estados->getDatosBase ( "categorias_juridicos" ) as $area ) :
-									?>
-								<option value="<?php echo $area["id"]; ?>"><?php echo $area["nombre"]; ?></option>
-								<?php endforeach;?>
-									</select>
+							<div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 input" >
+								<input type="text" placeholder="Ingresa tu apellido..." name="p_apellido_admin"
+									class=" form-input " id="p_apellido_admin">
 							</div>
 							
 							
@@ -74,20 +64,16 @@
 								<span class="marL10"><i class="fa fa-map-marker"></i>
 									Sambil</span>
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input" >
-								<select disabled="disabled" class="error-select form-select " id="e_estado_admin" >									 
-								<?php
-								$sede_obj = new bd ();
-								$id_sede	=$usua->u_id_sede;
-								$row	=	array('indice' => 'id','value' => $id_sede);
-								$sedes=		$sede_obj->getAllDatos ( "sedes", $row);
-								foreach ($sedes as $sede ) :
+							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
+								<select class=" form-select " id="e_estado_admin" name="e_estado_admin">
+									<option value="" disabled selected>Seleccione un Estado</option>
+								<?php								
+								$estados = new bd ();
+								foreach ( $estados->getDatosBase ( "estados", 1 ) as $estado ) :
 									?>
-								<option value="<?php echo $sede["id"]; ?>"><?php echo $sede["nombre"]; ?></option>
-								<?php endforeach;?> 
+								<option value="<?php echo $estado["id"]; ?>"><?php echo $estado["nombre"]; ?></option>
+								<?php endforeach;?>
 								</select>
-								 <input type="hidden" value="<?php echo $sedes[0]['id']; ?>" name="id_sede"  		/>
-								 <input type="hidden" value="<?php echo $sedes[0]['estados_id']; ?>" name="e_estado_admin" />
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 								 

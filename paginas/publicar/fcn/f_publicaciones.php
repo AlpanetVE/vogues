@@ -53,7 +53,7 @@ function guardarPublicacion(){
 			"dafactura"=>isset($_POST["chkEntregaFactura"])?'S':'N',
 			"estienda"=>isset($_POST["chkEresTienda"])?'S':'N',
 			"clasificados_id"=>$_POST["idclas"],
-			"condiciones_publicaciones_id"=>$_POST["cmbCondicion"],
+			"condiciones_publicaciones_id"=>1,
 			"vencimientos_publicaciones_id"=>2,
 			"usuarios_id"=>$_SESSION["id"],
 			"publicar_facebook"=>$_POST["fb"],

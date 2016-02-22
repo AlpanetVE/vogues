@@ -21,7 +21,7 @@ if (isset($_SESSION["id"])) {
                         <div class="marB10 marT10 text-center"> 
                             <span class="t30 negro"><?php echo $publicacion -> titulo; ?></span> 
                             <br> 
-                            <span class="t16">-- <i class="fa fa-tag"></i> <?php echo $publicacion -> getCondicion(); ?> --</span>  
+                            <span class="t16"></span>  
                         </div>
                         
  	</div>
@@ -75,16 +75,7 @@ if (isset($_SESSION["id"])) {
                                                 <i class="fa fa-check-square t22 grisC" style="width:30px;"></i> 
                                                 <span class="t16"><?php echo $publicacion -> getTiempoGarantia(); ?></span>
                                             </span>
-                                            <br>
-                                            <span >
-                                                <i class="fa fa-university t22 grisC" style="width:30px;"></i>
-                                                <span class="t16"><?php echo $publicacion -> getTienda(); ?> <span class="negro">Tienda Fisica</span></span>
-                                            </span>
-                                            <br>
-                                            <span>
-                                                <i class="fa fa-file-text-o t22 grisC" style="width:30px;"></i>
-                                                <span class="t16"><?php echo $publicacion -> getFactura(); ?> <span class="negro">Factura Fiscal</span></span>
-                                            </span>
+                                        
 
                                         </p>
                                         <br>
@@ -119,7 +110,7 @@ if (isset($_SESSION["id"])) {
 
                                         <hr style="width:100%" class="marB5">
 										<div class="text-center">
-                                        <span class="t14 vin-blue"><a href="#">Recomendaciones</a> <br> <a href="terminos.php">Terminos y condiciones</a> </span>
+                                        <span class="t14 vin-blue"><a href="#">Recomendaciones</a> <br> <a href="#">T&eacute;rminos y condiciones</a> </span>
                                         </div> 
                                         <br>
                                         <span class="t14 vin-blue"></span>
@@ -133,9 +124,9 @@ if (isset($_SESSION["id"])) {
                               </div>
                                <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">  
                         <div class="marB10 marT10 text-center"> 
-                            <span class="t30 negro">Informacion del vendedor</span> 
+                           <span class="t30 negro">Informaci&oacute;n</span>
                             <br> 
-                            <span class="t16">-- <i class="fa fa-map-marker"></i> <?php echo utf8_decode($usuario -> getEstado()); ?> --</span>  
+                            <span class="t16"></span>   
                         </div>
                         </div>
                         
@@ -154,7 +145,7 @@ if (isset($_SESSION["id"])) {
                                 <br> 
                                 <span class="t14" ><?php echo $usuario -> n_nombre . " " . $usuario -> n_apellido . $usuario -> j_razon_social; ?> </span>   
                                 <br>
-                                <span class="t12 orange-apdp" > <b><?php echo $usuario -> getTiempo(); ?></b> vendiendo en A Precio De Pana </span>                               
+                                <!-- <span class="t12 orange-apdp" > <b><?php echo $usuario -> getTiempo(); ?></b> vendiendo en A Precio De Pana </span>                               
                                 <!--<br>
                                 <span class="t14" >0414-7435485</span>
                                 <br>
@@ -162,14 +153,14 @@ if (isset($_SESSION["id"])) {
                                 </div>
 
                             </div>
-                            <div class="  col-xs-12 col-sm-6 col-md-4 col-lg-4 marB10">
+                         <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9 marB10">
                                 <div class="marR20 marL5 text-justify pad15" >
-                                <div class="t16  blueO-apdp"><b>Biografia </b></div> 
+                                <div class="t16  blueO-apdp"><b>Biograf&iacute;a </b></div> 
                                 <br> 
-                                <div class="t12 " ><i class="fa fa-quote-left"></i> <span class="grisC"><?php echo $usuario -> u_descripcion; ?></span> <i class="fa fa-quote-right"></i></div>
+                                <div class="t12 " ><i class="fa fa-quote-left"></i> <span class="grisC"> Proveedor de servicios autorizado Apple </span> <i class="fa fa-quote-right"></i></div>
 								</div>
                             </div>
-                            <div class="pull-left  col-xs-12 col-sm-12 col-md-5 col-lg-5 marB10">
+                           <!-- <div class="pull-left  col-xs-12 col-sm-12 col-md-5 col-lg-5 marB10">
                                 <div style="background: #FAFAFA;  padding: 15px;" class="sombra-div borderS opacity ">
                                     <span class="t16  blueO-apdp"><b>Reputacion</b> <span class=" red">Proximamente</span></span>
                                     <br>
@@ -190,7 +181,7 @@ if (isset($_SESSION["id"])) {
 
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
 
                 </div>
@@ -199,7 +190,7 @@ if (isset($_SESSION["id"])) {
 
                        
                         <div class="marB10 marT10 text-center"> 
-                            <span class="t30 negro">Descripcion de la publicación</span> 
+                            <span class="t30 negro">Descripci&oacute;n de la publicaci&oacute;n</span> 
                             <br>
                             <span class="t16">-- <i class="fa fa-tags"></i> <?php echo $publicacion -> stock; ?> Und. --</span> 
                         </div>
@@ -209,18 +200,18 @@ if (isset($_SESSION["id"])) {
                     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12  marB10  "   > 
 
                         <div class=" contenedor pad20  t16 text-justify" style="margin: 20px;">
-                        	
+                        	<!--
                         	<p class=" opacity t14">
-                        		 A Precio De Pana, C.A. no asume ninguna responsabilidad por la información contenida en este anuncio, 
-                        		 ya que ha sido suministrada en su totalidad por el usuario aquí identificado. A Precio De Pana, C.A. no es el propietario
-                        		 ni vende los artículos aquí ofrecidos y no participa en ninguna negociación, venta o perfeccionamiento de operaciones, 
-                        		 sino que sólo se limita a la publicación y/o alojamiento de anuncios de sus usuarios. A Precio De Pana, C.A. no asume 
-                        		 responsabilidad por daños o perjuicios que pudiere sufrir el usuario o visitante por operaciones sobre anuncios publicados en el sitio.
+                        		 A Precio De Pana, C.A. no asume ninguna responsabilidad por la informaciï¿½n contenida en este anuncio, 
+                        		 ya que ha sido suministrada en su totalidad por el usuario aquï¿½ identificado. A Precio De Pana, C.A. no es el propietario
+                        		 ni vende los artï¿½culos aquï¿½ ofrecidos y no participa en ninguna negociaciï¿½n, venta o perfeccionamiento de operaciones, 
+                        		 sino que sï¿½lo se limita a la publicaciï¿½n y/o alojamiento de anuncios de sus usuarios. A Precio De Pana, C.A. no asume 
+                        		 responsabilidad por daï¿½os o perjuicios que pudiere sufrir el usuario o visitante por operaciones sobre anuncios publicados en el sitio.
                         		 </p>
                         		 <hr>
                         		 <br> 
-
-							<?php echo utf8_decode($publicacion -> descripcion); ?>
+									--></br>
+							<?php echo ($publicacion -> descripcion); ?>
 
                         </div>
 
