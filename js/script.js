@@ -875,7 +875,7 @@ $("#enviar").click(function(e){
 	});	
 	
 	$("#btn_sin_cuenta").click(function(){
-		if ($(this).data("tipo")==1) {
+		/*if ($(this).data("tipo")==1) {
 			$("#usr-reg-title").html($("section[data-type='p']").data("title"));
 			$("#usr-reg-submit").data("type","p");
 			$("section[data-type='p']").fadeIn();
@@ -885,7 +885,7 @@ $("#enviar").click(function(e){
 			$("#usr-reg-submit").data("type","e");
 			$("section[data-type='e']").fadeIn();
 			$("#type").val("e");
-		}		
+		}		*/
 		$("#insc-red").modal('hide');
 	});
 	

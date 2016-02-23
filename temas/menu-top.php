@@ -28,7 +28,7 @@
 			</div>
 			<form id="usr-log-form" name="usr-log-form" data-url="public" action="fcn/f_usuarios.php" method="POST">
 				<ul class="nav navbar-nav navbar-right t16">
-					<li><a href="#" class="marT10 alert-reg" data-toggle='modal' data-target='#actualizar2'> Inscribete <span
+					<li><a href="#" class="marT10 alert-reg" data-toggle='modal' data-target='#insc-red'> Inscribete <span
 							class="glyphicon glyphicon-log-in"></span></a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle marT10"
 						data-toggle="dropdown" role="button" aria-expanded="false"
