@@ -1,6 +1,7 @@
-<?php $cant = $usua->getCantPreguntasActivas();
-$compras = $usua->getCantCompras();  ?>
-<div class=" contenedor">
+<?php
+	$cant_preg_usr = $usua -> getCantPreguntasActivas($_SESSION["id"]);
+	$cant_preguntas=$cant_preg_usr[0]["cant"];
+?><div class=" contenedor">
 	
 	<div class="row marL20 marR20 marB20">
 
@@ -11,31 +12,9 @@ $compras = $usua->getCantCompras();  ?>
 				</center>
 			</div><!-- Fin titulo -->
 		
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 "><!-- Titulo de Publicaciones -->
-			 	<div class="pad10 pad-left-20  t18  " style="background: #F2F2F2;"> 
-			 		<i class="fa fa-comment marL10"></i> Preguntas
-			 	</div>
-			 </div ><!-- Fin Titulo de Publicaciones -->
-			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
-			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $cant[0]["cant"];?></span> <a href="preguntas.php?tipo=1"><span class="marL10 " >Preguntas sin responder</span></span></a></div>
-			 </div>
-			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
-			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $compras[0]["cant"];?></span> <a href="preguntas.php?tipo=2"><span class="marL10 " >Tus preguntas</span></span></a></div>
-			 </div>
-
-			 
-			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10  "><!-- Espaciador-->
-			 </div>
-			 
-			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10  "><!-- Espaciador-->
-			 </div>
-		
-		
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 "><!-- Titulo de Publicaciones -->
 			 	<div class="pad10 pad-left-20  t18  " style="background: #F2F2F2;"> 
-			 		<i class="fa fa-tags marL10"></i> Publicaciones
+			 		<i class="fa fa-tag marL10"></i> Publicaciones
 			 	</div>
 			 </div ><!-- Fin Titulo de Publicaciones -->
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
@@ -55,12 +34,17 @@ $compras = $usua->getCantCompras();  ?>
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10  "><!-- Espaciador-->
 			 </div>
 			 
-
-
-
 			 
-			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10  "><!-- Espaciador-->
+			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 "><!-- Titulo de Preguntas -->
+			 	<div class="pad10 pad-left-20  t18  " style="background: #F2F2F2;"> 
+			 		<i class="fa fa-comment marL10"></i> Preguntas
+			 	</div>
+			 </div ><!-- Fin Titulo de Publicaciones -->
+			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
+			 	<hr>
+			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $cant_preguntas; ?></span> <a href="preguntas.php?tipo=1"><span class="marL10 " >Sin Responder</span></span></a></div>
 			 </div>
+			 
 			 
 
 		</div>

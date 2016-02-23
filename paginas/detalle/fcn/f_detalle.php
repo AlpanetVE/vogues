@@ -25,23 +25,24 @@ function actualizaFavoritos(){
 }
 function guardaPregunta(){
 	$publi=new publicaciones($_POST["id"]);
-	$publi->setPreguntas(($_POST["pregunta"]));	
-	$not = $publi->setNotificacion($_POST["id"],$_POST["tipo"],$_POST["usr"]);
+	$inse = $publi->setPreguntas( (htmlspecialchars(strip_tags($_POST["pregunta"]))));	
+	$not = $publi->setNotificacion($_POST["id"],$_POST["tipo"],$_POST["usr"],$inse);
 	$preguntas=$publi->getPreguntasPublicacion();
 	?>
 	<div style="background: #FFF; margin-top: -10px; width: 140px;" class="marR20 text-center pull-right"> <span>Ultimas Preguntas</span></div>
 	<div class="alert alert-info hidden" style="padding: 4px; margin: 5px; margin-left: 20px; margin-right:10px;">hola</div>
 	<?php
 		foreach ($preguntas as $key => $valor):
-		$respuesta=$publi->getRespuestaPregunta($valor["id"])[0]);
+		$respuesta=$publi->getRespuestaPregunta($valor["id"])[0];
+		$usuario=new usuario($valor["usuario"]); 
 		$claseR=$respuesta==""?"hidden":"";
 	?>							
 		<p class="t14 marL20 marR20" style="border-bottom: #ccc 1px dashed;">
-		<br>
+	  <br>
 		<i class="fa fa-comment blueO-apdp marL10"></i> <span class="marL5"><?php echo  ($valor["pregunta"]); ?></span>
 		<br>
 		<i class="fa fa-comments-o marL20 blueC-apdp <?php echo $claseR;?>" >			
-		</i> <span class="marL5"><?php echo  ($publi->getRespuestaPregunta($valor["id"])[0]); ?> </span> <span class="opacity t12"> - <?php echo $publi->getRespuestaPregunta($valor["id"])[1]; ?> </span>
+		</i> <span class="marL5"><?php echo  ($publi->getRespuestaPregunta($valor["id"])[0]); ?> </span> <span class="opacity t11"> - <?php echo $publi->getRespuestaPregunta($valor["id"])[1]; ?> </span>
 		<br>	
 		<br>						
 		</p>

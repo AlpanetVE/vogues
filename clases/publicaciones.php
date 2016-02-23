@@ -413,9 +413,11 @@ class publicaciones{
 		$bd=new bd();
 		$preguntas=array();
 		$condicion="publicaciones_id=$id AND preguntas_publicaciones_id IS NULL";
-        $result=$bd->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id order by fecha desc");	
+        $result=$bd->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id and status <> 2 order by fecha desc");	
         foreach ($result as $r){
-        	$preguntas[]=array("id"=>$r["id"],"pregunta"=>$r["contenido"],"pre_pub_id"=>$r["preguntas_publicaciones_id"]);
+        $segundos=strtotime('now') - strtotime($r["fecha"]);
+		$tiempo = $this -> getTiempo($segundos);
+        	$preguntas[]=array("id"=>$r["id"],"pregunta"=>$r["contenido"],"pre_pub_id"=>$r["preguntas_publicaciones_id"],"usuario"=>$r["usuarios_id"],"tiempo"=>$tiempo);
   		}
 		return $preguntas;
 	}
@@ -434,18 +436,20 @@ class publicaciones{
 		return $preguntas;
 	}
 	
-		public function getPreguntasActivas($id = NULL){
+	public function getPreguntasActivas($id = NULL){
 		if(is_null($id)){
 			$id=$this->id;
 		}
 		$bd=new bd();
 		$preguntas=array();
 		$condicion="publicaciones_id=$id AND preguntas_publicaciones_id IS NULL";
-        $result=$bd->query("select * from preguntas_publicaciones where id not in (SELECT preguntas_publicaciones_id 
-        FROM `preguntas_publicaciones` WHERE preguntas_publicaciones_id is not null) and preguntas_publicaciones_id is NULL 
-        and publicaciones_id=$id order by fecha");	
+        $result=$bd->query("select * from preguntas_publicaciones pp, usuarios_accesos u where pp.usuarios_id=u.usuarios_id and 
+        id not in (SELECT preguntas_publicaciones_id FROM `preguntas_publicaciones` WHERE preguntas_publicaciones_id is not null) 
+        and pp.preguntas_publicaciones_id is NULL and pp.publicaciones_id=$id order by fecha");	
         foreach ($result as $r){
-        	$preguntas[]=array("id"=>$r["id"],"pregunta"=>$r["contenido"],"pre_pub_id"=>$r["preguntas_publicaciones_id"],"usr_id"=>$r["usuarios_id"]);
+        $segundos=strtotime('now') - strtotime($r["fecha"]);
+		$tiempo = $this -> getTiempo($segundos);			
+        	$preguntas[]=array("id"=>$r["id"],"pregunta"=>$r["contenido"],"pre_pub_id"=>$r["preguntas_publicaciones_id"],"usr_id"=>$r["usuarios_id"],'nombre'=>$r["seudonimo"],'tiempo'=>$tiempo);
   		}
 		return $preguntas;
 	}
@@ -639,6 +643,42 @@ class publicaciones{
 			}
 			return $result;
 		}
+	}
+	public function getTiempo($segundos){
+		$dias=intval($segundos/60/60/24);
+			if($dias<1){
+			$dias = intval($segundos/60/60);
+			if($dias<1){
+				$dias= intval($segundos/60);
+					if($dias<1){
+						$dias = $segundos;
+						if($dias<60){
+							if($dias==1){
+								return " 1 s";
+							}else{
+								return " $segundos s";
+							}
+						}
+					}elseif($dias<60){//minutos
+						if($dias==1){
+							return " 1 m";
+						}else{
+							return " $dias m";
+						}
+					}
+			}elseif($dias<24){//horas
+				if($dias==1){
+					return " 1 h";
+				}else{
+					return " $dias h";
+				}
+			}
+		}elseif($dias<=30){//dias
+			if($dias==1)
+				return " Ayer";
+			else
+				return " $dias d";	
+		}	
 	}
 
 

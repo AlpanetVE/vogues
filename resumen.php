@@ -13,7 +13,18 @@ include ("temas/header.php");
 		<?php include("temas/menu-left-usr.php"); ?>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-		<?php include("paginas/resumen/p_resumen.php"); ?>
+		<?php
+			if(!isset($_SESSION)){
+			    session_start();	
+			} 
+    
+			##########VARIABLE CREADA EN MENU TOP USER#########
+			if($_SESSION["id_rol"]=='1' || $_SESSION["id_rol"] =='2'){
+				include("paginas/resumen/p_resumen.php"); 
+			}else{				
+				include("paginas/resumen/p_resumen_cliente.php"); 
+			}
+			?>
 	</div>
 </div>
 <?php

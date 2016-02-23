@@ -122,16 +122,16 @@ if (isset($_SESSION["id"])) {
                                 </div>
                                </div>
                               </div>
-                               <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">  
+                              <!-- <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">  
                         <div class="marB10 marT10 text-center"> 
                            <span class="t30 negro">Informaci&oacute;n</span>
                             <br> 
                             <span class="t16"></span>   
                         </div>
-                        </div>
+                        </div> -->
                         
                         <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12">  
-                        <div class="contenedor row" style="margin: 20px; padding: 20px;" >
+                    <?php /*   <div class="contenedor row" style="margin: 20px; padding: 20px;" >
 
                          
                             <div class="pull-left  col-xs-12 col-sm-6 col-md-3 col-lg-3 marB10 ">
@@ -152,7 +152,7 @@ if (isset($_SESSION["id"])) {
                                 <span class="t14" >cdodesarrollo@gmail.com</span>-->
                                 </div>
 
-                            </div>
+                            </div> 
                          <div class="col-xs-12 col-sm-6 col-md-9 col-lg-9 marB10">
                                 <div class="marR20 marL5 text-justify pad15" >
                                 <div class="t16  blueO-apdp"><b>Biograf&iacute;a </b></div> 
@@ -182,7 +182,7 @@ if (isset($_SESSION["id"])) {
                                 </div>
 
                             </div> -->
-                        </div>
+                        </div> */ ?>
 
                 </div>
 
@@ -220,7 +220,7 @@ if (isset($_SESSION["id"])) {
                     <div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12  marB10 "   >  
   
                         	<div class="marB10 marT10 text-center"> 
-                            <span class="t30 negro">Preguntas al vendedor</span> 
+                            <span class="t30 negro">Preguntas sobre la publicaci&oacute;n</span> 
 
                         </div>
                         

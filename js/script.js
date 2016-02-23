@@ -840,7 +840,7 @@ $("#enviar").click(function(e){
 	
 	$("#btnPersona2").click(function(e){
 		/*$("#btn_sin_cuenta").data("tipo","1");
-		$("#tw_reg_button").data("tipo","1");
+		/*$("#tw_reg_button").data("tipo","1");
 	    $("#actualizar2").data("tipo","1");*/
 	   
 		$("#actualizar2").modal('hide');

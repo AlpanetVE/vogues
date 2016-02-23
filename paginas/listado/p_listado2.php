@@ -118,7 +118,7 @@ function buscaRuta(){
 				<div class="marL5 marT5 marB5  contenedor">
 					<div class="marL10">
 						<div id="izquierda">
-							<div id="tipo">
+						<?php /*	<div id="tipo">
 							<h5 class="negro" ><b>Tipo</b></h5>
 							<hr class="marR5">
 							</div>							
@@ -139,7 +139,7 @@ function buscaRuta(){
 											endif;
 										endif;
 										?>											
-								</ul>
+								</ul> */?>
 								<?php
 									$cat=$act_cla!=""?"data-categoria=$act_cla":""; 
 								?>
@@ -163,7 +163,7 @@ function buscaRuta(){
 									<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin' href='prueba'>
 									<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin' href='prueba'>
 							</ul>
-							<div id="ubicacion">
+						<?php  /*	<div id="ubicacion">
 									<h5 class="negro" ><b>Ubicaci&oacute;n</b></h5>							
 									<hr class="marR5">
 									<ul class="nav marR5 t11  marT10 marB20 ">
@@ -177,8 +177,8 @@ function buscaRuta(){
 											endforeach;
 											?>
 									</ul>
-							</div>
-							<div id="condicion" style="display:<?php if($totalPub==0){ echo "none"; } else{ echo "block"; }?>">
+							</div> */ ?>
+						<?php /*	<div id="condicion" style="display:<?php if($totalPub==0){ echo "none"; } else{ echo "block"; }?>">
 								<h5 class="negro" ><b>Condici&oacute;n</b></h5>
 								<hr class="marR5">
 							</div>
@@ -203,7 +203,7 @@ function buscaRuta(){
 										<?php
 										endif;
 										?>
-								</ul>
+								</ul>  */ ?>
 							</div>						
 							</div>
 							</div>
@@ -227,7 +227,7 @@ function buscaRuta(){
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 ">
 							<div class=" marR20" style="margin-top:10px;" id="orden">
-							<select id="filtro"  class="form-control  input-sm " style="width:auto;"  >
+							<select id="filtro"  class="form-control  input-sm" style="width:auto;"  >
 							<option value='id_desc' selected>Mas Recientes</option>
 							<option value='id_asc'>Menos Recientes</option>
 							<option value='monto_desc'>Mayor Precio</option>							
@@ -288,22 +288,23 @@ function buscaRuta(){
 									            <!--publicaci&oacute;n-->
 												<div class=' col-xs-12 col-sm-6 col-md-2 col-lg-2'>
 											    	<div class='marco-foto-conf  point marL20  ' style='height:130px; width: 130px;'  >
-											    		<div style='position:absolute; left:40px; top:10px; ' class='f-condicion'><?php echo $publi->getCondicion();?> </div>			 
+											    		<div style='position:absolute; left:40px; top:10px; ' class='f-condicion'> </div>			 
 											    		<img src='<?php echo $publi->getFotoPrincipal();?>' class='img img-responsive center-block img-apdp imagen' style='width:100%;height:100%;'
 											    		data-id='<?php echo $publi->id;?>'>				
 													</div>
 												</div>
 												<div class=' col-xs-12 col-sm-6 col-md-7 col-lg-7'><p class='t16 marL10 marT5'>
 											    	<span class=' t15'><a class='negro' href='detalle.php?id=<?php echo $publi->id;?>' class='grisO'><b> <?php echo $miTitulo;?></b></a></span>
-													<br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span>
-													<br><span class='t14 grisO '><?php echo $usua->getNombre();?></span><br>
-													<span class='t12 grisO '><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span><br>
+													<?php /* <br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span> */ ?>
+												<?php /*	<br><span class='t14 grisO '><?php echo $usua->getNombre();?></span><br> */ ?>
+													<span class='t12 grisO' style="display: block;"><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span><br>
 													<span class='t11 grisO'> <span> <i class='fa fa-eye negro opacity'></i></span><span class='marL5'><?php echo $publi->getVisitas();?> Visitas</span><i class='fa fa-heart negro marL5 opacity'>
 													</i><span class=' point h-under marL5'><?php echo $publi->getFavoritos();?> Me gusta</span><i class='fa fa-share-alt negro marL15 opacity hidden'></i> <span class=' point h-under marL5 hidden'> <?php echo $publi->getCompartidos(3);?> Veces compartido</span> </span></p>
 											    </div>
 											    <div class=' col-xs-12 col-sm-12 col-md-3 col-lg-3 text-right'>
 											    	<div class='marR20'><span class='red t20'><b> <?php echo $publi->getMonto();?></b></span >
-														<br><span class=' t12'> <?php echo ($usua->getEstado());?> </span><br><span class='vin-blue t16'><a href='detalle.php?id=<?php echo $publi->id;?>' style='text-decoration:underline;'>Ver Mas</a></span >
+														<?php /* <br><span class=' t12'> <?php echo ($usua->getEstado());?> </span><br> */?>
+														<span style="display: block;" class='vin-blue t16'><a href='detalle.php?id=<?php echo $publi->id;?>' style='text-decoration:underline;'>Ver Mas</a></span >
 													</div>
 												</div>
 												<div class='col-xs-12 col-sm-12 col-md-12 col-lg-2'><br></div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-10'><hr class='marR10'><br></div>

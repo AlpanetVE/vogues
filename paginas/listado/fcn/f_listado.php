@@ -1210,15 +1210,16 @@
 				</div>
 			<div class=' col-xs-12 col-sm-6 col-md-7 col-lg-7'><p class='t16 marL10 marT5'>
 		    <span class=' t15'><a class='negro' href='detalle.php?id=<?php echo $publi->id;?>' class='grisO'><b> <?php echo  ($miTitulo);?></b></a></span>
-				<br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span>
-				<br><span class='t14 grisO '><?php echo  ($usua->getNombre());?></span><br>
-				<span class='t12 grisO '><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span><br>
+			<?php /*	<br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span> */?>
+			<?php /*	<br><span class='t14 grisO '><?php echo  ($usua->getNombre());?></span><br> */?>
+				<span class='t12 grisO' style="display: block;"><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span><br>
 				<span class='t11 grisO'> <span> <i class='fa fa-eye negro opacity'></i></span><span class='marL5'><?php echo $publi->getVisitas();?> Visitas</span><i class='fa fa-heart negro marL5 opacity'>
 				</i><span class=' point h-under marL5'><?php echo $publi->getFavoritos();?> Me gusta</span><i class='fa fa-share-alt negro marL15 opacity hidden'></i> <span class=' point h-under marL5 hidden'> <?php echo $publi->getCompartidos(3);?> Veces compartido</span> </span></p>
 		    </div>
 		    <div class=' col-xs-12 col-sm-12 col-md-3 col-lg-3 text-right'>
 		    	<div class='marR20'><span class='red t20'><b> <?php echo $publi->getMonto();?></b></span >
-						<br><span class=' t12'> <?php echo $usua->getEstado();?> </span><br><span class='vin-blue t16'><a href='detalle.php?id=<?php echo $publi->id;?>' style='text-decoration:underline;'>Ver Mas</a></span >
+						<?php /*<br><span class=' t12'> <?php echo $usua->getEstado();?> </span><br> */ ?>
+						<span style="display: block;" class='vin-blue t16'><a href='detalle.php?id=<?php echo $publi->id;?>' style='text-decoration:underline;'>Ver Mas</a></span >
 				</div>
 			</div>
 			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-2'><br></div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-10'><hr class='marR10'><br></div>		

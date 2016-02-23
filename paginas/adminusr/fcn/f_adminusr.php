@@ -25,8 +25,8 @@
 				?>
 				<tr>
                     <td><?php echo $fila["seudonimo"]; ?></td>
-                    <td><?php echo $fila["nombre"]; ?></td>
-                    <td><?php echo $fila["apellido"]; ?></td>
+                    <td><?php echo $fila["nombre"].' '.$fila["apellido"]; ?></td>
+                    <td><?php echo $fila["rol"]; ?></td>
                     
                    <?php if($status=='1'){ ?>  
                         <td><a href="#mod" class="update_user show-select-rol" data-toggle="modal" data-target="#usr-update-info" data-rol-type="select" data-tipo="1" data-method="actualizar" data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a></td>

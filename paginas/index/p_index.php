@@ -139,7 +139,7 @@ foreach ($resultTotal as $r => $valor) {
 						<br>
 						<span class='red t14'><b><?php echo $publicacion->getMonto(); ?> </b></span>
 						<br>
-						<span class='t12 grisC'><?php echo ($usua->getEstado()) ?> </span> &nbsp;&nbsp; <span class='t12 grisC'><i class='fa fa-clock-o'></i><?php echo $publicacion->getTiempoPublicacion(); ?> </span>
+					<?php /*	<span class='t12 grisC'><?php echo ($usua->getEstado())  </span> */ ?> &nbsp;&nbsp; <span class='t12 grisC'><i class='fa fa-clock-o'></i><?php echo $publicacion->getTiempoPublicacion(); ?> </span>
 						<br>
 						<br>
 					</div>

@@ -116,9 +116,16 @@
 										placeholder=" Repite la contrase&ntilde;a..." oncontextmenu="return false"/>
 								</div>
 											 
-							
-							<input type="hidden" name="ingresoUsuario_admin" value="0" />							
-							<input type="hidden" name="id_rol_admin" value="2" />
+							<div class="col-xs-12  ">
+								<span class="marL10"><i class="fa fa-user "></i> Rol de Usuario</span>
+							</div>
+							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input ">
+								<select class="form-select" id="id_rol_admin" name="id_rol_admin" >
+									<option value="1">Super Administrador</option>
+									<option value="2">Administrador</option> 
+								</select>								
+							</div>
+							 
 							 
 							
 						</div>

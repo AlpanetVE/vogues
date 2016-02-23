@@ -30,7 +30,7 @@ $(function() {
 		
 		//#######USUARIO ROL 1#######
 		if(id_rol==1){
-			$(".resumen, .factura, .fact-cobrar, .configurar, .admin-usuarios").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .admin-usuarios").removeClass("hidden");
 		}
 		//#######USUARIO ROL 2#######
 		else if(id_rol==2){
@@ -41,12 +41,6 @@ $(function() {
 			$(".resumen, .compra,  .configurar").removeClass("hidden");
 		}
 				
-    }else{
-    	var id_rol=parseInt($('.nosequedatadequediv').data("id_rol"));
-    	//#######USUARIO ROL 1#######
-    	if(id_rol==1){
-			window.open("resumen.php","_self");
-		}
     }
 });
 /*FUNCIONES*/

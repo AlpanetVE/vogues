@@ -18,7 +18,7 @@
 				<p class="text-center t20">Necesitamos saber si eres </p>
 				<br>
 				<div class="text-center">
-				<button class="btn btn-how3 " style="display:inline-table;width: 200px; " id="btnEmpresa2" name="btnEmpresa2" data-target="#usr-reg" data-toggle="modal"><i class="fa fa-industry"></i> Empresa</button> 
+				<button class="btn btn-how3 " style="display:inline-table;width: 200px;" id="btnEmpresa2" name="btnEmpresa2" data-target="#usr-reg" data-toggle="modal"><i class="fa fa-industry"></i> Empresa</button> 
 				<button class="btn btn-how marL20 " style="display:inline-table;width: 200px; " id="btnPersona2" name="btnPersona2" data-target="#usr-reg" data-toggle="modal"><i class="fa fa-user"></i> Persona</button>
 				</div>
 				<br>

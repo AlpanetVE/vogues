@@ -6,7 +6,7 @@
 	$cant_ventas = $usr -> getCantNotificacionPregunta();
 	$visto=0;
 }
-?>
+?> 
 <nav class="navbar menu-cabecera navbar-inverse navbar-static-top" role="navigation ">
 	<div class="container">
 		<div class="navbar-header ">
@@ -74,7 +74,7 @@
 				</li>
 <?php 
 $alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"];
-if($alertas==0 or $visto==1){ 
+if($alertas==0 or $visto==1){
 ?>
 				<li id="notificacion"  class="dropdown"><a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" aria-expanded="false"
 					style=""><i class="fa fa-bell"></i>  </a>
@@ -84,7 +84,7 @@ if($alertas==0 or $visto==1){
 					</ul>
 				</li>
 						
-<?php }else{						
+<?php }else{					
 ?>
 				<li id="notificacion" data-id="<?php echo $_SESSION["id"];?>" class="dropdown"><a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" onclick="<?php echo $visto=1; ?>" aria-expanded="false"
 					style=""><span id="alerta" class="badge blanco" style="background: red; position: absolute; top: -2px; left: -1px;"><?php echo $alertas; ?></span><i class="fa fa-bell"></i>  </a>

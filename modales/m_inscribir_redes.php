@@ -21,7 +21,7 @@
 				<br class="hidden-lg hidden-md hidden-sm">
 				<button class="btn btn-twitter marL20 trans-top" style="display:inline-table;width: 150px;" id="tw_reg_button">Twitter</button>
 				<br class="hidden-lg hidden-md hidden-sm ">
-				<button class="btn btn-default marL20 trans-top" style="display:inline-table;width: 150px;" id="btn_sin_cuenta" data-toggle="modal" data-target="#usr-reg">No tienes cuenta</button>
+				<button class="btn btn-default marL20 trans-top" style="display:inline-table;width: 150px;" id="btn_sin_cuenta" data-toggle="modal" data-target="#actualizar2">No tienes cuenta</button>
 				</div>
 				<br>
 				<div class="pad20 text-center grisO  " style="background: #E6E6E6">
