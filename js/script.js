@@ -282,7 +282,7 @@ $(document ).ready(function() {
 	            		}else{   //si es un registro de usuario publico
 		            			swal({
 							title: "Bienvenido", 
-							text: "&iexcl;A Vogues Eshop!",
+							text: "&iexcl;A Vogue's Eshop!",
 							imageUrl: "galeria/img/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
@@ -412,7 +412,7 @@ $(document ).ready(function() {
 	            } else{
 	            	swal({
 						title: "Bienvenido", 
-						text: "&iexcl;A Vogues Eshop!",
+						text: "&iexcl;A Vogue's Eshop!",
 						imageUrl: "galeria/img/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -870,7 +870,7 @@ $("#enviar").click(function(e){
 	});
 	$("#insc-red").on("hidden.bs.modal",function(){
 		if ($('#usr-reg').is(':hidden')){
-			$("#actualizar2").modal('show');
+		//	$("#actualizar2").modal('show');
 		}
 	});	
 	
@@ -917,4 +917,22 @@ $("#enviar").click(function(e){
 			}
 		});
 	});
+	$(".pre_pub").click(function(e){
+		window.open("preguntas.php?tipo=1&publicacion=" + $(this).data("id_pub"),"_self");  
+	});
+	
+	$(".resp_pub").click(function(e){
+		window.open("preguntas.php?tipo=2&publicacion=" + $(this).data("id_pub"),"_self");
+	});
+	
+	$(".detalle").click(function(e){
+		window.open("detalle.php?id=" + $(this).data("id"),"_self");
+	//	window.open("pub_" + $(this).attr("id"),"_self");
+	});
+	$(".perfil").click(function(e){
+		window.open("perfil.php?id=" + $(this).data("id"),"_self");
+	});	
+	
+	
+	
 });

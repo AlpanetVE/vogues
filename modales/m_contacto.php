@@ -52,9 +52,9 @@ if(isset($_SESSION["id"])){
 				</div>
 				<br>
 				<div class="center-block text-center" style="width: 80%">
-					Apreciodepana, C.A. J-405824794 T&aacute;chira - Venezuela <br>
-					Telefonos: (0276) 356.91.60 / (0276) 348.92.17 Email:
-					contacto@apreciodepana.com
+					Vogues Company, C.A. RIF: J-402930810 T&aacute;chira - Venezuela <br>
+					Telefonos: (0276) 348.92.17 / (0414) 735.02.12  Email:
+					atencionalcliente@vogueseshop.com
 				</div>
 			</div>
 		</form>

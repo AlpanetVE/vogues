@@ -52,7 +52,8 @@ foreach ($usr_publicaciones as $up => $valor) {
 					<a href="detalle.php?id=<?php echo $id_pub; ?>" >							
 						<span class="marL10"> <?php echo $valor["titulo"]; ?>  </span> 
 	        		</a>
-	        			<span class="red t14 marL10"><b>Bs <?php echo $valor["monto"] ?> </b></span> <span class="opacity t12"><?php echo "x ".$valor["stock"]. " Und"; ?></span> <a href="perfil.php?id=<?php echo $valor['usuarios_id']; ?>"> <span class="marL10"> <b> <?php echo $usr->a_seudonimo ?> </b> </span></a>
+	        			<span class="red t14 marL10"><b>Bs <?php echo $valor["monto"] ?> </b></span> 
+	        			<span class="opacity t12"><?php echo "x ".$valor["stock"]. " Und"; ?></span> 
 	      </h4> 
 	    </div>
 	    <div id="collapse<?php echo $id_pub;?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading<?php echo $id_pub;?>">

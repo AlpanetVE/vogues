@@ -23,6 +23,7 @@ if (isset ( $_SESSION ["id"] )) {
 </header>
 <?php 
 include"modales/m_contacto.php";
+include"modales/m_recover.php";
 include"modales/m_tipo_usuario.php";
 include"modales/m_inscribir_redes.php";
 

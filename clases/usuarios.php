@@ -272,67 +272,72 @@ class usuario {
 	}
 
 
-public function recuperaClave($login){
-	$bd= new bd();
-	$correo=new email();
-	if(isset($login["seudonimo"])){
+	/********Funciones de restauracion de Claves**********/
+	public function recuperaClave($login){
+		$bd= new bd();
+		$correo=new email();
+		if(isset($login["seudonimo"])){
 			$condicion = "seudonimo = '{$login["seudonimo"]}'";
 		}else{
 			$condicion = "email = '{$login["email"]}'";
 		}
-	$result = $bd->doSingleSelect($this->a_table,$condicion);
+		$result = $bd->doSingleSelect($this->a_table,$condicion);
 		if(!empty($result)){
-			if($result["status_usuarios_id"]=='1'){ 
-				$email=$result["email"];
-	
-				 $link=$this->generaLinkTemporal($result["usuarios_id"],$result["seudonimo"]);
-				 if($link){
-				  		$correo->sendEmail($email,$link);
-				 		return array(1,$result["usuarios_id"]);	
-				 }
-				 else{
-				 	return array(2,"");
-				 }
-					} else {
-						return array(2,"");
-					}
+			//if($result["status_usuarios_id"]=='1'){ 
+			$email=$result["email"];
+			 $link=$this->generaLinkTemporal($result["usuarios_id"],$result["seudonimo"]);
+			 if($link){
+				$correo->sendRecuperarPass($email,$link);
+				return array(1,$result["usuarios_id"]);	
+			}
+			 else{
+			 	return array(2,"");
+			 }
+			
+			//}
 		}
 		else{
 			return array(2,"");
-		}	
-		
-}
-
-function generaLinkTemporal($iduser,$seudonimo){
-	$bd= new bd();
-	$cadena=$seudonimo.rand(1,99999).date('Y-m-d');
-	$token=sha1($cadena);
-	$this->r_id_usuario=$iduser;
-	$this->r_seudonimo=$seudonimo;
-	$this->r_token=$token;
-	$this->r_creado="NOW()";
-	
-	$result=$bd->doInsert($this->r_table, $this->serializarDatos ( "r_" ));
-	
-	 if($result){
-     		 // Se devuelve el link que se enviara al usuario
-      $enlace = $_SERVER["SERVER_NAME"].'/restablecer.php?idusuario='.$iduser.'&token='.$token;
-      return $enlace;
-   }
-   	else {
-   		return FALSE;
-   	}
-     
 		}		
-	
-function comprobarToken($token){
-	$bd= new bd();
-	$result=$bd->doSingleSelect($this->r_table,"token = '$token'");
-	if($result)
-		return $result;
-	else 
-		return false;
-}
+	}
+
+	function generaLinkTemporal($iduser,$seudonimo){
+		$bd= new bd();
+		$cadena=$seudonimo.rand(1,99999).date('Y-m-d');
+		$token=sha1($cadena);
+		$this->r_id_usuario=$iduser;
+		$this->r_seudonimo=$seudonimo;
+		$this->r_token=$token;
+		$this->r_creado=date("Y-m-d H:i:s",time());	
+		$result=$bd->doInsert($this->r_table, $this->serializarDatos ( "r_" ));	
+		if($result==true){
+     		 // Se devuelve el link que se enviara al usuario
+	      		$enlace = $_SERVER["SERVER_NAME"].'/restablecer.php?idusuario='.$iduser.'&token='.$token;
+		      return $enlace;
+	   	}
+   		else {
+   			return FALSE;
+   		}     
+	}			
+	function comprobarToken($token){
+		$bd= new bd();
+		$result=$bd->doSingleSelect($this->r_table,"token = '$token'");
+		if($result)
+			return $result;
+		else 
+			return false;
+	}	
+
+public function setNewPassword($user,$clave){		
+		$bd=new bd();		
+		$clave = hash ( "sha256", $clave );		
+				
+		$actualizar=array( 'password'=>$clave);		
+		//$parametro=$actualizar["password"]=$clave;		
+		$condicion="usuarios_id=$user";		
+		$result=$bd->doUpdate($this->a_table, $actualizar, $condicion);		
+		return $result;		
+	}		
 /*public function ingresoUsuarioAdmin($login, $password){
 		$bd= new bd();
 		$foto = new fotos();
@@ -611,16 +616,18 @@ function comprobarToken($token){
 			}
 		}
     }
-	public function getPublicaciones($status=1,$pagina=1,$id=NULL){
-		if(is_null($id)){
-			$id=$this->id;
-		}
+	public function getPublicaciones($status=1,$pagina=1,$id=NULL, $order=NULL){
+		if(empty($order)){
+			$order='id desc';
+		}		
 		$bd=new bd();
 		$limite = ($pagina-1) * 25;
-		$consulta="select * from publicaciones where 
-		usuarios_id=$id and id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) order by id desc";
+		$consulta="select * from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) ";
+		
+		$consulta.=" order by $order";
+		
 		$consulta.=" LIMIT 25 OFFSET $limite";
-		$result=$bd->query($consulta);
+		$result=$bd->query($consulta); 
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -628,13 +635,16 @@ function comprobarToken($token){
 		}
 	}
 	
-	public function getAllPublicaciones($status=1,$id=NULL){
-		if(is_null($id)){
-			$id=$this->id;
-		}
+	public function getAllPublicaciones($status=1,$id=NULL, $id_publicacion=NULL){		
 		$bd=new bd();
 		$consulta="select * from publicaciones where 
-		usuarios_id=$id and id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) order by id desc";
+		id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) ";
+				
+		if(!is_null($id_publicacion)){
+			$consulta.=" and id='$id_publicacion'";
+		}
+		
+		$consulta.=" order by id desc";  
 		$result=$bd->query($consulta);
 		if(!empty($result)){
 			return $result;
@@ -644,13 +654,10 @@ function comprobarToken($token){
 	}
 	
 	public function getCantPreguntasActivas($id = NULL){
-		if(is_null($id)){
-			$id=$this->id;
-		}
 		$bd=new bd();
 		$preguntas=array();
         $result=$bd->query("select count(*) as cant from preguntas_publicaciones where id not in (SELECT preguntas_publicaciones_id FROM preguntas_publicaciones 
-        WHERE preguntas_publicaciones_id is not null) and preguntas_publicaciones_id is NULL and publicaciones_id in ( SELECT id FROM publicaciones WHERE usuarios_id = $id ) and publicaciones_id in
+        WHERE preguntas_publicaciones_id is not null) and preguntas_publicaciones_id is NULL and publicaciones_id in
          (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL )  ");	
         foreach ($result as $r){
         	$preguntas[]=array("cant"=>$r["cant"]);
@@ -688,14 +695,11 @@ function comprobarToken($token){
 		return $preguntas;
 	}
 	
-	public function getCantNotificacionPregunta($id = NULL){
-		if(is_null($id)){
-			$id=$this->id;
-		}
+	public function getCantNotificacionPregunta(){
 		$bd=new bd();
 		$preguntas=array();
 		$consulta=" select count(*) as cant from preguntas_publicaciones where id in (select preguntas_publicaciones_id from notificaciones 
-		where leida=0 and usuarios_id=$id) and preguntas_publicaciones_id is null ";
+		where leida=0) and preguntas_publicaciones_id is null ";
         $result=$bd->query($consulta);	
         foreach ($result as $r){
         	$preguntas[]=array("cant"=>$r["cant"]);
@@ -704,12 +708,13 @@ function comprobarToken($token){
 	}
 	
 	public function getCantidadPub($status=1,$id=NULL){
-		if(is_null($id)){
-			$id=$this->id;
-		}
 		$bd=new bd();
-		$consulta="select count(*) as tota from publicaciones where 
-		usuarios_id=$id and id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) order by id desc";
+		$consulta="select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null)";
+		
+		if(!empty($id)){
+			$consulta.=" and usuarios_id=$id";
+		}
+		$consulta.=" order by id desc";
 		$result=$bd->query($consulta);
 		foreach ($result as $key => $valor) {
 			//if($valor["tota"]<10){
@@ -740,7 +745,7 @@ function comprobarToken($token){
 			return false;
 		}
 	}
-	public function getPreguntasCompra($id_usr){
+	public function getPreguntasCompra($id_usr, $id_publicacion=NULL){
 		$bd=new bd();
 
 		$consulta="select * from publicaciones where 
@@ -748,12 +753,21 @@ function comprobarToken($token){
 		from preguntas_publicaciones 
 		where usuarios_id=$id_usr and preguntas_publicaciones_id is null) and id in 
 		(select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL)";
+		
+		 
+		if(!is_null($id_publicacion)){
+			$consulta.=" and id='$id_publicacion'";
+		}
+		
+		$consulta.=" order by id desc";  
+		
 		$result=$bd->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
 			return false;
 		}
+		
 	}
 	
 	public function getAllDatos($id_usr){
@@ -838,14 +852,46 @@ function comprobarToken($token){
 		return $result;
 	}
 	
-	public function setNewPassword($user,$clave){
+	public function getCantPanas($id = NULL){
+		if(is_null($id)){
+			$id=$this->id;
+		}
 		$bd=new bd();
-		$clave = hash ( "sha256", $clave );
-		$actualizar=array( 'password'=>$clave);
-		//$parametro=$actualizar["password"]=$clave;
-		$condicion="usuarios_id=$user";
-		$result=$bd->doUpdate($this->a_table, $actualizar, $condicion);
-		return $result;
+		$panas=array();
+        $result=$bd->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=3 ");	
+        foreach ($result as $r){
+        	$panas[]=array("cant"=>$r["cant"]);
+  		}
+		return $panas;
+	}
+	public function getCantNotiPublicaciones($id = NULL){
+		if(is_null($id)){
+			$id=$this->id;
+		}
+		$bd=new bd();
+		$panas=array();
+        $result=$bd->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=4 ");	
+        foreach ($result as $r){
+        	$panas[]=array("cant"=>$r["cant"]);
+  		}
+		return $panas;
+	}
+	public function getAllNotificaciones($id=null){
+		if(is_null($id)){
+			$id=$this->id;
+		}
+			$bd = new bd();
+			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
+			pana_id pana from notificaciones where usuarios_id=$id ORDER BY `notificaciones`.`fecha`  DESC limit 25";
+			$result =$bd->query($consulta);
+			return $result;	
+	}
+	public function getAllNotificacionesAdmin(){ 
+			$bd = new bd();
+			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
+			pana_id pana from notificaciones where tipos_notificaciones_id='1' ORDER BY `notificaciones`.`fecha`  DESC limit 25";
+			$result =$bd->query($consulta);
+			return $result;	
 	}
 	
 }

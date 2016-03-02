@@ -314,6 +314,32 @@ $(document).ready(function(){
 	$("#publicaciones").on("click",".imagen",function(){
 		window.open("detalle.php?id=" + $(this).data("id"),"_self");
 	});
+	
+	$("#filtro").change(function(){
+		var tipo;
+		if($("#irActivas").hasClass('active')){
+			tipo=1; 
+		}else if($("#irPausadas").hasClass('active')){
+			tipo=2;
+		}else if($("#irFinalizadas").hasClass('active')){
+			tipo=3;
+		}  
+		var order= "id "+$("#filtro").val();
+		var pagina=1;
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/venta/fcn/f_ventas.php",
+			data:{metodo:"buscarPublicaciones",tipo:tipo,order:order,pagina:pagina},
+			type:"POST",
+			dataType:"html",
+			success:function(data){
+				console.log(data);
+				$("#publicaciones").html(data);
+				loadingAjax(false);
+			}
+		});
+	});
+	
 	$("#ventas").css("display","block");
 	$("#uno1").addClass("active");
 	});

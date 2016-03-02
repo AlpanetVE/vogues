@@ -10,11 +10,11 @@
 				</button>
 				<br>
 				<br>
-				<img alt="" src="galeria/img/logos/bill-ok.png"
+				<img alt="" src="galeria/img/logos/logo-modal2.png"
 					class="center-block img-responsive" width="200px" height="200px">
 				<h2 class="text-center me-p_contenido" style="color: #000;">&iexcl;Hola!</h2>
 				<br>
-				<p class="text-center t20">inscribete utilizando tu cuenta de  </p>
+				<p class="text-center t20">Registrate usando tu cuenta de  </p>
 				<br>
 				<div class="text-center">
 				<button class="btn btn-facebook marL20 trans-top" style="display:inline-table;width: 150px;" id="fb_reg_button">Facebook</button> 
@@ -24,9 +24,6 @@
 				<button class="btn btn-default marL20 trans-top" style="display:inline-table;width: 150px;" id="btn_sin_cuenta" data-toggle="modal" data-target="#actualizar2">No tienes cuenta</button>
 				</div>
 				<br>
-				<div class="pad20 text-center grisO  " style="background: #E6E6E6">
-					La seguridad de tu compra es escencial para nosotros, <br> Te sugerimos que te inscribas de esta manera para generar confianza en la comunidad.
-				</div>
 				 
 			</div>
 	</div>

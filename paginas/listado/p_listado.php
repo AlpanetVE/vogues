@@ -80,11 +80,11 @@ $primero=(($pagina - 1) * 25) + 1;
 $ultimo=$pagina * 25;
 ?>
 	<div class="container " id="principal" name="principal"  data-cla="<?php echo $act_cla;?>" data-est="<?php echo $act_est;?>" data-con="<?php echo $condicion;?>" 
-		data-pag="<?php echo $pagina;?>" data-pal="<?php echo $palabra;?>" data-can="<?php echo $cantidadAnt;?>" data-nomest="<?php echo $nombre_est;?>">
+		data-pag="<?php echo $pagina;?>" data-pal="<?php echo $palabra;?>" data-can="<?php echo $cantidadAnt;?>" data-nomest="<?php echo $nombre_est;?>" >
 		<div class="row">			
 			 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' id="noresultados" name"noresultados" style="display:none">
                          <div class='alert alert-warning2  text-left' role='alert'   >
-                         	<img src="galeria/img/logos/bill-error.png" width="120px" height="120px;" class="pull-left" style="margin-top:-10px;"/>
+                         	<img src="galeria/img/logos/bill-error.png" width="100px" height="100px;" class="pull-left" style="margin-top:0px;"/>
                          	<div class="t16 marL20 marB5 ">No se encontraron resultados de tu busqueda.</div>
                          	<span class="t12 marL30 grisO">
                          		<i class="fa fa-caret-right marR10"></i> Verifica la ortografia en cada palabra.
@@ -310,6 +310,7 @@ $ultimo=$pagina * 25;
 							<div id="">
 						<div id="ajaxContainer" border="3" > <!-- ESTE DIV SE UTILIZARA SI SE DECIDI APLICARLE AJAX, POR EL MOMENTO NO SE UTILIZA -->
 						<!-- Listado filas -->
+						
 						<?php
 						    if($ac>0){
 						    	?>
@@ -394,7 +395,10 @@ $ultimo=$pagina * 25;
 									echo "<li><a href='listado.php?id_cla=$act_cla&pagina=$siguienteGrupo&palabra=$palabra" . $laCondicion2 . "' aria-label='Next'><i class='fa fa-angle-double-right'></i> </a>";
 								}
 								?>
-								</li></ul></nav></center></div></div></div></div></div></div>
+								</li></ul></nav></center></div>
+								
+								
+								</div></div></div></div></div>
 							<?php							
 						}else{
 							?>

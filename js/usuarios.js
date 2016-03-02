@@ -317,7 +317,7 @@ $('#usr-update-form').formValidation({
         });
     });
     
-    $("body").on('click', '.ver-detalle-user', function(e) { 
+    $("body").on('click', '.ver-detalle-user', function(e) {
 	 	
 	 	var usuarios_id= $(this).data("usuarios_id");
 		usuarios_id = parseInt(usuarios_id);
@@ -331,9 +331,10 @@ $('#usr-update-form').formValidation({
 	            success: function (data) {
 	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
 	            	if (data.result === 'OK') {  
+	            		console.log(data.campos);
 	            				$('.modal-datail-user .fotoperfil').attr("src", data.campos.ruta); 
-				            	$('.modal-datail-user .nombre').html(data.campos.j_razon_social);
-				            	$('.modal-datail-user .rif').html(data.campos.j_rif); 
+				            	$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 
 				            	$('.modal-datail-user .direccion').html(data.campos.u_direccion);
 				            	$('.modal-datail-user .telefono').html(data.campos.u_telefono);
 				            	$('.modal-datail-user .correo').html(data.campos.a_email);

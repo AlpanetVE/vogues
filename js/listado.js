@@ -2,6 +2,10 @@ $(document).ready(function(){
 	$('#txtBuscar').val($("#principal").data("palabra"));
 	$('#txtBuscar').select();
 	$(document).on("change","#filtro",function(e){
+		var pagina=1; 
+		paginar(pagina);
+	});
+	/*$(document).on("change","#filtro",function(e){
 		if($("#ubicacion").data("estado")!=undefined){
 			var estado=$("#ubicacion").data("estado");
 		}else{
@@ -37,7 +41,7 @@ $(document).ready(function(){
 				$('#paginacion').find('[data-pagina=1]').parent().addClass("active");			
 			}
 		});
-	});
+	});*/
 	$(document).on("click",".navegador",function(e){
 		e.preventDefault();
 		var pagina=$("#paginacion").data("paginaactual");
@@ -134,10 +138,15 @@ $(document).ready(function(){
 		}else{
 			var categoria="";
 		}
+		if($("#ver_tiendas").data("ver_tiendas")!=undefined){
+			var ver_tiendas=$("#ver_tiendas").data("ver_tiendas");
+		}else{
+			var ver_tiendas="";
+		}
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/listado/fcn/f_listado.php",
-			data:{metodo:"buscar",pagina:pagina,total:total,palabra:palabra,categoria:categoria,condicion:condicion,estado:estado,orden:orden,bandera:bandera},
+			data:{metodo:"buscar",pagina:pagina,total:total,palabra:palabra,categoria:categoria,condicion:condicion,estado:estado,orden:orden,bandera:bandera,ver_tiendas:ver_tiendas},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -189,6 +198,43 @@ $(document).ready(function(){
 		}else{
 			var condicion="";
 		}
+		
+		$("#categoria").data("categoria",id);
+		paginar(1);
+		//create_paginator($(this).data("cantidad"));
+		var cantidad=$(this).data("cantidad");
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/listado/fcn/f_listado.php",
+			data:{metodo:"filtrarCat",id:id,palabra:palabra,estado:estado,condicion:condicion,cantidad:cantidad},
+			type:"POST",
+			dataType:"json",
+			success:function(data){
+ 				console.log(data);
+				$("#categoria").html(data.categoria); 
+				$("#ruta").html(data.ruta);
+				$('#paginacion').html(data.paginacion);
+				$('html,body').animate({
+    				scrollTop: 0
+				}, 200);
+				loadingAjax(false);								
+			}
+		});
+	});
+	/*$(document).on("click",".filtrocat",function(e){
+		e.preventDefault();
+		var id=$(this).data("id");
+		var palabra=$("#principal").data("palabra");
+		if($("#ubicacion").data("estado")!=undefined){
+			var estado=$("#ubicacion").data("estado");
+		}else{
+			var estado="";
+		}
+		if($("#condicion").data("condicion")!=undefined){
+			var condicion=$("#condicion").data("condicion");
+		}else{
+			var condicion="";
+		}
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/listado/fcn/f_listado.php",
@@ -204,7 +250,7 @@ $(document).ready(function(){
 				loadingAjax(false);								
 			}
 		});
-	});
+	});*/
 	$(document).on("click",".filtroest",function(e){
 		e.preventDefault();
 		var id=$(this).data("id");

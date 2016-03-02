@@ -259,7 +259,7 @@ switch($tipo){
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marB10 marT15" >
-				<div class=" btn-group marL30 ">
+				<div class=" btn-group marL30 hidden ">
 					<button type="button" class="btn btn-default">
 						Filtrar
 					</button>
@@ -308,7 +308,12 @@ switch($tipo){
 
 								</ul>
 							</div></td>-->
-							<td  width="75%"  align="right"><span class="marR10">Publicaciones 1 - 50 de <b>100</b></span></td>
+							<td  width="75%"  align="right">
+								<span class="marR10">Publicaciones </span>
+								<span id="inicio-list" name="inicio-list"> 1</span>
+								<span id="final-list" name="final-list"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span> 
+								<span id="total-list" name="total-list"><b><?php echo $total;?></b></span> 
+							</td>
 							<td   width="15%"  align="right" height="40px;" >
 							<select id="filtro" class="form-control  input-sm " style="width:auto; margin-right:20px;">
 								<option value="desc" >Mas Recientes</option>
@@ -342,6 +347,7 @@ switch($tipo){
 			<div id="publicaciones">
 				<?php
 				$hijos=$usua->getPublicaciones($tipo);
+				
 				$contador=0;
 				foreach ($hijos as $key => $valor) {
 					$contador++;
@@ -359,6 +365,7 @@ switch($tipo){
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2  text-left '>
 					<span class='red t14' id='monto" . $valor["id"] . "'>" . $publicacion->getMonto(1) . " </span>
+					<br>
 					<span class='t12 opacity' id='stock" . $valor["id"] . "'> x  " . $publicacion->stock . " und</span>
 					<br>
 					<span> " . $publicacion->getVisitas() . " Visitas</span>
@@ -416,6 +423,7 @@ switch($tipo){
 				echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 				<nav class='text-center'>
 				  <ul class='pagination'>";
+				  
 				$totalPaginas=floor($contador/25);
 				$restantes=$contador-($totalPaginas*25);
 				if($restantes>0){

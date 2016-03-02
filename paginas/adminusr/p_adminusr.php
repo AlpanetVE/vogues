@@ -1,31 +1,21 @@
-<div class="pad10 contenedor">
+<div class="pad20 contenedor">
             <div class="marB20">
                 <h4>
-                    Panel administrativo de Tiendas
+                    Panel administrativo de Usuarios
                 </h4>
-                <br>
-                <br>
-                <div class="pull-right">
+                <hr>
+                <br>             
+                <div class="text-right">
                    <a class="admin-reg-user" href="#" data-toggle='modal' data-target='#usr-reg-admin' data-rol-type='select'  data-tipo='1' >
 						<button class="btn2 btn-default t16" style="">Agregar Usuario</button>
 					</a>
                 </div>
-            </div>
-            <div class="tabbable tabs-up">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#tab-shop-active" data-toggle="tab" data-status="1" class="tab-shop" style="outline: inherit;">Tiendas Activas</a>
-                    </li>
-                    <li>
-                        <a href="#tab-shop-inactive" data-toggle="tab" data-status="3" class="tab-shop" style="outline: inherit;">Tiendas Suspendidas</a>
-                    </li>
-                </ul>
-            </div>
+            </div>       
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-shop-active">
                     <div id="lista-shop-active">
-                        <table class="table table-striped text-center table-hover">
-                            <tr>
+                        <table class="table  text-center table-hover">
+                            <tr style="background: #D8DFEA">
                                 <th class="text-center">
                                     Seudonimo
                                 </th>

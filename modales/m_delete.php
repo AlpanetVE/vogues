@@ -2,7 +2,7 @@
 aria-labelledby="myLargeModalLabel" id="msj-eliminar">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="usr-act-form-delete" action="fcn/f_usuarios.php" method="post" class="usr-act-form-edit form-inline" data-status="3" data-method="updateStatus" >
+			<form id="usr-act-form-delete" action="fcn/f_usuarios.php" method="post" class="usr-act-form-edit form-inline" data-status="3" data-method="deleteUser" >
 				 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -10,12 +10,12 @@ aria-labelledby="myLargeModalLabel" id="msj-eliminar">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title " ><img src="galeria/img/logos/mascota.png" width="50" height="51"><span
-				class="marL15">Suspender</span></h3>
+				class="marL15">Eliminar</span></h3>
 			</div>
 
 			<div class="modal-body marL20 marR20 ">		
 				<br>	
-				<p class="t16 text-center">&iquest;Estas seguro de continuar con la operaci&oacute;n?</p>
+				<p class="t16 text-center">&iquest;Estas seguro de eliminar definitivamente este usuario?</p>
 			</div>				
 				
 				
@@ -25,7 +25,7 @@ aria-labelledby="myLargeModalLabel" id="msj-eliminar">
 					Cancelar
 				</button>
 				<button type="submit"   class="btn btn-primary2 btn-usr-act btn-usr-act marT10 marB5" data-action="act-pass">
-					Suspender
+					Eliminar
 				</button>
 			</div>
 			</form>

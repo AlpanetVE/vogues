@@ -35,10 +35,9 @@
 
                         </div>            			
                     </div>
-                    <br>
-                    <div class="alert alert-info t12">  Cuando te comuniques con el vendedor dile que lo contactaste a tr&aacute;ves de <span class="orange-apdp">apreciodepana.com</span></div>
+                    <br>                
 				<div class="modal-footer">
-					<button class="btn btn-primary2" data-dismiss="modal">Continuar</button>
+					<a href="informar_pago.php"><button class="btn btn-primary2" >Concretar compra</button></a>
 				</div>
 			
 		</div>

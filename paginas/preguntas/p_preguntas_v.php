@@ -62,15 +62,18 @@ foreach ($p_preguntas as $pp => $valor2) {
 		}else{
 			$nextid = $p_preguntas[0]["id"];
 		}
-		
+			
 		?>
 					<div id="<?php echo $id_pregunta; ?>" >
 		     	 		<br>
-		      					<p data-id="<?php echo $id_pregunta; ?>" class="toggleResponder pointer t14 marL20 marR20 bor <?php if($cont!=1){ $cont++;?>borBD<?php }?>" id="eti-p<?php echo $id_pregunta;?>"  >
-										 
-										<i class="fa fa-comment blueO-apdp " style="border-bottom: #ccc 1px dashed;" ></i>
-										<span class="marL5 point"  data-id="<?php echo $id_pregunta; ?>">
-											<?php echo $valor2["pregunta"]; ?></span>&nbsp;<span class="opacity t11"><?php echo $valor2["tiempo"]; ?></span>
+		      					<p clas="t14 marL20 marR20 bor <?php if($cont!=1){ $cont++;?>borBD<?php }?>"  >
+										<span data-id="<?php echo $id_pregunta; ?>" class="toggleResponder pointer" id="eti-p<?php echo $id_pregunta;?>"   >
+											<i class="fa fa-comment blueO-apdp " style="border-bottom: #ccc 1px dashed;" ></i>
+											<span class="marL5 point"  data-id="<?php echo $id_pregunta; ?>">
+												<?php echo $valor2["pregunta"]; ?></span>&nbsp;<span class="opacity t11"><?php echo $valor2["tiempo"]; ?></span>
+										</span> 
+										
+										<span data-id="4" class="marL5 "><a class="ver-detalle-user" data-toggle="modal" data-target='#info-user-detail' data-usuarios_id="<?php echo $id_usr; ?>" ><?php echo $valor2['nombre']; ?></a></span>
 										<br>
 										<br>
 								</p>

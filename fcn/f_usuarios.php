@@ -52,6 +52,9 @@ switch ($_POST["method"]) {
 	case "updateStatus":
 		updateStatus();
 		break;
+	case "deleteUser":
+		deleteUser();
+		break;
 	case "recover":
 		recoverPassword();
 		break;	
@@ -85,6 +88,9 @@ function getUser() {
 			$valores [$name] = $usuario->$name;
 		}
 	}
+	/***no poseen foto los usuarios de la tienda**/
+	/*$foto = new fotos();*/
+	$valores ['ruta'] = 'galeria/img/logos/silueta-bill.png';
 	echo json_encode ( array (
 			"result" => "OK",
 			"campos" => $valores
@@ -414,7 +420,7 @@ function newUser() {
 }
 	function sendEmail(){
 		ini_set("sendmail_from",$_POST["email"]);
-		$email_to = "apreciodepanacontacto@gmail.com";
+		$email_to = "atencionalcliente@vogueseshop.com";
 
 		$email_subject = $_POST ['nombre']." te ha contactado!";
 		$email_message = $_POST ['mensaje']."\n\n";		
@@ -490,70 +496,77 @@ function newUser() {
 		 
 	}		
 	
+function deleteUser(){
+		$sql= new bd();
+	$usuarios_id=filter_input ( INPUT_POST, "usuarios_id" );
+	$consulta="DELETE FROM usuarios where id=$usuarios_id";
+	 $res=$sql->query($consulta);
+	 if($res){
+	 	echo json_encode ( array (
+					"result" => "OK" 
+			) );
+	 }
+	 else{
+	 	echo json_encode ( array (
+					"result" => "error" 
+			) );
+	 }
+}	
+	
 function recoverPassword(){
-	$usuario = new usuario ();
-	$bd = new bd ();
-	$login = filter_input ( INPUT_POST, "rec_usuario" );
-	
-	$field_name="";	
-	if ($bd->valueExist ( $usuario->a_table, $login, "seudonimo" )) {
-		$field_name="seudonimo";		
-	}elseif($bd->valueExist ( $usuario->a_table, $login, "email" )){
-		 $field_name="email";
-	}
-	
+		$usuario = new usuario ();
+		$bd = new bd ();
 		
-	if (!empty($field_name)) {
-		
-		$id = $usuario->recuperaClave ( array (
-				$field_name => $login 
-		));
-		
-		if ( $id[0] == 2) {
-			$fields ["rec_usuario"] = "El usuario o el correo no estan registrados o fueron eliminados";
-		}
-		
-	}  else {
-		$fields ["rec_usuario"] = "El usuario o el correo no estan registrados";
-		$id[0]=0;
-	}
-		
-	if ( $id[0] == 1) {
-		echo json_encode ( array (
-				"result" => "OK"
-		) );
-		exit ();
-	}
-	else{
-		if (isset ( $fields )) {
+		$login = filter_input ( INPUT_POST, "rec_usuario" );
+		$field_name="";	
+		if ($bd->valueExist ( $usuario->a_table, $login, "seudonimo" )) {
+			$field_name="seudonimo";		
+		}elseif($bd->valueExist ( $usuario->a_table, $login, "email" )){
+			 $field_name="email";
+		}	
+		if (!empty($field_name)) {	
+			$id = $usuario->recuperaClave ( array (
+			$field_name => $login 
+		));		
+			if ( $id[0] == 2) {
+				$fields ["rec_usuario"] = "El usuario o el correo no estan registrados o fueron eliminados";
+			}		
+		}  else {
+			$fields ["rec_usuario"] = "El usuario o el correo no estan registrados";
+			$id[0]=0;
+		}		
+		if ( $id[0] == 1) {
 			echo json_encode ( array (
-					"result" => "error",
-					"fields" => $fields 
+				"result" => "OK"
 			) );
 			exit ();
 		}
-	}
-		
-	}
-
-	
-function restablecerPassword(){
-	$password= filter_input ( INPUT_POST, "rec_clave" );
-	$user=filter_input ( INPUT_POST, "usuario" );
-	$usuario=new usuario();
-	$res=$usuario->setNewPassword($user,$password);
-	if($res) 
-	{	echo json_encode ( array (
-					"result" => "OK" 
+		else{
+			if (isset ( $fields )) {
+				echo json_encode ( array (
+				"result" => "error",
+				"fields" => $fields 
 			) );
+			exit ();
+			}
+		}		
 	}
-	else {
-		echo json_encode ( array (
-					"result" => "error" 
+	function restablecerPassword(){
+		$password= filter_input ( INPUT_POST, "rec_clave" );
+		$user=filter_input ( INPUT_POST, "usuario" );
+		$usuario=new usuario();
+		$res=$usuario->setNewPassword($user,$password);
+		if($res) 
+		{	echo json_encode ( array (
+				"result" => "OK" 
 			) );
+		}
+		else {
+			echo json_encode ( array (
+					"result" => "error $user $password" 
+			) );
+		}	
 	}
-	
- }	
 function updateUser(){
 	$bd = new bd ();	
 	$usuarios_id=	filter_input ( INPUT_POST, "update_usuarios_id" );		 

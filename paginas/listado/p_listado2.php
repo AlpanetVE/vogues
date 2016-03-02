@@ -82,7 +82,7 @@ function buscaRuta(){
 			?>
 			 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' id="noresultados" name"noresultados">
                          <div class='alert alert-warning2  text-left' role='alert'   >
-                         	<img src="galeria/img/logos/bill-error.png" width="120px" height="120px;" class="pull-left" style="margin-top:-10px;"/>
+                         	<img src="galeria/img/logos/bill-error.png" width="100px" height="100px;" class="pull-left" style="margin-top:0px;"/>
                          	<div class="t16 marL20 marB5 ">No se encontraron resultados de tu busqueda.</div>
                          	<span class="t12 marL30 grisO">
                          		<i class="fa fa-caret-right marR10"></i> Verifica la ortografia en cada palabra.
@@ -144,25 +144,21 @@ function buscaRuta(){
 									$cat=$act_cla!=""?"data-categoria=$act_cla":""; 
 								?>
 							<div id="categoria" name="categoria" <?php echo $cat;?> style="display:<?php if($totalPub==0){ echo "none"; } else{ echo "block"; }?>">
-								<h5 class="negro"><b>Categorias</b></h5>
+								<h5 class="negro"><b>Categoria</b></h5>
 								<hr class="marR5">
 									<ul class="nav marR5 t11  marT10 marB20 ">
 										<?php
 											foreach($categorias as $c=>$valor):
 												if($valor["totaC"]>0):
 											?>
-													<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin filtrocat' href='#' data-id="<?php echo $valor["id"];?>"><?php echo "{$valor["nombre"]} ({$valor["totaC"]})";?></a></span></li>
+													<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin filtrocat' href='#' data-id="<?php echo $valor["id"];?>" data-cantidad="<?php echo $valor["totaC"];?>" ><?php echo "{$valor["nombre"]} ({$valor["totaC"]})";?></a></span></div></li>
 													<?php
 												endif;
 											endforeach;
 											?>
 									</ul>							
 							</div>
-							<ul class="nav marR5 t11  marT10 marB20 ">
-									<!--imprimir las categoria resultantes segun lo seleccionado mediante las condiciones anteriores  (YA SE HIZO)-->
-									<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin' href='prueba'>
-									<li class='marB10 t11'><div  class='h-gris'><span ><a class='blue-vin' href='prueba'>
-							</ul>
+							 
 						<?php  /*	<div id="ubicacion">
 									<h5 class="negro" ><b>Ubicaci&oacute;n</b></h5>							
 									<hr class="marR5">
@@ -214,8 +210,11 @@ function buscaRuta(){
 							<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 text-left vin-blue ">
 							<!-- mostrar la busqueda o donde esta segun lo q selecciono y almaceno en la variable de busqueda 2 y contar seria la cantidad de resultados obtenidos segun la busqueda -->
 							<div class="marL20 t14"><p style="margin-top:15px;"> 
-								<span id="inicio" name="inicio" class="grisC"> 1</span> - <span id="final" name="final" class="grisC"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span> <span class="grisC">
-									<?php echo $total;?></span> <span class="marR5 grisC"> resultados</span>
+								<span id="inicio" name="inicio" class="grisC"> 1</span> - <span id="final" name="final" class="grisC"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span> 
+								<span class="grisC">
+									<?php echo $total;?>
+								</span> 
+								<span class="marR5 grisC"> resultados</span>
 									<a href="index.php" style="color:#000" class="marL5">Inicio </a> 
 									<i class="fa fa-caret-right negro marR5 marL5"></i>
 									<span id="ruta" name="ruta">
@@ -245,41 +244,10 @@ function buscaRuta(){
 										$i=0;										
 										foreach($lista as $p=>$valor):
 											$i++;
-											if($valor["tipo"]=="U"):
-												$usua=new usuario($valor["id"]);
-												$miTitulo=$usua->getNombre();
-												if(isset($_GET["palabra"])){
-													$criterioPal1=explode(" ", $_GET["palabra"]);
-													foreach($criterioPal1 as $c=>$valor){
-														$miTitulo=str_ireplace($valor, "<span style='background:#ccc'><b>" . strtoupper($valor) . "</b></span>", $miTitulo);										
-													}
-												}
-												?>
-												<div class=' col-xs-12 col-sm-6 col-md-2 col-lg-2'>
-											  	  	<div class='marco-foto-conf  point marL20  ' style='height:130px; width: 130px;'  >
-													    <!--<div style='position:absolute; left:40px; top:10px; ' class='f-condicion'> Vendedor </div>-->						 
-													    <img src='<?php echo $foto->buscarFotoUsuario($usua->id);?>' class='img img-responsive center-block img-apdp imagen' style='width:100%;height:100%;' data-id='prueba'>							
-													</div>
-												</div>
-												<div class=' col-xs-12 col-sm-6 col-md-7 col-lg-7'><p class='t16 marL10 marT5'>
-												    <span class=' t15'><a class='negro' href='perfil.php?id=<?php echo $usua->id;?>' class='grisO'><b><?php echo $miTitulo;?></b></a></span>
-													<br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span><span></span>
-													<br>
-													<span class='t12 orange-apdp'><?php echo $usua->getTiempo();?> Vendiendo en Apreciodepana</span><br>
-													<span class='t11 grisO'> <i class='fa fa-heart negro opacity'>
-													</i><span class=' point h-under marL5'><?php echo $usua->countFavoritos();?> Me gusta</span><i class='fa fa-share-alt negro marL15 opacity hidden'></i> <span class=' point h-under marL5 hidden'> num_prueba Veces compartido</span> </span>
-												    <br>
-												    <br>
-												    </p>
-											    </div>
-											    <br>
-											    <div class=' col-xs-12 col-sm-12 col-md-3 col-lg-3 text-right'><div class='marR20'>
-												<span class=' t12'><?php echo ($usua->getEstado());?></span><br><span class='vin-blue t16'><a href='perfil.php?id=<?php echo $usua->id;?>' style='text-decoration:underline;'>Ver Mas</a></span >
-												</div></div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-2'><br></div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-10'><hr class='marR10'><br></div>						
-											<?php
-											else:
+											if($valor["tipo"]=="P"):
+												
 												$publi=new publicaciones($valor["id"]);
-												$usua=new usuario($publi->usuarios_id);
+												/*$usua=new usuario($publi->usuarios_id);*/
 												$miTitulo=$publi->titulo;
 												if($palabra!=""){
 													$miTitulo=str_ireplace($palabra, "<span style='background:#ccc'><b>$palabra</b></span>", $miTitulo);
@@ -297,9 +265,13 @@ function buscaRuta(){
 											    	<span class=' t15'><a class='negro' href='detalle.php?id=<?php echo $publi->id;?>' class='grisO'><b> <?php echo $miTitulo;?></b></a></span>
 													<?php /* <br><span class=' vin-blue t14'><a href='perfil.php?id=<?php echo $usua->id;?>' class=''><b> <?php echo $usua->a_seudonimo;?></b></a></span> */ ?>
 												<?php /*	<br><span class='t14 grisO '><?php echo $usua->getNombre();?></span><br> */ ?>
-													<span class='t12 grisO' style="display: block;"><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span><br>
+													<span class='t12 grisO' style="display: block;"><i class='glyphicon glyphicon-time t14  opacity'></i><?php echo $publi->getTiempoPublicacion();?></span>
 													<span class='t11 grisO'> <span> <i class='fa fa-eye negro opacity'></i></span><span class='marL5'><?php echo $publi->getVisitas();?> Visitas</span><i class='fa fa-heart negro marL5 opacity'>
-													</i><span class=' point h-under marL5'><?php echo $publi->getFavoritos();?> Me gusta</span><i class='fa fa-share-alt negro marL15 opacity hidden'></i> <span class=' point h-under marL5 hidden'> <?php echo $publi->getCompartidos(3);?> Veces compartido</span> </span></p>
+													</i><span class=' point h-under marL5'><?php echo $publi->getFavoritos();?> Me gusta</span><i class='fa fa-share-alt negro marL15 opacity hidden'></i> <span class=' point h-under marL5 hidden'> <?php echo $publi->getCompartidos(3);?> Veces compartido</span> </span>
+													<br>
+													<br>
+													<br>
+													</p>
 											    </div>
 											    <div class=' col-xs-12 col-sm-12 col-md-3 col-lg-3 text-right'>
 											    	<div class='marR20'><span class='red t20'><b> <?php echo $publi->getMonto();?></b></span >

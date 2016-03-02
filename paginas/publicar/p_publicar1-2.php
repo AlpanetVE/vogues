@@ -4,7 +4,7 @@ if (!headers_sent()) {
 }
 ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-	<div class="contenedor " style="margin-top: 5px; z-index: 1">
+	<div class="contenedor " style="margin-top: 5px; z-index: 1; padding-bottom: 20px;">
 		<div class="row"
 			style="margin-left: 15px; margin-right: 15px; padding-top: 10px; padding-bottom: 10px;">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -29,7 +29,9 @@ if (!headers_sent()) {
 							<?php 
 							include_once "../../clases/clasificados.php";
 							$clasificado = new clasificados();
-							$resultado=$clasificado->buscarHijos($_POST["id_clasificados"]);
+							//$resultado=$clasificado->buscarHijos($_POST["id_clasificados"]);
+							
+							$resultado=$clasificado->buscarPadresdeHijos("'1039','1051','1648','5726','1000','1430','3937','1144'");
 							foreach ($resultado as $r):?>
 								<option value="<?php echo $r["id"];?>"><?php echo $r["nombre"];?></option>
 								 

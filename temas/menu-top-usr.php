@@ -1,11 +1,13 @@
 <?php if(!isset($_SESSION)){
     session_start();	
-}else{
+}
+/*else{
+	
 	$usr = new usuario($_SESSION["id"]);	
 	$cant_compras = $usr->getCantRespuestas();
 	$cant_ventas = $usr -> getCantNotificacionPregunta();
 	$visto=0;
-}
+}*/
 ?> 
 <nav class="navbar menu-cabecera navbar-inverse navbar-static-top" role="navigation ">
 	<div class="container">
@@ -18,7 +20,7 @@
 			</button>
 			<a href="index.php" class="navbar-brand"> <img style=""
 				class=" marT5 marB5 marL5" src="galeria/img/logos/logo-header.png"
-				width="200px;" height="50px">
+				width="auto" height="50px">
 			</a>
 		</div>
 		<div class="collapse navbar-collapse " id="menuP">
@@ -26,7 +28,7 @@
 <!--	            <form> --> 
 				<div class="input-group">
 					<input id="txtBuscar" name="txtBuscar"
-						style="margin-left: -10px; border-left: trasparent;width:300px;" name="c"
+						style="margin-left: -10px; border-left: trasparent;width:250px;" name="c"
 						type="text" class="form-control-header2 buscador" placeholder="Buscar" >
 						<span class="input-group-btn"> 
 						<button class="btn-header2 btn-default-header2 buscadorBoton"
@@ -57,43 +59,157 @@
 						<li><a href="salir.php">Salir</a></li>
 					</ul></li>
 				<li>
+					<div class="vertical-line "
+						style="height: 25px; margin-top: 18px;"></div>
+				</li>
+					<?php if ($_SESSION["id_rol"] == '3') { ?>
+					<li><a href="informar_pago.php" class="marT10 " > Informar Pago</a></li>
 					
+					<div class="vertical-line "
+						style="height: 25px; margin-top: 18px;"></div>
+					
+					<?php  } ?>
 				</li>
 				<!-- Se agrega la opcion en el caso de que sea admin -->
 				<?php if ($_SESSION["id_rol"] <=2 ) { ?> 
 				<li><a href="publicar.php" data-toggle="" data-target="" class="marT10">Publicar</a></li>
+				<li>
+					<div class="vertical-line "
+						style="height: 25px; margin-top: 18px;"></div>
+				</li>
   			<?php  } ?>
 				<!--  Fin de la condicion-->
 				<?php if ($_SESSION["id_rol"] == 1 ) { ?>
 					<li><a href="admin-usr.php" data-toggle="" data-target="" class="marT10">
-						<i class="fa fa-user"></i> </a></li>
+						<i class="fa fa-users"></i> </a></li>
 				
 					<?php  } ?>
-				<li>
 				
-				</li>
-<?php 
-$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"];
-if($alertas==0 or $visto==1){
+
+
+		
+				
+				
+				
+				
+				
+				
+				
+	<?php
+	$usr = new usuario($_SESSION["id"]);
+	$cant_compras = $usr->getCantRespuestas();
+	$cant_ventas = $usr -> getCantNotificacionPregunta();
+	/*$cant_panas = $usr -> getCantPanas();
+	$cant_pub = $usr -> getCantNotiPublicaciones();*/
+	$cant_panas = 0;
+	$cant_pub = 0;
+	
+	$status = $usr -> s_status_usuarios_id;
+	
+	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
+		$alerts = $usr -> getAllNotificacionesAdmin();
+	else 
+		$alerts = $usr -> getAllNotificaciones($_SESSION["id"]);
+	
+	
+	$visto=0;
+	include_once "clases/publicaciones.php";
+	
+	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"];
+ 
 ?>
-				<li id="notificacion"  class="dropdown"><a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" aria-expanded="false"
-					style=""><i class="fa fa-bell"></i>  </a>
-					<ul class="dropdown-menu blanco" role="menu">
-						<li><a href="preguntas.php?tipo=1">Ver Preguntas</a></li>
-						<li><a href="preguntas.php?tipo=2;">Ver Respuestas</a></li>
-					</ul>
-				</li>
-						
-<?php }else{					
-?>
-				<li id="notificacion" data-id="<?php echo $_SESSION["id"];?>" class="dropdown"><a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" onclick="<?php echo $visto=1; ?>" aria-expanded="false"
-					style=""><span id="alerta" class="badge blanco" style="background: red; position: absolute; top: -2px; left: -1px;"><?php echo $alertas; ?></span><i class="fa fa-bell"></i>  </a>
-					<ul class="dropdown-menu blanco" role="menu">
-						<li><a href="preguntas.php?tipo=1">Te han preguntado <?php if($cant_ventas[0]["cant"]!=0 ){?>(<?php echo $cant_ventas[0]["cant"];?>)<?php }?></a></li>
-						<li><a href="preguntas.php?tipo=2;">Te han Respondido <?php if($cant_compras[0]["cant"]!=0 ){?> (<?php echo $cant_compras[0]["cant"];?>)<?php }?></a></li>
-					</ul>
-				</li>							
-<?php }?>
+			 		
+		
+				<li id="notificacion" data-id="<?php echo $_SESSION["id"];?>" class="dropdown">
+					<a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" onclick="<?php echo $visto=1; ?>" aria-expanded="false"
+					style="">
+					<?php if($alertas!=0){
+						 echo '<span id="alerta" class="badge blanco" style="background: red; position: absolute; top: -2px; left: -1px;">';
+						  echo $alertas; 
+						   echo '</span>';
+					}?>
+
+					
+					<i class="fa fa-bell"></i>  
+					</a>
+						  
+			        <?php if($alerts->rowCount()>0){ ?>
+					<ul class="dropdown-menu blanco alertas" role="menu"> 
+						<?php 
+						 
+						foreach ($alerts as $a => $val) {
+							$fecha = $val["fecha"];
+							$tipo = $val["tipo"];
+							$id_pana = $val["pana"];
+							$id_pub = $val["pub"];
+							$id_pre = $val["pregunta"];
+							$pub = new publicaciones($id_pub);
+							$segundos = strtotime('now')-strtotime($fecha);
+							$tiempo = $pub -> getTiempo($segundos);
+							if($tipo==1){//Pregunta
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$id   = 1;
+								$tema = "Te Preguntaron";
+								$link = "pre_pub";
+							}
+							if($tipo==2){//Repuesta
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$id   = 2;
+								$tema = "Te Respondieron";
+								$link = "resp_pub";
+							}
+							if($tipo==3){//Panas
+								$foto = $usr -> buscarFotoUsuario($id_pana);
+								$id   = $id_pana;
+								$title= $usr -> getPana($id_pana);
+								$tema = "Ahora te sigue";	
+								$link = "ver-noti-seguidor";
+							}
+							if($tipo==4){//Publicacion
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Nuevos Articulos";
+								$id   = $id_pub;
+								$link = "detalle";
+							}
+						?>
+						<li data-id="<?php echo $id; ?>" data-id_pub="<?php echo $id_pub; ?>"  class="<?php echo $link; ?> noti-hover pointer">
+							<a class="" style="overflow: hidden;">
+								<div style="display: inline-block;   ">
+									<div style="padding-bottom: 5px;"><img src="<?php echo $foto; ?>" width="50px" height="50px"></div>
+								</div>
+								<div style="display:inline-block;    width: 145px; " >
+									<div class="marL10" >						
+										<b ><?php echo $title; ?></b>
+									</span>
+										<br>
+										<span class="grisC t12"><?php echo $tema; ?></span>							
+									</div>									
+								</div>
+								
+								<div style="display: inline-block;  ">
+									<!--<i class="fa fa-times" style="float: right; top: 5px;"></i>-->
+									<div class="marL10"><p><span class="grisC opacity t10"><?php echo $tiempo; ?></span></p></div>
+								</div>															
+								
+
+							</a>
+						</li>
+				<?php }?>
+						 </ul>
+						 
+						 <?php } ?>
+				</li>	
+
+
+
+
+
+
+
+
 				
 					
 					<?php if ($_SESSION["id_rol"] == 3 ) { ?>

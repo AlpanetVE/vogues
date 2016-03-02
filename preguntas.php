@@ -5,6 +5,7 @@ include 'fcn/varlogin.php';
 include ("fcn/incluir-css-js.php");
 include "clases/publicaciones.php";
 ?>
+<script type="text/javascript" src="js/usuarios.js"></script>
 <body>
 <?php
 include ("temas/header.php");
@@ -25,6 +26,7 @@ include_once "clases/amigos.php";
 </div>
 <?php
 include ("temas/footer.php");
+include"modales/m_info_user.php";
 ?>
 </body>
 </html>

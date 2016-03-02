@@ -3,19 +3,26 @@
 	<?php	
 	include "fcn/incluir-css-js.php";
 	?>
-	<body >
+	<link rel="stylesheet" type="text/css" href="css/slick.css" />
+	<link rel="stylesheet" type="text/css" href="css/slick-theme.css"/>
+	<body style="margin-top: 80px;">
 		<?php include "temas/header.php";
 		?>		
-		<div style="margin-top: -40px;margin-bottom:25px;"><?php include('paginas/index/apdp-principal.php'); ?></div>
-		
-			<div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-					<?php 
+		<center>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
+				<div style="" class="ancho85 center-block marB10"><?php include('paginas/index/apdp-principal.php'); ?></div>
+			    <div style=" background: #F1F9FD; padding-left: 30px; padding-right: 30px; " class=" ancho85 pad20"><?php 
 					include "paginas/index/p_index.php";
 					?>
+				</div>
 					<br>
-				</div>		
-		</div>		
+					<br>
+<br>
+<br>
+				</div>	
+			
+		
+			</center>		
 		<?php
 		include "temas/footer.php";
 		include "modales/m_registrar.php";
@@ -25,5 +32,9 @@
 		?>
 		<div class="modal-backdrop fade in cargador" style="display:none"></div>
 		</body>
+	
+	<!--INCLUIREMOS ACA DADO QUE SOLO SE USARA EN PRINCIPAL POR LOS MOMENTOS-->
+	<script type="text/javascript" src="js/slick.min.js"></script>
+	
 	
 </html>

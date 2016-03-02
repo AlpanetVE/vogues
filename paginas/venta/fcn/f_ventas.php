@@ -23,14 +23,29 @@ switch($_POST["metodo"]){
 }
 function buscaPublicaciones(){
 		session_start();
-	    $usua2=new usuario($_SESSION["id"]);
-		$hijos2=$usua2->getPublicaciones($_POST["tipo"]);
+		$usua2=new usuario($_SESSION["id"]);
+		if(isset($_POST["pagina"]))
+			$pagina=$_POST["pagina"];
+		else
+			$pagina=1;		
+		
+		if(isset($_POST["order"]))
+			$order=$_POST["order"];
+		else
+			$order='id desc';
+				
+		if(isset($_POST["tipo"]))
+			$tipo=$_POST["tipo"];
+		else
+			$tipo='1';
+		
+	  	$hijos2=$usua2->getPublicaciones($tipo,$pagina, NULL, $order);		
 		$contador=0;
-		$des=$_POST["tipo"]==1?"":"disabled";
+		$des=$tipo==1?"":"disabled";		 
 		foreach ($hijos2 as $key => $valor) {
 			$contador++;
 			$publicacion=new publicaciones($valor["id"]);
-			switch($_POST["tipo"]){
+			switch($tipo){
 				case 1:
 					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,1)'><a class='pausar opciones'  id='' href='' data-toggle='modal' value='pausar'>Pausar</a></li>";
 					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,1)'><a class='finalizar opciones' id='' href='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
@@ -65,9 +80,12 @@ function buscaPublicaciones(){
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center t12 '>
 				<div class='btn-group pull-right marR10'>					
 					<button id='b" . $publicacion->id . "' type='button' class='btn2 btn-warning boton' data-toggle='modal' data-target='#info-publicacion' onclick='javascript:pasavalores($publicacion->id)'
-					data-id='$publicacion->id' data-titulo='" .  ($publicacion->titulo) . "' data-stock='$publicacion->stock' data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-descripcion='" . $publicacion->descripcion . "' data-listado='{$_POST["tipo"]}' $des>
+					data-id='$publicacion->id' data-titulo='" .  ($publicacion->titulo) . "' data-stock='$publicacion->stock' data-url_video='$publicacion->url_video'  data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-listado='{$tipo}' $des>
 						Modificar
-					</button> 					
+					</button>
+					<textarea  class='hidden' id='descripcion_" . $publicacion->id . "'>
+								$publicacion->descripcion
+					</textarea >
 					<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1)'>
 						Reactivar
 					</button> 
@@ -108,27 +126,42 @@ function buscaPublicaciones(){
 		echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 			<nav class='text-center'>
 			  <ul class='pagination'>";
-			$totalPaginas=floor($contador/25);
-			$restantes=$contador-($totalPaginas*25);
-			if($restantes>0){
-				$totalPaginas++;
-			}
-			if($totalPaginas>0){
-			  echo "<li>
-			      <a href='#' aria-label='Previous'>
-			        <span aria-hidden='true'>&laquo;</span>
-			      </a>
-			    </li>";
-			}
-			  for($i=1;$i<=$totalPaginas;$i++){
-			  	echo "<li><a href='#'>$i</a></li>";
-			 }
-			 if($totalPaginas>0){
-			 echo "<li>
-			      <a href='#' aria-label='Next'>
-			        <span aria-hidden='true'>&raquo;</span>
-			      </a>
-			    </li>			    
+								$ac=$usua2->getCantidadPub($tipo);
+								$totalPaginas=floor($ac/25);
+								$restantes=$ac-($totalPaginas*25);
+								if($restantes>0){
+									$totalPaginas++;
+								}
+								echo"</div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' id='paginas' name='paginas' data-metodo='buscarPublicaciones' data-tipo='" . $tipo . "' data-id='" . $usua2->id . "' > <center><nav><ul class='pagination'>";
+								$contador=0;
+								if($pagina<=10){
+									$inicio=1;
+								}else{
+									$inicio=floor($pagina/10);
+									if($pagina % 10!=0){
+										$inicio=($inicio*10)+1;
+									}else{
+										$inicio=($inicio*10)-9;
+									}									
+								}
+								 								 
+								for($i=$inicio;$i<=$totalPaginas;$i++){
+									$contador++;
+									if($i==$pagina){ 
+										echo "<li class='active' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+									}else{
+										echo "<li class='' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+									}
+									if($contador==10){
+										break;
+									}
+								}
+				 if($totalPaginas>0){
+				 echo "<li>
+				      <a href='#' aria-label='Next'>
+				        <span aria-hidden='true'>&raquo;</span>
+				      </a>
+				    </li>
 			  </ul>
 			</nav>
 			</div>	";

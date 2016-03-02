@@ -9,7 +9,7 @@
 				</button>
 				<h3 class="modal-title ">
 					<img src="galeria/img/logos/mascota.png" ><span
-						id="" class="marL15"></span>
+						id="" class="marL15">Detalle de Usuario</span>
 				</h3>
 			</div>
 			
@@ -36,7 +36,7 @@
                         		
                         		<div class="info-user-detalle">
 	                        		<div class="col-xs-12">
-	                        			<span >RIF: </span>
+	                        			<span >Cedula: </span>
 	                        			<span class="rif" > </span>
 	                        		</div>
 	                        		<div class="col-xs-12 ">

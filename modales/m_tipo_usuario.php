@@ -11,11 +11,11 @@
 				</button>
 				<br>
 				<br>
-				<img alt="" src="galeria/img/logos/bill-ok.png"
+				<img alt="" src="galeria/img/logos/logo-modal2.png"
 					class="center-block img-responsive" width="200px" height="200px">
 				<h2 class="text-center me-p_contenido" style="color: #000;">&iexcl;Cuentanos!</h2>
 				<br>
-				<p class="text-center t20">Necesitamos saber si eres </p>
+				<p class="text-center t20">queremos saber si eres </p>
 				<br>
 				<div class="text-center">
 				<button class="btn btn-how3 " style="display:inline-table;width: 200px;" id="btnEmpresa2" name="btnEmpresa2" data-target="#usr-reg" data-toggle="modal"><i class="fa fa-industry"></i> Empresa</button> 

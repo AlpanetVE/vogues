@@ -3,33 +3,36 @@ $(document).ready(function(){
 
 $('#recientes').slick({
   arrows: true,
-  dots: true,
+  dots: false,
   infinite: false,
   speed: 300,
-  slidesToShow: 5,
-  slidesToScroll: 5,
+  slidesToShow: 4,
+  slidesToScroll: 4,
   adaptiveHeight: true,
+
   responsive: [
+    
     {
-      breakpoint: 1600,
+      breakpoint: 1400,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
-        infinite: true,
-        dots: true,
-        arrows: false
+        dots: false,
+        arrows: true
+      }
+    },
+    {
+      breakpoint: 1080,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        arrows:true,
+        dots: false
+        
       }
     },
     {
       breakpoint: 600,
-      settings: {
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        arrows:false
-      }
-    },
-    {
-      breakpoint: 480,
       settings: {
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -83,82 +86,81 @@ include_once "clases/fotos.php";
 $foto=new fotos();
 ?>
   
-   <div class="ancho85 center-block">
+  
+  
+   <div class="anchoC  center-block marB10">
+   	
    	  <?php include_once "fcn/f_categorias.php"; ?>
    </div>
 
-<br>
-<br>
+
 
 <!--Ultimas publicaciones --------------------------------------------------------------------------------------------------------------- -->
 
-   <div  class="ancho85  center-block" >
-    <div class="row contenedor sombra-div " >
+   <div  class="anchoC   center-block" >
+    <div class="row contenedor2 sombra-div " >
 
-    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
-      <p class="text-left mar20 " style="border-right: 1px solid #ccc;">
-        <span class="negro t26 ">Ultimas <br> p&uacute;blicaciones</span>
-        <br><br>
-        <span class="">echale un vistazo a las publicaciones m&aacute;s recientes.</span>
-        <br><br> 
-        <span class="vin-blue t18 " style="text-decoration:underline;"><a href="listado.php">Ver m&aacute;s...</a></span>
-         <br>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+      <div class="text-left mar20  pad20 borde-right-ultimas">
+        <div class="t24" style="">Nuestros   Productos</div>
+        <div class="text-left t16 grisC  mar-ultimas-publicaciones">Echale un vistaso a nuestras ultimas publicaciones,
+        	vistete a la moda con la tecnologia del momento.
+        </div>
+        <br> 
+        <br>
+        <a href="#" class="t18 " style="text-decoration: underline;">Ver mas</a>
         <br>
         <br>
         <br>
-      </p>
+      </div>
     </div>
-    
-<div id="recientes" class="hover-publicaciones " style="width:80%; z-index: 1; float: left;" >
-
-    <!--desde aqui -->
-<?php
-$bd=new bd();
-$consulta="select * from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL) order by id desc limit 25";
-$result=$bd->query($consulta);
-$resultTotal=$bd->query("select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL)");
-foreach ($resultTotal as $r => $valor) {
-		$total=$valor["tota"];
-}
-	$i=0;
-    foreach($result as $r){
-    	$i++;
-    	$publicacion=new publicaciones($r["id"]);
-		$usua=new usuario($publicacion->usuarios_id);
-
-		?>
-    	<div id="<?php echo $i; ?>" class='col-xs-12 col-sm-12 col-md-6 col-lg-2' >
-
-	    			<div class='text-center mar10 publicaciones1' style='relative;width:70%;' id='<?php echo $publicacion->id; ?> '>
-				    	<br>
-				    	<div class='marco-foto-conf  point center-block sombra-div3 ' style='height:120px; width: 120px;'  >
-						<img src='<?php echo $publicacion->getFotoPrincipal(); ?> '  class=' img-responsive center-block img-apdp'>
-						</div>
-						<br>
-						<span class='negro t16'><?php echo $publicacion->tituloFormateado(15); ?> </span>
-						<br>
-						<span class='red t14'><b><?php echo $publicacion->getMonto(); ?> </b></span>
-						<br>
-					<?php /*	<span class='t12 grisC'><?php echo ($usua->getEstado())  </span> */ ?> &nbsp;&nbsp; <span class='t12 grisC'><i class='fa fa-clock-o'></i><?php echo $publicacion->getTiempoPublicacion(); ?> </span>
-						<br>
-						<br>
-					</div>
-
-		</div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8"  >
+		<div  id="recientes"  >
+		
+		    <!--desde aqui -->
 		<?php
-
-	}
-?>
-</div>
-    
+		$bd=new bd();
+		$consulta="select * from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL) order by id desc limit 25";
+		$result=$bd->query($consulta);
+		$resultTotal=$bd->query("select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL)");
+		foreach ($resultTotal as $r => $valor) {
+				$total=$valor["tota"];
+		}
+			$i=0;
+		    foreach($result as $r){
+		    	$i++;
+		    	$publicacion=new publicaciones($r["id"]);
+				$usua=new usuario($publicacion->usuarios_id);
+		
+				?>
+		    	<div id="<?php echo $i; ?>" class='col-xs-12 col-sm-12 col-md-2 col-lg-2' >
+		
+			    			<div class='text-center  publicaciones1 marT15' style='relative;width:70%;' id='<?php echo $publicacion->id; ?> '>
+						    	<br>
+						    	<div class='marco-foto-conf  point center-block sombra-div3 ' style='height:120px; width: 120px;'  >
+								<img src='<?php echo $publicacion->getFotoPrincipal(); ?> '  class=' img-responsive center-block img-apdp'>
+								</div>
+								<br>
+								<span class='negro t16'><?php echo $publicacion->tituloFormateado(15); ?> </span>
+								<br>
+								<span class='red t14'><b><?php echo $publicacion->getMonto(); ?> </b></span>
+								
+							</div>
+		
+				</div>
+				<?php
+		
+			}
+		?>
+		</div>
+    </div>
     <!-- Hasta aqui -->
     </div>
   </div>
 
 
 
-
-<!-- 5 mas visitadas --------------------------------------------------------------------------------------------------------------- -->
+<!-- 5 mas visitadas --------------------------------------------------------------------------------------------------------------- 
 
 
    <div  class="ancho85  center-block hidden">
@@ -176,7 +178,7 @@ foreach ($resultTotal as $r => $valor) {
       
       </p>
     </div>
- 
+ -->
     <!-- Desde aqui -->
     <?php
     /*    VISITAS REVISAR
@@ -216,9 +218,9 @@ foreach ($resultTotal as $r => $valor) {
 	}
 */
    ?>
-   </div></div>
-   <!-- Hasta aqui -->
-   <br><br> 
+  <!--  </div></div>
+   Hasta aqui -->
+
    
    <!-- 5 vendedores --------------------------------------------------------------------------------------------------------------- -->
 
@@ -285,13 +287,7 @@ foreach ($resultTotal as $r => $valor) {
    </div></div>
    <!-- Hasta aqui -->
    
-   
-   
-   
-   
-   <br><br> 
-      <br><br> 
          
    
   
-  
+    

@@ -30,10 +30,12 @@ class busqueda{
 /************M&eacute;todos***********/
 	public function getPublicaciones(){
 		$bd=new bd();
-		$condicion="where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin is null) ";
+		
+		$condicion="where publicaciones.id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin is null)";
+		
 		$operador="and";
 		if($this->palabra!=""){
-			$condicion.="$operador titulo like '%{$this->palabra}%'";
+			$condicion.=" $operador titulo like '%{$this->palabra}%'";
 			$operador=" and ";
 		}
 		if($this->clasificados_id!=""){
@@ -41,26 +43,93 @@ class busqueda{
 			$condicion .=$operador . " clasificados_id in (select id from clasificados where ruta like '%$criterio%')";
 			$operador=" and ";			
 		}
+		
+		#SI ENVIARON PALABRA, CREAMOS CRITERIO PARA FILTRAR LA BUSQUEDA
 		if($this->palabra!=""){
 			$criterio=explode(" ",$this->palabra);
-			$criterio2="(";
+			//$criterio2="(";
 			$criterio3="(";
 			foreach ($criterio as $c=>$valor) {
-				$criterio2.="nombre like '%$valor%' or apellido like '%$valor%' or ";
+				//$criterio2.="nombre like '%$valor%' or apellido like '%$valor%' or ";
 				$criterio3.="razon_social like '%$valor%' or ";
 			}
-			$criterio2=substr($criterio2,0,strlen($criterio2)-4) . ")";
+			//$criterio2=substr($criterio2,0,strlen($criterio2)-4) . ")";
 			$criterio3=substr($criterio3,0,strlen($criterio3)-4) . ")";			
-			$consultaUsua=" union (select usuarios_id as id,identificacion,'U' as tipo,CONCAT(nombre,' ',apellido) as nombre from usuarios_naturales where $criterio2)
-				 union (select usuarios_id as id,razon_social,'U' as tipo,razon_social as nombre from usuarios_juridicos where $criterio3)";
+			
+			
+		}
+			
+		#SI ENVIARON PALABRA o DESEAMOS VER LAS TIENDAS BUSCAMOS EN USUARIOS JURIDICOS
+		/*if($this->palabra!="" || $this->ver_tiendas=='1'){
+			
+			#$consultaUsua=" union (select usuarios_id as id,identificacion,'U' as tipo,CONCAT(nombre,' ',apellido) as nombre from usuarios_naturales
+			#				Inner Join usuarios ON usuarios_naturales.usuarios_id = usuarios.id
+			#				where ($criterio2) and usuarios.id_sede =  '$id_sede')
+			#			 	union (select usuarios_id as id,razon_social,'U' as tipo,razon_social as nombre from usuarios_juridicos
+			#			 	Inner Join usuarios ON usuarios_juridicos.usuarios_id = usuarios.id
+			#			 	where ($criterio3) and usuarios.id_sede =  '$id_sede')";
+			$consultaUsua=" (select usuarios_accesos.usuarios_id as id,razon_social,'U' as tipo,razon_social as nombre from usuarios_juridicos
+						 	Inner Join usuarios ON usuarios_juridicos.usuarios_id = usuarios.id
+						 	Inner Join usuarios_accesos ON usuarios.id = usuarios_accesos.usuarios_id
+						 	where ($criterio3) and usuarios.id_sede =  '$id_sede' AND
+							usuarios_accesos.status_usuarios_id =  '1')  ";
 		}else{
 			$consultaUsua="";
-		}		
+		}*/
+		 
+		$consultaUsua="";
+		#SI NO SE DESEA SOLO BUSCAR POR TIENDA
+		
 		if($condicion=="where ")
 		$condicion="";
-		$limite = ($this->pagina - 1) * 5;
-		$consulta="(select id,usuarios_id,'P' as tipo,titulo as nombre from publicaciones $condicion order by {$this->orden}) $consultaUsua";
-		$publicaciones=$bd->query($consulta);
+		switch($this->orden){
+			case "id_asc":
+				$orden="id asc";
+				break;
+			case "id_desc":
+				$orden="id desc";
+				break;
+			case "monto_asc":
+				$orden="monto asc";
+				break;
+			case "monto_desc":
+				$orden="monto desc";
+				break;
+			default:
+       			$orden="id desc";
+				break;
+		}
+		
+		$consultaPubli="(select  publicaciones.id,usuarios_id,'P' as tipo,titulo as nombre from publicaciones 
+					Inner Join usuarios ON publicaciones.usuarios_id = usuarios.id
+		$condicion order by {$orden})";
+		
+		
+		
+		
+		
+		 #SI EXISTEN LOS DOS QUERYS LOS UNIMOS
+		if(!empty($consultaPubli) && !empty($consultaUsua)){
+			$union='union';
+		}
+		else {
+			$union='';
+		}		
+		
+		#ARMAMOS EL QUERY
+		$consulta="$consultaPubli $union $consultaUsua";
+
+  
+		#PARA PAGINAR
+	 	if(!empty($this->pagina)){
+	 		$this->pagina=$this->pagina?$this->pagina:"1";
+			$inicio=($this->pagina - 1) * 25;
+			$consulta.=" limit 25 OFFSET $inicio";
+	 	}else{
+	 		$consulta.=" limit 250 OFFSET 0";  //para asegurar no traer mas de 1000productos para un solo listado
+	 	}
+		   //var_dump($consulta);
+		$publicaciones=$bd->query($consulta);  
 		return $publicaciones;
 	}
 	public function getUsuarios(){

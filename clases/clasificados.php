@@ -39,7 +39,20 @@ class clasificados{
 			$id=$this->id;
 		}
 		$bd=new bd();
-		$condicion="clasificados_id=$id order by orden,nombre";
+		$condicion=" clasificados_id=$id  order by orden,nombre";
+		$filas=$bd->doFullSelect("clasificados",$condicion);
+		if(!empty($filas)){
+			return $filas;
+		}else{
+			return false;
+		}		
+	}
+	public function buscarPadresdeHijos($id=NULL){
+		if(is_null($id)){
+			$id=$this->id;
+		}
+		$bd=new bd();
+		$condicion=" id in ($id)  order by orden,nombre";
 		$filas=$bd->doFullSelect("clasificados",$condicion);
 		if(!empty($filas)){
 			return $filas;

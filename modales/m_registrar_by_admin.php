@@ -11,7 +11,7 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span id="usr-reg-title-admin"
-						class="marL15">Registrar Tienda</span>
+						class="marL15">Registrar administrador</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
