@@ -430,9 +430,27 @@ $(document ).ready(function() {
             }
         });
 	});		
+	 
 	
+	$(".li-icon-top").focus(function() {
+		$(this).parent().next().children('div').removeClass('vertical-line');
+		$(this).parent().prev().children('div').removeClass('vertical-line');
+	});
+	$(".li-icon-top ").blur(function() {
+		$(this).parent().next().children('div').addClass('vertical-line');
+		$(this).parent().prev().children('div').addClass('vertical-line');
+	});	
+	$(".li-icon-top").hover(function(){
+		$(this).parent().next().children('div').removeClass('vertical-line');
+		$(this).parent().prev().children('div').removeClass('vertical-line');
+		}, function(){
+			if(!$(this).is(":focus")){
+				$(this).parent().next().children('div').addClass('vertical-line');
+				$(this).parent().prev().children('div').addClass('vertical-line');
+			}			
+	});
 
-
+  
 	
 	$(".buscador").keydown(function(e){
 		if(e.which==13){

@@ -876,13 +876,30 @@ public function setNewPassword($user,$clave){
   		}
 		return $panas;
 	}
-	public function getAllNotificaciones($id=null){
-		if(is_null($id)){
+	public function getAllNotificaciones($id=null, $pagina=null){
+		/*if(is_null($id)){
 			$id=$this->id;
-		}
+		}*/
 			$bd = new bd();
 			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
-			pana_id pana from notificaciones where usuarios_id=$id ORDER BY `notificaciones`.`fecha`  DESC limit 25";
+			pana_id pana from notificaciones where 1 ";
+			
+			if(!empty($id)){
+				##si envia filtro de ID es porque es usuario
+				$consulta.= " and usuarios_id=$id  ";
+			}else{
+				##traemos notifs tipo pregunta
+				$consulta.= " and tipos_notificaciones_id='1' ";				
+			}
+			$consulta .= " ORDER BY `notificaciones`.`fecha`  DESC ";
+			
+			
+			if(empty($pagina)){
+				$consulta.= " limit 25";
+			}else{
+				$start=($pagina - 1) * 25;
+				$consulta.=" LIMIT 25 OFFSET $start";
+			}
 			$result =$bd->query($consulta);
 			return $result;	
 	}
@@ -890,6 +907,12 @@ public function setNewPassword($user,$clave){
 			$bd = new bd();
 			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
 			pana_id pana from notificaciones where tipos_notificaciones_id='1' ORDER BY `notificaciones`.`fecha`  DESC limit 25";
+			if(empty($pagina)){
+				$consulta.= " limit 25";
+			}else{
+				$start=($pagina - 1) * 25;
+				$consulta.=" LIMIT 25 OFFSET $start";
+			}
 			$result =$bd->query($consulta);
 			return $result;	
 	}

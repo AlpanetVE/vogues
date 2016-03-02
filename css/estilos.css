@@ -1085,6 +1085,12 @@ div.vertical-line {
 	height: 100%; /* Override in-line if you want specific height. */
 	float: left;
 }
+div.size-line {
+	height: 25px;
+	margin-top: 18px;
+	width: 2px;
+}
+
 /* ************* Fin del header ************* */
 
 /* ************* login  ************* */
@@ -1111,7 +1117,23 @@ div.vertical-line {
 	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
-
+.alertas {
+	overflow-y: auto;
+	max-height: 400px;
+	width: 300px;
+}
+div.AlertsFooter a {
+    background-color: #f6f7f8;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top: 1px solid #c5c5c5;
+    display: block;
+    font-weight: bold;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    z-index: 100;
+}
 /* ************* Fin login  ************* */
 
 /* Categorias*/
