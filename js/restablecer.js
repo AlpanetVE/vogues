@@ -1,6 +1,11 @@
 $(document ).ready(function() {
 	
-/* Validador de Formulario de recuperar contraseña */	
+/* Validador de Formulario de recuperar contrase&ntilde;a */	
+$('#rec-clave-submit').click(function(){ 
+		$("#restablecer-password").data('formValidation').validate();
+});
+
+
 $('#recover-password').formValidation({
 		locale: 'es_ES',
 		excluded: ':disabled',
@@ -63,7 +68,7 @@ $('#recover-password').formValidation({
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
-							//location.reload();
+							location.reload();
 										
 						});
                 } 
@@ -87,11 +92,11 @@ $('#recover-password').formValidation({
 		addOns: { i18n: {} },
 		err: { container: 'tooltip' },
 		fields : {			
-			password : {validators : {
+			rec_clave : {validators : {
 				notEmpty : {},
 				stringLength : {min:6,max : 64}}},
-			password_val : {validators : {
-				identical: {field: 'password'}}}
+			rec_clave2 : {validators : {
+				identical: {field: 'rec_clave'}}}
 		}
 	}).on('success.field.fv', function(e, data) {
         if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
