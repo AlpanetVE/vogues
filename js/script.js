@@ -870,7 +870,7 @@ $("#enviar").click(function(e){
 	});
 	$("#insc-red").on("hidden.bs.modal",function(){
 		if ($('#usr-reg').is(':hidden')){
-		//	$("#actualizar2").modal('show');
+
 		}
 	});	
 	
