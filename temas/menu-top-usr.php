@@ -51,7 +51,7 @@
 				</li>
 				<li>&nbsp;&nbsp;
 				<li>
-				<li class="dropdown"><a href="#" class="dropdown-toggle marT10"
+				<li class="dropdown"><a href="#" class="dropdown-toggle marT10 li-icon-top"
 					data-toggle="dropdown" role="button" aria-expanded="false"
 					style=""> <?php echo strtoupper($_SESSION["seudonimo"]);?> </a>
 					<ul class="dropdown-menu blanco" role="menu">
@@ -59,28 +59,25 @@
 						<li><a href="salir.php">Salir</a></li>
 					</ul></li>
 				<li>
-					<div class="vertical-line "
-						style="height: 25px; margin-top: 18px;"></div>
+					<div class="vertical-line size-line" ></div>
 				</li>
 					<?php if ($_SESSION["id_rol"] == '3') { ?>
-					<li><a href="informar_pago.php" class="marT10 " > Informar Pago</a></li>
+					<li><a href="informar_pago.php" class="marT10 li-icon-top " > Informar Pago</a></li>
 					
-					<div class="vertical-line "
-						style="height: 25px; margin-top: 18px;"></div>
+					<div class="vertical-line size-line"></div>
 					
 					<?php  } ?>
 				</li>
 				<!-- Se agrega la opcion en el caso de que sea admin -->
 				<?php if ($_SESSION["id_rol"] <=2 ) { ?> 
-				<li><a href="publicar.php" data-toggle="" data-target="" class="marT10">Publicar</a></li>
+				<li><a href="publicar.php" data-toggle="" data-target="" class="marT10 li-icon-top">Publicar</a></li>
 				<li>
-					<div class="vertical-line "
-						style="height: 25px; margin-top: 18px;"></div>
+					<div class="vertical-line size-line"></div>
 				</li>
   			<?php  } ?>
 				<!--  Fin de la condicion-->
 				<?php if ($_SESSION["id_rol"] == 1 ) { ?>
-					<li><a href="admin-usr.php" data-toggle="" data-target="" class="marT10">
+					<li><a href="admin-usr.php" data-toggle="" data-target="" class="marT10 li-icon-top">
 						<i class="fa fa-users"></i> </a></li>
 				
 					<?php  } ?>
@@ -107,11 +104,11 @@
 	$status = $usr -> s_status_usuarios_id;
 	
 	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
-		$alerts = $usr -> getAllNotificacionesAdmin();
+		$id_user_noti=null;
 	else 
-		$alerts = $usr -> getAllNotificaciones($_SESSION["id"]);
+		$id_user_noti=$_SESSION["id"];
 	
-	
+	$alerts = $usr -> getAllNotificaciones($id_user_noti);
 	$visto=0;
 	include_once "clases/publicaciones.php";
 	
@@ -198,6 +195,10 @@
 							</a>
 						</li>
 				<?php }?>
+				
+				<div class="AlertsFooter"><a class="seeMore" href="notificaciones.php" accesskey="5"><span>Ver todas</span></a></div>
+				
+				
 						 </ul>
 						 
 						 <?php } ?>

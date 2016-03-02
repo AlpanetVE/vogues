@@ -5,13 +5,19 @@ class Parameter {
      */
     function __construct(){
     		##lEER JSON PARA CAPTURAR CONFIGURACION
-    		
+    		$parameters['SUBJECT']		='vogueseshop.com';
+			$parameters['COMPANY']		='Vogues Company';
+			$parameters['COMPANY_NAME']	='Vogue\'s eShop';
+			$parameters['RIF']			='J-402930810';
+			$parameters['DIRECTION']	='San Cristóbal, Táchira,Venezuela.';
+			$parameters['SLOGAN']		='Vistete a la moda con la mejor tecnologia';
+			$parameters['DOMAIN_ROOT']	='http://'.$_SERVER ['SERVER_NAME'].'/';
     		##GUARDAMOS EN VARIABLE
-            $res_array;
+            
             
 			##DEFINIMOS VARIABLES
-            for($i=0, $cant=count($res_array); $i<$cant; $i++){
-                    define($res_array[$i]['parameter_key'], $res_array[$i]['parameter_value']);
+			foreach ($parameters as $key => $valor) { 
+                    define($key, $valor);
             }
 			
 			##DEFINIMOS EL DOMINIO

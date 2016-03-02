@@ -10,6 +10,7 @@ switch($tipo){
 		$clasesP1="active pesta";
 		$clasesP2="pesta";
 		$clasesP3="pesta";
+		$pagina=1;
 		break;
 	case 2:
 		$clasesP1="pesta";
