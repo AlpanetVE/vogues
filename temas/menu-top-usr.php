@@ -64,7 +64,9 @@
 					<?php if ($_SESSION["id_rol"] == '3') { ?>
 					<li><a href="informar_pago.php" class="marT10 li-icon-top " > Informar Pago</a></li>
 					
-					<div class="vertical-line size-line"></div>
+					<li>
+						<div class="vertical-line size-line" ></div>
+					</li>
 					
 					<?php  } ?>
 				</li>
@@ -81,15 +83,6 @@
 						<i class="fa fa-users"></i> </a></li>
 				
 					<?php  } ?>
-				
-
-
-		
-				
-				
-				
-				
-				
 				
 				
 	<?php
@@ -118,7 +111,7 @@
 			 		
 		
 				<li id="notificacion" data-id="<?php echo $_SESSION["id"];?>" class="dropdown">
-					<a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10" onclick="<?php echo $visto=1; ?>" aria-expanded="false"
+					<a href="#" data-toggle="dropdown" role="button" class="dropdown-toggle marT10 li-icon-top" onclick="<?php echo $visto=1; ?>" aria-expanded="false"
 					style="">
 					<?php if($alertas!=0){
 						 echo '<span id="alerta" class="badge blanco" style="background: red; position: absolute; top: -2px; left: -1px;">';
@@ -204,14 +197,6 @@
 						 <?php } ?>
 				</li>	
 
-
-
-
-
-
-
-
-				
 					
 					<?php if ($_SESSION["id_rol"] == 3 ) { ?>
 						 	

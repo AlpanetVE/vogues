@@ -66,7 +66,7 @@ switch($tipo){
  		 $('#monto').val($("#b" + b).data('monto'));
  		 $('#stock').val($("#b" + b).data('stock'));
  		 $("#btn-social-act").data("id",$("#b" + b).data('id'));
- 		 $("#btn-social-act").data("descripcion",$("#b" + b).data('descripcion'));
+ 		 $("#btn-social-act").data("url_video",$("#b" + b).data('url_video'));
  		 $("#btn-social-act").data("metodo","actualizar");
  		 $("#tituloVentana").html("Editar Publicaci&oacute;n");
          $("#masDetalles").css("display","block");
@@ -260,11 +260,11 @@ switch($tipo){
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marB10 marT15" >
-				<div class=" btn-group marL30 hidden ">
-					<button type="button" class="btn btn-default">
+				<div class=" btn-group marL30 ">
+					<button type="button" class="btn btn-default hidden ">
 						Filtrar
 					</button>
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
 					</button>
@@ -287,34 +287,23 @@ switch($tipo){
 
 					<table width="100%" class="alto50" border="0" cellspacing="0" cellpadding="0" >
 						<tr>
-							<!--<td  width="5%"  align="right" valign="top">
-							<div class="  marT10 hidden-xs hidden-sm"  style="  transform:  rotate(0deg); width: 18px; height:18px; border: 0px; margin-right:4px;   ">
-								<INPUT  TYPE=CHECKBOX  style=" width:100% ; height:100%;" class="">
-							</div></td>
-							<td  width="5%"  align="left">
-							<div class="hidden-xs hidden-sm" style="margin-left:15px;">
-								<button type="button" class="btn2 btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-									<span class="glyphicon glyphicon-cog "></span><span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="" data-toggle="modal">Pausar</a>
-									</li>
-									<li>
-										<a href="" data-toggle="modal">Finalizar </a>
-									</li>
-									<li>
-										<a href="" data-toggle="modal">Republicar</a>
-									</li>
-
-								</ul>
-							</div></td>-->
+							 <?php
+							 $hijos=$usua->getPublicaciones($tipo);
+							 $total=$hijos->rowCount(); 
+							 $ac=$usua->getCantidadPub(1);
+							 
+							 
+							 ?>
 							<td  width="75%"  align="right">
-								<span class="marR10">Publicaciones </span>
-								<span id="inicio-list" name="inicio-list"> 1</span>
-								<span id="final-list" name="final-list"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span> 
-								<span id="total-list" name="total-list"><b><?php echo $total;?></b></span> 
+								<span class="marR5 "> Publicaciones</span> <span id="inicio" name="inicio">1</span> - <span id="final" name="final"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span>
+								<span><b><?php echo $ac;?></b></span> 
+								
 							</td>
+							
+							
+									
+									
+							
 							<td   width="15%"  align="right" height="40px;" >
 							<select id="filtro" class="form-control  input-sm " style="width:auto; margin-right:20px;">
 								<option value="desc" >Mas Recientes</option>
@@ -339,15 +328,11 @@ switch($tipo){
 				<!-- INICIO de detalle del listado de publicaciones -->
 			<div id="noresultados" name="noresultados" class="container center-block col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">	
 			<br>
-			<br>
-			<div class='alert alert-warning2  text-center' role='alert'  >                                        	
-	              	<span class="t16  "><i class="fa fa-info-circle"></i> No se encontraron publicaciones favoritas.</span>
-	         </div>
 	         <br>  
 	        </div>				
 			<div id="publicaciones">
 				<?php
-				$hijos=$usua->getPublicaciones($tipo);
+				
 				
 				$contador=0;
 				foreach ($hijos as $key => $valor) {
@@ -366,7 +351,6 @@ switch($tipo){
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2  text-left '>
 					<span class='red t14' id='monto" . $valor["id"] . "'>" . $publicacion->getMonto(1) . " </span>
-					<br>
 					<span class='t12 opacity' id='stock" . $valor["id"] . "'> x  " . $publicacion->stock . " und</span>
 					<br>
 					<span> " . $publicacion->getVisitas() . " Visitas</span>
@@ -374,11 +358,14 @@ switch($tipo){
 					<span class=' blue-vin hidden'> 30 ventas </span>
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center t12 '>
-					<div class='btn-group pull-right marR10'>				
+					<div class='btn-group pull-right marR10'>
 						<button id='b" . $publicacion->id . "' type='button' class='btn2 btn-warning boton' data-toggle='modal' data-target='#info-publicacion' onclick='javascript:pasavalores($publicacion->id)'
-						data-id='$publicacion->id' data-titulo='$publicacion->titulo' data-stock='$publicacion->stock' data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-descripcion='" . $publicacion->descripcion . "' data-listado='1' >
-							Modificar
-						</button>
+						data-id='$publicacion->id' data-url_video='$publicacion->url_video' data-titulo='$publicacion->titulo' data-stock='$publicacion->stock' data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-listado='1' >
+						    Modificar  
+					    </button>
+					    <textarea  class='hidden' id='descripcion_" . $publicacion->id . "'>
+								$publicacion->descripcion
+						</textarea >
 						<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1)'>
 							Reactivar
 						</button>
@@ -424,22 +411,36 @@ switch($tipo){
 				echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 				<nav class='text-center'>
 				  <ul class='pagination'>";
-				  
-				$totalPaginas=floor($contador/25);
-				$restantes=$contador-($totalPaginas*25);
-				if($restantes>0){
-					$totalPaginas++;
-				}
-				if($totalPaginas>0){
-				echo "<li>
-				      <a href='#' aria-label='Previous'>
-				        <span aria-hidden='true'>&laquo;</span>
-				      </a>
-				    </li>";
-				}
-				for($i=1;$i<=$totalPaginas;$i++){
-				  	echo "<li><a href='#'>$i</a></li>";
-				 }
+								
+								$totalPaginas=floor($ac/25);
+								$restantes=$ac-($totalPaginas*25);
+								if($restantes>0){
+									$totalPaginas++;
+								}
+								echo"</div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' id='paginas' name='paginas' data-metodo='buscarPublicaciones' data-tipo='1' data-id='" . $usua->id . "' > <center><nav><ul class='pagination'>";
+								$contador=0;
+								if($pagina<=10){
+									$inicio=1;
+								}else{
+									$inicio=floor($pagina/10);
+									if($pagina % 10!=0){
+										$inicio=($inicio*10)+1;
+									}else{
+										$inicio=($inicio*10)-9;
+									}									
+								}
+								 								 
+								for($i=$inicio;$i<=$totalPaginas;$i++){
+									$contador++;
+									if($i==1){
+										echo "<li class='active' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+									}else{
+										echo "<li class='' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+									}
+									if($contador==10){
+										break;
+									}
+								}
 				 if($totalPaginas>0){
 				 echo "<li>
 				      <a href='#' aria-label='Next'>

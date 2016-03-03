@@ -89,7 +89,7 @@ $(document).ready(function(){
 	
 	
 	/*
-	 * Controlas la pesta&ntilde;as de mis publicaciones (activas, pausadas, inactivas)
+	 * Controlas la pesta&oacute;as de mis publicaciones (activas, pausadas, inactivas)
 	*/
 	
 	$(".pesta").click(function(){
@@ -115,10 +115,36 @@ $(document).ready(function(){
 			    var tipo=3;
 				break;
 		}	
+		var order= "id "+$("#filtro").val(); 
+		var pagina=1;
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"buscarPublicaciones",tipo:tipo},
+			data:{metodo:"buscarPublicaciones",tipo:tipo,pagina:pagina,order:order},
+			type:"POST",
+			dataType:"html",
+			success:function(data){
+				console.log(data);
+				$("#publicaciones").html(data);
+				loadingAjax(false);
+			}
+		});
+	});
+	$("#filtro").change(function(){	 
+		var tipo;
+		if($("#irActivas").hasClass('active')){
+			tipo=1; 
+		}else if($("#irPausadas").hasClass('active')){
+			tipo=2;
+		}else if($("#irFinalizadas").hasClass('active')){
+			tipo=3;
+		}  
+		var order= "id "+$("#filtro").val();
+		var pagina=1;
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/venta/fcn/f_ventas.php",
+			data:{metodo:"buscarPublicaciones",tipo:tipo,order:order,pagina:pagina},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -313,33 +339,32 @@ $(document).ready(function(){
 	});
 	$("#publicaciones").on("click",".imagen",function(){
 		window.open("detalle.php?id=" + $(this).data("id"),"_self");
-	});
-	
-	$("#filtro").change(function(){
-		var tipo;
-		if($("#irActivas").hasClass('active')){
-			tipo=1; 
-		}else if($("#irPausadas").hasClass('active')){
-			tipo=2;
-		}else if($("#irFinalizadas").hasClass('active')){
-			tipo=3;
-		}  
+	});		
+	$(document).on("click",".botonPagina",function(){
+		var orden=$("#filter").val();
+		var pagina=$(this).data("pagina");
+		var palabra=$("#txtBusqueda").val();
+		var metodo=$("#paginas").data("metodo");
+		var id=$("#paginas").data("id");
+		var tipo=$("#paginas").data("tipo");
 		var order= "id "+$("#filtro").val();
-		var pagina=1;
+		$(".pagination li").removeClass("active");
+		$(this).parent().addClass("active");
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"buscarPublicaciones",tipo:tipo,order:order,pagina:pagina},
+			data:{metodo:metodo,orden:orden,palabra:palabra,pagina:pagina,id:id,tipo:tipo,order:order},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				console.log(data);
 				$("#publicaciones").html(data);
+				loadingAjax(false);
+			},
+			error:function(xhr,status){
 				loadingAjax(false);
 			}
 		});
 	});
-	
 	$("#ventas").css("display","block");
 	$("#uno1").addClass("active");
 	});

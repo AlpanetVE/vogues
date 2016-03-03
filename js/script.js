@@ -935,21 +935,19 @@ $("#enviar").click(function(e){
 			}
 		});
 	});
-	$(".pre_pub").click(function(e){
+	$(document).on("click",".pre_pub",function(e){
 		window.open("preguntas.php?tipo=1&publicacion=" + $(this).data("id_pub"),"_self");  
 	});
-	
-	$(".resp_pub").click(function(e){
+	$(document).on("click",".resp_pub",function(e){
 		window.open("preguntas.php?tipo=2&publicacion=" + $(this).data("id_pub"),"_self");
 	});
-	
-	$(".detalle").click(function(e){
+	$(document).on("click",".detalle",function(e){
 		window.open("detalle.php?id=" + $(this).data("id"),"_self");
 	//	window.open("pub_" + $(this).attr("id"),"_self");
 	});
-	$(".perfil").click(function(e){
+	$(document).on("click",".perfil",function(e){
 		window.open("perfil.php?id=" + $(this).data("id"),"_self");
-	});	
+	});
 	
 	
 	
