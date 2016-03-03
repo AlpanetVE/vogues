@@ -1,4 +1,7 @@
 <?php
+
+include_once 'bd.php';
+include_once 'config/parameter.php';
 class email {
 	private $subject='vogueseshop.com';
 	private $headers;		
@@ -6,8 +9,9 @@ class email {
 	function __construct(){
       
     }
-	function sendEmail($destinatario,$html){
-		$headers = 'From: Vogues Eshop <no-responder@vogueseshop.com> '  . "\r\n" . 'Reply-To: '  . "no-responder@vogueseshop.com" . "\r\n" . 'X-Mailer: PHP/' . phpversion ();
+
+function sendEmail($destinatario,$txt){
+		$headers = 'From: '.COMPANY_NAME_MAY.' <no-responder@'.WEBPAGE.'> '  . "\r\n" . 'Reply-To: '  . 'no-responder@'.WEBPAGE. "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		$headers .= "MIME-Version: 1.0\r\n";		
 		$headers .= "Content-type: text/html; charset=UTF-8.";
 			$destinatario='oscarjoselopez26@gmail.com';
@@ -25,10 +29,12 @@ class email {
 	}	
 	function Footer($version='1'){
 				
-		$txt = "<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		Vistete a la moda con la mejor tecnologia</div>
-		</div></div></body></html>";		
-		return $txt;
+
+		$txt = "
+		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
+		".SLOGAN."</div></div></div></body></html>";
+		
+
 	}	
 	
 	
@@ -45,7 +51,13 @@ class email {
 		 text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid #1e8dc6; cursor: pointer; font-size: 18px;'>Restablecer Contrase&ntilde;a</button>
 		</a>
 		<br>
-		</div>";
+		</div>
+		
+		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
+		".SLOGAN."
+		</div>
+";
+
 		
 		$html=$this->Header().$contenido.$this->Footer();
 		$this->sendEmail($destinatario,$html);
