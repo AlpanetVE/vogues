@@ -1,5 +1,4 @@
 <?php
-
 include_once 'bd.php';
 include_once 'config/parameter.php';
 class email {
@@ -14,7 +13,6 @@ function sendEmail($destinatario,$txt){
 		$headers = 'From: '.COMPANY_NAME_MAY.' <no-responder@'.WEBPAGE.'> '  . "\r\n" . 'Reply-To: '  . 'no-responder@'.WEBPAGE. "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		$headers .= "MIME-Version: 1.0\r\n";		
 		$headers .= "Content-type: text/html; charset=UTF-8.";
-			$destinatario='oscarjoselopez26@gmail.com';
 		mail($destinatario,$this->subject,$html,$headers);
 	}
 	function Header($version='1'){

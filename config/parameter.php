@@ -1,6 +1,6 @@
 <?php  
 
-  
+   
     		##lEER JSON PARA CAPTURAR CONFIGURACION
     		$domain_root='http://'.$_SERVER ['SERVER_NAME'].'/';
 			
