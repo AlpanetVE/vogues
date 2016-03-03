@@ -11,8 +11,12 @@
 			session_start ();
 		}
 		 $usr = new usuario();
-		 
-		 $alerts = $usr -> getAllNotificaciones($_SESSION["id"], $_POST['pagina']);
+		 if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
+			$id_user_noti=null;
+		else 
+			$id_user_noti=$_SESSION["id"];
+		
+		 $alerts = $usr -> getAllNotificaciones($id_user_noti, $_POST['pagina']);
 		 
 		if(TRUE):	
 			$notificaciones='';
