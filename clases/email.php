@@ -1,9 +1,7 @@
 <?php
-<<<<<<< HEAD
+
 include_once 'bd.php';
 include_once 'config/parameter.php';
-=======
->>>>>>> 0a1ce6a59596ea7ec4e278ce1e84e24ea7857931
 class email {
 	private $subject='vogueseshop.com';
 	private $headers;		
@@ -31,17 +29,12 @@ function sendEmail($destinatario,$txt){
 	}	
 	function Footer($version='1'){
 				
-<<<<<<< HEAD
+
 		$txt = "
 		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
 		".SLOGAN."</div></div></div></body></html>";
 		
-=======
-		$txt = "<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		Vistete a la moda con la mejor tecnologia</div>
-		</div></div></body></html>";		
->>>>>>> 0a1ce6a59596ea7ec4e278ce1e84e24ea7857931
-		return $txt;
+
 	}	
 	
 	
@@ -58,15 +51,13 @@ function sendEmail($destinatario,$txt){
 		 text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid #1e8dc6; cursor: pointer; font-size: 18px;'>Restablecer Contrase&ntilde;a</button>
 		</a>
 		<br>
-<<<<<<< HEAD
 		</div>
 		
 		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
 		".SLOGAN."
 		</div>
-=======
-		</div>";
->>>>>>> 0a1ce6a59596ea7ec4e278ce1e84e24ea7857931
+";
+
 		
 		$html=$this->Header().$contenido.$this->Footer();
 		$this->sendEmail($destinatario,$html);
