@@ -1,5 +1,6 @@
 <?php
 include_once 'bd.php';
+include_once 'config/parameter.php';
 class email {
 	private $subject='vogueseshop.com';
 	private $headers;		
@@ -8,7 +9,7 @@ class email {
       
     }
 	function sendEmail($destinatario,$txt){
-		$headers = 'From: Vogues Eshop <no-responder@vogueseshop.com> '  . "\r\n" . 'Reply-To: '  . "no-responder@vogueseshop.com" . "\r\n" . 'X-Mailer: PHP/' . phpversion ();
+		$headers = 'From: '.COMPANY_NAME_MAY.' <no-responder@'.WEBPAGE.'> '  . "\r\n" . 'Reply-To: '  . 'no-responder@'.WEBPAGE. "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		$headers .= "MIME-Version: 1.0\r\n";		
 		$headers .= "Content-type: text/html; charset=UTF-8.";
 			
@@ -27,7 +28,7 @@ class email {
 				
 		$txt = "
 		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		Vistete a la moda con la mejor tecnologia</div></div></div></body></html>";
+		".SLOGAN."</div></div></div></body></html>";
 		
 		return $txt;
 	}	
@@ -63,7 +64,7 @@ class email {
 		</div>
 		
 		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		Vistete a la moda con la mejor tecnologia 
+		".SLOGAN."
 		</div>
 		
 		</div>

@@ -9,7 +9,7 @@
 			
 			<tr>
 				<td width="45%" align="left" class="t12" >
-					<b class="marR5 "> Vogues Company, C.A </b ><br class="hidden-sm hidden-md hidden-lg">RIF: J-402930810  <span class="hidden-xs">/ San Crist&oacute;bal, T&aacute;chira,Venezuela.</span> 
+					<b class="marR5 "> <?php echo COMPANY; ?>, C.A </b ><br class="hidden-sm hidden-md hidden-lg">RIF: <?php echo RIF; ?>  <span class="hidden-xs">/<?php echo DIRECCION; ?></span> 
 				</td> 
 
 				<td width="35%" align="left" class="hidden-xs t12">
