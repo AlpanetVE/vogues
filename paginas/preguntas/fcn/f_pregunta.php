@@ -44,8 +44,8 @@ function sendPregunta(){
 	$destino = new usuario($_POST["usr_id"]);
 	$correo=new email();
 	
-	$link_detalle='http://vogueseshop.com/detalle.php?id='.$_POST["pub_id"];
-	$link_pregunta='http://vogueseshop.com/preguntas.php?tipo=1&publicacion='.$_POST["pub_id"];
+	$link_detalle=FULL_WEBPAGE.'/detalle.php?id='.$_POST["pub_id"];
+	$link_pregunta=FULL_WEBPAGE.'/preguntas.php?tipo=1&publicacion='.$_POST["pub_id"];
 	$links=array("detalle"=>$link_detalle,"pregunta"=>$link_pregunta);
 	
 	$correo->sendPregunta($destino-> a_email , $links,  $_POST['pregunta']);	
@@ -70,8 +70,8 @@ function sendRespuesta(){
 	$destino = new usuario($_POST["usr_id"]);
 	$correo=new email();
 	
-	$link_detalle='http://vogueseshop.com/detalle.php?id='.$_POST["pub_id"];
-	$link_respuesta='http://vogueseshop.com/preguntas.php?tipo=2&publicacion='.$_POST["pub_id"];
+	$link_detalle=FULL_WEBPAGE.'/detalle.php?id='.$_POST["pub_id"];
+	$link_respuesta=FULL_WEBPAGE.'/preguntas.php?tipo=2&publicacion='.$_POST["pub_id"];
 	
 	$links=array("detalle"=>$link_detalle,"respuesta"=>$link_respuesta);
 	

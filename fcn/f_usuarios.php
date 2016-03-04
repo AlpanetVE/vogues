@@ -420,7 +420,7 @@ function newUser() {
 }
 	function sendEmail(){
 		ini_set("sendmail_from",$_POST["email"]);
-		$email_to = "atencionalcliente@vogueseshop.com";
+		$email_to = EMAIL;
 
 		$email_subject = $_POST ['nombre']." te ha contactado!";
 		$email_message = $_POST ['mensaje']."\n\n";		

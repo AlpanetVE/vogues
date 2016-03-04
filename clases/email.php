@@ -1,7 +1,6 @@
 <?php
 
-include_once 'bd.php';
-include_once 'config/parameter.php';
+//require_once '../config/parameter.php';
 class email {
 	private $subject='vogueseshop.com';
 	private $headers;		
@@ -10,11 +9,10 @@ class email {
       
     }
 
-function sendEmail($destinatario,$txt){
+	function sendEmail($destinatario,$html){
 		$headers = 'From: '.COMPANY_NAME_MAY.' <no-responder@'.WEBPAGE.'> '  . "\r\n" . 'Reply-To: '  . 'no-responder@'.WEBPAGE. "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		$headers .= "MIME-Version: 1.0\r\n";		
-		$headers .= "Content-type: text/html; charset=UTF-8.";
-			$destinatario='oscarjoselopez26@gmail.com';
+		$headers .= "Content-type: text/html; charset=UTF-8.";			
 		mail($destinatario,$this->subject,$html,$headers);
 	}
 	function Header($version='1'){
@@ -23,18 +21,15 @@ function sendEmail($destinatario,$txt){
       <html lang='es'><body>
       	<div style=' padding 20px; text-align:left; margin: 20px;'>
 		<div style='width:500px;background:#fff; color:#666; padding:20px; margin-left:30px; margin-right:30px;'>	
-		<div style='text-align:left; padding-bottom:10px; border-bottom: 1px solid #CCC;'><img src='http://vogueseshop.com/galeria/img/logos/logo-header2.png' ></div>
+		<div style='text-align:left; padding-bottom:10px; border-bottom: 1px solid #CCC;'><img src='".WEBPAGE."/galeria/img/logos/logo-header2.png' ></div>
 		<br> ";
 		return $txt;
 	}	
 	function Footer($version='1'){
-				
-
 		$txt = "
 		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
 		".SLOGAN."</div></div></div></body></html>";
 		
-
 	}	
 	
 	
@@ -47,16 +42,11 @@ function sendEmail($destinatario,$txt){
 		<br>		
 		<div style='text-align:left; padding-bottom:10px; border-bottom: 1px solid #ccc;' >
 		<a href=".$link." style='text-decoration:none;'>
-		<button style='background:#36A7E1;
-		 text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid #1e8dc6; cursor: pointer; font-size: 18px;'>Restablecer Contrase&ntilde;a</button>
+		<button style='background:".COLOR_BTN.";
+		 text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid ".COLOR_BORD_BTN."; cursor: pointer; font-size: 18px;'>Restablecer Contrase&ntilde;a</button>
 		</a>
 		<br>
-		</div>
-		
-		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		".SLOGAN."
-		</div>
-";
+		</div>";
 
 		
 		$html=$this->Header().$contenido.$this->Footer();
@@ -76,8 +66,8 @@ function sendEmail($destinatario,$txt){
 		            <br>		
 		            <div style='text-align:left; padding-bottom:10px; border-bottom: 1px solid #ccc;cursor: pointer;' >
 		               <a href='$link_pregunta' style='text-decoration:none;cursor: pointer;'>
-		               <button style='background:#36A7E1;
-		                  text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid #1e8dc6; cursor: pointer; font-size: 18px;'>Responder</button>
+		               <button style='background:".COLOR_BTN.";
+		 					text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid ".COLOR_BORD_BTN."; cursor: pointer; font-size: 18px;'>Responder</button>
 		               </a> </div> 	";
 			
 			$html=$this->Header().$contenido.$this->Footer();
@@ -99,8 +89,8 @@ function sendEmail($destinatario,$txt){
 		            <br>		
 		            <div style='text-align:left; padding-bottom:10px; border-bottom: 1px solid #ccc;cursor: pointer;' >
 		               <a href='$link_respuesta' style='text-decoration:none;cursor: pointer;'>
-		               <button style='background:#36A7E1;
-		                  text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid #1e8dc6; cursor: pointer; font-size: 18px;'>Hacer otra pregunta</button>
+		               <button style='background:".COLOR_BTN.";
+		 					text-align:center;  color:#FFF; padding:10px; margin:10px; border: 1px solid ".COLOR_BORD_BTN."; cursor: pointer; font-size: 18px;'>Hacer otra pregunta</button>
 		               </a>
 		              </div>      
 		               ";		

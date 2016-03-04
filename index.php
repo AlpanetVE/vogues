@@ -11,7 +11,7 @@
 		<center>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >
 				<div style="" class="ancho85 center-block marB10"><?php include('paginas/index/apdp-principal.php'); ?></div>
-			    <div style=" background: #F1F9FD; padding-left: 30px; padding-right: 30px; " class=" ancho85 pad20"><?php 
+			    <div class=" ancho85 pad20 div-principal " ><?php 
 					include "paginas/index/p_index.php";
 					?>
 				</div>

@@ -17,7 +17,7 @@
 					<br>
 					Titular
 					<br>
-					<?php echo COMPANY_NAME; ?>
+					Titular: Vogue's Company, C.A.
 					<br>
 					RIF: <?php echo RIF; ?>
 					<br>

@@ -69,7 +69,7 @@
 			
 			?>			
 			 
-				<h5 class="negro"><b>Categoriaseee</b></h5>
+				<h5 class="negro"><b>Categorias</b></h5>
 				<hr class="marR5">
 				<ul class="nav marR5 t11  marT10 marB20 ">
 					<?php

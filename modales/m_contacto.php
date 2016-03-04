@@ -53,7 +53,7 @@ if(isset($_SESSION["id"])){
 				<br>
 				<div class="center-block text-center" style="width: 80%">
 					<?php echo COMPANY .", C.A. RIF: ".RIF." Dirección: ".DIRECCION ?>  <br>
-					Telefonos: (0276) 348.92.17 / (0414) 735.02.12  &nbsp; Email:
+					Telefonos: <?php echo CONTAC_TEFL1 ;?> / <?php echo CONTAC_TEFL2 ;?>  &nbsp; Email:
 				<?php echo " ".EMAIL ;?>
 				</div>
 			</div>

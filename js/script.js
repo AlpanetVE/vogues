@@ -430,7 +430,6 @@ $(document ).ready(function() {
             }
         });
 	});		
-	 
 	
 	$(".li-icon-top").focus(function() {
 		$(this).parent().next().children('div').removeClass('vertical-line');
@@ -450,7 +449,7 @@ $(document ).ready(function() {
 			}			
 	});
 
-  
+
 	
 	$(".buscador").keydown(function(e){
 		if(e.which==13){
@@ -888,7 +887,6 @@ $("#enviar").click(function(e){
 	});
 	$("#insc-red").on("hidden.bs.modal",function(){
 		if ($('#usr-reg').is(':hidden')){
-
 		}
 	});	
 	

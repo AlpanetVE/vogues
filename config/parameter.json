@@ -1,8 +1,15 @@
-{"company":"Vogues Company",
-"company_name":"Vogue's eshop",
-"company_name_may":"Vogues Eshop",
-"rif":"J-402930810",
-"webpage":"vogueseshop.com",
-"direccion":"San Cristóbal, Táchira,Venezuela",
-"slogan":"Vistete a la moda con la mejor tecnologia",
-"email":"atencionalcliente@vogueseshop.com"}
+{"COMPANY":"Vogues Company",
+"COMPANY_NAME":"Vogue's eshop",
+"COMPANY_NAME_MAY":"Vogues Eshop",
+"RIF":"J-402930810",
+"WEBPAGE":"vogueseshop.com",
+"FULL_WEBPAGE":"www.vogueseshop.com",
+"DIRECCION":"San Cristóbal, Táchira,Venezuela",
+"SLOGAN":"Vistete a la moda con la mejor tecnologia",
+"EMAIL":"atencionalcliente@vogueseshop.com",
+"COLOR_BTN":"#36A7E1",
+"COLOR_BORD_BTN":"#1e8dc6",
+"CONTAC_TEFL1":"(0276) 348.92.17",
+"CONTAC_TEFL2":"(0414) 735.02.12"
+"FACEBOOK":"vogues.company",
+"TWITTER":"VOGUEScompany"}
