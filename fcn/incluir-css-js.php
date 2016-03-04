@@ -1,3 +1,4 @@
+<?php include_once"config/parameter.php";?>
 <head>
 <title><?php echo COMPANY; ?></title>
 <link rel="shortcut icon" href="favicon.ico">
@@ -28,7 +29,8 @@
 <script type="text/javascript" src="js/framework/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/language/es_ES.js"></script>
 <script type="text/javascript" src="js/sweetalert.min.js"></script>
-<script type="text/javascript" src="js/script.js"></script>
+
+<!--<script type="text/javascript" src="js/script.js"></script>-->
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/preguntas.js"></script>
 <script type="text/javascript" src="js/framework/bootstrap-multiselect.js"></script>

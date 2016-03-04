@@ -1,81 +1,4 @@
-
-
 @CHARSET "UTF-8";
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "FontAwesome";
-	src: url("../fonts/fontawesome-webfont.ttf") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues";
-	src: url("../fonts/vogues.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues2";
-	src: url("../fonts/vogues2.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues3";
-	src: url("../fonts/vogues3.OTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues4";
-	src: url("../fonts/vogues4.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues5";
-	src: url("../fonts/vogues5.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues6";
-	src: url("../fonts/vogues6.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues7";
-	src: url("../fonts/vogues7.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "handy";
-	src: url("../fonts/comesinhandy.TTF") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "sharpie";
-	src: url("../fonts/HollySharpie.ttf") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "magic";
-	src: url("../fonts/Magic Pies.otf") format("truetype");
-}
-
-
-/* fieldset y checkbox*/
-
-
-
-/* fieldset y checkbox----------------------------------------------------------------------------------------*/
-
-
-body {
-	margin: 0; 
-	font-size: 12px;
-	margin-top: 100px;
-	margin-bottom:100px;
-	font-family: "vogues7";
-}
 
 header {
 	position: fixed;
@@ -85,8 +8,6 @@ header {
 	z-index: 999;
 	margin:0 auto;
 }
-
-
 
 .text-dec-none:hover,  .text-dec-none:active, .text-dec-none, .text-dec-none:visited, .text-dec-none:before, .text-dec-none:focus, .text-dec-none:after
 {

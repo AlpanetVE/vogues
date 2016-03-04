@@ -1,3 +1,4 @@
+<script>
 $(document ).ready(function() {
 /* Considerar borrar este c�digo y llamar a configuracion-js*>*/
 	$('#usr-act-form-nat').formValidation({
@@ -282,7 +283,7 @@ $(document ).ready(function() {
 	            		}else{   //si es un registro de usuario publico
 		            			swal({
 							title: "Bienvenido", 
-							text: "&iexcl;A Vogue's Eshop!",
+							text: "&iexcl;A <?php echo COMPANY_NAME_MAY;?>!",
 							imageUrl: "galeria/img/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
@@ -412,7 +413,7 @@ $(document ).ready(function() {
 	            } else{
 	            	swal({
 						title: "Bienvenido", 
-						text: "&iexcl;A Vogue's Eshop!",
+						text: "&iexcl;A <?php echo COMPANY_NAME_MAY;?>!",
 						imageUrl: "galeria/img/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -449,7 +450,7 @@ $(document ).ready(function() {
 			}			
 	});
 
- 
+
 	
 	$(".buscador").keydown(function(e){
 		if(e.which==13){
@@ -950,3 +951,4 @@ $("#enviar").click(function(e){
 	
 	
 });
+</script>

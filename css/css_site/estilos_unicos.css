@@ -1,4 +1,26 @@
-@CHARSET "UTF-8";
+@CHARSET "UTF-8"
+
+@font-face {
+	/*R Definir fuentes del sitio*/
+	font-family: "vogues7";
+	src: url("../fonts/vogues7.TTF") format("truetype");
+}
+
+/* fieldset y checkbox*/
+
+
+
+/* fieldset y checkbox----------------------------------------------------------------------------------------*/
+
+
+body {
+	margin: 0; 
+	font-size: 12px;
+	margin-top: 100px;
+	margin-bottom:100px;
+	font-family: "vogues7";
+}
+
 
 
 .btn-default-fantasma {

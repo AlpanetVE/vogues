@@ -21,8 +21,8 @@
 				
 					
 				<td width="40%" align="right" class="t12"  >
-					<a href="https://www.facebook.com/<?php echo FACEBOOK;" target="_blank" class="h-opc"><span><i class="fa fa-facebook-square t24 color-emp"></i></span></a>
-					<a href="https://twitter.com/VOGUEScompany" class="h-opc" target="_blank"><span class="marL15"><i class="fa fa-twitter-square t24 color-emp"></i></span></a>
+					<a href="https://www.facebook.com/<?php echo FACEBOOK;?>" target="_blank" class="h-opc"><span><i class="fa fa-facebook-square t24 color-emp"></i></span></a>
+					<a href="https://twitter.com/<?php echo TWITTER;?>" class="h-opc" target="_blank"><span class="marL15"><i class="fa fa-twitter-square t24 color-emp"></i></span></a>
 					<a href="#" class="h-opc" target="_blank"><span class="marL15"><i class="fa fa-youtube-square t24 color-emp"></i></span></a>
 				</td>
 			</tr>

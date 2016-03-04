@@ -1,7 +1,8 @@
 <header class="header">
 <?php
+
 if (! isset ( $_SESSION )) {
-	session_start ();
+	session_start();
 }
 if(isset($_COOKIE["c_id"])){
 	 
@@ -22,7 +23,7 @@ if (isset ( $_SESSION ["id"] )) {
 ?>
 </header>
 <?php 
-include_once"config/parameter.php";
+include ("js/script.php");
 include"modales/m_contacto.php";
 include"modales/m_recover.php";
 include"modales/m_tipo_usuario.php";

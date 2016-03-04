@@ -1,6 +1,7 @@
 <?php
+ 
 class email {
-	private $subject='vogueseshop.com';
+	private $subject=WEBPAGE;
 	private $headers;		
 	
 	function __construct(){
@@ -11,6 +12,7 @@ class email {
 		$headers = 'From: '.COMPANY_NAME_MAY.' <no-responder@'.WEBPAGE.'> '  . "\r\n" . 'Reply-To: '  . 'no-responder@'.WEBPAGE. "\r\n" . 'X-Mailer: PHP/' . phpversion ();
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type: text/html; charset=UTF-8.";
+		
 		mail($destinatario,$this->subject,$html,$headers);
 	}
 	function Header($version='1'){
@@ -24,13 +26,10 @@ class email {
 		return $txt;
 	}	
 	function Footer($version='1'){
-		$txt = "
-		<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>
-		".SLOGAN."</div></div></div></body></html>";
-		
+		$txt = "<div style='font-size: 12px; text-align:left; margin-left:10px; color:#999;  margin-top:5px;'>			
+		".SLOGAN."</div></div></div></body></html>";		
+		return $txt;		
 	}	
-	
-	
 	function sendRecuperarPass($destinatario,$link){
 		$contenido = "<div style='text-align:left; margin-left:10px; 	font-size: 18px; '>
 			<p><b>Hola,</b></p>
@@ -51,7 +50,7 @@ class email {
 		$this->sendEmail($destinatario,$html);
 	}
 	function sendPregunta($destinatario,$link, $pregunta){
-		 
+		 $destinatario=EMAIL;die("seeeeee".$destinatario);
 			$link_detalle=array_key_exists("detalle", $link)?$link["detalle"]:'';
 			$link_pregunta=array_key_exists("pregunta", $link)?$link["pregunta"]:'';
 			
