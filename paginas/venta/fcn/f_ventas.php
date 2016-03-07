@@ -1,7 +1,7 @@
 <?php
+require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
-include_once "../../../clases/bd.php";
 switch($_POST["metodo"]){
 	case "buscarPublicaciones":
 		buscaPublicaciones();

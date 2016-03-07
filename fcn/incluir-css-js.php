@@ -1,4 +1,3 @@
-<?php include_once"config/parameter.php";?>
 <head>
 <title><?php echo COMPANY; ?></title>
 <link rel="shortcut icon" href="favicon.ico">

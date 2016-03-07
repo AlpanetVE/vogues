@@ -1,5 +1,5 @@
 <?php
-include_once "../clases/bd.php";
+require '../config/core.php';
 include_once "../clases/usuarios.php";
 include_once "../clases/fotos.php";
 include_once "../clases/amigos.php";

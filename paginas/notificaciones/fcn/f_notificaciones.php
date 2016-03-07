@@ -1,4 +1,5 @@
 <?php
+	require '../../../config/core.php';
 	include_once "../../../clases/usuarios.php";
 	include_once "../../../clases/publicaciones.php";
 	switch($_POST["method"]){

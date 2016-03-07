@@ -1,3 +1,4 @@
+<?php require 'config/core.php';?>
 <!DOCTYPE html>
 <html lang="es">
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8" />

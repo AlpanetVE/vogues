@@ -1,4 +1,4 @@
-<?php include_once 'clases/bd.php';?>
+<?php ?>
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-log2">
 	<div class="modal-dialog modal-sm">

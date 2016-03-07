@@ -7,9 +7,8 @@
  * @property int pagina;
  * @property int codicion;
  */
-include_once 'bd.php';
 include_once 'clasificados.php';
-class busqueda{
+class busqueda extends bd{
 	private $palabra;
 	private $orden;
 	private $clasificados_id;
@@ -19,6 +18,7 @@ class busqueda{
 	public $listado;
 /*************Constructor*******/	
 	public function busqueda($parametros){
+		parent::__construct();
 		$this->palabra=$parametros["palabra"];
 		$this->orden=array_key_exists("orden", $parametros)?$parametros["orden"]:"id desc";
 		$this->clasificados_id=$parametros["clasificados_id"];
@@ -29,7 +29,7 @@ class busqueda{
 	}
 /************M&eacute;todos***********/
 	public function getPublicaciones(){
-		$bd=new bd();
+		
 		
 		$condicion="where publicaciones.id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin is null)";
 		
@@ -129,11 +129,11 @@ class busqueda{
 	 		$consulta.=" limit 250 OFFSET 0";  //para asegurar no traer mas de 1000productos para un solo listado
 	 	}
 		   //var_dump($consulta);
-		$publicaciones=$bd->query($consulta);  
+		$publicaciones=$this->query($consulta);
 		return $publicaciones;
 	}
 	public function getUsuarios(){
-		$bd=new bd();
+		
 		if($this->palabra!=""){
 			$criterio=explode(" ",$_POST["palabra"]);
 			$criterio2="(";
@@ -146,15 +146,15 @@ class busqueda{
 			$criterio3=substr($criterio3,0,strlen($criterio3)-4) . ")";			
 			$consulta="(select usuarios_id as id,'U' as tipo from usuarios_naturales where $criterio2)
 				 union (select usuarios_id as id,'U' as tipo from usuarios_juridicos where $criterio3";
-			$usuarios=$bd->query($consulta);
+			$usuarios=$this->query($consulta);
 			return $usuarios;
 		}else{
 			return false;
 		}
 	}	
 	public function getEstados(){
-  		$bd=new bd();
-		 $est=$bd->doFullSelect("estados");
+  		
+		 $est=$this->doFullSelect("estados");
 		 $lista=array();
 		 $i=1;
 		 foreach($est as $e=>$valor){
@@ -168,13 +168,13 @@ class busqueda{
 		 		if($valor["tipo"]=="P"){
 		  			if($valor["usuarios_id"]!=$anterior){
 		  				$anterior=$valor["usuarios_id"];
-						$r=$bd->doSingleSelect("usuarios","id={$valor["usuarios_id"]}");
+						$r=$this->doSingleSelect("usuarios","id={$valor["usuarios_id"]}");
 						$actual=$r["estados_id"];
 					}
 		  		}else{
 		  			if($valor["id"]!=$anterior){
 		  				$anterior=$valor["id"];
-						$r=$bd->doSingleSelect("usuarios","id={$valor["id"]}");
+						$r=$this->doSingleSelect("usuarios","id={$valor["id"]}");
 						$actual=$r["estados_id"];
 					}
 		  		}
@@ -196,11 +196,11 @@ class busqueda{
 		
 	}
 	public function getCategorias(){
-  		$bd=new bd();
+  		
 		if($this->clasificados_id==""){
-		 	$cla=$bd->doFullSelect("clasificados","clasificados_id<=4 and clasificados_id is not null order by nombre");
+		 	$cla=$this->doFullSelect("clasificados","clasificados_id<=4 and clasificados_id is not null order by nombre");
 		}else{
-			$cla=$bd->doFullSelect("clasificados","clasificados_id=$this->clasificados_id order by nombre");
+			$cla=$this->doFullSelect("clasificados","clasificados_id=$this->clasificados_id order by nombre");
 		}
 		 $lista=array();	 
 		 foreach($cla as $c=>$valor){
@@ -213,14 +213,14 @@ class busqueda{
 				$condicion .=" and titulo like '%{$this->palabra}%'";
 				$consulta="select count(id) as totaC from publicaciones $condicion and clasificados_id in (select id from clasificados where 
 							ruta like '%$criterio%')";
-				$r=$bd->query($consulta);
+				$r=$this->query($consulta);
 				$row=$r->fetch();
 				$lista[$i]["totaC"]=$row["totaC"];
 		 }		  
 		 return $lista;
 	}
 	public function getCondiciones(){
-		$bd=new bd();
+		
 		$condicion="where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin is null)";
 		$operador="and";
 		if($this->palabra!=""){
@@ -235,7 +235,7 @@ class busqueda{
 		$consulta="select (select count(id) from publicaciones $condicion and condiciones_publicaciones_id=1) as tota1,
     				(select count(id) from publicaciones $condicion and condiciones_publicaciones_id=2) as tota2,
     				(select count(id) from publicaciones $condicion and condiciones_publicaciones_id=3) as tota3";
-		$r=$bd->query($consulta);
+		$r=$this->query($consulta);
 		if($r){
 			return $r->fetch();
 		}else{

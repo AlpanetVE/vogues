@@ -1,5 +1,4 @@
-<?php
- 
+<?php 
 class email {
 	private $subject=WEBPAGE;
 	private $headers;		

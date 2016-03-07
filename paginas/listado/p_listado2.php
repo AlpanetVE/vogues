@@ -1,6 +1,5 @@
 <?php
 include "clases/busqueda.php";
-include_once "clases/bd.php";
 include_once "clases/fotos.php";
 include_once "clases/publicaciones.php";
 $bd=new bd();

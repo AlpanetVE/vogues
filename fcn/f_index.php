@@ -1,6 +1,6 @@
 <?php
+require '../config/core.php';
 include_once "../clases/publicaciones.php";
-include_once "../clases/bd.php";
 include_once "../clases/usuarios.php";
 switch($_POST["metodo"]){
 	case "buscarPublicaciones":
@@ -9,11 +9,11 @@ switch($_POST["metodo"]){
 }
 
  function buscaPublicaciones(){
-    $bd=new bd();
+    
 	$inicio=(($_POST["pagina"] - 1)*5);
 	$consulta="select * from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 AND fecha_fin IS NULL) order by id desc limit 5 OFFSET $inicio";
-	$result=$bd->query($consulta);
-	$resultTotal=$bd->query("select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 AND fecha_fin IS NULL)");
+	$result=$this->query($consulta);
+	$resultTotal=$this->query("select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 AND fecha_fin IS NULL)");
 	foreach ($resultTotal as $r => $valor) {
 		$total=$valor["tota"];
 	}	

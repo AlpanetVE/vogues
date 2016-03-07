@@ -1,4 +1,4 @@
-<?php include_once 'clases/bd.php';?>
+<?php ?>
 <?php include 'modales/m_cropper.php';?>
 <div class="modal fade bs-example-modal-lg modal-conf-user" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-reg">
@@ -80,7 +80,7 @@
 						</div>
 					</section>	
 					<section class="form-apdp" style="display: none"
-						data-title="Informaciï&iquest;½n Empresarial" data-step="1" data-type="e"  >
+						data-title="Informaciï¿½&iquest;ï¿½n Empresarial" data-step="1" data-type="e"  >
 						<div class="row">
 							<div class="col-xs-12 ">
 								<span class="marL10"><i class="fa fa-list-alt"></i>

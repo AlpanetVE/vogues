@@ -1,6 +1,5 @@
 <?php
-include_once 'bd.php';
-class fotos{
+class fotos extends bd {
 	protected $table = "fotos";
 	protected $table_user = "fotos_usuarios";
 	protected $table_pub = "fotosxpublicaciones";
@@ -20,10 +19,10 @@ class fotos{
 // 		}
 // 	}
 	public function buscarFotoUsuario($id){
-		$bd = new bd();
+		
 		$table = "fotos, fotos_usuarios";
 		$condicion = "usuarios_id = $id AND fotos_id = id";
-		$result = $bd->doSingleSelect($table,$condicion);
+		$result = $this->doSingleSelect($table,$condicion);
 		if(!empty($result)){
 			return $result["ruta"].$result["id"].".png";
 		}else{
@@ -32,10 +31,10 @@ class fotos{
 	}
 	
 	public function buscarFotoPort($id){
-		$bd = new bd();
+		
 		$table = "fotos , fotos_usuarios ";
 		$condicion = "usuarios_id = $id AND fotos_id = id and status = 'P'";
-		$result = $bd->doSingleSelect($table,$condicion);
+		$result = $this->doSingleSelect($table,$condicion);
 		if(!empty($result)){
 			return $result["ruta"].$result["id"].".png";
 		}else{
@@ -45,14 +44,14 @@ class fotos{
 	
 	public function crearFotoPublicacion($id_publicacion, $dataurl)
 	{
-		$bd = new bd();
+		
 		if(substr ( $dataurl, 0, 4 ) == "data")
 		{
 			$this->ruta = $this->crearRuta();
-			$result = $bd->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 7)));
+			$result = $this->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 7)));
 			if($result){
-				$this->id = $bd->lastInsertId();
-				$bd->doInsert($this->table_pub, array("publicaciones_id" => $id_publicacion, "fotos_id" => $this->id));
+				$this->id = $this->lastInsertId();
+				$this->doInsert($this->table_pub, array("publicaciones_id" => $id_publicacion, "fotos_id" => $this->id));
 				$this->subirFoto($dataurl);
 				return true;
 			}else{
@@ -71,14 +70,14 @@ class fotos{
 		}
 	}	
 	public function crearFotoUsuario($id_usuario, $dataurl){
-		$bd = new bd();		
+				
 		if(substr ( $dataurl, 0, 4 ) == "data")
 		{
 			$this->ruta = $this->crearRuta();
-			$result = $bd->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 1)));
+			$result = $this->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 1)));
 			if($result){
-				$this->id = $bd->lastInsertId();
-				$bd->doInsert($this->table_user, array("status" => "A", "usuarios_id" => $id_usuario, "fotos_id" => $this->id));
+				$this->id = $this->lastInsertId();
+				$this->doInsert($this->table_user, array("status" => "A", "usuarios_id" => $id_usuario, "fotos_id" => $this->id));
 				$this->subirFoto($dataurl);
 				return true;
 			}else{
@@ -90,14 +89,14 @@ class fotos{
 		}
 	}
 	public function crearFotoPort($id_usuario, $dataurl){
-		$bd = new bd();		
+				
 		if(substr ( $dataurl, 0, 4 ) == "data")
 		{
 			$this->ruta = $this->crearRuta();
-			$result = $bd->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 1)));
+			$result = $this->doInsert($this->table,array("id" => 0, "ruta" => substr($this->ruta, strpos($this->ruta, "/") + 1)));
 			if($result){
-				$this->id = $bd->lastInsertId();
-				$bd->doInsert($this->table_user, array("status" => "P", "usuarios_id" => $id_usuario, "fotos_id" => $this->id)); // fotos de portada se agregan con el estado PA (portada activa)
+				$this->id = $this->lastInsertId();
+				$this->doInsert($this->table_user, array("status" => "P", "usuarios_id" => $id_usuario, "fotos_id" => $this->id)); // fotos de portada se agregan con el estado PA (portada activa)
 				$this->subirFoto($dataurl);
 				return true;
 			}else{

@@ -16,7 +16,7 @@ class restricciones{
 	 * ===========--- Contructor ---============ *
 	 * * * * * * * * * * * * * * * * * * * * * * */
 	public function restricciones($id_rol = NULL, $ruta = NULL) {
-		 
+		 parent::__construct();
 		if ($id_rol != NULL and $ruta != NULL) { 
 			$this->buscarRestriccion ( $id_rol, $ruta );
 		}

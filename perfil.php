@@ -1,4 +1,4 @@
-<?php
+<?php require 'config/core.php';
 if (!isset ( $_GET ["id"] )) {
 	header ( "Location: index.php" );
 }

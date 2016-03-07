@@ -1,4 +1,4 @@
-<?php
+<?php require 'config/core.php';
 if(!isset($_GET["tipo"])){
 	header ( "Location: index.php" );
 }

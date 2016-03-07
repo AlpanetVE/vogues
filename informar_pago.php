@@ -1,4 +1,5 @@
 <?php
+require 'config/core.php';
 // Incluimos las clases a usar.
 
 include 'clases/usuarios.php';

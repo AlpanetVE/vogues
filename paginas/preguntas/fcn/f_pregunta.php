@@ -1,6 +1,5 @@
 <?php
-include_once '../../../config/parameter.php';
-include_once "../../../clases/bd.php";
+require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
 include_once "../../../clases/email.php";

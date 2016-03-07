@@ -2,6 +2,7 @@
 if (!headers_sent()) {
 	header('Content-Type: text/html; charset=UTF-8');
 }
+require '../../config/core.php';
 include_once '../../clases/publicaciones.php';
 $publi=new publicaciones($_POST["id"]);
 $precio = str_replace(".", "", $_POST["precio"]);

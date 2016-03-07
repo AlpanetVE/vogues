@@ -1,6 +1,5 @@
 <?php
-include_once 'bd.php';
-class amigos {
+class amigos extends bd{
 	// Amigos (f)
 	protected $table = "usuarios_amigos";
 	protected $table_fav = "usuarios_favoritos";
@@ -10,8 +9,8 @@ class amigos {
 	private $result;
 	
 	public function contarMeGustan($id){
-		$bd = new bd();
-		$sql = $bd->query("SELECT COUNT(*) total FROM {$this->table_fav} WHERE favoritos_id = $id GROUP BY favoritos_id");
+		
+		$sql = $this->query("SELECT COUNT(*) total FROM {$this->table_fav} WHERE favoritos_id = $id GROUP BY favoritos_id");
 		if($sql->rowCount()>0){
 			$row = $sql->fetch();			
 			return $row["total"];
@@ -20,8 +19,8 @@ class amigos {
 		}		
 	}
 	public function yamegusta($useract,$userper){
-		$bd = new bd();
-		$sql = $bd->query("SELECT * FROM {$this->table_fav} WHERE usuarios_id = $userper AND favoritos_id = $useract");
+		
+		$sql = $this->query("SELECT * FROM {$this->table_fav} WHERE usuarios_id = $userper AND favoritos_id = $useract");
 		if($sql->rowCount()>0){			
 			return true;
 		}else{
@@ -29,8 +28,8 @@ class amigos {
 		}		
 	}
 	public function borrarFavorito($usuarios_id, $favoritos_id){
-		$bd = new bd();
-		$sql = $bd->query("DELETE FROM usuarios_favoritos WHERE usuarios_id = $usuarios_id AND favoritos_id = $favoritos_id");
+		
+		$sql = $this->query("DELETE FROM usuarios_favoritos WHERE usuarios_id = $usuarios_id AND favoritos_id = $favoritos_id");
 		if($sql->rowCount()>0){
 			return true;
 		}else{
@@ -39,7 +38,6 @@ class amigos {
 	}
 	
 	public function buscarAmigos($id,$tipo = NULL, $busqueda = NULL) {
-		$bd = new bd ();
 		$querynatural = "SELECT ua.usuarios_id numero, seudonimo, CONCAT(nombre,' ', apellido) nombre, estados_id estado
 						  FROM usuarios_naturales un, usuarios_accesos ua, usuarios u 
 						  WHERE u.id = un.usuarios_id AND u.id = ua.usuarios_id ";
@@ -73,7 +71,7 @@ class amigos {
 						  $queryjuridico) tabla, usuarios_amigos 
 					  WHERE amigos_id = numero $estado $search AND usuarios_id = ?";
 		try {
-			$sql = $bd->prepare ( $statement );
+			$sql = $this->prepare ( $statement );
 			$sql->execute ( array (
 					$id 
 			) );
@@ -83,20 +81,18 @@ class amigos {
 				return false;
 			}			 
 		} catch ( PDOException $ex ) {
-			return $bd->showError ( $ex );
+			return $this->showError ( $ex );
 		}
 	}
 	public function nuevoAmigo($fecha, $usuarios_id, $amigos_id) {
-		$bd = new bd ();
-		$bd->doInsert ( $this->table, array (
+		$this->doInsert ( $this->table, array (
 				"fecha" => $fecha,
 				"usuarios_id" => $usuarios_id,
 				"amigos_id" => $amigos_id 
 		) );
 	}
 	public function nuevoFavorito($fecha, $usuarios_id, $favoritos_id) {
-		$bd = new bd ();
-		$bd->doInsert ( $this->table_fav, array (
+		$this->doInsert ( $this->table_fav, array (
 				"fecha" => $fecha,
 				"usuarios_id" => $usuarios_id,
 				"favoritos_id" => $favoritos_id

@@ -1,32 +1,31 @@
 <?php
-include_once 'bd.php';
-
-class clasificados{
+class clasificados extends bd{
 	protected $table = "clasificados";
 	private $id;
 	private $nombre;
 	private $clasificados_id;
     private $ruta;
 	public function clasificados($id = NULL){
+		parent::__construct();
 		if(!is_null($id)){
 			$this->buscarClasificado($id);
 		}
 	}
 	public function crearClasificado($id, $nombre, $padre = NULL,$ruta=NULL){
-		$bd = new bd();
+		
 		$valores["id"] = $id;
 		$valores["nombre"] = $nombre;
 		$valores["clasificados_id"] = $padre;
 		$valores["ruta"] = $ruta;
-		if($bd->doInsert($this->table, $valores)){
+		if($this->doInsert($this->table, $valores)){
 			return true;
 		}else{
 			return false;
 		}
 	}
 	public function buscarClasificado($id){
-		$bd = new bd();
-		$row = $bd->doSingleSelect($this->table,"id = $id order by orden,nombre");
+		
+		$row = $this->doSingleSelect($this->table,"id = $id order by orden,nombre");
 		if($row){
 			$this->setClasificado($row["id"], $row["nombre"], $row["clasificados_id"], $row["ruta"]);
 			return true;
@@ -38,9 +37,9 @@ class clasificados{
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$condicion=" clasificados_id=$id  order by orden,nombre";
-		$filas=$bd->doFullSelect("clasificados",$condicion);
+		$filas=$this->doFullSelect("clasificados",$condicion);
 		if(!empty($filas)){
 			return $filas;
 		}else{
@@ -51,9 +50,9 @@ class clasificados{
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$condicion=" id in ($id)  order by orden,nombre";
-		$filas=$bd->doFullSelect("clasificados",$condicion);
+		$filas=$this->doFullSelect("clasificados",$condicion);
 		if(!empty($filas)){
 			return $filas;
 		}else{
@@ -73,10 +72,10 @@ class clasificados{
 		if(is_null($palabra)){
 			$palabra="";
 		}
-		$bd = new bd();
+		
 		$inicioHtml = "<span id='categoriaNombre'>";
 		$finHtml = "</span><i class='fa fa-angle-right' style='color:#000;' ></i>";
-        $row = $bd->doSingleSelect("clasificados","id= $id");
+        $row = $this->doSingleSelect("clasificados","id= $id");
         $cadena = "";
 		$contador=0;
         while($row["clasificados_id"] != NULL){
@@ -87,7 +86,7 @@ class clasificados{
 				$cadena = "{$inicioHtml} <a href='listado.php?id_cla={$row["id"]}'> {$nombre} </a> </span>" . $cadena;
 			}
 			$contador++;
-           	$row = $bd->doSingleSelect("clasificados","id= {$row["clasificados_id"]}");
+           	$row = $this->doSingleSelect("clasificados","id= {$row["clasificados_id"]}");
 		}
         if($palabra!=""){
         	$cadena=$cadena .  "'" . $palabra . "'";
@@ -99,10 +98,10 @@ class clasificados{
 		if(is_null($id)){
 			$id=$this->id;
 		}		
-		$bd = new bd();
+		
 		$inicioHtml = "<span id='categoriaNombre'>";
 		$finHtml = "</span><i class='fa fa-angle-right' style='color:#000;' ></i>";
-        $row = $bd->doSingleSelect("clasificados","id= $id");
+        $row = $this->doSingleSelect("clasificados","id= $id");
         $cadena = "";
 		$contador=0;
         while($row["clasificados_id"] != NULL){
@@ -113,7 +112,7 @@ class clasificados{
 				$contador++;
 				$cadena = "{$inicioHtml} {$nombre}" . "</span>" . $cadena;
 			}
-           	$row = $bd->doSingleSelect("clasificados","id= {$row["clasificados_id"]}");
+           	$row = $this->doSingleSelect("clasificados","id= {$row["clasificados_id"]}");
 		}
         $cadena = "{$inicioHtml} {$row["nombre"]} {$finHtml}$cadena";		
 		return $cadena;
@@ -141,11 +140,11 @@ class clasificados{
 		}
 		$strCondicion=is_null($condicion)?"":" and condiciones_publicaciones_id=$condicion";
 //		echo $criterioOrden;
-		$bd=new bd();
+		
 		$clasif=$this->buscarHijos($id);
 		$devolverCat=array();
 		$devolver=array();
-		$resultadoEstados=$bd->doFullSelect("estados");
+		$resultadoEstados=$this->doFullSelect("estados");
 		foreach ($resultadoEstados as $estado => $valorEstado) {
 			$estados[]=array("id"=>$valorEstado["id"],"nombre"=>$valorEstado["nombre"],"cantidad"=>0);
 		}
@@ -163,10 +162,10 @@ class clasificados{
 				}
 				$ac=0;
 				$ac2=0;
-				$rows=$bd->query($consulta);
+				$rows=$this->query($consulta);
 				foreach ($rows as $row => $valor2) {
 					$consulta="id={$valor2["usuarios_id"]}";
-					$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+					$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 					$ac+=$valor2["tota"];
 					$estados[$resultadoUsuarios["estados_id"]-1]["cantidad"]+=$ac;
 					$ac2+=$ac;
@@ -180,10 +179,10 @@ class clasificados{
 			$ac=0;
 			$consulta="select count(*) as tota,clasificados_id,usuarios_id from publicaciones where clasificados_id=$id and 
 			id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL)	$strCondicion group by clasificados_id,usuarios_id order by clasificados_id";
-			$resultado=$bd->query($consulta);
+			$resultado=$this->query($consulta);
 			foreach ($resultado as $key => $valor) {
 				$consulta="id={$valor["usuarios_id"]}";
-				$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+				$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 				foreach ($estados as $estado => $valorEstado) {
 					if($valorEstado["id"]==$resultadoUsuarios["estados_id"]){
 						$estados[$estado]["cantidad"]+=$valor["tota"];
@@ -247,12 +246,12 @@ class clasificados{
 				$consulta=$consulta . " and id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL) order by $criterioOrden limit 25 OFFSET " . $limite;
 			}
 		}
-		$publicaciones=$bd->query($consulta);
-		$nuevos=$bd->query($consultaNuevos);
+		$publicaciones=$this->query($consulta);
+		$nuevos=$this->query($consultaNuevos);
 		$rowNuevos=$nuevos->fetch();		
-		$usados=$bd->query($consultaUsados);
+		$usados=$this->query($consultaUsados);
 		$rowUsados=$usados->fetch();
-		$servicios=$bd->query($consultaServicios);
+		$servicios=$this->query($consultaServicios);
 		$rowServicios=$servicios->fetch();
 		return array("categorias"=>$devolverCat,"estados"=>$devolver,"publicaciones"=>$publicaciones,"nuevos"=>$rowNuevos["tota"],"usados"=>$rowUsados["tota"],"servicios"=>$rowServicios["tota"]); 	
     }
@@ -273,13 +272,13 @@ class clasificados{
 			$criterioOrden="monto asc";
 		}
 		$strCondicion=is_null($condicion)?"":"and condiciones_publicaciones_id=$condicion";		
-		$bd=new bd();
+		
 		$devolverCat=array();
 		$devolver=array();
 		if(is_null($id_cla)){
 			for($i=1;$i<=4;$i++){
 				$clasif=$this->buscarHijos($i);
-				$resultadoEstados=$bd->doFullSelect("estados");
+				$resultadoEstados=$this->doFullSelect("estados");
 				foreach ($resultadoEstados as $estado => $valorEstado) {
 					$estados[]=array("id"=>$valorEstado["id"],"nombre"=>$valorEstado["nombre"],"cantidad"=>0);
 				}
@@ -310,10 +309,10 @@ class clasificados{
 						}
 						$ac=0;
 						$ac2=0;
-						$rows=$bd->query($consulta);
+						$rows=$this->query($consulta);
 						foreach ($rows as $row => $valor2) {
 							$consulta="id={$valor2["usuarios_id"]}";
-							$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+							$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 							$ac+=$valor2["tota"];
 							$estados[$resultadoUsuarios["estados_id"]-1]["cantidad"]+=$ac;
 							$ac2+=$ac;
@@ -328,10 +327,10 @@ class clasificados{
 					$consulta="select count(*) as tota,clasificados_id,usuarios_id from publicaciones where clasificados_id=$id
 					$strCondicion and id in (select publicaciones_id from publicacionesxstatus where 
 					status_publicaciones_id=1 and fecha_fin IS NULL) group by clasificados_id,usuarios_id order by clasificados_id";
-					$resultado=$bd->query($consulta);
+					$resultado=$this->query($consulta);
 					foreach ($resultado as $key => $valor) {
 						$consulta="id={$valor["usuarios_id"]}";
-						$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+						$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 						foreach ($estados as $estado => $valorEstado) {
 							if($valorEstado["id"]==$resultadoUsuarios["estados_id"]){
 								$estados[$estado]["cantidad"]+=$valor["tota"];
@@ -343,7 +342,7 @@ class clasificados{
 			}
 		}else{
 			$clasif=$this->buscarHijos($id_cla);
-			$resultadoEstados=$bd->doFullSelect("estados");
+			$resultadoEstados=$this->doFullSelect("estados");
 			foreach ($resultadoEstados as $estado => $valorEstado) {
 				$estados[]=array("id"=>$valorEstado["id"],"nombre"=>$valorEstado["nombre"],"cantidad"=>0);
 			}
@@ -362,10 +361,10 @@ class clasificados{
 					}
 					$ac=0;
 					$ac2=0;
-					$rows=$bd->query($consulta);				
+					$rows=$this->query($consulta);				
 					foreach ($rows as $row => $valor2) {
 						$consulta="id={$valor2["usuarios_id"]}";
-						$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+						$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 						$ac+=$valor2["tota"];
 						$estados[$resultadoUsuarios["estados_id"]-1]["cantidad"]+=$ac;
 						$ac2+=$ac;
@@ -378,10 +377,10 @@ class clasificados{
 			}else{
 				$ac=0;
 				$consulta="select count(*) as tota,clasificados_id,usuarios_id from publicaciones where clasificados_id=$id_cla and id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL) $strCondicion group by clasificados_id,usuarios_id";
-				$resultado=$bd->query($consulta);
+				$resultado=$this->query($consulta);
 				foreach ($resultado as $key => $valor) {
 					$consulta="id={$valor["usuarios_id"]}";
-					$resultadoUsuarios=$bd->doSingleSelect("usuarios",$consulta,"estados_id");
+					$resultadoUsuarios=$this->doSingleSelect("usuarios",$consulta,"estados_id");
 					foreach ($estados as $estado => $valorEstado) {
 						if($valorEstado["id"]==$resultadoUsuarios["estados_id"]){
 							$estados[$estado]["cantidad"]+=$valor["tota"];
@@ -485,12 +484,12 @@ class clasificados{
 				$consulta.=" order by $criterioOrden limit 25 OFFSET " . $limite;
 			}
 		}
-		$publicaciones=$bd->query($consulta);
-		$nuevos=$bd->query($consultaNuevos);
+		$publicaciones=$this->query($consulta);
+		$nuevos=$this->query($consultaNuevos);
 		$rowNuevos=$nuevos->fetch();		
-		$usados=$bd->query($consultaUsados);
+		$usados=$this->query($consultaUsados);
 		$rowUsados=$usados->fetch();
-		$servicios=$bd->query($consultaServicios);
+		$servicios=$this->query($consultaServicios);
 		$rowServicios=$servicios->fetch();		
 		return array("categorias"=>$devolverCat,"estados"=>$devolver,"publicaciones"=>$publicaciones,"nuevos"=>$rowNuevos["tota"],"usados"=>$rowUsados["tota"],"servicios"=>$rowServicios["tota"]); 	
     }

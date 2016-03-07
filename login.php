@@ -1,3 +1,4 @@
+<?php require 'config/core.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php  include "fcn/incluir-css-js.php";?>

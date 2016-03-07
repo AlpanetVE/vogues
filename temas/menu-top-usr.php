@@ -86,20 +86,21 @@
 				
 				
 	<?php
+	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
+		$id_user_noti=null;
+	else 
+		$id_user_noti=$_SESSION["id"];
+	
+	
 	$usr = new usuario($_SESSION["id"]);
-	$cant_compras = $usr->getCantRespuestas();
-	$cant_ventas = $usr -> getCantNotificacionPregunta();
+	$cant_compras = $usr->getCantRespuestas($id_user_noti);
+	$cant_ventas = $usr -> getCantNotificacionPregunta($id_user_noti);
 	/*$cant_panas = $usr -> getCantPanas();
 	$cant_pub = $usr -> getCantNotiPublicaciones();*/
 	$cant_panas = 0;
 	$cant_pub = 0;
 	
-	$status = $usr -> s_status_usuarios_id;
-	
-	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
-		$id_user_noti=null;
-	else 
-		$id_user_noti=$_SESSION["id"];
+	$status = $usr -> s_status_usuarios_id;	
 	
 	$alerts = $usr -> getAllNotificaciones($id_user_noti);
 	$visto=0;

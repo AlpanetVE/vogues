@@ -1,4 +1,3 @@
-<?php include_once 'clases/bd.php';?>
 <?php include 'modales/m_cropper.php';?>
 <div class="modal fade bs-example-modal-lg modal-conf-user" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-reg">

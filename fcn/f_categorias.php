@@ -1,5 +1,4 @@
 <?php
-include_once "clases/bd.php";
 include_once "clases/usuarios.php";
 include_once "clases/fotos.php";
 $bd=new bd();
