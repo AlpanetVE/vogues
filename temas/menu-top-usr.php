@@ -1,4 +1,6 @@
-<?php if(!isset($_SESSION)){
+<?php
+include_once "clases/publicaciones.php";
+if(!isset($_SESSION)){
     session_start();	
 }
 /*else{
@@ -86,25 +88,24 @@
 				
 				
 	<?php
-	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
-		$id_user_noti=null;
-	else 
-		$id_user_noti=$_SESSION["id"];
-	
-	
 	$usr = new usuario($_SESSION["id"]);
-	$cant_compras = $usr->getCantRespuestas($id_user_noti);
-	$cant_ventas = $usr -> getCantNotificacionPregunta($id_user_noti);
-	/*$cant_panas = $usr -> getCantPanas();
-	$cant_pub = $usr -> getCantNotiPublicaciones();*/
+	
+	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2'){
+		$cant_ventas = $usr -> getCantNotificacionPregunta(null);
+		$alerts = $usr -> getAllNotificaciones(NULL);
+		$cant_compras = 0;
+	}
+	else {
+		$cant_compras = $usr->getCantRespuestas();
+		$alerts = $usr -> getAllNotificaciones();
+		$cant_ventas = 0;
+	}
 	$cant_panas = 0;
 	$cant_pub = 0;
 	
-	$status = $usr -> s_status_usuarios_id;	
+	$status = $usr -> s_status_usuarios_id;
 	
-	$alerts = $usr -> getAllNotificaciones($id_user_noti);
-	$visto=0;
-	include_once "clases/publicaciones.php";
+	$visto=0;	
 	
 	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"];
  

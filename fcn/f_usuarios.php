@@ -451,7 +451,16 @@ function newUser() {
 	
 	function updateNot(){
 		$usr = new usuario($_POST["id"]);
-		$act = $usr ->updateNotificaciones($_POST["id"]);
+		if($usr->a_id_rol=='1' || $usr->a_id_rol=='2'){
+			$id=null;
+			$tipos_notificaciones_id='1';
+		}			
+		else{
+			$id=$_POST["id"];
+			$tipos_notificaciones_id=null;
+		}			
+		
+		$act = $usr ->updateNotificaciones($id,$tipos_notificaciones_id);
 		echo "ok";
 	}	
 

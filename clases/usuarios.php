@@ -794,12 +794,15 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	
-	public function updateNotificaciones($id=NULL){
-		$id = $this->id;
-		
+	public function updateNotificaciones($id=NULL,$tipos_notificaciones_id=null){
 		$actualizar=array("leida"=>1);
-		$condicion="usuarios_id=$id and leida=0";
-		var_dump($condicion);
+		$condicion="leida=0";
+		if(!empty($id)){
+			$condicion.=" and usuarios_id=$id";
+		}
+		if(!empty($tipos_notificaciones_id)){
+			$condicion.=" and tipos_notificaciones_id=$tipos_notificaciones_id";
+		}
 		var_dump($this->doUpdate("notificaciones",$actualizar,$condicion));
 	}
 	public function countFavoritos($id=NULL){
@@ -886,7 +889,7 @@ public function setNewPassword($user,$clave){
   		}
 		return $panas;
 	}
-	public function getAllNotificaciones($id=null, $pagina=null){
+	public function getAllNotificaciones($id=null, $pagina=null, $tipos_notificaciones_id=null){
 		/*if(is_null($id)){
 			$id=$this->id;
 		}*/
@@ -896,9 +899,10 @@ public function setNewPassword($user,$clave){
 		if(!empty($id)){
 			##si envia filtro de ID es porque es usuario
 			$consulta.= " and usuarios_id=$id  ";
-		}else{
-			##traemos notifs tipo pregunta
-			$consulta.= " and tipos_notificaciones_id='1' ";				
+		}
+		if(!empty($tipos_notificaciones_id)){
+			##si envia filtro de ID es porque es usuario
+			$consulta.= " and tipos_notificaciones_id='$tipos_notificaciones_id' ";	
 		}
 		$consulta .= " ORDER BY `notificaciones`.`fecha`  DESC ";
 		
