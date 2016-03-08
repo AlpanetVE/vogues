@@ -1221,7 +1221,7 @@ color: #06C;
 }
 
 .cargador {
-	background-image: url(../galeria/img/loading.gif); background-repeat :
+	background-image: url(../galeria/img-site/loading.gif); background-repeat :
 	no-repeat;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -1345,7 +1345,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1359,7 +1359,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1372,7 +1372,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1666,7 +1666,7 @@ opacity: 1;
 	}
 	.portada {
 		height: 300px;
-		background-image: url("../galeria/img/fondos/portada2.jpg");
+		background-image: url("../galeria/img-site/fondos/portada2.jpg");
 		background-repeat: repeat;
 	}
 	.seu-nom-perfil-header {

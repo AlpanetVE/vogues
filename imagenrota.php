@@ -14,7 +14,7 @@ foreach($result as $r=>$valor){
 	}else{
 		$c2++;
 		echo "<br>NO EXISTE EL ARCHIVO: $file";
-		copy("galeria/img/actualizar_foto.png",$file);
+		copy("galeria/img-site/actualizar_foto.png",$file);
 	}
 }
 echo "<br>Existen $c1 <br>";

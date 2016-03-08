@@ -59,7 +59,7 @@ $(document ).ready(function() {
 	            	swal({
 						title: "Exito", 
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -139,7 +139,7 @@ $(document ).ready(function() {
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){
@@ -272,7 +272,7 @@ $(document ).ready(function() {
 	            				swal({
 							title: "Registro de Usuario", 
 							text: "&iexcl;Usuario Creado Exitosamente!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
@@ -283,7 +283,7 @@ $(document ).ready(function() {
 		            			swal({
 							title: "Bienvenido", 
 							text: "&iexcl;A Vogue's Eshop!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){			
@@ -413,7 +413,7 @@ $(document ).ready(function() {
 	            	swal({
 						title: "Bienvenido", 
 						text: "&iexcl;A Vogue's Eshop!",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -632,7 +632,7 @@ $('#recover-password').formValidation({
 	            	swal({
 						title: "Excelente", 
 						text: "&iexcl;Revisa tu correo!",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -744,7 +744,7 @@ $("#enviar").click(function(e){
 			swal({
 						title: "Exito", 
 						text: "Tu mensaje ha sido enviado.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 				});

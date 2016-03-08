@@ -48,7 +48,7 @@ function SweetError(text){
 	swal({
 		title: "Error, intenta de nuevo", 
 		text: "Codigo:"+  text,
-		imageUrl: "galeria/img/logos/bill-error.png",
+		imageUrl: "galeria/img-site/logos/bill-error.png",
 		showConfirmButton: true
 		});
 }

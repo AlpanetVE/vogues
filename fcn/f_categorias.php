@@ -11,26 +11,26 @@ $foto=new fotos();
        		<div class="oculto2"><a href="#"></div>     
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-       		<a href="#" ><div id="opcion5"><img src="galeria/img/iconos_cat/verificado.png" width="35" height="35" ><span class="marL5">Tiendas Verificadas </span></div></a>
+       		<a href="#" ><div id="opcion5"><img src="galeria/img-site/iconos_cat/verificado.png" width="35" height="35" ><span class="marL5">Tiendas Verificadas </span></div></a>
 	    </div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="#" ><div id="opcion1" class="active-cat"><img src="galeria/img/iconos_cat/autos motos y otros.png" width="10" height="35" class="oculto2" ><span class="marL5">Productos y otros </span></div></a>
+      		<a href="#" ><div id="opcion1" class="active-cat"><img src="galeria/img-site/iconos_cat/autos motos y otros.png" width="10" height="35" class="oculto2" ><span class="marL5">Productos y otros </span></div></a>
 	    </div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="#" ><div id="opcion2"><img src="galeria/img/iconos_cat/autos motos y otros.png" width="69" height="35"><span class="marL5">Vehiculos </span></div></a>
+      		<a href="#" ><div id="opcion2"><img src="galeria/img-site/iconos_cat/autos motos y otros.png" width="69" height="35"><span class="marL5">Vehiculos </span></div></a>
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">
-       		<a href="#" ><div id="opcion3"><img src="galeria/img/iconos_cat/inmuebles.png" width="42" height="35"><span class="marL5">Inmuebles </span></div></a>     
+       		<a href="#" ><div id="opcion3"><img src="galeria/img-site/iconos_cat/inmuebles.png" width="42" height="35"><span class="marL5">Inmuebles </span></div></a>     
 	    </div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-       		<a href="#" ><div id="opcion4"><img src="galeria/img/iconos_cat/servicios.png" width="43" height="35"><span class="marL5">Servicios </span></div></a>
+       		<a href="#" ><div id="opcion4"><img src="galeria/img-site/iconos_cat/servicios.png" width="43" height="35"><span class="marL5">Servicios </span></div></a>
     	</div>
 	</div>
 	-->
 	
 	<div class="categorias " id="productos" style="display:block"> <!-- categorias de productos y otros-->   
     <!--	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1384"><div><img src="galeria/img/iconos_cat/bebes.png" width="41" height="35"><span class="marL5 t12">Bebes </span></div></a>
+      		<a href="listado.php?id_cla=1384"><div><img src="galeria/img-site/iconos_cat/bebes.png" width="41" height="35"><span class="marL5 t12">Bebes </span></div></a>
     </div> -->
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">      
       		<a href="listado.php?id_cla=1039"><div><span class="marL5 ">Camaras  </span></div></a>
@@ -42,7 +42,7 @@ $foto=new fotos();
        		<a href="listado.php?id_cla=1648"><div><span class="marL5 ">Computaci&oacute;n </span></div></a>     
     	</div>
     <!--	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1276"><div><img src="galeria/img/iconos_cat/deportes y fitness.png" width="36" height="35"><span class="marL5 t12">Deportes y fitness </span></div></a>
+      		<a href="listado.php?id_cla=1276"><div><img src="galeria/img-site/iconos_cat/deportes y fitness.png" width="36" height="35"><span class="marL5 t12">Deportes y fitness </span></div></a>
     </div> -->
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">      
       		<a href="listado.php?id_cla=5726"><div><span class="marL5 ">Electrodomesticos </span></div></a>
@@ -52,7 +52,7 @@ $foto=new fotos();
 	    </div>  
 	   <!--
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-       		<a href="listado.php?id_cla=1246"><div><img src="galeria/img/iconos_cat/estetica y belleza.png" width="37" height="35"><span class="marL5 t12">Estetica y belleza </span></div></a>     
+       		<a href="listado.php?id_cla=1246"><div><img src="galeria/img-site/iconos_cat/estetica y belleza.png" width="37" height="35"><span class="marL5 t12">Estetica y belleza </span></div></a>     
     	</div> 
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
       		<a href="listado.php?id_cla=1574"><div><span class="marL5 ">Hogar y muebles </span></div></a>
@@ -64,28 +64,28 @@ $foto=new fotos();
       		<a href="listado.php?id_cla=3937"><div><span class="marL5 ">Relojes y joyas </span></div></a>
     	</div>
     <!--	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1182"><div><img src="galeria/img/iconos_cat/instrumentos musicales.png" width="25" height="35"><span class="marL5 t12">Instrumentos musicales </span></div></a>      
+      		<a href="listado.php?id_cla=1182"><div><img src="galeria/img-site/iconos_cat/instrumentos musicales.png" width="25" height="35"><span class="marL5 t12">Instrumentos musicales </span></div></a>      
     </div> 
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-       		<a href="listado.php?id_cla=1132"><div><img src="galeria/img/iconos_cat/juegos y juguetes.png" width="63" height="35"><span class="marL5 t12">Juegos y juguetes</span></div></a>     
+       		<a href="listado.php?id_cla=1132"><div><img src="galeria/img-site/iconos_cat/juegos y juguetes.png" width="63" height="35"><span class="marL5 t12">Juegos y juguetes</span></div></a>     
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=3025"><div><img src="galeria/img/iconos_cat/libros y audiovisuales.png" width="48" height="35"><span class="marL5 t12">Libros y audiovisuales </span></div></a>
+      		<a href="listado.php?id_cla=3025"><div><img src="galeria/img-site/iconos_cat/libros y audiovisuales.png" width="48" height="35"><span class="marL5 t12">Libros y audiovisuales </span></div></a>
     	</div>
      	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-       		<a href="listado.php?id_cla=1071"><div><img src="galeria/img/iconos_cat/animales y mascotas.png" width="22" height="35"><span class="marL5 t12">Mascotas </span></div></a>     
+       		<a href="listado.php?id_cla=1071"><div><img src="galeria/img-site/iconos_cat/animales y mascotas.png" width="22" height="35"><span class="marL5 t12">Mascotas </span></div></a>     
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1798"><div><img src="galeria/img/iconos_cat/pasatiempos.png" width="23" height="35"><span class="marL5 t12">Pasatiempos </span></div></a>
+      		<a href="listado.php?id_cla=1798"><div><img src="galeria/img-site/iconos_cat/pasatiempos.png" width="23" height="35"><span class="marL5 t12">Pasatiempos </span></div></a>
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1430"><div><img src="galeria/img/iconos_cat/prendas y calzados.png" width="45" height="35"><span class="marL5 t12">Prendas y calzados </span></div></a>      
+      		<a href="listado.php?id_cla=1430"><div><img src="galeria/img-site/iconos_cat/prendas y calzados.png" width="45" height="35"><span class="marL5 t12">Prendas y calzados </span></div></a>      
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=3937"><div><img src="galeria/img/iconos_cat/relojes, joyas.png" width="36" height="35"><span class="marL5 t12">Relojes y joyas </span></div></a>      
+      		<a href="listado.php?id_cla=3937"><div><img src="galeria/img-site/iconos_cat/relojes, joyas.png" width="36" height="35"><span class="marL5 t12">Relojes y joyas </span></div></a>      
     	</div>
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">      
-      		<a href="listado.php?id_cla=1747"><div><img src="galeria/img/iconos_cat/repuestos.png" width="73" height="35" ><span class="marL5 t12">Repuestos </span></div></a>      
+      		<a href="listado.php?id_cla=1747"><div><img src="galeria/img-site/iconos_cat/repuestos.png" width="73" height="35" ><span class="marL5 t12">Repuestos </span></div></a>      
     	</div>  -->
     	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-3">
       		<a href="listado.php?id_cla=1144"><div><span class="marL5 ">Videojuegos</span></div></a>      

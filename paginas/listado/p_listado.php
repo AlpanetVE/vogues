@@ -84,7 +84,7 @@ $ultimo=$pagina * 25;
 		<div class="row">			
 			 <div class='col-xs-12 col-sm-12 col-md-12 col-lg-12' id="noresultados" name"noresultados" style="display:none">
                          <div class='alert alert-warning2  text-left' role='alert'   >
-                         	<img src="galeria/img/logos/bill-error.png" width="100px" height="100px;" class="pull-left" style="margin-top:0px;"/>
+                         	<img src="galeria/img-site/logos/bill-error.png" width="100px" height="100px;" class="pull-left" style="margin-top:0px;"/>
                          	<div class="t16 marL20 marB5 ">No se encontraron resultados de tu busqueda.</div>
                          	<span class="t12 marL30 grisO">
                          		<i class="fa fa-caret-right marR10"></i> Verifica la ortografia en cada palabra.

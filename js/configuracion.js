@@ -68,7 +68,7 @@ $(document).ready(function(){
 	            	swal({
 						title: "Exito", 
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -137,7 +137,7 @@ $(document).ready(function(){
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){
@@ -192,7 +192,7 @@ $(document).ready(function(){
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){
@@ -248,7 +248,7 @@ $(document).ready(function(){
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){
@@ -307,7 +307,7 @@ $(document).ready(function(){
 	            swal({
 					title: title,
 					text: text,
-					imageUrl: "galeria/img/logos/"+image,
+					imageUrl: "galeria/img-site/logos/"+image,
 					timer: 2000,
 					showConfirmButton: true
 					}, function(){
@@ -381,7 +381,7 @@ $(document).ready(function(){
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){							

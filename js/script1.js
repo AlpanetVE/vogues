@@ -59,7 +59,7 @@ $(document ).ready(function() {
 	            	swal({
 						title: "Exito", 
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -139,7 +139,7 @@ $(document ).ready(function() {
 	            	swal({
 						title: "Exito",
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000,
 						showConfirmButton: true
 						}, function(){
@@ -270,7 +270,7 @@ $(document ).ready(function() {
 		        	swal({
 						title: "Bievenido", 
 						text: "&iexcl;Compra y vende lo que quieras!",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){			
@@ -396,7 +396,7 @@ $(document ).ready(function() {
 	            		//html:true, //se debe agregar en true para que permita entidades hmtl
 						title: "Bienvenido", 
 						text: "&iexcl;A Vogues Eshop!",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -636,7 +636,7 @@ $("#enviar").click(function(e){
 			swal({
 						title: "Exito", 
 						text: "Tu mensaje ha sido enviado.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 				});

@@ -90,7 +90,7 @@ function sendRespuesta(){
       <html lang="es"><body>
 		<div style=" padding 20px; text-align:left; margin: 20px;">
 		<div style="width:500px;background:#fff; color:#666; padding:20px; margin-left:30px; margin-right:30px;">
-		<div style="text-align:left; padding-bottom:10px; border-bottom: 1px solid #CCC;"><img src="http://vogueseshop.com/galeria/img/logos/logo-header2.png"></div>
+		<div style="text-align:left; padding-bottom:10px; border-bottom: 1px solid #CCC;"><img src="http://vogueseshop.com/galeria/img-site/logos/logo-header2.png"></div>
 		<br>';	
 		
 		

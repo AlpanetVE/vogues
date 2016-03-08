@@ -10,7 +10,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title " >
-					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span id="usr-reg-title-admin"
+					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="usr-reg-title-admin"
 						class="marL15">Registrar administrador</span>
 				</h3>
 			</div>

@@ -53,6 +53,7 @@ class clasificados extends bd{
 		
 		$condicion=" id in ($id)  order by orden,nombre";
 		$filas=$this->doFullSelect("clasificados",$condicion);
+		 
 		if(!empty($filas)){
 			return $filas;
 		}else{

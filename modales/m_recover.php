@@ -12,7 +12,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<br>
-				<img alt="" src="galeria/img/logos/logo-modal2.png" width="auto" height="150px"
+				<img alt="" src="galeria/img-site/logos/logo-modal2.png" width="auto" height="150px"
 					class="center-block ">
 				<h2 class="text-center me-p_contenido" style="color: #000;">Recuperar contrase&ntilde;a</h2>
 				<br>

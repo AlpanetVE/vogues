@@ -9,7 +9,7 @@ aria-labelledby="myLargeModalLabel" id="add-msj">
 					aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h3 class="modal-title " ><img src="galeria/img/logos/mascota.png" width="50" height="51"><span
+					<h3 class="modal-title " ><img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span
 					class="marL15"><span id="titulo" name="titulo">Mensaje Nuevo / Editar Mensaje</span></h3>
 				</div>
 				<div class="modal-body marL20 marR20 ">
@@ -22,27 +22,27 @@ aria-labelledby="myLargeModalLabel" id="add-msj">
 							<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 								<div class="cfb_manager">
 									 <div id="fffb" data-rs="fb" class="redsocial" style="position: relative">
-									 <a href="#"><img id="f-fb" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+									 <a href="#"><img id="f-fb" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 									 <i id="fb" data-fb="0" class="fa fa-check-circle green" style="display: none; position: absolute; top: 2px; right: 40px;"></i>
 									 </div>
 									 <div class="marB5 text-center ">Facebook</div>
 								</div>
 								<div class="cfp_manager">
 									 <div id="fffp" data-rs="fp" class="redsocial"style="position: relative">
-									  <a href="#"><img id="f-fp" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+									  <a href="#"><img id="f-fp" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 									 <i id="fp" data-fp="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i>
 									 </div> 
 									<div class="marB5 text-center">FanPage</div>	
 								</div>
 								<div class="ctw_manager">
 									<div id="fftw" data-rs="tw" class="redsocial" style="position: relative">
-									  <a href="#"><img id="f-tw" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+									  <a href="#"><img id="f-tw" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 									 <i id="tw" data-tw="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i>
 									 </div>
 									 <div class="marB5 text-center">Twitter</div>
 								</div>
 									 <div id="ffgr" data-rs="gr" class="redsocial"style="position: relative">
-									  <a href="#"><img id="f-gr" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+									  <a href="#"><img id="f-gr" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 									 <i id="gr" data-gr="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i>
 									 </div>
 									<div class="marB5 text-center">Grupo</div>

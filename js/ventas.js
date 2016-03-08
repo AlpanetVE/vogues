@@ -76,7 +76,7 @@ $(document).ready(function(){
            		swal({
 					title: "Exito", 
 					text: mensaje,
-					imageUrl: "galeria/img/logos/bill-ok.png",
+					imageUrl: "galeria/img-site/logos/bill-ok.png",
 					timer: 2000, 
 					showConfirmButton: true
 					}, function(){
@@ -166,9 +166,9 @@ $(document).ready(function(){
 		var precio=$("#monto").val();
 		var precio=montoFormateado;
 		var titulo=$("#titulo").val();
-		var descripcion=$("#btn-social-act").data("descripcion");
+		var descripcion=$("#descripcion_"+id).val();
 		$.ajax({
-			url:"paginas/venta/p_edit_publicaciones.php",
+			url:"paginas/venta/fcn/f_edit_publicaciones.php",
 			data:{id:id,cantidad:cantidad,precio:precio,titulo:titulo,descripcion:descripcion},
 			type:"POST",
 			dataType:"html",
@@ -227,7 +227,7 @@ $(document).ready(function(){
 	            		swal({
 							title: "Exito", 
 							text: "Se actualizo correctamente.",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
