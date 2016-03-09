@@ -3,7 +3,7 @@
 </head>
 	<div id="wowslider-container2"  >
 	<div class="ws_images"><ul>
-		<li><img src="galeria/img/apdp-slide/baner2.jpg"  title="slide_1" id="wows1_0"/></li>
+		<li><img src="galeria/img-site/slider/banner-a.jpg"  title="slide_1" id="wows1_0"/></li>
 	</div>
 	<div class="ws_shadow"></div>
 	</div>	

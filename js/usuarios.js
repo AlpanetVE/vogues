@@ -139,7 +139,7 @@ $("#update_usr-reg-submit").click(function(){
 	            				swal({
 							title: "Registro de Usuario", 
 							text: "&iexcl;Usuario Creado Exitosamente!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
@@ -216,7 +216,7 @@ $('#usr-update-form').formValidation({
 	            	swal({
 							title: "Usuario Actualizado", 
 							text: "&iexcl;Usuario Actualizado Exitosamente!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){

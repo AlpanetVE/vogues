@@ -15,7 +15,7 @@ $(document).ready(function() {
 	$(".catg").click(function() {
 		var laimagen = $(this).children("img").attr("src");
 		$.ajax({
-			url : "paginas/publicar/p_publicar1-2.php",
+			url : "paginas/publicar/fcn/f_publicar1-2.php",
 			data : {
 				id_clasificados : $(this).data("idcatg")
 			},
@@ -89,7 +89,7 @@ $(document).ready(function() {
 		var laimagen = $("#imagenclasificado").attr("src");
 		//ejecutamos ajax para pasar a 2.
 		$.ajax({
-			url : "paginas/publicar/p_publicar2.php",
+			url : "paginas/publicar/fcn/f_publicar2.php",
 			data : {
 				id : $("#ajaxListas > div").last().find(".form-select-publicar").val()				
 			},
@@ -215,7 +215,7 @@ $(document).ready(function() {
 										swal({
 											title: "Exito",
 											text: text,
-											imageUrl: "galeria/img/logos/bill-ok.png",
+											imageUrl: "galeria/img-site/logos/bill-ok.png",
 											showConfirmButton: true
 											}, function(){			
 												document.location.href = 'detalle.php?id='+data.id;

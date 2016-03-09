@@ -26,7 +26,7 @@ class fotos extends bd {
 		if(!empty($result)){
 			return $result["ruta"].$result["id"].".png";
 		}else{
-			return "galeria/img/logos/silueta-bill.png";
+			return "galeria/img-site/logos/silueta-bill.png";
 		}
 	}
 	
@@ -38,7 +38,7 @@ class fotos extends bd {
 		if(!empty($result)){
 			return $result["ruta"].$result["id"].".png";
 		}else{
-			return "galeria/img/fondos/portada.png";
+			return "galeria/img-site/fondos/portada.png";
 		}
 	}
 	
@@ -143,7 +143,7 @@ class fotos extends bd {
 	}
 	
 	public function updateFoto($ruta,$dataurl,$id){
-		if($ruta == "galeria/img/logos/silueta-bill.png")
+		if($ruta == "galeria/img-site/logos/silueta-bill.png")
 		{
 			return $this->crearFotoUsuario($id, $dataurl);
 		}else{
@@ -152,7 +152,7 @@ class fotos extends bd {
 	}
 	
 	public function updatePort($ruta,$dataurl,$id){
-		if($ruta == "galeria/img/fondos/portada.png")
+		if($ruta == "galeria/img-site/fondos/portada.png")
 		{
 			return $this->crearFotoPort($id, $dataurl);
 		}else{

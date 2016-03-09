@@ -21,7 +21,7 @@ if(!isset($_SESSION)){
 					class="icon-bar"></span>
 			</button>
 			<a href="index.php" class="navbar-brand"> <img style=""
-				class=" marT5 marB5 marL5" src="galeria/img/logos/logo-header.png"
+				class=" marT5 marB5 marL5" src="galeria/img-site/logos/logo-header.png"
 				width="auto" height="50px">
 			</a>
 		</div>

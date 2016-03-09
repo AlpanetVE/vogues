@@ -90,7 +90,7 @@ function getUser() {
 	}
 	/***no poseen foto los usuarios de la tienda**/
 	/*$foto = new fotos();*/
-	$valores ['ruta'] = 'galeria/img/logos/silueta-bill.png';
+	$valores ['ruta'] = 'galeria/img-site/logos/silueta-bill.png';
 	echo json_encode ( array (
 			"result" => "OK",
 			"campos" => $valores

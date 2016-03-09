@@ -328,7 +328,7 @@ class usuario extends bd {
 			return false;
 	}	
 
-public function setNewPassword($user,$clave){		
+public function setNewPassword($user,$clave){	
 				
 		$clave = hash ( "sha256", $clave );		
 				

@@ -8,7 +8,7 @@ aria-labelledby="myLargeModalLabel" id="red-social">
 				aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h3 class="modal-title " ><img src="galeria/img/logos/mascota.png" width="50" height="51"><span
+				<h3 class="modal-title " ><img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span
 				class="marL15">Seleccionar Redes Sociales</span></h3>
 			</div>
 
@@ -23,27 +23,27 @@ aria-labelledby="myLargeModalLabel" id="red-social">
 						<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 							<div class="cfb_manager">
 								 <div data-rs="fb" id="ccfb" class="compartir" style="position: relative">
-								 <a href="#"><img id="c-fb" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+								 <a href="#"><img id="c-fb" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 								 <i id="cfb" data-fb="0" class="fa fa-check-circle green" style="display: none; position: absolute; top: 2px; right: 40px;"></i> <!-- data fb en id cfb -->
 								 </div>
 								 <div class="marB5 text-center ">Facebook</div>
 							</div>
 							<div class="cfp_manager">
 								<div data-rs="fp" id="ccfp" class="compartir"style="position: relative">
-								  <a href="#"><img id="c-fp" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+								  <a href="#"><img id="c-fp" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 								 <i id="cfp" data-fp="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i> <!-- data fp en id cfp -->
 								 </div> 
 								<div class="marB5 text-center">FanPage</div>
 							</div>		
 							<div class="ctw_manager">
 								<div id="cctw" data-rs="tw" class="compartir" style="position: relative">
-								  <a href="#"><img id="c-tw" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+								  <a href="#"><img id="c-tw" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 								 <i id="ctw" data-tw="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i> <!-- data tw en id ctw -->
 								 </div>
 								 <div class="marB5 text-center">Twitter</div>
 							</div>
 							 <div data-rs="gr" id="ccgp" class="compartir"style="position: relative">
-							  <a href="#"><img id="c-gr" src="galeria/img/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
+							  <a href="#"><img id="c-gr" src="galeria/img-site/logos/silueta-bill.png" class="img-red-perfil center-block marB5 opacity"   /> </a>
 							 <i id="cgr" data-gr="0" class="fa fa-check-circle green" style="display: none;  position: absolute; top: 2px; right: 40px;"></i> <!-- data gr en id cgr -->
 							 </div>
 							<div class="marB5 text-center">Grupo</div>
