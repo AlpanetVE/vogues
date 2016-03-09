@@ -3,4 +3,4 @@
 .metadata
 
 #base de datos config
-clases/bd.php
+config/config_var.php
