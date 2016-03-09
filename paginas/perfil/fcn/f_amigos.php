@@ -19,7 +19,6 @@ if (isset ( $_GET ["id"] )) :
 	$usuario = new usuario ( $_GET ["id"] ); // instanciamos la clase usuario(perfil a ver)
 	$amigos = new amigos ();
 	$foto = new fotos ();
-	$bd = new bd ();
 	
 	endif;
 if (isset ( $_SESSION ["id"] )) {
