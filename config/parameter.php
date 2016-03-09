@@ -12,5 +12,3 @@
 	foreach($json_params as $campo=>$valor){
 		define($campo, $valor);
 	}
-	
-?>
