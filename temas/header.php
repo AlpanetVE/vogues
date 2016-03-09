@@ -5,13 +5,11 @@ if (! isset ( $_SESSION )) {
 	session_start();
 }
 if(isset($_COOKIE["c_id"])){
-	 
 	$_SESSION["id"]=$_COOKIE["c_id"];
 	$_SESSION["seudonimo"]=$_COOKIE["c_seudonimo"];
 	$_SESSION["fotoperfil"]=$_COOKIE["c_fotoperfil"];
 	$_SESSION["nivel"]=$_COOKIE["c_nivel"];	
 	$_SESSION["id_rol"]=$_COOKIE["c_id_rol"];	
-	
 }
 if (isset ( $_SESSION ["id"] )) {
 	include_once "clases/usuarios.php";

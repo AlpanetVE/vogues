@@ -9,7 +9,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 			<?php include "paginas/listado/p_listado2.php"; ?>
 		</div>
-	</div>
+</div>
 <?php 
 include "temas/footer.php";
 include "modales/m_registrar.php";

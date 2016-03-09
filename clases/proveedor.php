@@ -3,18 +3,18 @@ class proveedor extends bd {
 	/* * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Attributes ---============ *
 	 * * * * * * * * * * * * * * * * * * * * * * */
-	protected $p_table = "proveedor";
-	private $p_id = 0;
+	protected $p_table = "proveedores";
+	private $id = 0;
 	private $p_documento;
 	private $p_nombre;
 	private $p_telefono;
 	private $p_direccion;
 	private $p_email;
 
-	protected $b_table = "proveedor_bancos";
-	private $b_id = 0;
+	protected $b_table = "proveedores_bancos";
 	private $b_proveedor;
 	private $b_banco;
+	private $b_nro_cuenta;
 	
 	/* * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Contructor ---============ *
@@ -41,10 +41,28 @@ class proveedor extends bd {
 			return false;
 		}
 	}
+	public function crearProveedor($id) {
+		$this->defaultClass();
+		$result = $this->doInsert ( $this->p_table, $this->serializarDatos ( "p_" ) );
+		$result = $this->doInsert ( $this->b_table, $this->serializarDatos ( "b_" ) );
+	}
+	public function getProveedores($campos = null){
+		$campos=is_null($campos)?"*":$campos;
+		$preguntas=array();
+		$consulta="select $campos FROM proveedores WHERE 1";
+        $result=$this->query($consulta);
+		return $result;
+	}
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Private Methods ---=========== *
 	 * * * * * * * * * * * * * * * * * * * * * * * * */
-	private function serializarDatos($prefix = "u_", $foreign_table = false) {
+	private function defaultClass() {
+		foreach ( get_class_vars ( get_class ( $this ) ) as $name => $default ) {
+			$this->$name = $default;
+		}
+	}
+	private function serializarDatos($prefix = "p_", $foreign_table = false) {
 		$reflection = new ReflectionObject ( $this );
 		$properties = $reflection->getProperties ( ReflectionProperty::IS_PRIVATE );
 		foreach ( $properties as $property ) {
