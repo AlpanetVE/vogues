@@ -16,9 +16,17 @@ include_once "fcn/varlogin.php";
 	<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ">
 		<?php include "temas/menu-left-usr.php";?>
 	</div>
+	<?php if($_GET["type"]=='1') { ?> 
 	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">	
 		<div class="marL20 " id="primero" name="primero"><?php include "paginas/venta/p_admin_publicaciones.php";?></div>
 	</div>
+	<?php }?>
+	<?php if($_GET["type"]=='2') { ?> 
+	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">	
+		<div class="marL20 " id="primero" name="primero"><?php include "paginas/venta/p_ventas.php";?></div>
+	</div>
+	<?php }?>
+	
 	</div>
 </div>
 <?php include "modales/m_edit_publicacion.php";?>
