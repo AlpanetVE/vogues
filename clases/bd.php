@@ -12,10 +12,10 @@
 class bd extends PDO {
 	private $driver = "mysql";
 	private $host = "localhost";
-	private $bd_name = "vogues";
+	private $bd_name = DB_NAME;
 	private $bd_charset = "utf8";
-	private $user = "root";
-	private $password = "";
+	private $user = DB_USER;
+	private $password = DB_PASS;
 	private $options = array (
 			PDO::ATTR_EMULATE_PREPARES => true,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -70,7 +70,7 @@ class bd extends PDO {
 			$condition = "WHERE $condition";
 		}
 		$stament = "SELECT {$columns} FROM {$table} {$condition}";
-		//return $stament;
+	//return $stament;
 		try {
 			$sql = $this->query ( $stament );
 			$this->rowcount=$sql->rowCount();
@@ -80,6 +80,8 @@ class bd extends PDO {
 				return false;
 			}
 		} catch ( PDOException $ex ) {
+				var_dump($stament);
+		var_dump($condition);
 			return $this->showError ( $ex );
 		}
 	}

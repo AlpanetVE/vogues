@@ -25,9 +25,9 @@ $(document).ready(function(){
 				}
 			});
 		}*/
-	$('#editor').trumbowyg({
+	/*$('#editor').trumbowyg({
 		lang : 'es'
-	});
+	});*/
 	$("#monto").autoNumeric({aSep: '.', aDec: ','});
 	$("#ven-form-mod").formValidation({
 		locale: 'es_ES',
@@ -130,6 +130,24 @@ $(document).ready(function(){
 			}
 		});
 	});
+	
+	
+	$(".pesta-ventas").click(function(){
+		if($("#sin-concretar").hasClass("hidden")){
+			$("#sin-concretar").removeClass("hidden");
+			$("#concretadas").addClass("hidden");
+			$("#paginacion").removeClass("hidden");
+			$("#paginacion2").addClass("hidden");			
+		}else{
+			$("#sin-concretar").addClass("hidden");
+			$("#concretadas").removeClass("hidden");
+			$("#paginacion2").removeClass("hidden");
+			$("#paginacion").addClass("hidden");
+		}
+		$(".pesta-ventas").removeClass("active");
+		$(this).addClass("active");
+	});
+	
 	$("#filtro").change(function(){	 
 		var tipo;
 		if($("#irActivas").hasClass('active')){

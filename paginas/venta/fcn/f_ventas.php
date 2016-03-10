@@ -1,9 +1,9 @@
 <?php
+require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
-include_once "../../../clases/bd.php";
 include_once "../../../clases/amigos.php";
-include_once "../../../clases/comprasventas.php";
+include_once "../../../clases/ventas.php";
 include_once "../../../clases/fotos.php";
 switch($_POST["metodo"]){
 	case "buscarPublicaciones":

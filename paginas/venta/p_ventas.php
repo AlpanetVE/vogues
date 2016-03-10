@@ -105,7 +105,7 @@ $clasesP2="";
 				foreach ($listaVentas as $l => $valor):
 					$usua=new usuario($valor["usuarios_id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
-					$venta=new comprasventas($valor["id"]);
+					$venta=new ventas($valor["id"]);
 					$statusPago=$venta->getStatusPago();
 					switch($statusPago){
 						case "Pago pendiente":
@@ -136,10 +136,10 @@ $clasesP2="";
 //					$statusEnvio=$venta->getStatusEnvio();
 				?>
 				<div id="venta<?php echo $valor["id"];?>" class="general" data-titulo='<?php echo $usua->getNombre() . $usua->a_seudonimo;?>'>
-					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14'>
 						 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 						<br>
-						<span class=''><a href="<?php echo $usua->a_seudonimo;?>"><?php echo $usua->a_seudonimo;?></a></span>
+						<span class=''><a href="#"><?php echo $usua->a_seudonimo;?></a></span>
 						<br>
 						<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 						<br>
@@ -147,12 +147,12 @@ $clasesP2="";
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
 							<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
-							<a href="publicacion-<?php echo $publi->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
+							<a href="#"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
 							style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 						<div style="margin-left: 3%;">
-						<span class='detalle.php'> <a href='publicacion-<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
+						<span class='detalle.php'> <a href='#'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
 						<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 						</div>
