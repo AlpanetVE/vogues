@@ -25,7 +25,7 @@
 			<ul class="submenu ">
 				<li class="" ><a href="favoritos.php">Favoritos</a></li>
 				<li class=""><a href="preguntas.php?tipo=2">Preguntas</a></li>
-				<li class="" ><a href="#">Compras</a></li>
+				<li class="" ><a href="compras.php">Compras</a></li>
 				
 			</ul>
 		</li>

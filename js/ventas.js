@@ -383,6 +383,457 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$("#ventas").css("display","block");
-	$("#uno1").addClass("active");
+	
+	$(document).on("click",".botonPaginaventas",function(){
+		var pagina=$(this).data("pagina");
+		var elemento=$(this);
+		if($("#sin-concretar").hasClass("hidden")){
+			var eldiv=$("#concretadas");
+			var origen=3;
+			var metodo="paginar2";
+		}else{
+			var eldiv=$("#sin-concretar");
+			var origen=1;
+			metodo="paginar1";
+		}
+		var orden=$("#filtro").val();		
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/venta/fcn/f_ventas.php",
+			data:{metodo:metodo,pagina:pagina,origen:origen,orden:orden},
+			type:"POST",
+			dataType:"html",
+			success:function(data){
+				if(origen==1){
+					$('#paginacion').find('li').removeClass("active");
+				}else{
+					$('#paginacion2').find('li').removeClass("active");
+				}
+				elemento.parent().addClass("active");
+				eldiv.html(data);
+				loadingAjax(false);
+			}
+		});
 	});
+	
+	$(document).on("click",".vinculopagos",function(){
+		var id=$(this).attr("id").substr(4);
+		if($(this).data("target")==="#pagos-ven2"){
+			var pagina="paginas/venta/fcn/f_pagos2.php";
+			var elDiv=$("#ajaxcontainer2");
+		}else{
+			var pagina="paginas/venta/fcn/f_pagos.php";
+			var elDiv=$("#ajaxcontainer");
+		}
+		$.ajax({
+			url : pagina,
+			data : {id:id},
+			type : "POST",
+			dataType : "html",
+			success : function(data){
+				elDiv.html(data);
+				actual=id;
+			}
+		});
+	});
+	
+	$("#ventas").css("display","block");	
+				switch($('body').data("tipo")){
+					case 1:
+						$("#uno1").addClass("active");
+						break;
+					case 2:
+						$("#uno2").addClass("active");
+						break;
+					case "":
+						$("#uno1").addClass("active");
+						break;		
+				}
+	$("#ajaxcontainer").on("click",".boton-status",function(e){
+		//fa fa-clock-o naranja-apdp
+		//fa fa-thumbs-o-up verde-apdp
+		//fa fa-remove rojo-apdp
+		e.preventDefault();
+		if($(this).data("indice")==1){
+			return false;
+		}
+		var id=$(this).data("id");
+		var anterior=$("#primero" + id).text();
+		if(pagos!="")
+		pagos+=",";		
+		pagos+=id + " ";
+		pagos+=$(this).data("texto");	
+		$("#primero" + id).text($(this).data("texto"));
+		$("#iconoa" + id).removeClass();
+		$("#iconob" + id).removeClass();
+		$("#iconoc" + id).removeClass();		
+		if($(this).data("texto")=="Pendiente"){
+			$("#iconoa" + id).addClass("fa fa-clock-o naranja-apdp");
+			$("#iconob" + id).addClass("fa fa-thumbs-o-up verde-apdp");
+			$("#iconoc" + id).addClass("fa fa-remove rojo-apdp");
+			$("#segundo" + id).text("Verificar");
+			$("#tercero" + id).text("Rechazar");			
+			$(this).data("texto","Verificado");
+			$(this).next().data("texto","Rechazado");
+		}else if($(this).data("texto")=="Verificado"){
+			$("#iconoa" + id).addClass("fa fa-thumbs-o-up verde-apdp");
+			$("#iconob" + id).addClass("fa fa-clock-o naranja-apdp");
+			$("#iconoc" + id).addClass("fa fa-remove rojo-apdp");						
+			$("#segundo" + id).text("Pendiente");
+			$("#tercero" + id).text("Rechazar");
+			if($(this).data("indice")==2){			
+				$(this).data("texto","Pendiente");
+				$(this).next().data("texto","Rechazado");
+			}else{
+				$("#iconoa" + id).addClass("fa fa-clock-o naranja-apdp");				
+				$(this).prev().data("texto","Pendiente");
+				$(this).data("texto","Rechazado");				
+			}
+		}else if($(this).data("texto")=="Rechazado"){
+			$("#iconoa" + id).addClass("fa fa-remove rojo-apdp");
+			$("#iconob" + id).addClass("fa fa-clock-o naranja-apdp");
+			$("#iconoc" + id).addClass("fa fa-thumbs-o-up verde-apdp");
+			$("#segundo" + id).text("Pendiente");
+			$("#tercero" + id).text("Verificado");		
+			$(this).data("texto","Verificado");
+			$(this).prev().data("texto","Pendiente");
+		}
+	});
+	
+	$("#btn-guardar").click(function(){
+		if(pagos!=""){
+			loadingAjax(true);
+			$.ajax({
+				url:"paginas/venta/fcn/f_ventas.php",
+				data:{metodo:"actualizarPagos",pagos:pagos,id:actual},
+				type:"POST",
+				dataType:"html",
+				success:function(data){
+					loadingAjax(false);
+					pagos="";
+					console.log(data);					
+					$("#pago" + actual + ">span").html(data);
+					$("#pago" + actual + ">i").first().removeClass();
+					switch(data){
+						case "Pago verificado":
+							$("#pago" + actual + ">i").first().addClass("fa fa-credit-card verde-apdp");
+							break;
+						case "Pago incompleto":			
+							$("#pago" + actual + ">i").first().addClass("fa fa-credit-card naranja-apdp");
+							break;
+						case "Pago rechazado":		
+							$("#pago" + actual + ">i").first().addClass("fa fa-credit-card rojo-apdp");						
+							break;
+						case "Pago pendiente":
+							$("#pago" + actual + ">i").first().addClass("fa fa-credit-card amarillo-apdp");						
+							break;							
+					}
+				}
+			});
+		}
+	});
+	
+	$(document).on("click",".vinculoenvios",function(e){
+		e.preventDefault();
+		var id=$(this).attr("id").substr(5);
+		var maximo=$(this).data("maximo");
+		//var status=$(this).data("status");
+		var status=$("#pago" + id + ">span").first().text();
+		if(status!="Pago verificado"){			
+			return false;
+		}
+		$("#envios-ven").modal('show');
+		$.ajax({
+			url : "paginas/venta/fcn/f_envios.php",
+			data : {id:id},
+			type : "POST",
+			dataType : "html",
+			success : function(data){
+				$("#ajaxcontainer3").html(data);
+				$("#p_cantidad").attr("max",maximo);
+				actual=id;
+				if(maximo<=0){
+					$("#btn-agregar-guia").addClass("hidden");					
+				}else{
+					$("#btn-agregar-guia").removeClass("hidden");
+				}
+				$("#frm-reg-envios").formValidation({
+					locale: 'es_ES',
+					excluded: ':hidden',
+					framework : 'bootstrap',
+					icon : {
+						valid : 'glyphicon glyphicon-ok',
+						invalid : 'glyphicon glyphicon-remove',
+						validating : 'glyphicon glyphicon-refresh'
+					},
+					addOns: { i18n: {} },
+					err: { container: 'tooltip',  },
+					fields:{
+						p_cantidad:{validators:{
+							notEmpty:{}}},
+						p_agencia:{validators:{
+							notEmpty:{}}},
+						p_numero:{validators:{
+							notEmpty:{}}},							
+						p_direccion:{validators:{
+							notEmpty:{}}}
+						}
+				}).on('success.form.fv',function(e){
+					e.preventDefault();
+					var form = $(e.target);
+					form=$("#frm-reg-envios").serialize() + "&metodo=guardarEnvio&id=" + actual;
+					$.ajax({
+						url : "paginas/venta/fcn/f_ventas.php",
+						data : form,
+						type : "POST",
+						dataType : "html",
+						success : function(data){
+							console.log(data);
+							$("#ajaxcontainer3").load("paginas/venta/fcn/f_envios.php",{id:actual});
+							var faltante=$("#p_cantidad").attr("max") - $("#p_cantidad").val();
+							$("#envio" + actual).data("maximo",faltante);
+							if(faltante==0){
+								$("#p_cantidad").attr("max",faltante);
+								$("#p_cantidad").val("");
+								$("#p_direccion").val("");
+								$("#p_numero").val("");
+								$("#p_fecha").val("");
+								$("#p_monto").val("");
+								$("#p_agencia").val("");				
+								swal({
+									title: "Envio realizado",
+									text: "Se completo el envio",
+									imageUrl: "galeria/img/logos/bill-ok.png",
+									showConfirmButton: true
+								});
+								$("#envios-ven").modal("hide");						
+								$("#envio" + actual + ">span").first().text("Enviado");
+								$("#envio" + actual + ">i").first().removeClass("rojo-apdp naranja-apdp");
+								$("#envio" + actual + ">i").first().addClass("verde-apdp");
+								$("#concretadas").append($("#venta" + actual));
+								return false;
+							}
+							$("#p_cantidad").attr("max",faltante);
+							$("#p_cantidad").val("");
+							$("#p_direccion").val("");
+							$("#p_numero").val("");
+							$("#p_fecha").val("");
+							$("#p_monto").val("");
+							$("#p_agencia").val("");
+							$("#btn-agregar-guia").removeClass("hidden");
+							$("#btn-guardar2").removeClass("hidden");
+							$("#btn-guardar-guia").addClass("hidden");
+							$("#envio" + actual + ">span").first().text("En camino");
+							$("#envio" + actual + ">i").first().removeClass("naranja-apdp rojo-apdp");
+							$("#envio" + actual + ">i").first().addClass("naranja-apdp");							
+						}
+					});
+					$("#frm-envios").slideUp();
+		       });
+			}
+		});
+	});
+	
+	$(document).on("click",".vinculodescuento",function(){
+		actual=$(this).attr("id").substr(4);
+		total=$(this).data("monto");
+		$("#frm-reg-desc").formValidation({
+			locale: 'es_ES',
+			excluded: ':hidden',
+			framework : 'bootstrap',
+			icon : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			addOns: { i18n: {} },
+			err: { container: 'tooltip',  },
+			fields:{
+				p_descuento:{validators:{
+					notEmpty:{},
+					between:{min:1,max:total}}}
+			}
+			}).on('success.form.fv',function(e){
+					monto=$("#p_descuento").val();
+					e.preventDefault();
+					$.ajax({
+						url:"paginas/venta/fcn/f_ventas.php",
+						data:{metodo:"guardarDescuento",id:actual,monto:monto},
+						type:"POST",
+						dataType:"html",
+						success:function(data){
+							$("#pago" + actual + ">span").text(data);
+							$("#pago" + actual + ">i").removeClass();
+							switch(data){
+								case "Pago pendiente":
+									$("#pago" + actual + ">i").addClass("fa fa-credit-card amarillo-apdp");								
+									break;
+								case "Pago rechazado":
+									$("#pago" + actual + ">i").addClass("fa fa-credit-card rojo-apdp");
+									break;
+								case "Pago verificado":
+									$("#pago" + actual + ">i").addClass("fa fa-credit-card verde-apdp");
+									break;
+								case "Pago incompleto":
+									$("#pago" + actual + ">i").addClass("fa fa-credit-card naranja-apdp");
+									break;
+							}						
+						}
+					});
+					$("#descuento").modal('hide');
+			});		
+	});
+	
+	$(document).on("click",".vinculocomentario",function(){
+		$("#p_comentario").val($(this).data("nota"));
+		actual=$(this).attr("id").substr(5);
+		$("#frm-reg-comentario").formValidation({
+			locale: 'es_ES',
+			excluded: ':hidden',
+			framework : 'bootstrap',
+			icon : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			addOns: { i18n: {} },
+			err: { container: 'tooltip',  },
+			fields:{
+				p_comentario:{validators:{
+					notEmpty:{}}}
+			}
+			}).on('success.form.fv',function(e){
+				e.preventDefault();
+				var nota=$("#p_comentario").val();
+				$.ajax({
+					url:"paginas/venta/fcn/f_ventas.php",
+					data:{metodo:"guardarComentario",id:actual,nota:nota},
+					type:"POST",
+					dataType:"html",
+					success:function(data){
+						console.log(data);
+						$("#comen" + actual).data("nota",nota);
+						$("#comentario").modal('hide');
+					}
+				});
+		});
+	});
+	
+	$("#btn-agregar-guia").click(function(e){
+		e.preventDefault();
+		$(this).addClass("hidden");
+		$("#btn-guardar2").addClass("hidden");
+		$("#btn-guardar-guia").removeClass("hidden");
+		$("#frm-envios").slideDown();
+	});
+	
+	function validacion(){
+		swal({
+			title: "Falta datos importantes",
+			text: "Algunos de los valores necesarios estan vacios",
+			imageUrl: "galeria/img/logos/bill-ok.png",
+			showConfirmButton: true
+			}, function(){		
+				//document.location.href = 'detalle.php?id='+data.id;
+			});
+	}
+	
+	
+	$(document).on("change","#filtro",function(){
+		if($("#sin-concretar").hasClass("hidden")){
+			var eldiv=$("#concretadas");
+			var origen=2;
+		}else{
+			var eldiv=$("#sin-concretar");
+			var origen=1;
+		}
+		var orden=$(this).val();
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/venta/fcn/f_ventas.php",
+			data:{metodo:"ordenar",orden:orden,origen:origen},
+			type:"POST",
+			dataType:"html",
+			success:function(data){
+				console.log(data);				
+				eldiv.html(data);				
+				if(origen==1){
+					$('#paginacion').find('li').removeClass("active");
+					$("#paginacion").find('li').first().next().addClass("active");				
+				}else{
+					$('#paginacion2').find('li').removeClass("active");
+					$("#paginacion2").find('li').first().next().addClass("active");				
+				}
+				loadingAjax(false);
+			}
+		});
+	});
+	
+	$("#principal").on("keyup","#txtBuscar",function(){
+		if($(this).val()!=""){
+			var c=0;
+			var valor=$(this).val().toUpperCase();			
+			$(".general").each(function(i){
+				var titulo=$(this).data("titulo").toUpperCase();				
+				if(titulo.indexOf(valor)==-1) {
+					$(this).css("display","none");
+				}else{
+					c++;
+					$(this).css("display","block");
+				}
+			});
+			if(c==0){
+				$("#noresultados").removeClass("hidden");
+				$("#publicaciones").addClass("hidden");
+			}else{
+				$("#noresultados").addClass("hidden");
+				$("#publicaciones").removeClass("hidden");				
+			}
+		}else{		
+			if($(".general").length>0){
+				$("#noresultados").addClass("hidden");
+				$("#publicaciones").removeClass("hidden");
+				$(".general").css("display","block");				
+			}else{
+				$("#noresultados").removeClass("hidden");
+				$("#publicaciones").addClass("hidden");				
+			}
+		}		
+	});
+	
+	var input1 = $('#p_fecha').pickadate({editable: false, container: '#date-picker',
+  monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+  weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab'],
+  today: 'Hoy',
+  clear: 'Limpiar',
+  close: 'Cerrar',
+  
+  format: 'yyyy-mm-dd',
+  formatSubmit: 'y-m-d'});
+var picker1 = input1.pickadate('picker');
+picker1.set('min', true);
+picker1.set('max', 30);
+//Fecha desde
+$('#p_fecha').off('click focus');
+
+$('#calendario').on('click', function(e) {
+  if (picker1.get('open')) { 
+    picker1.close();
+  } else {
+    picker1.open();
+  }
+  
+  e.stopPropagation();    
+});
+
+
+$('#p_fecha').on('click', function(e) {
+  if (picker1.get('open')) { 
+    picker1.close();
+  } else {
+    picker1.open();
+  }
+  
+  e.stopPropagation();    
+});
+});

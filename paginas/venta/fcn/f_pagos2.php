@@ -1,6 +1,8 @@
 <?php
-	include_once "../../../clases/comprasventas.php";
-	$venta=new comprasventas($_POST["id"]);
+	require_once "../../../config/core.php";
+	include_once "../../../clases/ventas.php";
+	
+	$venta=new ventas($_POST["id"]);
 	$listaPagos=$venta->getPagos();
 	if($listaPagos):
 		?>
