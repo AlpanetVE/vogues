@@ -34,7 +34,10 @@ include_once "fcn/varlogin.php";
 <?php include "modales/m_pagos_ven.php";?>
 <?php include "modales/m_pagos_ven2.php";?>
 <?php include "modales/m_descuento.php";?>
-<?php include "modales/m_comentario.php";?>
+<?php include "modales/m_comentario.php";
+	  include"modales/m_info_user.php";
+?>
+
 <script type="text/javascript" src="js/autoNumeric/autoNumeric-min.js"></script>
 <script type="text/javascript" src="js/ventas.js"></script>
 <div class="modal-backdrop fade in cargador" style="display:none"></div>

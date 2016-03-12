@@ -415,6 +415,48 @@ $(document).ready(function(){
 			}
 		});
 	});
+	$("body").on('click', '.ver-detalle-user', function(e) {
+	 	
+	 	var usuarios_id= $(this).data("usuarios_id");
+		usuarios_id = parseInt(usuarios_id);
+		  
+		if(usuarios_id>0){
+			$.ajax({
+				url: "fcn/f_usuarios.php", // la URL para la petici&oacute;n
+	            data: {method:"get", id:usuarios_id}, // la informaci&oacute;n a enviar
+	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
+	            dataType: 'json', // el tipo de informaci&oacute;n que se espera de respuesta
+	            success: function (data) {
+	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
+	            	if (data.result === 'OK') {  
+	            		console.log(data.campos);
+	            				$('.modal-datail-user .fotoperfil').attr("src", data.campos.ruta); 
+	            				if(data.campos.n_nombre!=null){  
+				            		$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	}
+				            	else {
+				            		$('.modal-datail-user .nombre').html(data.campos.j_razon_social);
+				            	}
+				            	
+				            	if(data.campos.n_identificacion!=null){
+				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 	
+				            	}
+				            	else{
+				            	$('.modal-datail-user .rif').html(data.campos.j_rif); 	
+				            	}
+				            	
+				            	$('.modal-datail-user .direccion').html(data.campos.u_direccion);
+				            	$('.modal-datail-user .telefono').html(data.campos.u_telefono);
+				            	$('.modal-datail-user .correo').html(data.campos.a_email);
+		            }
+	          	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
+	            error: function (xhr, status) {
+	            	SweetError(status);
+	            }
+	        });
+	    }
+	 	
+	});	
 	
 	$(document).on("click",".vinculopagos",function(){
 		var id=$(this).attr("id").substr(4);

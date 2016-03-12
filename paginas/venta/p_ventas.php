@@ -139,7 +139,7 @@ $clasesP2="";
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14'>
 						 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 						<br>
-						<span class=''><?php echo $usua->a_seudonimo;?></span>
+						<span class=''> <!-- <a class="ver-detalle-user" data-toggle="modal" data-target='#info-user-detail' data-usuarios_id="<?php echo $valor["usuarios_id"]; ?>" > </a> --> <?php echo $usua->a_seudonimo;?></span> 
 						<br>
 						<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 						<br>
@@ -183,7 +183,7 @@ $clasesP2="";
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
-						<center><hr class=' center-block'></center>
+						<center><hr class='center-block'></center>
 					</div>
 				</div>
 				<?php

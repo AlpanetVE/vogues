@@ -37,7 +37,7 @@
 						<br>
 						<span> <b>Comprador</b></span>
 						<br>
-						<a href="<?php echo $comprador->a_seudonimo;?>"><span><?php echo $comprador->a_seudonimo;?></span></a>
+						<span><?php echo $comprador->a_seudonimo;?></span>
 						<br>
 						<span><?php echo $comprador->getNombre();?></span>
 						<br>

@@ -417,7 +417,7 @@ function pagina2(){
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 					<br>
-					<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+					<span class=''><?php echo $usua->a_seudonimo;?></span>
 					<br>
 					<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 					<br>
@@ -508,7 +508,7 @@ function ordena(){
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 				 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 				<br>
-				<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+				<span class=''><?php echo $usua->a_seudonimo;?></span>
 				<br>
 				<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 				<br>
