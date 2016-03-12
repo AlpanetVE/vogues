@@ -948,10 +948,10 @@ select::-webkit-scrollbar-thumb {
 
 .form-group>.form-control-feedback {
 	margin-right: 8px;
-	margin-top: 0.5px;
+	margin-top: 1.8px;
 	background: #FFF;
 	width: 25px;
-	height: 25px;
+	height: 27px;
 	line-height: 30px;
 }
 
@@ -962,7 +962,6 @@ select::-webkit-scrollbar-thumb {
 .form-apdp>div>div {
 	margin-bottom: 5px;
 }
-
 .form-apdp>div>.input {
 	margin-bottom: 10px;
 }

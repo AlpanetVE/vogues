@@ -12,10 +12,10 @@
 class bd extends PDO {
 	private $driver = "mysql";
 	private $host = "localhost";
-	private $bd_name = "vogues";
+	private $bd_name = DB_NAME;	
 	private $bd_charset = "utf8";
-	private $user = "root";
-	private $password = "";
+	private $user = DB_USER;
+	private $password = DB_PASS;
 	private $options = array (
 			PDO::ATTR_EMULATE_PREPARES => true,
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -154,12 +154,11 @@ class bd extends PDO {
 			return $sql->fetchAll ();
 		}
 	}
-	public function getAllDatos($table, $row) {
-		
-		$consulta = "SELECT * FROM $table WHERE 1" ; 
-		if (isset ( $row['indice'] ) and isset ( $row['value'])) {			
+	public function getAllDatos($table, $row, $fields='*') {
+		$consulta = "SELECT $fields FROM $table WHERE 1" ; 
+		if (isset ( $row['indice'] ) and isset ( $row['value'])) {		
 			$consulta .= ' and '.$row['indice'].' = '. $row['value'];
-		}  
+		}
 		$sql = $this->query ( $consulta );
 		$this->rowcount = $sql->rowCount ();
 		return $sql->fetchAll ();

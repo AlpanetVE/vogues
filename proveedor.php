@@ -6,7 +6,7 @@ include 'fcn/varlogin.php';
 include ("fcn/incluir-css-js.php"); 
 ?>
 <script type="text/javascript" src="js/proveedor.js"></script>
-
+<link href="css/proveedor.css" rel="stylesheet">
 <body>
 <?php
 include ("temas/header.php"); 

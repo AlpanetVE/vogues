@@ -47,14 +47,41 @@
 
 	function crearProveedor() {
 		$proveedor = new proveedor();
+		
+		$tipo = filter_input ( INPUT_POST, "prov_tipo" );
 		$documento = filter_input ( INPUT_POST, "prov_documento" );
 		$nombre = filter_input ( INPUT_POST, "prov_nombre" );
 		$telefono = filter_input ( INPUT_POST, "prov_telefono" );
 		$email = filter_input ( INPUT_POST, "prov_email" );
-		$direccion = filter_input ( INPUT_POST, "prov_direccion" );
-		$usuario->datosProveedor($documento, $nombre, $telefono, $email, $direccion);
+		$direccion = filter_input ( INPUT_POST, "prov_direccion" );	
+		
+		if (isset($_POST['diff_titular'])) {
+		    $tipo_titular = filter_input ( INPUT_POST, "prov_tipo_titular" );
+			$documento_titular = filter_input ( INPUT_POST, "prov_documento_titular" );
+			$nombre_titular = filter_input ( INPUT_POST, "prov_nombre_titular" );
+			$email_titular = filter_input ( INPUT_POST, "prov_email_titular" );
+		}else{
+			$tipo_titular = $tipo;
+			$documento_titular = $documento;
+			$nombre_titular = $nombre;
+			$email_titular = $email;
+		}
+		
+		$tipos_bancos = $_POST['prov_tipo_banco'];
+		$bancos = $_POST['prov_banco'];
+		$nros_cuentas = $_POST['prov_nro_cuenta'];
+		 
+		$proveedor->datosProveedor($tipo, $documento, $nombre, $telefono, $email, $direccion );
+		$proveedor->datosTitular($tipo_titular, $documento_titular, $nombre_titular, $email_titular);
+		
+		$proveedor_bancos=array (
+					"tipos_bancos_id" => $tipos_bancos,
+					"bancos_id" => $bancos,
+					"nro_cuentas" => $nros_cuentas
+					);
+			
 		//$usuario->datosBanco ( $seudonimo, $email, $password ,0, $id_rol, $status_usuarios_id); 
-		$usuario->crearProveedor();	
+		$proveedor->crearProveedor($proveedor_bancos);
 					
 		echo json_encode ( array (
 					"result" => "ok" 
