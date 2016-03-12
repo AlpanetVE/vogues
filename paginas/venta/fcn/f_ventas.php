@@ -1,9 +1,9 @@
 <?php
+require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
-include_once "../../../clases/bd.php";
 include_once "../../../clases/amigos.php";
-include_once "../../../clases/comprasventas.php";
+include_once "../../../clases/ventas.php";
 include_once "../../../clases/fotos.php";
 switch($_POST["metodo"]){
 	case "buscarPublicaciones":
@@ -266,7 +266,7 @@ function buscarCaliente(){
 }
 function actualizaPagos(){
 	$bd=new bd();
-	$venta=new comprasventas($_POST["id"]);
+	$venta=new ventas($_POST["id"]);
 	$pagos=explode(",",$_POST["pagos"]);
 	foreach ($pagos as $p => $valor) {
 		$pago=explode(" ",$valor);
@@ -291,26 +291,26 @@ function actualizaPagos(){
 	echo $sta;
 }
 function guardaEnvio(){
-	$venta=new comprasventas($_POST["id"]);
+	$venta=new ventas($_POST["id"]);
 	$result=$venta->setEnvios($_POST["p_fecha"], $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
 }
 function guardaDescuento(){
-	$venta=new comprasventas($_POST["id"]);
+	$venta=new ventas($_POST["id"]);
 	echo $venta->setDescuento($_POST["monto"]);
 }
 function guardaComentario(){
-	$venta=new comprasventas($_POST["id"]);
+	$venta=new ventas($_POST["id"]);
 	echo $venta->setComentario($_POST["nota"]);
 }
 function pagina1(){
-	$ventas=new comprasventas();
+	$ventas=new ventas();
 	$listaVentas=$ventas->listarPorUsuario(1,$_POST["pagina"],$_POST["orden"]);
 	$foto=new fotos();
     if($listaVentas):
 		foreach ($listaVentas as $l => $valor):
 			$usua=new usuario($valor["usuarios_id"]);
 			$publi=new publicaciones($valor["publicaciones_id"]);			
-			$venta=new comprasventas($valor["id"]);
+			$venta=new ventas($valor["id"]);
 			$statusPago=$venta->getStatusPago();
 			switch($statusPago){
 				case "Pago pendiente":
@@ -396,14 +396,14 @@ function pagina1(){
 				endif;	
 }
 function pagina2(){
-	$ventas=new comprasventas();
+	$ventas=new ventas();
 	$listaVentas=$ventas->listarPorUsuario(3,$_POST["pagina"],$_POST["orden"]);
 	$foto=new fotos();	
 		if($listaVentas):
 				foreach ($listaVentas as $l => $valor):
 					$usua=new usuario($valor["usuarios_id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
-					$venta=new comprasventas($valor["id"]);
+					$venta=new ventas($valor["id"]);
 					$statusPago=$venta->getStatusPago();
 					$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
 					if($maximo==0){
@@ -417,7 +417,7 @@ function pagina2(){
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 					<br>
-					<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+					<span class=''><?php echo $usua->a_seudonimo;?></span>
 					<br>
 					<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 					<br>
@@ -466,7 +466,7 @@ function pagina2(){
 				endif;	
 }
 function ordena(){
-	$ventas=new comprasventas();
+	$ventas=new ventas();
 	if($_POST["origen"]==1){
 		$listaVentas=$ventas->listarPorUsuario(1,1,$_POST["orden"]); //Ventas sin concretar
 	}else{
@@ -476,7 +476,7 @@ function ordena(){
 		foreach ($listaVentas as $l => $valor):
 			$usua=new usuario($valor["usuarios_id"]);
 			$publi=new publicaciones($valor["publicaciones_id"]);
-			$venta=new comprasventas($valor["id"]);
+			$venta=new ventas($valor["id"]);
 			$statusPago=$venta->getStatusPago();
 			switch($statusPago){
 				case "Pago pendiente":
@@ -508,7 +508,7 @@ function ordena(){
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 				 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 				<br>
-				<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+				<span class=''><?php echo $usua->a_seudonimo;?></span>
 				<br>
 				<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 				<br>

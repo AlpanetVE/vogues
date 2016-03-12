@@ -25,10 +25,10 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 pad20 marB10" style="background: #f5f5f5;  border: solid 1px #ccc;">
 						
-						<a href="publicacion-<?php echo $publicacion->id;?>"><img src="<?php echo $publicacion->getFotoPrincipal();?> class="center-block" width="200px" height="200px" style="border: solid 1px #ccc"  /></a>
+						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><img src="<?php echo $publicacion->getFotoPrincipal();?> class="center-block" width="200px" height="200px" style="border: solid 1px #ccc"  /></a>
 						<br>
 						<br>
-						<a href="publicacion-<?php echo $publicacion->id;?>"><?php echo $publicacion->titulo;?></a>
+						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><?php echo $publicacion->titulo;?></a>
 						<br>
 						<span class="red">Bs <?php echo $publicacion->getMonto();?></span> x <span class="grisO"><?php echo $venta->getAtributo("cantidad");?> und</span>
 						<br>
@@ -37,7 +37,7 @@
 						<br>
 						<span> <b>Comprador</b></span>
 						<br>
-						<a href="<?php echo $comprador->a_seudonimo;?>"><span><?php echo $comprador->a_seudonimo;?></span></a>
+						<span><?php echo $comprador->a_seudonimo;?></span>
 						<br>
 						<span><?php echo $comprador->getNombre();?></span>
 						<br>

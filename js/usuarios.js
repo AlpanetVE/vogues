@@ -333,7 +333,21 @@ $('#usr-update-form').formValidation({
 	            	if (data.result === 'OK') {  
 	            		console.log(data.campos);
 	            				$('.modal-datail-user .fotoperfil').attr("src", data.campos.ruta); 
-				            	$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	
+				            	if(data.campos.n_nombre!=null){  
+				            		$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	}
+				            	else {
+				            		$('.modal-datail-user .nombre').html(data.campos.j_razon_social);
+				            	}
+				            	
+				            	if(data.campos.n_identificacion!=null){
+				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 	
+				            	}
+				            	else{
+				            	$('.modal-datail-user .rif').html(data.campos.j_rif); 	
+				            	}
+				            	
 				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 
 				            	$('.modal-datail-user .direccion').html(data.campos.u_direccion);
 				            	$('.modal-datail-user .telefono').html(data.campos.u_telefono);

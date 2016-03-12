@@ -12,7 +12,7 @@
 		private $nota;
 
 /**********POR EL MOMENTO EL CONSTRUCTOR SOLO CARGA LOS ATRIBUTOS DE LA TABLA compras_publicaciones************/		
-		public function comprasventas($id=NULL){
+		public function ventas($id=NULL){
 			parent::__construct();
 			if(!is_null($id)){
 				$this->buscarCompra($id);
@@ -209,7 +209,7 @@
 			$inicio=($pagina - 1) * 25;
 			$consulta="select c.*,p.titulo,p.monto,p.usuarios_id as vendedor, c.cantidad- (select sum(cantidad) from compras_envios where compras_publicaciones_id=c.id) as maximo from compras_publicaciones as c,publicaciones as p where $condicion order by $orden limit 25 OFFSET $inicio";
 		//$consulta=	"select c.*,p.titulo,p.monto,p.usuarios_id as vendedor, 100 as maximo from compras_publicaciones as c,publicaciones as p order by $orden limit 25 OFFSET $inicio";
-			//var_dump($consulta);
+		//	var_dump($consulta);
 			$result=$this->query($consulta);
 			return $result;
 		}
@@ -240,7 +240,9 @@
 				$id=$this->id;
 			}
 			if(is_null($monto)){
-				$res=$bd->doSingleSelect("publicaciones","id=$this->publicaciones_id","monto");
+				
+				$res=$this->doSingleSelect("publicaciones","id=$this->publicaciones_id","monto");
+				//echo $this->id."hi";
 				$monto=$res["monto"];
 			}
 			$result=$this->query("select (select COALESCE(sum(monto),0) from pagosxcompras where compras_publicaciones_id=$id and status_pago=2) as tota2,

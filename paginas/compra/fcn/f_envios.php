@@ -73,7 +73,7 @@
          <?php
 		endforeach;
 else:
-	echo "klakldklaskldklaskldkl";
+	echo "No hay envios";
 endif;
 ?>
 
