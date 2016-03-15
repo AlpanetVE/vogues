@@ -23,7 +23,9 @@ include ("temas/header.php");
 </div>
 <?php
 include "temas/footer.php";
-include"modales/m_registrar_proveedor.php"; 
+include"modales/m_registrar_proveedor.php";
+include"modales/m_edit_proveedor.php";
+include"modales/m_info_prov.php";
 ?>
 
 </body>

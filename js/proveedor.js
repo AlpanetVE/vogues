@@ -1,35 +1,46 @@
 $(document ).ready(function() {
-	/**********AGREGAR PROVEEDOR********/
+	 
+	paginar(1, '#lista-prov-active');
+	
+	/****************AGREGAR PROVEEDOR**************/
 		/**CHECK TITULAR**/
-	$("#diff_titular").change(function() {
-	   $(".diff-titular-field").toggle("fast");
+	$(".diff_titular_checkbox").change(function() {
+		var $container    = $(this).parents('.form-proveedor');
+	  	$container.find(".diff-titular-field").toggle("fast");
 	   if ($(this).is(':checked')) {
-	   		 $(".diff-titular-field input, .diff-titular-field select").prop("disabled",false);
+	   		$container.find(".diff-titular-field input, .diff-titular-field select").prop("disabled",false);
 	   }else{
-	   		$(".diff-titular-field input, .diff-titular-field select").prop("disabled",true);
+	   		$container.find(".diff-titular-field input, .diff-titular-field select").prop("disabled",true);
 	   }
 	});
 	
-		/**BANCOS DINAMICOS**/
+		/**BANCOS DINAMICOS**/	
+	initFormValidation('#reg-prov-form');
+	initFormValidation('#edit-prov-form');	
 	// The maximum number of options
+	function initFormValidation(formContainer){
     var MAX_OPTIONS = 15;
-    $('#reg-prov-form')
+    $(formContainer)
         // Add button click handler
         .on('click', '.addButton', function() {
-            var $template = $('#optionTemplate'),
-                $clone    = $template
+            var $template = $(formContainer+' #optionTemplate');           
+             $clone    = $template
                                 .clone()
                                 .removeClass('hide')
                                 .removeAttr('id')
-                                .insertBefore($template),
-                $optionA   = $clone.find('[name="prov_banco[]"]');
+                                .addClass('aditionalOpt')                       
+                                .insertBefore($template);
+                                
+                 $clone.find("input, select").prop("disabled",false);
+                var $optionA   = $clone.find('[name="prov_banco[]"]');
                 $optionB  = $clone.find('[name="prov_tipo_banco[]"]');
                 $optionC  = $clone.find('[name="prov_nro_cuenta[]"]');
+                
                  
             // Add new field
-            $('#reg-prov-form').formValidation('addField', $optionA);
-            $('#reg-prov-form').formValidation('addField', $optionB);
-            $('#reg-prov-form').formValidation('addField', $optionC);
+            $(formContainer).formValidation('addField', $optionA);
+            $(formContainer).formValidation('addField', $optionB);
+            $(formContainer).formValidation('addField', $optionC);
         })
 
         // Remove button click handler
@@ -42,9 +53,9 @@ $(document ).ready(function() {
             $row.remove();
 
             // Remove field
-            $('#reg-prov-form').formValidation('removeField', $optionA);
-            $('#reg-prov-form').formValidation('removeField', $optionB);
-            $('#reg-prov-form').formValidation('removeField', $optionC);
+            $(formContainer).formValidation('removeField', $optionA);
+            $(formContainer).formValidation('removeField', $optionB);
+            $(formContainer).formValidation('removeField', $optionC);
         })
 
         // Called after adding new field
@@ -54,8 +65,8 @@ $(document ).ready(function() {
             // data.options --> The new field options
 
             if (data.field === 'prov_nro_cuenta[]') {
-                if ($('#reg-prov-form').find(':visible[name="prov_nro_cuenta[]"]').length >= MAX_OPTIONS) {
-                    $('#reg-prov-form').find('.addButton').attr('disabled', 'disabled');
+                if ($(formContainer).find(':visible[name="prov_nro_cuenta[]"]').length >= MAX_OPTIONS) {
+                    $(formContainer).find('.addButton').attr('disabled', 'disabled');
                 }
             }
         })
@@ -63,47 +74,59 @@ $(document ).ready(function() {
         // Called after removing the field
         .on('removed.field.fv', function(e, data) {
            if (data.field === 'prov_nro_cuenta[]') {
-                if ($('#reg-prov-form').find(':visible[name="prov_nro_cuenta[]"]').length < MAX_OPTIONS) {
-                    $('#reg-prov-form').find('.addButton').removeAttr('disabled');
+                if ($(formContainer).find(':visible[name="prov_nro_cuenta[]"]').length < MAX_OPTIONS) {
+                    $(formContainer).find('.addButton').removeAttr('disabled');
                 }
             }
         });
         
-        /**FIN BANCOS DINAMICOS**/
-       
-	$(".admin-reg-prov").click(function(){
-		$("#reg-prov-submit").data("step",1).html('Continuar');
-		$(".diff-titular-field").hide();		
-		$("section[data-step=2]").fadeOut( "fast", function() {  
-					$("section[data-step=1]").fadeIn("fast");
-				});
+     }
+        /**FIN BANCOS DINAMICOS**/    
+    $("body").on('click', '.admin-reg-prov', function(e) {
+		btnModalProveedor('#reg-prov-form');
 	});
-	$("#reg-prov-submit").click(function(){
+	 $("body").on('click', '.admin-edit-prov', function(e) {
+		btnModalProveedor('#edit-prov-form');
+		 $('#edit-prov-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare
+        console.log($(this).data("proveedor_id"));
+	});
+	function btnModalProveedor(container){ 
+		$(container+" .btn-prov-submit").data("step",1).html('Continuar');
+		$(container+" .diff-titular-field").hide();
+		$(container+" section[data-step=2]").fadeOut( "fast", function() {
+					$(container+" section[data-step=1]").fadeIn("fast");
+				});
+				
+		step = $(container+" .btn-prov-submit").data("step");
+		
+	}	
+	$(".btn-prov-submit").click(function(){
+		var $container    = $(this).parents('.form-proveedor');
 		var step, section;
 		step = $(this).data("step");
 		switch(step){
 		case 1:
-			if(validarFormReg(step)){
+			if(validarFormReg(step,$container)){
 				step++;
-				$("#reg-prov-submit").data("step",step);
-				$("section[data-step=1]").fadeOut( "slow", function() {
-					$("section[data-step='"+step+"']").fadeIn("slow");
-					$("#reg-prov-submit").html('Guardar');
+				$container.find(".btn-prov-submit").data("step",step);
+				$container.find("section[data-step=1]").fadeOut( "slow", function() {
+					$container.find("section[data-step='"+step+"']").fadeIn("slow");
+					$container.find(".btn-prov-submit").html('Guardar');
 				});
 			}
 			break;
 		case 2:
-			$("#reg-prov-form").data('formValidation').validate();			
+			$container.data('formValidation').validate();
 			break;
 		}
 	});
-	function validarFormReg(step){
-		var fv = $('#reg-prov-form').data('formValidation'), // FormValidation instance 
+	function validarFormReg(step, $container){
+		var fv = $container.data('formValidation'), // FormValidation instance 
 		
-		$container = $('#reg-prov-form').find('section[data-step="' + step +'"]');
+		$container_section = $container.find('section[data-step="' + step +'"]');
 		
         // Validate the container
-        fv.validateContainer($container);
+        fv.validateContainer($container_section);
         var isValidStep = fv.isValidContainer($container);
         if (isValidStep === false || isValidStep === null) {
             // Do not jump to the next step
@@ -176,7 +199,6 @@ $(document ).ready(function() {
 		}
 	}).on('success.form.fv', function(e) {
 		e.preventDefault();		
-		$("#optionTemplate input, #optionTemplate select").prop("disabled",true); //desactivamos inputs para evitar el envio
 		var form = $(e.target);
 		var fv = form.data('formValidation');
 		var method = "&metodo="+$(this).data("method");		
@@ -210,8 +232,232 @@ $(document ).ready(function() {
             	SweetError(status);
             }
         });
-       $("#optionTemplate input, #optionTemplate select").prop("disabled",false); //habilitamos  inputs      
-    });	
+           
+    });
+  /******************************FIN AGREGAR PROVEEDORES*********************************/  
+  /**********************MODIFICAR PROVEEDORES*********************/
+ $('.modal-edit-proveedor').on('show.bs.modal', function (e) {
+		var proveedor_id= $('#edit-prov-form').data("proveedor_id"),
+		container='#edit-prov-form';
+		defaultModal(container);
+		proveedor_id = parseInt(proveedor_id);
+		if(proveedor_id>0){
+			$.ajax({
+				url:"paginas/proveedor/fcn/f_proveedor.php", // la URL para la petici&oacute;n
+	            data: {metodo:"getProveedores", id:proveedor_id}, // la informaci&oacute;n a enviar
+	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
+	            dataType: 'json', // el tipo de informaci&oacute;n que se espera de respuesta
+	            success: function (data) {
+	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
+	            	if (data.result === 'OK') {
+	            		 
+	            				$(container+' #prov_tipo').val(data.campos.p_tipo);
+				            	$(container+' #prov_documento').val(data.campos.p_documento);
+				            	$(container+' #prov_nombre').val(data.campos.p_nombre);
+				            	$(container+' #prov_telefono').val(data.campos.p_telefono);
+				            	$(container+' #prov_email').val(data.campos.p_email);	
+				            	$(container+' #prov_direccion').val(data.campos.p_direccion);				            	
+				            	
+				            	if(data.campos.t_documento!=null && data.campos.t_email!=null){
+				            		$(container+' #diff_titular').click();
+				            		$(container+' #prov_tipo_titular').val(data.campos.t_tipo);
+					            	$(container+' #prov_documento_titular').val(data.campos.t_documento);
+					            	$(container+' #prov_nombre_titular').val(data.campos.t_nombre);
+					            	$(container+' #prov_email_titular').val(data.campos.t_email);				            		
+				            	}
+				            	getBancos(container, data.campos.id);
+		            }
+	          	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
+	            error: function (xhr, status) {
+	            	SweetError(status);
+	            }
+	        });
+	    }
+	});
+	function getBancos(container, proveedor_id){
+		$.ajax({
+				url:"paginas/proveedor/fcn/f_proveedor.php", // la URL para la petici&oacute;n
+	            data: {metodo:"getrBancos", id:proveedor_id}, // la informaci&oacute;n a enviar
+	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
+	            dataType: 'html', // el tipo de informaci&oacute;n que se espera de respuesta
+	            success: function (data) {
+	            	$(container+' #optionTemplate').before(data);            	
+	            	/*var $newsInputs=$(container+" .aditionalOpt input, "+container+" .aditionalOpt select");
+	            	console.log(container);
+	            	$(container).formValidation('addField', $newsInputs);*/
+	            	 var $optionA   = $(container).find('[name="prov_banco[]"]');
+	                $optionB  = $(container).find('[name="prov_tipo_banco[]"]');
+	                $optionC  = $(container).find('[name="prov_nro_cuenta[]"]');	                
+	                 
+		            // Add new field
+		            $(container).formValidation('addField', $optionA);
+		            $(container).formValidation('addField', $optionB);
+		            $(container).formValidation('addField', $optionC);	            	
+	          	}, 
+	            error: function (xhr, status) {
+	            	SweetError(status);
+	            }
+	        });
+	}
+	function defaultModal(container){
+		 var $container	= $(container);
+		 
+		 /**DEFAULT TITULAR**/
+		 $container.find(".diff-titular-field input, .diff-titular-field select").prop("disabled",true);
+		 $container.find(".diff-titular-field").hide();
+		 $container.find( ".diff_titular_checkbox" ).prop( "checked", false );
+		 
+		 /**DEFAULT BANCOS**/
+		 $container.find(".aditionalOpt").remove();
+	}
+	
+ $('#edit-prov-form').formValidation({
+		locale: 'es_ES',
+		framework : 'bootstrap',
+		icon : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		addOns: { i18n: {} },
+		err: { container: 'tooltip' },
+		fields : {
+			prov_documento: {validators : {
+				notEmpty:{},	
+				digits:{},
+				stringLength : { max :  10},
+				blank: {}}},
+			prov_nombre : {validators : {
+				notEmpty : {},
+				stringLength : {min : 5, max : 512}}},
+			prov_email : {validators : {
+				notEmpty : {},
+				emailAddress : {},
+				blank: {}}},
+			prov_documento_titular: {validators : {
+				notEmpty:{},	
+				digits:{},
+				stringLength : { max :  10},
+				blank: {}}},
+			prov_nombre_titular : {validators : {
+				notEmpty : {},
+				stringLength : {min : 5, max : 512}}},
+			prov_email_titular : {validators : {
+				notEmpty : {},
+				emailAddress : {},
+				blank: {}}},
+			prov_telefono : {validators : {
+				notEmpty : {},
+				phone : {country:'VE'}}},			
+			prov_direccion : {validators : {
+				notEmpty : {},
+				stringLength : {min: 10,max : 1024}}},
+            'prov_nro_cuenta[]': {
+                validators: {
+                	notEmpty: {},
+                	integer: {},                   
+                    stringLength: {
+                        max: 20,
+                        min: 20,
+                        message: 'Numero de cuenta debe ser exactamente 20 Numeros'
+                    }
+                }
+            },
+            'prov_banco[]': {
+                validators: {
+                	notEmpty: {}
+                }
+            },
+            'prov_tipo_banco[]': {
+                validators: {
+                	notEmpty: {}
+                }
+            }
+		}
+	}).on('success.form.fv', function(e) {
+		e.preventDefault();	
+		var form = $(e.target);
+		var fv = form.data('formValidation');
+		var method = "&metodo="+$(this).data("method");
+		var id = "&id="+$(this).data("proveedor_id");
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+            data: form.serialize() + method + id, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta		           
+            success: function (data) {
+	           	if (data.result === 'error') {
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	            	}
+	            }else{ //si registramos usuarios por backend            			
+            		swal({
+						title: "Registro de Proveedor",
+						text: "&iexcl;Proveedor Creado Exitosamente!",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+							location.reload();
+					});
+            	}
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+    });
+    
+ /*******************************MOSTRAR DETALLE PROVEEDOR******************************/	
+ 
+  
+	$("body").on('click', '.admin-ver-prov', function(e) {
+	 	
+	 	var proveedores_id= $(this).data("proveedor_id"),
+	    $modal=$('.modal-detalle-prov');
+		proveedores_id = parseInt(proveedores_id);
+		  console.log(proveedores_id);
+		if(proveedores_id>0){			
+			
+			$.ajax({
+				url:"paginas/proveedor/fcn/f_proveedor.php", // la URL para la petici&oacute;n
+		        data: {metodo:"buscarDetalleProveedores", id:proveedores_id}, // la informaci&oacute;n a enviar
+		        type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
+		        dataType: 'json', // el tipo de informaci&oacute;n que se espera de respuesta
+		        success: function (data) {
+		        	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria;
+		        	if (data.result === 'OK') {            		
+		        		console.log($modal);
+		        		$modal.find('.info-prov-detalle .nombre').html(data.campos.p_nombre);	
+		        		$modal.find('.info-prov-detalle .documento').html(data.campos.p_tipo+' - '+data.campos.p_documento);	            	
+		            	$modal.find('.info-prov-detalle .telefono').html(data.campos.p_telefono);
+		            	$modal.find('.info-prov-detalle .correo').html(data.campos.p_email);
+		            	$modal.find('.info-prov-detalle .direccion').html(data.campos.p_direccion);
+		            	
+		            	if(data.campos.t_documento!=null){
+		            		$modal.find('.info-prov-titular-detalle').removeClass('hide');
+		            		$modal.find('.info-prov-titular-detalle .nombre').html(data.campos.t_nombre);	
+		            		$modal.find('.info-prov-titular-detalle .documento').html(data.campos.t_tipo+' - '+data.campos.t_documento);	            	
+			            	$modal.find('.info-prov-titular-detalle .telefono').html(data.campos.t_telefono);
+			            	$modal.find('.info-prov-titular-detalle .correo').html(data.campos.t_email);
+			            	$modal.find('.info-prov-titular-detalle .direccion').html(data.campos.t_direccion);
+		            	}else{
+		            		$modal.find('.info-prov-titular-detalle').addClass('hide');
+		            	}
+		            	$modal.find('.info-bancaria').html(data.campos.bancos);		            	
+		            }
+		      	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
+		        error: function (xhr, status) {
+		        	SweetError(status);
+		        }
+		    });
+        
+       }
+	});
 	/********************FUNCIONES REALIZADAS PARA OPTIMIZAR EL LISTADO**************/
 	function paginar(pagina, container, status){
 		var total=$(container+" #paginacion").data("total"); 
@@ -249,7 +495,5 @@ $(document ).ready(function() {
 			}
 		});
 	}	
-	/****FUNCION PARA ARMAR LOS LISTADOS USUARIOS ACTIVOS E INACTIVOS**/
-	paginar(1, '#lista-prov-active');
 	
 });

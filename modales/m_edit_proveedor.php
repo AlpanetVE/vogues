@@ -1,6 +1,6 @@
 <?php include_once 'modales/m_cropper.php';?>
-<div class="modal fade bs-example-modal-lg modal-reg-prov" tabindex="-1" role="dialog"
-	aria-labelledby="myLargeModalLabel" id="reg-prov">
+<div class="modal fade bs-example-modal-lg modal-edit-proveedor" tabindex="-1" role="dialog"
+	aria-labelledby="myLargeModalLabel" id="edit-prov">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -10,16 +10,14 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="title-modal-prov"
-						class="marL15">Datos del Proveedor</span>
+						class="marL15">Actualizar Proveedor</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
-			<form action="paginas/proveedor/fcn/f_proveedor.php" data-method="crearProveedor" id="reg-prov-form" class="form-proveedor reg-prov-form" method="post"  >			
+			<form action="paginas/proveedor/fcn/f_proveedor.php" data-method="update" id="edit-prov-form" class="form-proveedor edit-prov-form" method="post"  >			
 				<div class="modal-body marL20 marR20 ">
 					<br>
 					<section class="form-apdp" data-title="Informaci&oacute;n del Proveedor" data-step="1"  >
-						
-							 
 							<div class="col-xs-12 ">
 								<div class="marL10"><i class="fa fa-list-alt"></i>
 									Identificaci&oacute;n</div>
@@ -77,7 +75,7 @@
 								</div>
 								<div class="col-xs-5 ">
 									<div class="text-right pad-right5">
-										<span class="diff_titular">Usar un titular distinto</span><input type="checkbox" class="diff_titular_checkbox" id="diff_titular" name="diff_titular" />
+										<span class="diff_titular">Usar un titular distinto</span><input class="diff_titular_checkbox" type="checkbox" id="diff_titular" name="diff_titular" />
 									</div>
 								</div>
 							
@@ -117,42 +115,9 @@
 								
 								<!------------------------------------------------------------------------>
 							
-							
-						        <div class="form-group col-xs-12 col-sm-8 col-md-7 col-lg-7 input" >								 
-									<select class="form-select" id="prov_banco" name="prov_banco[]">
-										<option value="" disabled selected >Seleccione un Banco</option>
-										<?php
-											$bd_obj = new bd ();
-											$bancos=$bd_obj->getAllDatos ("bancos");
-											foreach ($bancos as $banco ) :
-												?>
-											<option value="<?php echo $banco["id"]; ?>"><?php echo $banco["nombre"]; ?></option>
-										<?php endforeach;?> 
-									</select>								 
-								</div>
-								<div class="form-group col-xs-12 col-sm-4 col-md-5 col-lg-5 input" >								 
-									<select class="form-select" id="prov_tipo_banco" name="prov_tipo_banco[]">
-										<option value="" disabled selected>Tipo de Cuenta</option>							 
-										<?php
-											$tipos_cuentas=$bd_obj->getAllDatos ("tipos_cuentas");
-											foreach ($tipos_cuentas as $tipos ) :
-												?>
-											<option value="<?php echo $tipos["id"]; ?>"><?php echo $tipos["nombre"]; ?></option>
-										<?php endforeach;?>
-									</select>								 
-								</div>
-								<div class="form-group col-xs-11 col-sm-11 col-md-11 col-lg-11 input" >
-									<input maxlength="20" type="text"
-										placeholder="Ingrese solo numeros sin caracteres extraños" name="prov_nro_cuenta[]"
-										class="form-input" id="prov_nro_cuenta">
-								</div>
-						        <div class="col-xs-1 pad-left0">
-						            <button type="button" class="btn btn-default addButton t12"><i class="fa fa-plus"></i></button>
-						        </div>
-						    
-						
+							 
 						    <!-- The option field template containing an option field and a Remove button -->
-						    <div class="form-group hide" id="optionTemplate">
+						    <div class="form-group hide " id="optionTemplate">
 						        <div class="form-group col-xs-12 col-sm-8 col-md-7 col-lg-7 input marT10" >								 
 									<select disabled="disabled" class="form-select" id="prov_banco" name="prov_banco[]">
 										<option value="" disabled selected >Seleccione un Banco</option>
@@ -187,7 +152,7 @@
 					</section>
 				</div>
 				<div class="modal-footer">
-				<button id="reg-prov-submit" type="button" class="btn btn-primary2 btn-prov-submit">Next</button>
+				<button id="edit-prov-submit" type="button" class="btn btn-primary2 btn-prov-submit">Next</button>
 								
 				</div>
 			</form>

@@ -156,7 +156,7 @@ class bd extends PDO {
 			return $sql->fetchAll ();
 		}
 	}
-	public function getAllDatos($table, $row, $fields='*') {
+	public function getAllDatos($table, $row='', $fields='*') {
 		$consulta = "SELECT $fields FROM $table WHERE 1" ; 
 		if (isset ( $row['indice'] ) and isset ( $row['value'])) {		
 			$consulta .= ' and '.$row['indice'].' = '. $row['value'];

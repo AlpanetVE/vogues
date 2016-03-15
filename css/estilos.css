@@ -107,6 +107,10 @@ box-shadow: 2px 2px 12px -5px rgba(0,0,0,0.75);
 {
 	border-bottom: #ccc 1px dashed;
 }
+.borBS
+{
+	border-bottom: 1px solid rgb(238, 238, 238);
+}
 
 .mar-perfil-amigos {
 	margin-left: 50px;

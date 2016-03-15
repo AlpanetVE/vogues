@@ -6,3 +6,12 @@ span.diff_titular{
 .form-apdp>div>div>div {
 	margin-bottom: 5px;
 }
+.modal-ver-prov > div {
+    margin-left: 5px;
+}
+.modal-ver-prov > div > div{
+    margin-left: 10px;
+}
+.modal-ver-prov > div > div > span:first-child{
+	font-weight: bold;
+}
