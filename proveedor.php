@@ -6,7 +6,7 @@ include 'fcn/varlogin.php';
 include ("fcn/incluir-css-js.php"); 
 ?>
 <script type="text/javascript" src="js/proveedor.js"></script>
-
+<link href="css/proveedor.css" rel="stylesheet">
 <body>
 <?php
 include ("temas/header.php"); 
@@ -23,7 +23,9 @@ include ("temas/header.php");
 </div>
 <?php
 include "temas/footer.php";
-include"modales/m_registrar_proveedor.php"; 
+include"modales/m_registrar_proveedor.php";
+include"modales/m_edit_proveedor.php";
+include"modales/m_info_prov.php";
 ?>
 
 </body>

@@ -7,8 +7,8 @@
                 <hr>
                 <br>             
                 <div class="text-right">
-                   <a class="admin-reg-user" href="#" data-toggle='modal' data-target='#reg-prov' data-rol-type='select'  data-tipo='1' >
-						<button class="btn2 btn-default t16" style="">Agregar Proveedor</button>
+                   <a class="admin-reg-prov" href="#" data-toggle='modal' data-target='#reg-prov' data-rol-type='select'  data-tipo='1' >
+						<button class="btn2 btn-default t16 " style="">Agregar Proveedor</button>
 					</a>
                 </div>
             </div>       
@@ -29,7 +29,7 @@
                                 <th colspan="1" class="text-center">
                                     Email
                                 </th>
-                                <th colspan="1" class="text-center">
+                                <th colspan="2" class="text-center">
                                     Acci&oacute;n
                                 </th>
                             </tr>
