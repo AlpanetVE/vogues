@@ -30,6 +30,8 @@ $(document).ready(function(){
 		$(".pesta-compras").removeClass("active");
 		$(this).addClass("active");
 	});
+	
+	
 	$(document).on("click",".vinculoenvios",function(){
 		var id=$(this).attr("id").substr(5);
 		$("#envios-ven").modal('show');
