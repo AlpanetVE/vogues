@@ -17,7 +17,7 @@
 
                     <div class="row">
 
-                        <div class="text-left col-xs-12 modal-ver-prov">
+                        <div class="text-left col- col-xs-10 col-xs-offset-1 modal-ver-prov">
                         <br>
                         		<div class="info-prov-detalle col-xs-12 borBS">
 	                        		<span class="t18  vin-blue-apdp">
@@ -65,9 +65,6 @@
 	                        	<div class="info-bancaria col-xs-12">
 	                        		
 	                        	</div>
-	                        	
-                        	
-								
                         </div>            			
                     </div>  
 				<div class="modal-footer">
