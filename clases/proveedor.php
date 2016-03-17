@@ -73,8 +73,7 @@ class proveedor extends bd {
 				$listaValores_proveedor['proveedores_id']=$this->id;
 			}
 		//var_dump($listaValores_proveedor);
-		//var_dump($this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id"));
-		
+		$this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id");		
 		##BORRAMOS LOS BANCOS ASOCIADOS
 		$this->borrarBancos($this->id);
 		$count=count($bancos['nro_cuentas']);
