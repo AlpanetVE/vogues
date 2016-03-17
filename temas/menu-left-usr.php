@@ -9,8 +9,7 @@
 		</li>-->
 		<li class="hidden admin-usuarios">
 			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</div></a>			 
-		</li>
-		
+		</li>		
 		<li class="hidden venta">
 			<div class="link"><i class="fa fa-tags" ></i>Ventas<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu submenu-active" id="ventas" name="ventas">
@@ -18,6 +17,13 @@
 				<li><a href="ventas.php?type=2" >Ventas</a></li>
 				<li ><a href="preguntas.php?tipo=1">Preguntas</a></li>
                 <li> <a href="#">Reclamos</a></li>
+			</ul>
+		</li>
+		<li class="hidden compras-tienda">
+			<div class="link"><i class="fa fa-shopping-cart"></i>Compras<i class="fa fa-chevron-down"></i></div>
+			<ul class="submenu">
+				<li><a href="proveedor.php"> Proveedores</a></li>
+				<li><a href="#">Inventario</a></li>
 			</ul>
 		</li>
 		<li class="hidden compra">

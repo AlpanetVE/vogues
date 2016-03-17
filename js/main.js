@@ -30,11 +30,11 @@ $(function() {
 		
 		//#######USUARIO ROL 1#######
 		if(id_rol==1){
-			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .admin-usuarios").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .admin-usuarios, .compras-tienda").removeClass("hidden");
 		}
 		//#######USUARIO ROL 2#######
 		else if(id_rol==2){
-			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .compras-tienda").removeClass("hidden");
 		}
 		//#######USUARIO ROL 3#######
 		else if(id_rol==3 || id_rol==0){
