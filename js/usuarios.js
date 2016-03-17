@@ -363,7 +363,7 @@ $('#usr-update-form').formValidation({
 	});	
 	
     /* ============================----- Mostrar Detalle Tienda -----=========================*/	 
-	$('.modal-detalle-user').on('show.bs.modal', function (e) { 
+	$('.modal-detalle-user').on('show.bs.modal', function (e  ) { 
 		 
 		var usuarios_id= $(this).data("usuarios_id");
 		usuarios_id = parseInt(usuarios_id);

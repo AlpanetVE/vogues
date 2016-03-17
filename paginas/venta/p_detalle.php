@@ -25,7 +25,7 @@
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 pad20 marB10" style="background: #f5f5f5;  border: solid 1px #ccc;">
 						
-						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><img src="<?php echo $publicacion->getFotoPrincipal();?> class="center-block" width="200px" height="200px" style="border: solid 1px #ccc"  /></a>
+						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><img src="<?php echo $publicacion->getFotoPrincipal();?>" class="center-block" width="200px" height="200px" style="border: solid 1px #ccc"  /></a>
 						<br>
 						<br>
 						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><?php echo $publicacion->titulo;?></a>
