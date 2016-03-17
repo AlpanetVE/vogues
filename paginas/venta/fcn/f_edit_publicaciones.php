@@ -124,6 +124,19 @@ $foto6=$publi->getFotoN(6);
 						<span class="marL5"><i class="fa fa-warning marR5"></i> Debes subir al menos una (01) imagen para tu publicacion.</span>
 					</div>
 				</div>
+				
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT20">
+					<div class="t16">
+						<b>Col&oacute;cale un video a tu publicac&oacute;n (opcional)</b>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 marT10 marB10 ">
+					<div class="form-group input-group" style="width: 100%; ">
+						<input type="text" value="<?php echo isset($_POST['url_video'])?$_POST['url_video']:''; ?>" placeholder="Url del video" name="url_video" id="url_video" class="form-control" >
+					</div>
+				</div>
+				
+				
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT20">
 					<div class="t16">
 						Titulo tu producto
@@ -138,7 +151,7 @@ $foto6=$publi->getFotoN(6);
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
 					<div class="form-group input-group" style="width: 60%">
 						<input type="text" placeholder="Titulo de la publicaci&oacute;n" name="txtTitulo" id="txtTitulo"
-						class=" form-control " value="<?php echo ($_POST['titulo']);?>">
+						class="form-control" value="<?php echo ($_POST['titulo']);?>">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -245,7 +258,7 @@ $foto6=$publi->getFotoN(6);
 					</div>
 				</div>
 				<!-- Factura-->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
 					<div class="text-left marL20 marT10 ">
 						<table>
 							<tr>
@@ -266,7 +279,7 @@ $foto6=$publi->getFotoN(6);
 					</div>
 				</div>
 				<!-- Tienda Fisica -->
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">
 					<div class="text-left marL20 marT10 ">
 						<table>
 							<tr>

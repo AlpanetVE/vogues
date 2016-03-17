@@ -194,9 +194,19 @@ $(document).ready(function(){
 				console.log(data);
 				$("#primero").html(data);
 				$("#btn-social-act").data("dismiss","modal");
-				$('#editor').trumbowyg({
-					lang : 'es'
-				});
+				tinymce.init({
+				  	selector:'div#editor',
+				  	language:'es_MX',
+				  	height: 450,
+				  	statusbar: false,
+				  	menubar: false,
+				  	default_link_target: "_blank",
+				  	plugins: "charmap, hr, lists, preview, searchreplace, table, wordcount, anchor, code, fullpage, image, media, visualblocks, imagetools, fullscreen, link, textcolor",
+				  	toolbar:[
+				  	 'styleselect, formatselect, fontselect, fontsizeselect, undo, charmap, hr, preview, ',
+				  	 ' bold, italic,underline,alignleft, aligncenter, alignright, alignjustify, bullist, numlist, outdent, indent,  link, media, image, visualblocks, forecolor, backcolor' 	
+				  		]
+				   });
 				$("#txtPrecio").autoNumeric({aSep: '.', aDec: ','});
 				//Validator del formulario
 				$("#pub-form-reg").formValidation({

@@ -111,9 +111,20 @@ $(document).ready(function() {
 				$("#imagentipo").attr("src", laimagen);
 				$("#txtPrecio").autoNumeric({aSep: '.', aDec: ','});
 				//Inicializacion del editor HTML				
-					$('#editor').trumbowyg({
-						lang : 'es'
-					});				
+				tinymce.init({
+				  	selector:'div#editor',
+				  	language:'es_MX',
+				  	height: 450,
+				  	statusbar: false,
+				  	menubar: false,
+				  	default_link_target: "_blank",
+				  	plugins: "charmap, hr, lists, preview, searchreplace, table, wordcount, anchor, code, fullpage, image, media, visualblocks, imagetools, fullscreen, link, textcolor",
+				  	toolbar:[
+				  	 'styleselect, formatselect, fontselect, fontsizeselect, undo, charmap, hr, preview, ',
+				  	 ' bold, italic,underline,alignleft, aligncenter, alignright, alignjustify, bullist, numlist, outdent, indent,  link, media, image, visualblocks, forecolor, backcolor' 	
+				  		]
+				   });	
+				   			
 				if($("#cmbCondicion").val()==3){
 					$("#txtCantidad").attr("readonly","true");
 				}else{
