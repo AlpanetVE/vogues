@@ -88,7 +88,7 @@ $(document ).ready(function() {
 	 $("body").on('click', '.admin-edit-prov', function(e) {
 		btnModalProveedor('#edit-prov-form');
 		 $('#edit-prov-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare
-        console.log($(this).data("proveedor_id"));
+      
 	});
 	function btnModalProveedor(container){ 
 		$(container+" .btn-prov-submit").data("step",1).html('Continuar');
@@ -250,20 +250,19 @@ $(document ).ready(function() {
 	            success: function (data) {
 	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
 	            	if (data.result === 'OK') {
-	            		 
 	            				$(container+' #prov_tipo').val(data.campos.p_tipo);
 				            	$(container+' #prov_documento').val(data.campos.p_documento);
 				            	$(container+' #prov_nombre').val(data.campos.p_nombre);
 				            	$(container+' #prov_telefono').val(data.campos.p_telefono);
-				            	$(container+' #prov_email').val(data.campos.p_email);	
-				            	$(container+' #prov_direccion').val(data.campos.p_direccion);				            	
-				            	
-				            	if(data.campos.t_documento!=null && data.campos.t_email!=null){
+				            	$(container+' #prov_email').val(data.campos.p_email);
+				            	$(container+' #prov_direccion').val(data.campos.p_direccion);			            	
+				            	console.log(data.campos);
+				            	if(data.campos.documento!=null && data.campos.email!=null){
 				            		$(container+' #diff_titular').click();
-				            		$(container+' #prov_tipo_titular').val(data.campos.t_tipo);
-					            	$(container+' #prov_documento_titular').val(data.campos.t_documento);
-					            	$(container+' #prov_nombre_titular').val(data.campos.t_nombre);
-					            	$(container+' #prov_email_titular').val(data.campos.t_email);				            		
+				            		$(container+' #prov_tipo_titular').val(data.campos.tipo);
+					            	$(container+' #prov_documento_titular').val(data.campos.documento);
+					            	$(container+' #prov_nombre_titular').val(data.campos.nombre);
+					            	$(container+' #prov_email_titular').val(data.campos.email);  		
 				            	}
 				            	getBancos(container, data.campos.id);
 		            }
@@ -420,7 +419,7 @@ $(document ).ready(function() {
 	 	var proveedores_id= $(this).data("proveedor_id"),
 	    $modal=$('.modal-detalle-prov');
 		proveedores_id = parseInt(proveedores_id);
-		  console.log(proveedores_id);
+		  
 		if(proveedores_id>0){			
 			
 			$.ajax({
@@ -431,20 +430,20 @@ $(document ).ready(function() {
 		        success: function (data) {
 		        	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria;
 		        	if (data.result === 'OK') {            		
-		        		console.log($modal);
+		        		 
 		        		$modal.find('.info-prov-detalle .nombre').html(data.campos.p_nombre);	
 		        		$modal.find('.info-prov-detalle .documento').html(data.campos.p_tipo+' - '+data.campos.p_documento);	            	
 		            	$modal.find('.info-prov-detalle .telefono').html(data.campos.p_telefono);
 		            	$modal.find('.info-prov-detalle .correo').html(data.campos.p_email);
 		            	$modal.find('.info-prov-detalle .direccion').html(data.campos.p_direccion);
 		            	
-		            	if(data.campos.t_documento!=null){
+		            	if(data.campos.documento!=null){
 		            		$modal.find('.info-prov-titular-detalle').removeClass('hide');
-		            		$modal.find('.info-prov-titular-detalle .nombre').html(data.campos.t_nombre);	
-		            		$modal.find('.info-prov-titular-detalle .documento').html(data.campos.t_tipo+' - '+data.campos.t_documento);	            	
-			            	$modal.find('.info-prov-titular-detalle .telefono').html(data.campos.t_telefono);
-			            	$modal.find('.info-prov-titular-detalle .correo').html(data.campos.t_email);
-			            	$modal.find('.info-prov-titular-detalle .direccion').html(data.campos.t_direccion);
+		            		$modal.find('.info-prov-titular-detalle .nombre').html(data.campos.nombre);	
+		            		$modal.find('.info-prov-titular-detalle .documento').html(data.campos.tipo+' - '+data.campos.documento);	            	
+			            	$modal.find('.info-prov-titular-detalle .telefono').html(data.campos.telefono);
+			            	$modal.find('.info-prov-titular-detalle .correo').html(data.campos.email);
+			            	$modal.find('.info-prov-titular-detalle .direccion').html(data.campos.direccion);
 		            	}else{
 		            		$modal.find('.info-prov-titular-detalle').addClass('hide');
 		            	}

@@ -11,12 +11,7 @@ class proveedor extends bd {
 	private $p_telefono;
 	private $p_email;
 	private $p_direccion;
-	
-	protected $t_table = "proveedores_titulares";
-	private $t_tipo;
-	private $t_documento;
-	private $t_nombre;
-	private $t_email;	
+	private $p_proveedores_id;
 	
 	protected $b_table = "proveedores_bancos";
 	private $b_bancos_id;
@@ -37,46 +32,48 @@ class proveedor extends bd {
 	 * * * * * * * * * * * * * * * * * * * * */
 	public function buscarProveedor($id){
 		// hace consulta y setea valores
-		$this->id = $id;
-		if(!$this->getdatosProveedores()){
-			$this->getdatosTitulares();
-		}else{
-			return false;
-		}
+		
+		if(!empty($id)){
+			$this->id = $id;
+			$this->getdatosProveedores();
+		} 
 	}	
-	public function crearProveedor($bancos) {
-		$result = $this->doInsert ( $this->p_table, $this->serializarDatos ( "p_" ) );	
-		if ($result == true) {
-			$this->id = $this->lastInsertId ();			
-			if (isset ( $this->t_documento)) {
-				$result = $this->doInsert ( $this->t_table, $this->serializarDatos ( "t_", $this->p_table ) );
-			}
-			$count=count($bancos['nro_cuentas']);			
-			for($i=0;$i<$count;$i++){
-				$this->datosBancos($bancos['tipos_bancos_id'][$i], $bancos['bancos_id'][$i], $bancos['nro_cuentas'][$i]);
-				$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
-			}			
-			 
+	public function crearProveedor($bancos, $titular) {
+		if(array_key_exists("documento", $titular)){
+			$result = $this->doInsert ( $this->p_table, $titular );
+			$this->p_proveedores_id = $this->lastInsertId ();
+		}		
+		$result = $this->doInsert ( $this->p_table, $this->serializarDatos ( "p_" ) );
+		$this->id = $this->lastInsertId ();
+		if (empty ( $this->p_proveedores_id)) {				 
+			$this->doUpdate($this->p_table,array("proveedores_id"=>$this->id),"id=$this->id");
 		}
 		
+		$count=count($bancos['nro_cuentas']);			
+		for($i=0;$i<$count;$i++){
+			$this->datosBancos($bancos['tipos_bancos_id'][$i], $bancos['bancos_id'][$i], $bancos['nro_cuentas'][$i]);
+			$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
+		}		
 	}
-	public function modificarProveedor($listaValores_proveedor, $listaValores_titular=array(), $bancos){		
-		$condicion="id=$this->id";
-		$result=$this->doUpdate($this->p_table,$listaValores_proveedor,$condicion);
-		
-		if(array_key_exists("documento", $listaValores_titular)){
-			if ($this->valueExist ( $this->t_table, $this->id, "proveedores_id" )) {
-				##SI EXISTE MODIFICAMOS
-				$result=$this->doUpdate($this->t_table,$listaValores_titular,"proveedores_id=$this->id");
+	public function modificarProveedor($listaValores_proveedor, $listaValores_titular=array(), $bancos){
+		$this->getdatosProveedores();
+
+			if(array_key_exists("documento", $listaValores_titular)){
+				if ($this->id!=$this->p_proveedores_id) {
+					##SI EXISTE MODIFICAMOS
+					$result=$this->doUpdate($this->p_table,$listaValores_titular,"id=$this->p_proveedores_id");
+					$listaValores_proveedor['proveedores_id']=$this->p_proveedores_id;
+				}else{
+					##SINO CREAMOS
+					$result = $this->doInsert ( $this->p_table, $listaValores_titular );
+					$listaValores_proveedor['proveedores_id']= $this->lastInsertId ();
+				}				
 			}else{
-				##SINO CREAMOS
-				$this->datosTitular($listaValores_titular['tipo'], $listaValores_titular['documento'], $listaValores_titular['nombre'], $listaValores_titular['email']);
-				$this->doInsert ( $this->t_table, $this->serializarDatos ( "t_", $this->p_table ) );
-			}			
-		}else{
-			##SI NO ESTA CHEKEADO BORRAMOS TITULAR
-			$this->borrarTitular($this->id);
-		}
+				##SI NO ESTA CHEKEADO BORRAMOS TITULAR
+				$listaValores_proveedor['proveedores_id']=$this->id;
+			}
+		//var_dump($listaValores_proveedor);
+		//var_dump($this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id"));
 		
 		##BORRAMOS LOS BANCOS ASOCIADOS
 		$this->borrarBancos($this->id);
@@ -89,12 +86,17 @@ class proveedor extends bd {
 	}
 	public function getProveedores($campos = null){
 		$campos=is_null($campos)?"*":$campos;
-		$consulta="select $campos FROM proveedores WHERE 1";
+		$consulta="select $campos FROM proveedores WHERE proveedores_id IS NOT NULL";
         $result=$this->query($consulta);
 		return $result;
 	}
 	public function getBancos($proveedores_id=null){
 		$consulta="select * FROM proveedores_bancos WHERE proveedores_id='$proveedores_id'";
+        $result=$this->query($consulta);
+		return $result;
+	}
+	public function getTitulares($proveedores_id=null){
+		$consulta="select * FROM proveedores WHERE id='$proveedores_id' and proveedores_id IS NULL";
         $result=$this->query($consulta);
 		return $result;
 	}
@@ -120,24 +122,16 @@ class proveedor extends bd {
 	public function getdatosProveedores(){
 		$result = $this->doSingleSelect($this->p_table,"id = {$this->id}");
 		if($result){
-			$this->datosProveedor($result["tipo"], $result["documento"], $result["nombre"], $result["telefono"], $result["email"], $result["direccion"]);			
+			$this->datosProveedor($result["tipo"], $result["documento"], $result["nombre"], $result["telefono"], $result["email"], $result["direccion"], $result["proveedores_id"]);			
 			$this->id = $result["id"];
 		}else{
 			return false;
 		}
-	}
-	public function getdatosTitulares(){
-		$result = $this->doSingleSelect($this->t_table,"proveedores_id = {$this->id}");
-		if($result){
-			$this->datosTitular($result["tipo"], $result["documento"], $result["nombre"], $result["email"]);
-		}else{
-			return false;
-		}
-	}
+	}	
 	/* * * * * * * * * * * * * * * * * * *
 	 * =========--- Setters ---========= *
 	 * * * * * * * * * * * * * * * * * * */
-	public function datosProveedor($tipo, $documento, $nombre, $telefono, $email, $direccion) {
+	public function datosProveedor($tipo, $documento, $nombre, $telefono, $email, $direccion, $proveedores_id=null) {
 		$this->defaultClass();
 		$this->p_tipo = $tipo;
 		$this->p_documento = $documento;
@@ -145,6 +139,7 @@ class proveedor extends bd {
 		$this->p_telefono = $telefono;
 		$this->p_email = $email;
 		$this->p_direccion = $direccion;
+		$this->p_proveedores_id = $proveedores_id;
 	}
 	public function datosTitular($tipo_titular, $documento_titular, $nombre_titular, $email_titular) {
 		$this->t_tipo = $tipo_titular;
