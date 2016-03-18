@@ -141,7 +141,10 @@
 										<?php endforeach;?>
 									</select>								 
 								</div>
-								<div class="form-group col-xs-11 col-sm-11 col-md-11 col-lg-11 input" >
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 marT5">
+									<span class="marL10"><i class="fa fa-lock"></i> Numero de Cuenta </span>
+								</div>
+								<div class="form-group col-xs-11 col-sm-11 col-md-7 col-lg-7 input" >
 									<input maxlength="20" type="text"
 										placeholder="Ingrese solo numeros sin caracteres extraños" name="prov_nro_cuenta[]"
 										class="form-input" id="prov_nro_cuenta">
@@ -174,7 +177,10 @@
 										<?php endforeach;?> 
 									</select>								 
 								</div>
-								<div class="form-group col-xs-11 col-sm-11 col-md-11 col-lg-11 input" >
+								<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 marT5">
+									<span class="marL10"><i class="fa fa-lock"></i> Numero de Cuenta </span>
+								</div>
+								<div class="form-group col-xs-11 col-sm-11 col-md-7 col-lg-7 input" >
 									<input disabled="disabled" maxlength="20" type="text"
 										placeholder="Ingrese solo numeros sin caracteres extraños" name="prov_nro_cuenta[]"
 										class="form-input" id="prov_nro_cuenta">

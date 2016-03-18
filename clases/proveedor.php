@@ -55,25 +55,29 @@ class proveedor extends bd {
 			$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
 		}		
 	}
-	public function modificarProveedor($listaValores_proveedor, $listaValores_titular=array(), $bancos){
+	public function modificarProveedor($listaValores_proveedor){		
+		$result=$this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id");		
+		return $result;
+	}
+	public function modificarInfoBancaria($listaValores_titular=array(), $bancos){
 		$this->getdatosProveedores();
 
 			if(array_key_exists("documento", $listaValores_titular)){
 				if ($this->id!=$this->p_proveedores_id) {
 					##SI EXISTE MODIFICAMOS
 					$result=$this->doUpdate($this->p_table,$listaValores_titular,"id=$this->p_proveedores_id");
-					$listaValores_proveedor['proveedores_id']=$this->p_proveedores_id;
+					$proveedores_id=$this->p_proveedores_id;
 				}else{
 					##SINO CREAMOS
 					$result = $this->doInsert ( $this->p_table, $listaValores_titular );
-					$listaValores_proveedor['proveedores_id']= $this->lastInsertId ();
+					$proveedores_id= $this->lastInsertId ();
 				}				
 			}else{
 				##SI NO ESTA CHEKEADO BORRAMOS TITULAR
-				$listaValores_proveedor['proveedores_id']=$this->id;
+				$proveedores_id=$this->id;
 			}
-		//var_dump($listaValores_proveedor);
-		$this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id");		
+	
+		$this->doUpdate($this->p_table,array("proveedores_id"=>$proveedores_id),"id=$this->id");	
 		##BORRAMOS LOS BANCOS ASOCIADOS
 		$this->borrarBancos($this->id);
 		$count=count($bancos['nro_cuentas']);

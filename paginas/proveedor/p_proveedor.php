@@ -29,7 +29,7 @@
                                 <th colspan="1" class="text-center">
                                     Email
                                 </th>
-                                <th colspan="2" class="text-center">
+                                <th colspan="3" class="text-center">
                                     Acci&oacute;n
                                 </th>
                             </tr>
