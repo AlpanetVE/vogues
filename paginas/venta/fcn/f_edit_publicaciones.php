@@ -151,7 +151,7 @@ $foto6=$publi->getFotoN(6);
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
 					<div class="form-group input-group" style="width: 60%">
 						<input type="text" placeholder="Titulo de la publicaci&oacute;n" name="txtTitulo" id="txtTitulo"
-						class="form-control" value="<?php echo ($_POST['titulo']);?>">
+						class="form-control" value="<?php echo isset($_POST['titulo'])?$_POST['titulo']:''; ?>">
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
