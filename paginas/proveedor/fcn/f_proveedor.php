@@ -17,6 +17,9 @@
 		case "update":
 			modificarProveedor();
 			break;
+		case "updateBancaria":
+			modificarProveedorBancaria();
+			break;
 		case "buscarDetalleProveedores":
 			buscarDetalleProveedores();
 			break;			
@@ -47,8 +50,9 @@
                     <td><?php echo $fila["telefono"]; ?></td>
                     <td><?php echo $fila["email"]; ?></td>        
                    
-                    <td><a href="#mod" class="admin-edit-prov" data-toggle="modal" data-target="#edit-prov" data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-lock" ></i> Modificar</a></td>
-                    <td><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> Ver      </a></td>
+                   <td title="Editar informacion del Proveedor" ><a href="#mod" class="admin-edit-prov" data-toggle="modal" data-target="#edit-prov" data-proveedor_id="<?php echo $fila['id']; ?>" >  Editar <i class="fa fa-user"></i> </a></td>                    
+                    <td title="Editar informacion Bancaria" ><a href="#mod" class="admin-edit-prov-bank" data-toggle="modal" data-target="#edit-prov-bank" data-proveedor_id="<?php echo $fila['id']; ?>" > Editar <i class="fa fa-university" ></i></a></td>
+                    <td ><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> Ver      </a></td>
                    
                    <!-- <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                     		<i class="fa fa-remove"></i> Eliminar
@@ -120,8 +124,7 @@
 				$valores [$name] = $proveedor->$name;
 				
 			}
-		}
-		
+		}	
 		
 		$obj_titular=$proveedor->getTitulares( $valores ['p_proveedores_id'] );
 		
@@ -169,7 +172,7 @@
 			
 				<div class="marT5">
 					 <span></span>
-					<span class="t15"><?php echo $dataBanco['banco']; ?></span>
+					<span class="t15">Banco <?php echo $dataBanco['banco']; ?></span>
 					-
 					 
 						Tipo de Cuenta:
@@ -210,7 +213,7 @@
 		$tipos_cuentas_id=isset($Array_bancos[0]['tipos_cuentas_id'])?$Array_bancos[0]['tipos_cuentas_id']:'';
 		$nro_cuenta=isset($Array_bancos[0]['nro_cuenta'])?$Array_bancos[0]['nro_cuenta']:'';
 		?>
-	<div class="form-group aditionalOpt ">
+	<div class="form-group aditionalOpt bank-container-rm col-xs-12">
 		<div class="form-group col-xs-12 col-sm-8 col-md-7 col-lg-7 input" >
 			<select class="form-select" id="prov_banco" name="prov_banco[]">
 				<option value="" disabled selected >Seleccione un Banco</option>
@@ -231,7 +234,10 @@
 				<?php endforeach;?>
 			</select>								 
 		</div>
-		<div class="form-group col-xs-11 col-sm-11 col-md-11 col-lg-11 input" >
+		<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 marT5">
+									<span class="marL10"><i class="fa fa-lock"></i> Numero de Cuenta </span>
+								</div>
+								<div class="form-group col-xs-10 col-sm-11 col-md-7 col-lg-7 input" >
 			<input value="<?php echo $nro_cuenta; ?>"
 			maxlength="20" type="text" placeholder="Ingrese solo numeros sin caracteres extraños" name="prov_nro_cuenta[]"
 				class="form-input" id="prov_nro_cuenta">
@@ -245,11 +251,10 @@
 		<?php		
 		for($i=1;$i<$count;$i++){
 		?>
-			<div class="form-group aditionalOpt ">
+			<div class="form-group aditionalOpt bank-container-rm col-xs-12">
 		        <div class="form-group col-xs-12 col-sm-8 col-md-7 col-lg-7 input marT10" >								 
 					<select class="form-select" id="prov_banco" name="prov_banco[]">
 						<option value="" disabled >Seleccione un Banco</option>
-						<option  >Seleccione un Banco</option>
 					<?php
 					foreach ($bancos as $banco ) :
 						?>
@@ -267,7 +272,10 @@
 						<?php endforeach;?> 
 					</select>								 
 				</div>
-				<div class="form-group col-xs-11 col-sm-11 col-md-11 col-lg-11 input" >
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 marT5">
+									<span class="marL10"><i class="fa fa-lock"></i> Numero de Cuenta </span>
+								</div>
+								<div class="form-group col-xs-10 col-sm-11 col-md-7 col-lg-7 input" >
 					<input value="<?php echo $Array_bancos[$i]['nro_cuenta']; ?>"
 					 maxlength="20" type="text"	placeholder="Ingrese solo numeros sin caracteres extraños" name="prov_nro_cuenta[]"
 						class="form-input" id="prov_nro_cuenta">
@@ -294,6 +302,24 @@
 		$email = filter_input ( INPUT_POST, "prov_email" );
 		$direccion = filter_input ( INPUT_POST, "prov_direccion" );
 			
+		$listaValores_proveedor=array(
+			"tipo"=>$tipo,
+			"documento"=>$documento,
+			"nombre"=>$nombre,
+			"telefono"=>$telefono,
+			"email"=>$email,
+			"direccion"=>$direccion);		
+		
+		$proveedor->setID($id);
+		$proveedor->modificarProveedor($listaValores_proveedor);
+		 
+		 echo json_encode ( array (
+					"result" => "ok"
+			) );
+	}
+	function modificarProveedorBancaria() {
+		$proveedor = new proveedor();
+		$id = filter_input ( INPUT_POST, "id" );
 		if (isset($_POST['diff_titular'])) {
 		    $tipo_titular = filter_input ( INPUT_POST, "prov_tipo_titular" );
 			$documento_titular = filter_input ( INPUT_POST, "prov_documento_titular" );
@@ -311,15 +337,7 @@
 		
 		$tipos_bancos = $_POST['prov_tipo_banco'];
 		$bancos = $_POST['prov_banco'];
-		$nros_cuentas = $_POST['prov_nro_cuenta'];
-		
-		$listaValores_proveedor=array(
-			"tipo"=>$tipo,
-			"documento"=>$documento,
-			"nombre"=>$nombre,
-			"telefono"=>$telefono,
-			"email"=>$email,
-			"direccion"=>$direccion);
+		$nros_cuentas = $_POST['prov_nro_cuenta'];		
 		$listaValores_bancos=array (
 					"tipos_bancos_id" => $tipos_bancos,
 					"bancos_id" => $bancos,
@@ -327,7 +345,7 @@
 					);
 		
 		$proveedor->setID($id);
-		$proveedor->modificarProveedor($listaValores_proveedor, $listaValores_titular, $listaValores_bancos);
+		$proveedor->modificarInfoBancaria($listaValores_titular, $listaValores_bancos);
 		 
 		 echo json_encode ( array (
 					"result" => "ok"

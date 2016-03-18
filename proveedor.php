@@ -25,6 +25,7 @@ include ("temas/header.php");
 include "temas/footer.php";
 include"modales/m_registrar_proveedor.php";
 include"modales/m_edit_proveedor.php";
+include"modales/m_edit_proveedor_bancaria.php";
 include"modales/m_info_prov.php";
 ?>
 

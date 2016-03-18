@@ -16,7 +16,8 @@ $(document ).ready(function() {
 	
 		/**BANCOS DINAMICOS**/	
 	initFormValidation('#reg-prov-form');
-	initFormValidation('#edit-prov-form');	
+	initFormValidation('#edit-prov-bank-form');
+	/**FUNCTION FOR DINAMICAL BANK**/
 	// The maximum number of options
 	function initFormValidation(formContainer){
     var MAX_OPTIONS = 15;
@@ -81,25 +82,26 @@ $(document ).ready(function() {
         });
         
      }
-        /**FIN BANCOS DINAMICOS**/    
+     /**FIN BANCOS DINAMICOS**/
     $("body").on('click', '.admin-reg-prov', function(e) {
-		btnModalProveedor('#reg-prov-form');
+	//	btnModalProveedor('#reg-prov-form');
 	});
-	 $("body").on('click', '.admin-edit-prov', function(e) {
-		btnModalProveedor('#edit-prov-form');
-		 $('#edit-prov-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare
-      
+	$("body").on('click', '.admin-edit-prov', function(e) {
+	//	btnModalProveedor('#edit-prov-form');
+		$('#edit-prov-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare      
 	});
-	function btnModalProveedor(container){ 
+	$("body").on('click', '.admin-edit-prov-bank', function(e) {
+	//	btnModalProveedor('#edit-prov-form');
+		$('#edit-prov-bank-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare      
+	});
+	/*function btnModalProveedor(container){
 		$(container+" .btn-prov-submit").data("step",1).html('Continuar');
 		$(container+" .diff-titular-field").hide();
 		$(container+" section[data-step=2]").fadeOut( "fast", function() {
 					$(container+" section[data-step=1]").fadeIn("fast");
 				});
-				
 		step = $(container+" .btn-prov-submit").data("step");
-		
-	}	
+	}*/
 	$(".btn-prov-submit").click(function(){
 		var $container    = $(this).parents('.form-proveedor');
 		var step, section;
@@ -120,6 +122,11 @@ $(document ).ready(function() {
 			break;
 		}
 	});
+	$(".btn-edit-prov-submit").click(function(){
+		var $container    = $(this).parents('.form-proveedor');console.log($container);
+		$container.data('formValidation').validate();
+	});
+	
 	function validarFormReg(step, $container){
 		var fv = $container.data('formValidation'), // FormValidation instance 
 		
@@ -235,11 +242,10 @@ $(document ).ready(function() {
            
     });
   /******************************FIN AGREGAR PROVEEDORES*********************************/  
-  /**********************MODIFICAR PROVEEDORES*********************/
+  /**********************MODIFICAR PROVEEDORES INFO*********************/
  $('.modal-edit-proveedor').on('show.bs.modal', function (e) {
 		var proveedor_id= $('#edit-prov-form').data("proveedor_id"),
 		container='#edit-prov-form';
-		defaultModal(container);
 		proveedor_id = parseInt(proveedor_id);
 		if(proveedor_id>0){
 			$.ajax({
@@ -255,16 +261,110 @@ $(document ).ready(function() {
 				            	$(container+' #prov_nombre').val(data.campos.p_nombre);
 				            	$(container+' #prov_telefono').val(data.campos.p_telefono);
 				            	$(container+' #prov_email').val(data.campos.p_email);
-				            	$(container+' #prov_direccion').val(data.campos.p_direccion);			            	
-				            	console.log(data.campos);
+				            	$(container+' #prov_direccion').val(data.campos.p_direccion);
+		            }
+	          	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
+	            error: function (xhr, status) {
+	            	SweetError(status);
+	            }
+	        });
+	    }
+	});
+ $('#edit-prov-form').formValidation({
+		locale: 'es_ES',
+		framework : 'bootstrap',
+		icon : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		addOns: { i18n: {} },
+		err: { container: 'tooltip' },
+		fields : {
+			prov_documento: {validators : {
+				notEmpty:{},	
+				digits:{},
+				stringLength : { max :  10},
+				blank: {}}},
+			prov_nombre : {validators : {
+				notEmpty : {},
+				stringLength : {min : 5, max : 512}}},
+			prov_email : {validators : {
+				notEmpty : {},
+				emailAddress : {},
+				blank: {}}},			
+			prov_telefono : {validators : {
+				notEmpty : {},
+				phone : {country:'VE'}}},			
+			prov_direccion : {validators : {
+				notEmpty : {},
+				stringLength : {min: 10,max : 1024}}}
+		}
+	}).on('success.form.fv', function(e) {
+		e.preventDefault();	
+		var form = $(e.target);
+		var fv = form.data('formValidation');
+		var method = "&metodo="+$(this).data("method");
+		var id = "&id="+$(this).data("proveedor_id");
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+            data: form.serialize() + method + id, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta		           
+            success: function (data) {
+	           	if (data.result === 'error') {
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	            	}
+	            }else{ //si registramos usuarios por backend            			
+            		swal({
+						title: "Edici&oacute;n de Proveedor",
+						text: "&iexcl;Proveedor Modificado Exitosamente!",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+							location.reload();
+					});
+            	}
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+    });
+    /**********************MODIFICAR INFO BANCARIA*********************/
+ $('.modal-edit-bank-proveedor').on('show.bs.modal', function (e) {
+ 		var container='#edit-prov-bank-form';
+		proveedor_id= $(container).data("proveedor_id"),
+		defaultModal(container);
+		getBancos(container,proveedor_id);
+		proveedor_id = parseInt(proveedor_id);
+		if(proveedor_id>0){
+			$.ajax({
+				url:"paginas/proveedor/fcn/f_proveedor.php", // la URL para la petici&oacute;n
+	            data: {metodo:"getProveedores", id:proveedor_id}, // la informaci&oacute;n a enviar
+	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
+	            dataType: 'json', // el tipo de informaci&oacute;n que se espera de respuesta
+	            success: function (data) {
+	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
+	            	if (data.result === 'OK') {
 				            	if(data.campos.documento!=null && data.campos.email!=null){
 				            		$(container+' #diff_titular').click();
 				            		$(container+' #prov_tipo_titular').val(data.campos.tipo);
 					            	$(container+' #prov_documento_titular').val(data.campos.documento);
 					            	$(container+' #prov_nombre_titular').val(data.campos.nombre);
 					            	$(container+' #prov_email_titular').val(data.campos.email);  		
+				            	}else{
+					            	$(container+' #prov_documento_titular').val('');
+					            	$(container+' #prov_nombre_titular').val('');
+					            	$(container+' #prov_email_titular').val('');
 				            	}
-				            	getBancos(container, data.campos.id);
+				            	
 		            }
 	          	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
 	            error: function (xhr, status) {
@@ -280,7 +380,7 @@ $(document ).ready(function() {
 	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
 	            dataType: 'html', // el tipo de informaci&oacute;n que se espera de respuesta
 	            success: function (data) {
-	            	$(container+' #optionTemplate').before(data);            	
+	            	$(container+' #optionTemplate').before(data);
 	            	/*var $newsInputs=$(container+" .aditionalOpt input, "+container+" .aditionalOpt select");
 	            	console.log(container);
 	            	$(container).formValidation('addField', $newsInputs);*/
@@ -310,7 +410,7 @@ $(document ).ready(function() {
 		 $container.find(".aditionalOpt").remove();
 	}
 	
- $('#edit-prov-form').formValidation({
+ $('#edit-prov-bank-form').formValidation({
 		locale: 'es_ES',
 		framework : 'bootstrap',
 		icon : {
@@ -395,8 +495,8 @@ $(document ).ready(function() {
 	            	}
 	            }else{ //si registramos usuarios por backend            			
             		swal({
-						title: "Registro de Proveedor",
-						text: "&iexcl;Proveedor Creado Exitosamente!",
+						title: "Edici&oacute;n de Proveedor",
+						text: "&iexcl;Informaci&oacute;n Bancaria editada Exitosamente!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -410,7 +510,6 @@ $(document ).ready(function() {
             }
         });
     });
-    
  /*******************************MOSTRAR DETALLE PROVEEDOR******************************/	
  
   
