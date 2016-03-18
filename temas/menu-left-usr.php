@@ -7,6 +7,9 @@
 			<div class="link"  ><a href="#" class=""><i class="glyphicon glyphicon-thumbs-up hvr-icon"></i>Reputacion</a></div>
 			
 		</li>-->
+		
+		
+		<!--  El main.js elimina los hidden de este menu -->
 		<li class="hidden admin-usuarios">
 			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</div></a>			 
 		</li>		
@@ -19,6 +22,15 @@
                 <li> <a href="#">Reclamos</a></li>
 			</ul>
 		</li>
+		
+		<li class="hidden inventario">
+			<div class="link"><i class="fa fa-archive" ></i>Inventario<i class="fa fa-chevron-down"></i></div>
+			<ul class="submenu submenu-active" id="ventas" name="ventas">
+				<li  ><a href="inventario.php?type=1" class="" id="uno1"> Categorias</a></li>
+				<li><a href="inventario.php?type=2" >Productos</a></li>
+			</ul>
+		</li>
+		
 		<li class="hidden compras-tienda">
 			<div class="link"><i class="fa fa-shopping-cart"></i>Compras<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu">
