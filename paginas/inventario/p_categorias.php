@@ -4,13 +4,13 @@
 <div class="pad20 contenedor row">
             <div class="marB20">
                 <h4>
-                    Categorias de Productos
+                    Listado de Productos
                 </h4>
                 <hr>
                 <br>
                 <div class="text-right">
                    <a class="admin-reg-prov" href="#" data-toggle='modal' data-target='#reg-categoria' data-rol-type='select'  data-tipo='1' >
-						<button class="btn2 btn-default t16 " style="">Agregar Categoria</button>
+						<button class="btn2 btn-default t16 " style="">Agregar Productos</button>
 					</a>
 		        </div>  
                <div class="input-group" style="width: 19%;">
@@ -42,7 +42,7 @@
                                     Stock
                                 </th>
                               <th colspan="2" class="text-center">
-                                    Productos
+                                    Mercancia
                                 </th>
                                  <th class="text-center">
                                     Eliminar

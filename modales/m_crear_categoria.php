@@ -10,7 +10,7 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="title-modal-prov"
-						class="marL15">Datos de la Categoria</span>
+						class="marL15">Datos del Producto</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
@@ -21,7 +21,7 @@
 					<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 							<span class="marL10">Nombre</span>
 								<input type="text"
-									placeholder="Ingrese nombre de la categoria..." name="categ_nombre"
+									placeholder="Ingrese nombre del Producto..." name="categ_nombre"
 									class=" form-input" id="categ_nombre">
 							</div>
 					

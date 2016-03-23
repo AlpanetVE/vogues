@@ -3,8 +3,11 @@ if (!headers_sent()) {
 	header('Content-Type: text/html; charset=UTF-8');
 }
 include_once "../../../clases/clasificados.php";
+include_once "../../../clases/inventario.php";
 $clasificado = new clasificados($_POST["id"]);
+$categorias= new inventario();
 
+//$idcateg=isset($_GET["categ"])?$_GET["categ"]:"";
 ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 	<div class="contenedor "
@@ -37,6 +40,8 @@ $clasificado = new clasificados($_POST["id"]);
 								resultados en tus ventas.</span>
 						</div>
 					</div>
+					
+		     
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
 					<input type="hidden" id="fotoprincipal" value="false">
@@ -85,6 +90,15 @@ $clasificado = new clasificados($_POST["id"]);
 								contrario tu publicaci&oacute;n sera excluida de las listas.</span>
 						</div>
 					</div>
+					<?php if(isset($_POST["id_categ_prod"])) { 
+		    	$result=$categorias->getCategoriaById($_POST["id_categ_prod"]);
+		    	  ?>
+		     	<select id="categ" class="form-control input-sm " disabled="disabled" style="display: inline;">
+					<option value="<?php echo $result['id'] ?>" ><?php echo $result['nombre']; ?></option>					
+		         </select> 
+		       <?php  } else {   }  ?> <select id="categ" class="form-control input-sm " disabled="disabled" style="display: inline;">
+					<option value="<?php echo $result['id'] ?>" ><?php echo $result['nombre']; ?></option>					
+		       </select>  
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 marT10 marB10 ">
 					<div class="form-group input-group" style="width: 100%; ">
