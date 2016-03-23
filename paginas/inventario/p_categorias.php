@@ -1,40 +1,57 @@
 <?php include "clases/inventario.php"; ?>
-<div class="pad20 contenedor">
+<div class="pad20 contenedor row">
             <div class="marB20">
                 <h4>
                     Categorias de Productos
                 </h4>
                 <hr>
-                <br>             
+                <br>
                 <div class="text-right">
-                   <a class="admin-reg-prov" href="#" data-toggle='modal' data-target='#reg-prov' data-rol-type='select'  data-tipo='1' >
-						<button class="btn2 btn-default t16 " style="">Agregar Proveedor</button>
+                   <a class="admin-reg-prov" href="#" data-toggle='modal' data-target='#reg-categoria' data-rol-type='select'  data-tipo='1' >
+						<button class="btn2 btn-default t16 " style="">Agregar Categoria</button>
 					</a>
-                </div>
+		        </div>  
+               <div class="input-group" style="width: 19%;">
+					<span class="input-group-btn">
+						<button class="btn-header btn-default-header" style="border: #ccc 1px solid; border-right:transparent;">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span> <input style="margin-left: -10px; border: #ccc 1px solid; border-left:1px solid #FFF;  " class="form-control-header " placeholder="Buscar" id="txtBusquedaCateg" name="txtBusquedaCateg" type="text">						 
+				</div>  
+			 <div class="text-right">
+		        <select id="filtrostatus" class="form-control input-sm " style="display: inline;">
+								<option value="0" >Sin Publicar</option>
+								<option value="1" >Publicadas</option>					
+		         </select> 
+		</div> 
+			
+			 
             </div>       
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-shop-active">
                     <div id="lista-prov-active">
                         <table class="table  text-center table-hover">
-                            <tr style="background: #D8DFEA">
-                                <th class="text-center">
-                                    Codigo
-                                </th>
+                            <tr style="background: #D8DFEA"> 
                                 <th class="text-center">
                                     Nombre
                                 </th>
                                 <th class="text-center">
                                     Stock
                                 </th>
-                              
-                                <th colspan="2" class="text-center">
-                                    Acci&oacute;n
+                              <th colspan="2" class="text-center">
+                                    Productos
                                 </th>
+                                 <th class="text-center">
+                                    Eliminar
+                                </th> 
+                              <th class="text-center">
+                                    Status
+                                </th>    
                             </tr>
                             <tbody id="ajaxContainer">
                                 <?php                               
                                 $inventario= new inventario();								
-                                $result=$inventario->getCategorias('count(id) as total');
+                                $result=$inventario->getCategorias2('count(id) as total')->fetch();
 								$total=$result['total'];
                                 $totalPaginas=ceil($total/25);
                                 ?>

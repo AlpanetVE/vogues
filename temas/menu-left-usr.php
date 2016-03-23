@@ -23,19 +23,21 @@
 			</ul>
 		</li>
 		
-		<li class="hidden inventario">
+	<!--	<li class="hidden inventario">
 			<div class="link"><i class="fa fa-archive" ></i>Inventario<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu submenu-active" id="ventas" name="ventas">
 				<li  ><a href="inventario.php?type=1" class="" id="uno1"> Categorias</a></li>
 				<li><a href="inventario.php?type=2" >Productos</a></li>
 			</ul>
-		</li>
+	</li> -->
 		
 		<li class="hidden compras-tienda">
 			<div class="link"><i class="fa fa-shopping-cart"></i>Compras<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu">
 				<li><a href="proveedor.php"> Proveedores</a></li>
-				<li><a href="#">Inventario</a></li>
+				<li><a href="inventario.php?type=2">Inventario</a></li>
+				<li><a href="inventario.php?type=1">Productos</a></li>
+				
 			</ul>
 		</li>
 		<li class="hidden compra">

@@ -1403,6 +1403,15 @@ float: left ;
 	text-aling: center;
 }
 
+
+.admin-elim-categ{
+	color: red;
+}
+
+.admin-elim-disabled{
+	color:gray;
+}
+
 /* ************* Fin Resumen ************* */
 
 /* ************ iconos ***************** */

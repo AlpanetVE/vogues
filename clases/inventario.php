@@ -14,10 +14,10 @@ class inventario extends bd {
 	private $p_status;
 
 	protected $c_table = "productos_categorias";
-	private $c_id = 0;
-	private $c_codigo;
+	private $c_id;
 	private $c_nombre;
 	private $c_stock;
+	private $c_status;
 	
 	/* * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Contructor ---============ *
@@ -54,6 +54,52 @@ class inventario extends bd {
 		else {
 		return false;
 		}
+	 }
+	 
+	 public function getCategorias2($campos = null,$nombre=null,$status=null){
+		$campos=is_null($campos)?"*":$campos;
+		$status=is_null($status)?"0":$status;
+		$consulta="select $campos FROM productos_categorias WHERE 1 ";
+		if(!is_null($nombre)){
+			$consulta.="AND nombre LIKE '%".$nombre."%'";
+		}
+		if(!is_null($status)){
+			if($status!=0)
+				$consulta.="AND status<>0";		
+			else
+			$consulta.="AND status=0";
+		}
+		//echo $consulta;
+        $result=$this->query($consulta);
+		return $result;
+	}
+	 
+	 public function getProductos($campos=null,$categoria){
+	 	$campos=is_null($campos)?"*":$campos;
+		$consulta="select $campos FROM productos where productos.productos_categorias_id=$categoria";
+        $result=$this->query($consulta)->fetch();
+		return $result['total']; 		
+	 }
+	 
+	 public function crearCategoria($nombre){
+	 	$result=$this->doInsert($this->c_table, array("nombre"=>$nombre));
+		return $result;
+	 }
+	 
+	 public function actualizarCategoria($nombre,$id){
+	 	$result=$this->doUpdate($this->c_table, array("nombre"=>$nombre), "id=$id");
+		return $result;
+	 }
+	 
+	 public function eliminarCategoria($id){
+	 	$consulta="DELETE FROM $this->c_table where id=$id";
+		$result=$this->exec($consulta);
+		return $result;
+	 }
+	 
+	 public function hayProductosEnCategoria($idcategoria){
+	 	$result=$this->valueExist($this->p_table, $idcategoria, "productos_categorias_id");
+		return $result;
 	 }
 	 
 	public function getDatosProductos(){
