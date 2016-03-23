@@ -50,7 +50,7 @@
                   <td ><p href="" class="admin-elim-disabled"  data-status_categoria="<?php echo $fila['status']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><i style="font-size: larger;" class="fa fa-remove"></i></p></td>
                     <?php } if ($fila["status"]==0) { ?>
                    <td>
-                   		<a class="admin-reg-prov" href="publicar.php?<?php echo $fila["id"] ?>"   data-tipo='1' >
+                   		<a class="admin-reg-prov" href="publicar.php?categ=<?php echo $fila["id"] ?>"   data-tipo='1' >
 							<button class="btn2 btn-default t16 " style="">Publicar</button>
 						</a>
 					</td>  

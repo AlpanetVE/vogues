@@ -74,6 +74,13 @@ class inventario extends bd {
 		return $result;
 	}
 	 
+	 public function getCategoriaById($id){
+	 	$consulta="select * FROM productos_categorias WHERE id=$id";
+		$result=$this->query($consulta)->fetch();
+		return $result;
+	 }
+	 
+	 
 	 public function getProductos($campos=null,$categoria){
 	 	$campos=is_null($campos)?"*":$campos;
 		$consulta="select $campos FROM productos where productos.productos_categorias_id=$categoria";

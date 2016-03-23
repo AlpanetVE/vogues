@@ -51,7 +51,7 @@ if (!headers_sent()) {
 					<br>
 					<h2>&iexcl;Listo!</h2>
 					<br>
-					<button class="btn btn-primary2 t20" type="button" id="btnOk">Continuar</button>
+					<button class="btn btn-primary2 t20" type="button" id="btnOk" data-categ=""> Continuar</button>
 					</div>
 				</div>
 			</div>

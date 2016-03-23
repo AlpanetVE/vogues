@@ -9,15 +9,19 @@
 $(document).ready(function() {
 //	var a=jQuery.noConflict(true);
 	$('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />');
+	
+	var categ = $(".catg").data('categprod');
 	/*
 	 * 1er Paso: Pasar a publicar1-2.php
 	 */
 	$(".catg").click(function() {
 		var laimagen = $(this).children("img").attr("src");
-		$.ajax({
+		
+	$.ajax({
 			url : "paginas/publicar/fcn/f_publicar1-2.php",
 			data : {
 				id_clasificados : $(this).data("idcatg")
+				
 			},
 			type : "POST",
 			dataType : "html",
@@ -86,12 +90,15 @@ $(document).ready(function() {
 	 */
 	$("#ajaxContainer").on('click', '#btnOk', function() {
 		//Guardar imagen actual
+		//alert("categoria"+categ);
 		var laimagen = $("#imagenclasificado").attr("src");
+		//console.log(categ+laimagen);
 		//ejecutamos ajax para pasar a 2.
 		$.ajax({
 			url : "paginas/publicar/fcn/f_publicar2.php",
 			data : {
-				id : $("#ajaxListas > div").last().find(".form-select-publicar").val()				
+				id : $("#ajaxListas > div").last().find(".form-select-publicar").val(),
+				id_categ_prod:categ
 			},
 			type : "POST",
 			dataType : "html",
