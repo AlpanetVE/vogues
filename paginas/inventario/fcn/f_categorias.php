@@ -41,8 +41,8 @@
 				<tr>
                     <td><?php echo $fila["nombre"]; ?> <a href="#mod" class="admin-edit-categ" data-toggle="modal" data-target="#edit-categoria" data-nombre-cate="<?php echo $fila['nombre']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><i style="font-size: larger;" class="fa fa-pencil"></i> </a></td>
                     <td><?php echo $categoria->getProductos('count(id) as total',$fila['id']); ?> </td>
-                    <td ><a href="#mod" class="admin-ver-categoria"  data-toggle="modal" data-target="#ver-categoria"  data-categoria_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> Ver </a></td>
-                     <td ><a href="#mod" class="admin-ver-categoria"  data-toggle="modal" data-target="#ver-categoria"  data-categoria_id="<?php echo $fila['id']; ?>" ><i class="fa fa-plus"  ></i> Agregar </a></td>
+                    <td><a href="producto.php?producto=<?php echo $fila['id']; ?>"  ><i class="fa fa-eye"  ></i> Ver </a></td>
+                     <td ><a href="#mod" class="admin-add-categoria"  data-toggle='modal' data-target='#reg-prod'  data-categoria_id="<?php echo $fila['id']; ?>" ><i class="fa fa-plus"  ></i> Agregar </a></td>
                 <?php if(!$categoria->hayProductosEnCategoria($fila["id"])) {
                 	  ?>
                     <td ><a href="#mod" class="admin-elim-categ"  data-toggle="modal" data-target="#eliminar-categoria"  data-status_categoria="<?php echo $fila['status']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><i style="font-size: larger;" class="fa fa-remove"></i></a></td>

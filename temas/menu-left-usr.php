@@ -35,7 +35,7 @@
 			<div class="link"><i class="fa fa-shopping-cart"></i>Compras<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu">
 				<li><a href="proveedor.php"> Proveedores</a></li>
-				<li><a href="inventario.php?type=2">Inventario</a></li>
+				<li><a href="producto.php"> Inventario</a></li>
 				<li><a href="inventario.php?type=1">Productos</a></li>
 				
 			</ul>

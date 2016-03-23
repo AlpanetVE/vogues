@@ -79,9 +79,7 @@ class bd extends PDO {
 			} else {
 				return false;
 			}
-		} catch ( PDOException $ex ) {
-				var_dump($stament);
-		var_dump($condition);
+		} catch ( PDOException $ex ) {				
 			return $this->showError ( $ex );
 		}
 	}
@@ -132,7 +130,7 @@ class bd extends PDO {
 	}
 	public function emptyTable($table) {
 		try {
-			var_dump ( $this->query ( "DELETE FROM $table" ) );
+			$this->query ( "DELETE FROM $table");
 			$this->query ( "ALTER TABLE $table auto_increment = 1" );
 		} catch ( PDOException $ex ) {
 			return $ex->getMessage ();
@@ -157,10 +155,13 @@ class bd extends PDO {
 		}
 	}
 	public function getAllDatos($table, $row='', $fields='*') {
-		$consulta = "SELECT $fields FROM $table WHERE 1" ; 
-		if (isset ( $row['indice'] ) and isset ( $row['value'])) {		
-			$consulta .= ' and '.$row['indice'].' = '. $row['value'];
-		}
+		$consulta = "SELECT $fields FROM $table WHERE 1" ;
+		
+		if (is_array($row)) {
+			foreach ($row as $key => $value) {
+				$consulta .= ' and '.$key.' = '. $value;
+			}
+		}		
 		$sql = $this->query ( $consulta );
 		$this->rowcount = $sql->rowCount ();
 		return $sql->fetchAll ();

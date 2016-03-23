@@ -754,8 +754,7 @@ public function setNewPassword($user,$clave){
 			return false;
 		}
 	}
-	public function getPreguntasCompra($id_usr, $id_publicacion=NULL){
-		
+	public function getPreguntasCompra($id_usr, $id_publicacion=NULL){		
 
 		$consulta="select * from publicaciones where 
 		id in (select publicaciones_id
@@ -803,7 +802,7 @@ public function setNewPassword($user,$clave){
 		if(!empty($tipos_notificaciones_id)){
 			$condicion.=" and tipos_notificaciones_id=$tipos_notificaciones_id";
 		}
-		var_dump($this->doUpdate("notificaciones",$actualizar,$condicion));
+		$this->doUpdate("notificaciones",$actualizar,$condicion);
 	}
 	public function countFavoritos($id=NULL){
 		if(is_null($id)){

@@ -1,4 +1,6 @@
-<?php include "clases/inventario.php"; ?>
+<?php include "clases/inventario.php";
+	include "clases/proveedor.php"; 
+	 ?>
 <div class="pad20 contenedor row">
             <div class="marB20">
                 <h4>
@@ -16,7 +18,8 @@
 						<button class="btn-header btn-default-header" style="border: #ccc 1px solid; border-right:transparent;">
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
-					</span> <input style="margin-left: -10px; border: #ccc 1px solid; border-left:1px solid #FFF;  " class="form-control-header " placeholder="Buscar" id="txtBusquedaCateg" name="txtBusquedaCateg" type="text">						 
+					</span> 
+	<input style="margin-left: -10px; border: #ccc 1px solid; border-left:1px solid #FFF;  " class="form-control-header " placeholder="Buscar" id="txtBusquedaCateg" name="txtBusquedaCateg" type="text">						 
 				</div>  
 			 <div class="text-right">
 		        <select id="filtrostatus" class="form-control input-sm " style="display: inline;">

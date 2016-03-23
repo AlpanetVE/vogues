@@ -37,7 +37,7 @@ class proveedor extends bd {
 			$this->id = $id;
 			$this->getdatosProveedores();
 		} 
-	}	
+	}
 	public function crearProveedor($bancos, $titular) {
 		if(array_key_exists("documento", $titular)){
 			$result = $this->doInsert ( $this->p_table, $titular );
@@ -55,7 +55,7 @@ class proveedor extends bd {
 			$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
 		}		
 	}
-	public function modificarProveedor($listaValores_proveedor){		
+	public function modificarProveedor($listaValores_proveedor){
 		$result=$this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id");		
 		return $result;
 	}

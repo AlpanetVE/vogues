@@ -18,8 +18,6 @@
 				<div class="modal-body marL20 marR20 ">
 					<br>
 					<section class="form-apdp" data-title="Informaci&oacute;n del Proveedor" data-step="1"  >
-						
-							 
 							<div class="col-xs-12 ">
 								<div class="marL10"><i class="fa fa-list-alt"></i>
 									Identificaci&oacute;n</div>
@@ -189,6 +187,7 @@
 						            <button type="button" class="btn btn-default removeButton t12"><i class="fa fa-minus"></i></button>
 						        </div>
 						    </div>
+						    <!---------------------------------------------------------------------------------------->
 						</div>
 					</section>
 				</div>
