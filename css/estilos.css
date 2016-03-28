@@ -950,7 +950,7 @@ select::-webkit-scrollbar-thumb {
 	color: #333;
 }
 
-.form-group>.form-control-feedback {
+.form-group .form-control-feedback {
 	margin-right: 8px;
 	margin-top: 1.8px;
 	background: #FFF;

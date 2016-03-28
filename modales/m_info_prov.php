@@ -67,10 +67,10 @@
 	                        	</div>
                         </div>            			
                     </div>  
+                  </div>
 				<div class="modal-footer">
 					<button class="btn btn-primary2" data-dismiss="modal">Continuar</button>
-				</div>
-			
+				</div>			
 		</div>
 		<!-- /.modal-content -->
 	</div>

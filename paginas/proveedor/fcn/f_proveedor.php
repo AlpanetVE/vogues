@@ -46,13 +46,13 @@
 				?>
 				<tr>
                     <td><?php echo $fila["documento"]; ?></td>
-                    <td><?php echo $fila["nombre"]; ?></td>
+                    <td ><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> <?php echo $fila["nombre"]; ?></a></td>
                     <td><?php echo $fila["telefono"]; ?></td>
                     <td><?php echo $fila["email"]; ?></td>        
-                   
-                   <td title="Editar informacion del Proveedor" ><a href="#mod" class="admin-edit-prov" data-toggle="modal" data-target="#edit-prov" data-proveedor_id="<?php echo $fila['id']; ?>" >  Editar <i class="fa fa-user"></i> </a></td>                    
-                    <td title="Editar informacion Bancaria" ><a href="#mod" class="admin-edit-prov-bank" data-toggle="modal" data-target="#edit-prov-bank" data-proveedor_id="<?php echo $fila['id']; ?>" > Editar <i class="fa fa-university" ></i></a></td>
-                    <td ><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> Ver      </a></td>
+                    <td><a href="producto.php?proveedor=<?php echo $fila['id']; ?>"  ><i class="fa fa-eye"  ></i> Ver </a></td>
+                    <td ><a href="#mod" class="admin-add-proveedor"  data-toggle='modal' data-target='#reg-prod'  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-plus"  ></i> Agregar </a></td>                
+                    <td title="Editar informacion del Proveedor" ><a href="#mod" class="admin-edit-prov" data-toggle="modal" data-target="#edit-prov" data-proveedor_id="<?php echo $fila['id']; ?>" >   <i class="fa fa-user"></i> </a></td>                    
+                    <td title="Editar informacion Bancaria" ><a href="#mod" class="admin-edit-prov-bank" data-toggle="modal" data-target="#edit-prov-bank" data-proveedor_id="<?php echo $fila['id']; ?>" >  <i class="fa fa-university" ></i></a></td>
                    
                    <!-- <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                     		<i class="fa fa-remove"></i> Eliminar

@@ -1,6 +1,10 @@
 $(document ).ready(function() {
 	 
-	paginar(1, '#lista-prov-active');
+	if($('#lista-prov-active').length != 0) {
+		paginar(1, '#lista-prov-active');
+		initFormValidation('#reg-prov-form');
+		initFormValidation('#edit-prov-bank-form');	
+	}
 	
 	/****************AGREGAR PROVEEDOR**************/
 		/**CHECK TITULAR**/
@@ -13,10 +17,8 @@ $(document ).ready(function() {
 	   		$container.find(".diff-titular-field input, .diff-titular-field select").prop("disabled",true);
 	   }
 	});
+		/**BANCOS DINAMICOS**/
 	
-		/**BANCOS DINAMICOS**/	
-	initFormValidation('#reg-prov-form');
-	initFormValidation('#edit-prov-bank-form');
 	/**FUNCTION FOR DINAMICAL BANK**/
 	// The maximum number of options
 	function initFormValidation(formContainer){
@@ -83,8 +85,8 @@ $(document ).ready(function() {
         
      }
      /**FIN BANCOS DINAMICOS**/
-    $("body").on('click', '.admin-reg-prov', function(e) {
-	//	btnModalProveedor('#reg-prov-form');
+    $("body").on('click', '.admin-reg-prov', function(e) { 
+		btnModalProveedor('#reg-prov-form');
 	});
 	$("body").on('click', '.admin-edit-prov', function(e) {
 	//	btnModalProveedor('#edit-prov-form');
@@ -94,14 +96,14 @@ $(document ).ready(function() {
 	//	btnModalProveedor('#edit-prov-form');
 		$('#edit-prov-bank-form').data("proveedor_id",$(this).data("proveedor_id"));	//usuario que modificare      
 	});
-	/*function btnModalProveedor(container){
+	function btnModalProveedor(container){
 		$(container+" .btn-prov-submit").data("step",1).html('Continuar');
 		$(container+" .diff-titular-field").hide();
 		$(container+" section[data-step=2]").fadeOut( "fast", function() {
 					$(container+" section[data-step=1]").fadeIn("fast");
 				});
 		step = $(container+" .btn-prov-submit").data("step");
-	}*/
+	}
 	$(".btn-prov-submit").click(function(){
 		var $container    = $(this).parents('.form-proveedor');
 		var step, section;
@@ -518,7 +520,7 @@ $(document ).ready(function() {
 	 	var proveedores_id= $(this).data("proveedor_id"),
 	    $modal=$('.modal-detalle-prov');
 		proveedores_id = parseInt(proveedores_id);
-		  
+		  console.log(proveedores_id);
 		if(proveedores_id>0){			
 			
 			$.ajax({
@@ -558,7 +560,8 @@ $(document ).ready(function() {
 	});
 	/********************FUNCIONES REALIZADAS PARA OPTIMIZAR EL LISTADO**************/
 	function paginar(pagina, container, status){
-		var total=$(container+" #paginacion").data("total"); 
+		var $container=$(container);
+		var total=$container.find(" #paginacion").data("total"); 
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/proveedor/fcn/f_proveedor.php",
@@ -566,31 +569,36 @@ $(document ).ready(function() {
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				$(container+" #ajaxContainer").html(data);
-				$(container+" #paginacion li").removeClass("active");
-				$(container+" #paginacion").find('[data-pagina=' + pagina + ']').parent().addClass("active");
-				$(container+" #inicio").text(((pagina-1)*25)+1);
+				$container.find(" #ajaxContainer").html(data);
+				$container.find(" #paginacion li").removeClass("active");
+				$container.find(" #paginacion").find('[data-pagina=' + pagina + ']').parent().addClass("active");
+				$container.find(" #inicio").text(((pagina-1)*25)+1);
 				if(total<pagina*25){
-					$(container+" #final").text(total + " de ");
+					$container.find(" #final").text(total + " de ");
 				}else{
-					$(container+" #final").text(pagina*25 + " de ");
+					$container.find(" #final").text(pagina*25 + " de ");
 				}
-				$(container+" html,body").animate({
+				$container.find(" html,body").animate({
     				scrollTop: 0
 				}, 200);
 				if(pagina % 10 == 1){
-					$(container+" #paginacion #anterior1").addClass("hidden");
+					$container.find(" #paginacion #anterior1").addClass("hidden");
 				}else{
-					$(container+" #paginacion #anterior1").removeClass("hidden");
+					$container.find(" #paginacion #anterior1").removeClass("hidden");
 				}
-				$(container+" #paginacion").data("paginaactual",pagina);
+				$container.find(" #paginacion").data("paginaactual",pagina);
 				if(pagina*25>=total || pagina % 10==0){
-					$(container+" #paginacion #siguiente1").addClass("hidden");
+					$container.find(" #paginacion #siguiente1").addClass("hidden");
 				}else{
-					$(container+" #paginacion #siguiente1").removeClass("hidden");
+					$container.find(" #paginacion #siguiente1").removeClass("hidden");
 				}
 				loadingAjax(false);
 			}
+		});
+		
+		$(document).on('click',".admin-add-proveedor",function(e){
+			var proveedor=$(this).data("proveedor_id");
+			$('#reg-prod-form').find('#proveedor').val(proveedor).prop("disabled",true);
 		});
 	}	
 	

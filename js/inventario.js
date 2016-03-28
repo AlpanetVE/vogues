@@ -240,4 +240,9 @@ $(document).on('change',"#filtrostatus",function(e){
 		});
 	}	
 	
+	$(document).on('click',".admin-add-categoria",function(e){
+		var categoria=$(this).data("categoria_id");		
+		$('#reg-prod-form').find('#categoria').val(categoria).prop("disabled",true);
+	});
+
 });

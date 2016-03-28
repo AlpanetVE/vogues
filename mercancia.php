@@ -8,6 +8,8 @@ include_once "fcn/varlogin.php";
 <!--<script type="text/javascript" src="js/htmledit/trumbowyg.min.js"></script>-->
 <!-- <script type="text/javascript" src="js/htmledit/langs/es.min.js"> </script> -->
 <script type="text/javascript" src="js/inventario.js"></script>
+<script type="text/javascript" src="js/producto.js"></script>
+<link href="css/producto.css" rel="stylesheet">
 <body>
 <?php include "temas/header.php";?>
 <div class="container">	
@@ -45,6 +47,7 @@ include "temas/footer.php";
 include "modales/m_crear_categoria.php";
 include "modales/m_edit_categoria.php";
 include "modales/m_eliminar_categoria.php";
+include "modales/m_registrar_producto.php";
 ?>
 </body>
 </html>
