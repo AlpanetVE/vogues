@@ -61,8 +61,8 @@ function buscaPublicaciones(){
 			$publicacion=new publicaciones($valor["id"]);
 			switch($_POST["tipo"]){
 				case 1:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,111,1)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,122,1)'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,111," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,122," . $publicacion->productos_categorias_id . ")'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
 					break;
 				case 2:
 					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Reactivar</a></li>";
@@ -100,13 +100,13 @@ function buscaPublicaciones(){
 						<div id='descripcion" . $publicacion->id ."' name='descripcion" . $publicacion->id . "' class='hidden'>
 							$publicacion->descripcion
 						</div>
-					<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1)'>
+					<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1," . $publicacion->productos_categorias_id . ")'>
 						Reactivar
 					</button> 
-					<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2)'>
+					<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2," . $publicacion->productos_categorias_id . ")'>
 						Pausar
 					</button>						
-					<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3)'>
+					<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3," . $publicacion->productos_categorias_id . ")'>
 						Finalizar
 					</button>					
 					<button id='btnOpciones" . $publicacion->id . "' type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
@@ -207,13 +207,19 @@ function cambiaStatus(){
 	$publi=new publicaciones($_POST["id"]);
 	$categ=new inventario();
 	$publi->setStatus($_POST["tipo"],$_POST["anterior"]);
-	$categ->setStatus($_POST["categ"], $_POST["anterior"]);
+	
+	if($_POST["tipo"]=='1'){
+		$status_prod='1';
+	}else{
+		$status_prod='0';
+	}
+	$categ->setStatus($_POST["categ"],$status_prod);
 	$amigos = new amigos();
-	$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
+	/*$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
 	foreach ($panas as $p => $value) {
 		$mostrar = $publi -> deletePanaNoti($_POST["id"],4,$value["numero"]);
-	}
-	echo $mostrar;	
+	}*/
+	//echo $mostrar;	
 }
 function instancia(){
 	$publi=new publicaciones($_POST["id"]);
@@ -239,7 +245,7 @@ function actualizaPub(){
 	} 	
 	$listaValores["dias_garantia"]=str_replace("gn", "�", $listaValores["dias_garantia"]);
 	$listaValores["titulo"]=utf8_decode($listaValores["titulo"]);
-	$publi->actualizarPublicacion($listaValores,$monto,$fotos);
+	$publi->actualizarPublicacion($listaValores,$monto,$fotos); 
 	echo "OK";
 }
 function republica(){
@@ -250,11 +256,17 @@ function republica(){
 			"titulo"=>$_POST["titulo"],
 			"monto"=>$_POST["monto"],
 			"stock"=>$_POST["stock"]);
-	$resultado=$publi->volveraPublicar($listaValores);
-	$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
+	//$resultado=$publi->volveraPublicar($listaValores);
+	 
+	$publi->setMonto($monto);
+	$bd->doUpdate("publicaciones", $listaValores , "id={$_POST["id"]}");
+	 
+	 
+	/*$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
 	foreach ($panas as $p => $value) {
 		$publi-> setPanaPublicacion($resultado,4,$value["numero"]);
-	}			
+	}*/
+	
 	echo $resultado;
 }
 function buscarCaliente(){

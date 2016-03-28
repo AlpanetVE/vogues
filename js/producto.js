@@ -122,9 +122,22 @@ $(document ).ready(function() {
 		var form = $(e.target);
 		var fv = form.data('formValidation');
 		var method = "&metodo="+$(this).data("method");
-		$(this).find('#categoria').prop("disabled",false); //line for inventarios.js
-		$(this).find('#proveedor').prop("disabled",false); //line for proveedor.js
-		console.log($(this).find('#categoria'));
+		var categoria,proveedor,sendCategoria=false,sendProveedor=false;
+		
+		if($(this).find('#categoria').prop("disabled")){
+			$(this).find('#categoria').prop("disabled",false); //line for inventarios.js
+			categoria = $(this).find('#categoria').val();
+			sendCategoria=true;
+		}else if($(this).find('#proveedor').prop("disabled")){
+			$(this).find('#proveedor').prop("disabled",false); //line for proveedor.js
+			proveedor = $(this).find('#proveedor').val();
+			sendProveedor=true;
+		}
+		
+		
+		
+		
+		
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method , // la información a enviar
@@ -147,7 +160,15 @@ $(document ).ready(function() {
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
-						  location.reload();
+						  if(sendCategoria){
+						  	window.open("producto.php?producto=" + categoria,"_self");
+						  }
+						  else if(sendProveedor){	
+						  	window.open("producto.php?proveedor=" + proveedor,"_self");
+						  }else{
+						  	location.reload();
+						  }
+						  
 					});
             	}
           	},// código a ejecutar si la petición falla;
@@ -160,7 +181,7 @@ $(document ).ready(function() {
   /******************************FIN AGREGAR PRODUCTO*********************************/  
   
 	/**********************MODIFICAR PROVEEDORES INFO*********************/
-	$("body").on('click', '.admin-edit-prod', function(e) { 
+	$("body").on('click', '.admin-edit-prod', function(e) {
 		$('#edit-prod-form').data("producto_id",$(this).data("producto_id"));
 	});	
  	$('.modal-edit-producto').on('show.bs.modal', function (e) {
@@ -387,9 +408,9 @@ $(document ).ready(function() {
 	
 	
 /******************************CAMBIO DE ESTATUS PRODUCTO************/
+	var id_prod;
 	$("body").on('click', '.opciones-boton', function(e) {
-		console.log($(this));
-		$('#edit-statusxgarantia-form').data('producto_id',$(this).data('producto_id'));
+		id_prod=$(this).data('producto_id');
 	});
 	$("body").on('click', '.send-status', function(e) {
 		var $btnpadre = $(this).parents('.opciones-boton');		 
@@ -421,7 +442,7 @@ $(document ).ready(function() {
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
-						 // location.reload();
+						  location.reload();
 					});
             	}
           	},// código a ejecutar si la petición falla;
@@ -461,8 +482,7 @@ $(document ).ready(function() {
 		var fv = form.data('formValidation');
 		var method = "&metodo="+$(this).data("method");		
 		var status = "&status="+$(this).data("status");
-		var id = "&id="+$(this).data("producto_id");
-		
+		var id = "&id="+id_prod;
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method+status+id, // la información a enviar
@@ -485,7 +505,7 @@ $(document ).ready(function() {
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
-						 // location.reload();
+						 location.reload();
 					});
             	}
           	},// código a ejecutar si la petición falla;

@@ -82,7 +82,7 @@ class inventario extends bd {
 	 
 	 public function setStatus($id,$status){
 	 	$actualizar=array("status"=>$status);
-	 	$this->doUpdate($this->c_table, $actualizar, "id=$id");
+	 	var_dump($this->doUpdate($this->c_table, $actualizar, "id=$id"));
 	 }
 	 
 	 public function getProductos($campos=null,$categoria){

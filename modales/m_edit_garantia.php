@@ -25,6 +25,7 @@
 								placeholder="Ingrese detalle sobre el articulo..." name="motivo"
 								class=" form-input" id="motivo">
 					</div>
+					</section>
 				</div>
 				<div class="modal-footer">
 				<button id="edit-statusxproducto-form" type="submit" class="btn btn-primary2">Aceptar</button>

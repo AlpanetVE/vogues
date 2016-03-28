@@ -191,7 +191,7 @@ switch($tipo){
 	function eliminarPublicacion(elId){
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"cambiarStatus",id:elId,tipo:4,anterior:3},
+			data:{metodo:"cambiarStatus",id:elId,tipo:1,anterior:3},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -338,6 +338,7 @@ switch($tipo){
 				foreach ($hijos as $key => $valor) {
 					$contador++;
 				$publicacion=new publicaciones($valor["id"]);
+				
 				$cadena="<span id='general" . $valor["id"] . "' name='general" . $valor["id"] . "' class='general' data-titulo='{$valor["titulo"]}'>
 				<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
 						<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 

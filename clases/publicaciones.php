@@ -49,7 +49,6 @@ class publicaciones extends bd {
 		$params["monto"] =$monto;
 		$largo=strlen($params["titulo"]);
 		$params["titulo"] = strtoupper(substr($params["titulo"],0,1)) . strtolower(substr($params["titulo"],1,$largo-1));
-		// ucwords(strtolower($params["titulo"]));
 		$result = $this->doInsert($this->table, $params);
 		//return $result;
 		if($result){

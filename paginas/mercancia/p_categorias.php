@@ -1,5 +1,4 @@
-
-<?php include "clases/inventario.php";
+<?php include_once "clases/inventario.php";
 	include "clases/proveedor.php"; 
 	 ?>
 <div class="pad20 contenedor row">

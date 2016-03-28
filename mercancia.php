@@ -18,12 +18,10 @@ include_once "fcn/varlogin.php";
 		<?php include "temas/menu-left-usr.php";?>
 	</div>
 	<?php if($_GET["type"]=='1') { ?> 
-	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">	
-		
+	<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">		
 			<div class="marL20 " id="primero" name="primero">
 			<?php include "paginas/mercancia/p_categorias.php";?>
 			</div>
-		
 	</div>
 	<?php }?>
 	<?php if($_GET["type"]=='2') { ?> 
