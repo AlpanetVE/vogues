@@ -93,12 +93,24 @@ $categorias= new inventario();
 					<?php if(isset($_POST["id_categ_prod"])) { 
 		    	$result=$categorias->getCategoriaById($_POST["id_categ_prod"]);
 		    	  ?>
-		     	<select id="categ" class="form-control input-sm " disabled="disabled" style="display: inline;">
+		     	<select id="categ" name="categoria" class="form-control input-sm " disabled="disabled" style="display: inline;">
 					<option value="<?php echo $result['id'] ?>" ><?php echo $result['nombre']; ?></option>					
 		         </select> 
-		       <?php  } else {   }  ?> <select id="categ" class="form-control input-sm " disabled="disabled" style="display: inline;">
-					<option value="<?php echo $result['id'] ?>" ><?php echo $result['nombre']; ?></option>					
-		       </select>  
+		         
+		         
+		       <?php  } else { $result=$categorias->getCategorias2(null,null,0);
+			  ?>  <select id="categ" name="categoria" class="form-control input-sm " style="display: inline;">
+			 <option value="" disabled selected>Seleccione Categoria</option>
+			  <?php foreach ($result as $resultado):
+			  
+			      ?> 
+			<option value="<?php echo $resultado['id'] ?>" ><?php echo $resultado['nombre']; ?></option>	
+			  <?php endforeach;?>			
+		    </select>  
+		       
+		       <?php }  ?>
+		       
+		       
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 marT10 marB10 ">
 					<div class="form-group input-group" style="width: 100%; ">

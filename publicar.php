@@ -1,4 +1,4 @@
-<?php require 'config/core.php';
+<?php require_once 'config/core.php';
 include_once 'fcn/varlogin.php';
 ?>
 <!DOCTYPE html>

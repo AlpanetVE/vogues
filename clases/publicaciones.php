@@ -1,5 +1,6 @@
 <?php
 include_once 'fotos.php';
+include_once 'inventario.php';
 require_once __DIR__ .'/manager/autoload.php';
 use OneAManager\Handler_Soat;
 
@@ -33,14 +34,15 @@ class publicaciones extends bd {
 	private $condiciones_publicaciones_id;
 	private $clasificados_id;
 	private $monto;
+	private $productos_categorias_id;
 	public function publicaciones($id = NULL){
 		parent::__construct();
 		if(!is_null($id)){
 			$this->buscarPublicacion($id);
 		}
 	}
-	public function nuevaPublicacion($params,$monto,$fecha,$fotos){
-		
+	public function nuevaPublicacion($params,$monto,$fecha,$fotos,$idcategoria){
+		$categoria= new inventario();
 		$foto = new fotos();
 		$idVisita = $this->setVisitas();
 		$params["visitas_publicaciones_id"] = $idVisita;
@@ -61,6 +63,7 @@ class publicaciones extends bd {
 			$short_url=$hso->encode($soat_params);
 			$this->setMonto($monto);
 			$this->setStatus(1,1,$fecha);
+			$categoria->setStatus($idcategoria, 1);
 			$foto->path = "../../".$foto->path;
 			foreach($fotos as $data){
 				$foto->crearFotoPublicacion($this->id, $data);
@@ -89,6 +92,8 @@ class publicaciones extends bd {
 			$valores["condiciones_publicaciones_id"] = $result["condiciones_publicaciones_id"];
 			$valores["clasificados_id"]=$result["clasificados_id"];
 			$valores["monto"]=$result["monto"];
+			$valores["productos_categorias_id"]=$result["productos_categorias_id"];
+			
 			$this->setPublicacion($valores);
 			return true;
 		}else {

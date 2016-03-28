@@ -2,7 +2,7 @@
 aria-labelledby="myLargeModalLabel" id="eliminar-categoria">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form id="delete-categoria-form" action="paginas/inventario/fcn/f_categorias.php" method="post" class="usr-act-form-edit form-inline" data-method="eliminarCategoria" >
+			<form id="delete-categoria-form" action="paginas/mercancia/fcn/f_categorias.php" method="post" class="usr-act-form-edit form-inline" data-method="eliminarCategoria" >
 				 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"

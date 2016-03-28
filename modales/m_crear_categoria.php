@@ -14,7 +14,7 @@
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
-			<form action="paginas/inventario/fcn/f_categorias.php" data-method="crearCategoria" id="reg-categoria-form" class="form-proveedor reg-prov-form" method="post"  >			
+			<form action="paginas/mercancia/fcn/f_categorias.php" data-method="crearCategoria" id="reg-categoria-form" class="form-proveedor reg-prov-form" method="post"  >			
 				<div class="modal-body marL20 marR20 ">
 					<br>
 					<section class="form-apdp" data-title="Informaci&oacute;n de la Categoria"  >

@@ -59,6 +59,7 @@ function guardarPublicacion(){
 			"publicar_facebook"=>$_POST["fb"],
 			"publicar_twitter"=>$_POST["tt"],
 			"publicar_fanpage"=>$_POST["fp"],
+			"productos_categorias_id"=>$_POST["categoria"],
 			"publicar_grupo"=>$_POST["gr"]);
 	$monto = $_POST["monto"];
 	$fecha = date("Y-m-d H:i:s",time());;
@@ -69,7 +70,8 @@ function guardarPublicacion(){
 		}		
 	}
 	$listaValores["titulo"]=($listaValores["titulo"]);
-	$idPub = $publicacion->nuevaPublicacion($listaValores,$monto,$fecha,$fotos);
+	$idcategoria = $_POST["categoria"];
+	$idPub = $publicacion->nuevaPublicacion($listaValores,$monto,$fecha,$fotos,$idcategoria);
 	//echo json_encode(array("result" => "error","query" => $idPub ));
 	if($idPub){
 		echo json_encode(array("result" => "OK", "id" => $idPub));

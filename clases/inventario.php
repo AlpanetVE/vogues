@@ -80,6 +80,10 @@ class inventario extends bd {
 		return $result;
 	 }
 	 
+	 public function setStatus($id,$status){
+	 	$actualizar=array("status"=>$status);
+	 	$this->doUpdate($this->c_table, $actualizar, "id=$id");
+	 }
 	 
 	 public function getProductos($campos=null,$categoria){
 	 	$campos=is_null($campos)?"*":$campos;

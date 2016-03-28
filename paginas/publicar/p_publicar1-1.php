@@ -2,7 +2,7 @@
 	<div class="contenedor " style="margin-top: 5px; z-index: 1">
 		<div class="row">
 			<br>
-			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 catg" data-idcatg="1" data-categprod="<?php echo $_GET['categ'] ?>">
+			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 catg" data-idcatg="1" <?php if (isset($_GET['categ'])) {  ?> data-categprod="<?php echo $_GET['categ'] ?>" <?php }?>> 
 				<img alt="" src="galeria/img-site/Productos y Otros.png"
 					class="center-block marT10 marB10 img-publicar2">
 			</div>

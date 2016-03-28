@@ -213,7 +213,7 @@ $(document).ready(function() {
 									fotos = "&foto-"+index+"="+$(this).children("img").attr("src")+fotos;
 								}
 							});
-							form = $("#pub-form-reg").serialize() +"&fecha=" + $("#txtFecha").val()+"&idclas="+$(".form-select-publicar").last().val()+"&monto="+$("#txtPrecio").autoNumeric("get")+
+							form = $("#pub-form-reg").serialize() +"&fecha=" + $("#txtFecha").val()+"&categoria="+$("#categ").val()+"&idclas="+$(".form-select-publicar").last().val()+"&monto="+$("#txtPrecio").autoNumeric("get")+
 							"&fb="+$("#fb").data("fb")+"&tt="+$("#tt").data("tt")+"&fp="+$("#fp").data("fp")+"&gr="+$("#gr").data("gr")+"&metodo=guardar"+fotos;
 							$.ajax({
 								url:'paginas/publicar/fcn/f_publicaciones.php',

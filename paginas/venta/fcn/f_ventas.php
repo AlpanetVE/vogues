@@ -2,6 +2,7 @@
 require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
+include_once "../../../clases/inventario.php";
 include_once "../../../clases/amigos.php";
 include_once "../../../clases/ventas.php";
 include_once "../../../clases/fotos.php";
@@ -60,12 +61,12 @@ function buscaPublicaciones(){
 			$publicacion=new publicaciones($valor["id"]);
 			switch($_POST["tipo"]){
 				case 1:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,1)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,1)'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,111,1)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,122,1)'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
 					break;
 				case 2:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Reactivar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,2)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Reactivar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Finalizar</a></li>";
 					break;
 				case 3:
 					$boton1="<li onclick='javascript:republicarPublicacion($publicacion->id)'><a class='pausar opciones pointer'  id='' data-toggle='modal' data-target='#info-publicacion' value='republicar'>Republicar</a></li>";			
@@ -204,7 +205,9 @@ function actualiza(){
 }
 function cambiaStatus(){
 	$publi=new publicaciones($_POST["id"]);
+	$categ=new inventario();
 	$publi->setStatus($_POST["tipo"],$_POST["anterior"]);
+	$categ->setStatus($_POST["categ"], $_POST["anterior"]);
 	$amigos = new amigos();
 	$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
 	foreach ($panas as $p => $value) {

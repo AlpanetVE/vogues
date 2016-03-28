@@ -207,7 +207,7 @@ $(document).on('change',"#filtrostatus",function(e){
 		
 		
 		$.ajax({
-			url:"paginas/inventario/fcn/f_categorias.php",
+			url:"paginas/mercancia/fcn/f_categorias.php",
 			data:{metodo:"buscar",pagina:pagina,total:total,orden:" ",status:status,nombre:nombre,filtrostatus:filtrostatus},
 			type:"POST",
 			dataType:"html",

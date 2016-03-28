@@ -84,7 +84,7 @@ switch($tipo){
         $("#comando").text("Guardar");
         eliminarPublicacion(elId);
 	}	
-	function modificarOpciones(elId,tipo,origen){
+	function modificarOpciones(elId,tipo,origen,categ){
 		if(tipo!=origen){
 			$("#btnOpciones" + elId).addClass("hidden");
 			$("#b" + elId).addClass("hidden");
@@ -180,7 +180,7 @@ switch($tipo){
 		}
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"cambiarStatus",id:elId,tipo:tipo,anterior:origen},
+			data:{metodo:"cambiarStatus",id:elId,tipo:tipo,anterior:origen,categ:categ},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -366,13 +366,13 @@ switch($tipo){
 					    <textarea  class='hidden' id='descripcion_" . $publicacion->id . "'>
 								$publicacion->descripcion
 						</textarea >
-						<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1)'>
+						<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1," . $publicacion->productos_categorias_id . ")'>
 							Reactivar
 						</button>
-						<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2)'>
+						<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2," . $publicacion->productos_categorias_id . ")'>
 							Pausar
 						</button>						
-						<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3)'>
+						<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3," . $publicacion->productos_categorias_id . ")'>
 							Finalizar
 						</button>
 						<button id='btnOpciones" . $publicacion->id . "' type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
@@ -380,10 +380,10 @@ switch($tipo){
 							<span class='caret'></span>
 						</button>
 						<ul  class='  dropdown-menu'>
-							<li onclick='javascript:modificarOpciones($publicacion->id,2,1)'>
+							<li onclick='javascript:modificarOpciones($publicacion->id,2,1,$publicacion->productos_categorias_id)'>
 								<a class='pausar opciones'  id='' href='' data-toggle='modal' value='pausar'>Pausar</a>
 							</li>
-							<li onclick='javascript:modificarOpciones($publicacion->id,3,1)'>
+							<li onclick='javascript:modificarOpciones($publicacion->id,3,1,$publicacion->productos_categorias_id)'>
 								<a class='finalizar opciones' id='' href='' data-toggle='modal' value='finalizar'>Finalizar</a>
 							</li>
 						</ul>
