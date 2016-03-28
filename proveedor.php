@@ -1,4 +1,4 @@
-<?php require 'config/core.php'; ?>
+<?php require 'config/core.php';?>
 <!DOCTYPE html>
 <html lang="es">
 <?php
@@ -7,10 +7,11 @@ include ("fcn/incluir-css-js.php");
 ?>
 <script type="text/javascript" src="js/proveedor.js"></script>
 <link href="css/proveedor.css" rel="stylesheet">
+<script type="text/javascript" src="js/producto.js"></script>
+<link href="css/producto.css" rel="stylesheet">
 <body>
 <?php
 include ("temas/header.php"); 
- 
 ?> 
  
 <div class="container pad-top70">
@@ -27,7 +28,7 @@ include"modales/m_registrar_proveedor.php";
 include"modales/m_edit_proveedor.php";
 include"modales/m_edit_proveedor_bancaria.php";
 include"modales/m_info_prov.php";
+include "modales/m_registrar_producto.php";
 ?>
-
 </body>
 </html>

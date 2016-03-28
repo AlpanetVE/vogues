@@ -16,7 +16,7 @@ class producto extends bd {
 	private $temp_descripcion;
 	private $temp_precio_compra;
 	
-	
+	protected $s_table = "statusxproductos";
 	/* * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Contructor ---============ *
 	 * * * * * * * * * * * * * * * * * * * * * * */
@@ -34,13 +34,16 @@ class producto extends bd {
 		if(!empty($id)){
 			$this->id = $id;
 			$this->getdatosProducto();
-		} 
+		}
 	}
 	public function crearProducto() {
 		$count=count($this->temp_codigo);
+		$date=date("Y-m-d H:i:s",time());
 		for($i=0;$i<$count;$i++){
 			$this->datosProducto($this->temp_codigo[$i], $this->temp_precio_compra[$i], $this->temp_descripcion[$i]);
 			$this->doInsert ( $this->p_table,$this->serializarDatos ("p_"));
+			$listaValores=array('productos_id'=>$this->lastInsertId (),'fecha'=>$date,'status'=>'1');
+			$this->agregarHistorico($listaValores);
 		}
 	}
 	public function getProductos($campos = null, $order= null, $pagina= null, $status= null, $categoria= null, $proveedor= null, $busqueda= null){
@@ -48,8 +51,8 @@ class producto extends bd {
 		$consulta="select $campos FROM
 				productos_categorias
 				Inner Join productos ON productos.productos_categorias_id = productos_categorias.id
-				Inner Join proveedores ON productos.proveedores_id = proveedores.id WHERE 1";
-		
+				Inner Join proveedores ON productos.proveedores_id = proveedores.id
+				WHERE 1";
 		
 		if(!empty($status)){
 			$consulta.=" and productos.status =  '$status' ";
@@ -61,24 +64,54 @@ class producto extends bd {
 			$consulta.=" and productos.proveedores_id =  '$proveedor' ";
 		}
 		if(!empty($busqueda)){
-			$consulta.=" and (productos.codigo =  '%$busqueda%' or  productos.descripcion like  '%$busqueda%') ";
+			$consulta.=" and (productos.codigo =  '%$busqueda%' or  productos.descripcion like  '%$busqueda%' or  productos_categorias.nombre like  '%$busqueda%') ";
 		}
 		
-		if(!empty($orden)){
-			$consulta.=" order by $orden";
+		if(!empty($order)){
+			$consulta.=" order by $order";
 		}
 		if(!empty($pagina)){
 			$inicio=($pagina - 1) * 25;
 			$consulta.=" limit 25 OFFSET $inicio";		
 		}
-		
-		
+		/*var_dump($consulta);*/
         $result=$this->query($consulta);
 		return $result;
+	}
+	public function getHistorico($campos = null, $order= null, $pagina= null, $status= null, $producto= null){
+		$campos=is_null($campos)?"*":$campos;
+		$consulta="select $campos FROM
+				statusxproductos WHERE 1";
+		if(!empty($status)){
+			$consulta.=" and statusxproductos.status =  '$status' ";
+		}
+		if(!empty($producto)){
+			$consulta.=" and statusxproductos.productos_id =  '$producto' ";
+		}
+		if(!empty($order)){
+			$consulta.=" order by $order";
+		}
+		if(!empty($pagina)){
+			$inicio=($pagina - 1) * 25;
+			$consulta.=" limit 25 OFFSET $inicio";
+		}
+        $result=$this->query($consulta);
+        
+		return $result->fetch();
 	}
 	public function modificarProducto($listaValores_producto){
 		$result=$this->doUpdate($this->p_table,$listaValores_producto,"id=$this->id");		
 		return $result;
+	}
+	public function modificarStatus($listaValores){
+		$result=$this->doUpdate($this->p_table,array("status"=>$listaValores["status"]),'id='.$listaValores['productos_id']);
+		if($result){
+			$result=$this->agregarHistorico ($listaValores);
+		}
+		return $result;
+	}
+	public function agregarHistorico($listaValores){
+		return $this->doInsert ( $this->s_table,$listaValores);
 	}
 	
 	/* * * * * * * * * * * * * * * * * * *
@@ -113,6 +146,7 @@ class producto extends bd {
 		$this->temp_precio_compra = $precio_compra;
 		$this->temp_descripcion = $descripcion;
 	}
+	
 	/* * * * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Private Methods ---=========== *
 	 * * * * * * * * * * * * * * * * * * * * * * * * */

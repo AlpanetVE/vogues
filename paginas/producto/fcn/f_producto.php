@@ -16,7 +16,10 @@
 			break;
 		case "paginar":
 			paginator();
-			break;	
+			break;
+		case "modificarStatus":
+			modificarStatus();
+			break;
 		default :
 			echo "error";
 			break;
@@ -30,7 +33,7 @@
 		}else{
 			$id_user=NULL;
 		}
-		$orden='id desc';
+		$orden='productos.id desc';
 		$pagina=$_POST['pagina'];
 		$status=$_POST['status'];
 		$categoria=$_POST['categoria'];
@@ -38,8 +41,26 @@
 		$busqueda=$_POST['busqueda'];
 		$producto=new producto();		
 		//TRAEMOS LOS DATOS QUE USAREMOS
+		
 		$campos='productos.codigo, descripcion, precio_compra, productos_categorias.nombre, productos.id, proveedores.nombre as proveedor, proveedores.id as prov_id';
-		$result=$producto->getProductos($campos, $orden,$pagina, $status, $categoria, $proveedor, $busqueda);
+		$result=$producto->getProductos($campos, $orden,$pagina, $status, $categoria, $proveedor, $busqueda);		
+		switch($status){
+				case 1:
+					$boton0='<span>Disponible</span>';
+					$boton1="<li><a class='pausar opciones pointer'    data-status='2'  id=''   data-toggle='modal' data-target='#edit-status-garantia' value='pausar'>Garantia</a></li>";
+					$boton2="<li><a class='finalizar opciones pointer' data-status='3' id='' data-toggle='modal' data-target='#edit-status-facturado'  value='finalizar'>Facturado</a></li>";
+					break;
+				case 2:
+					$boton0='<span>Garantia</span>';
+					$boton1="<li><a class='pausar opciones pointer send-status'    data-status='1' id=''  data-toggle='modal' value='reactivar'>Disponible</a></li>";
+					$boton2="";
+					break;
+				case 3:
+					$boton0='<span>Facturado</span>';
+					$boton1="<li><a class='pausar opciones pointer'    data-status='2' id=''  data-toggle='modal' data-target='#edit-status-garantia' value='reactivar'>Garantia</a></li>";
+					$boton2="";
+					break;
+		}
 		foreach($result as $r=>$fila){
 				?>
 			<tr>
@@ -48,9 +69,30 @@
 				<td><?php echo $fila['codigo']; ?></td>				
 				<td><?php echo $fila['precio_compra']; ?></td>
 				<td><a class="admin-ver-prov" data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['prov_id']; ?>" ><i class="fa fa-eye"  ></i> <?php echo $fila['proveedor']; ?></a></td>
-                <td title="Editar informacion del Producto" ><a href="#mod" class="admin-edit-prod" data-toggle="modal" data-target="#edit-prod" data-producto_id="<?php echo $fila['id']; ?>" ><i class="fa fa-user"></i>  Editar  </a></td>
-			</tr>
-                <?php
+           		
+           		<?php 
+           		if($status=='2'){
+					echo '<td> - </td>';           			
+				$campos='statusxproductos.motivo';
+				$id_prod=$fila['id'];
+				$historico=$producto->getHistorico($campos, 'id desc',null, $status, $id_prod);			 
+					echo '<td>'.$historico["motivo"].'</td>';
+				} ?>
+           		<td><div data-producto_id="<?php echo $fila['id']; ?>" class="opciones-boton col-xs-12">
+					<button id='btnOpciones'  type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
+						<?php echo $boton0;?>
+						<span class='caret'></span>
+					</button>
+					<ul  class='  dropdown-menu'  id='opciones'>	
+						<?php
+							echo $boton1;
+							echo $boton2;
+						?>
+					</ul>
+					</div>
+				</td>					
+           </tr>
+     <?php
 		}
 		
 		 $result=$producto->getProductos('count(productos.id) as total', $orden,$pagina, $status, $categoria, $proveedor,$busqueda)->fetch();
@@ -163,4 +205,26 @@
 		else			
 			echo $paginador;
 	}
+	function modificarStatus()
+	{
+		$producto = new producto();
+		$id = filter_input ( INPUT_POST, "id" );
+		$motivo = isset($_POST["motivo"])?filter_input ( INPUT_POST, "motivo" ):'';
+		$status = filter_input ( INPUT_POST, "status" );
+		$fecha = date("Y-m-d H:i:s",time());
+		
+		$listaValores_statusxproductos=array(
+			"productos_id"=>$id,
+			"fecha"=>$fecha,
+			"status"=>$status,
+			"motivo"=>$motivo
+			);
+		
+		$producto->modificarStatus($listaValores_statusxproductos);
+		
+		echo json_encode ( array (
+					"result" => "ok"
+			) );
+	}
+
 ?>

@@ -11,7 +11,7 @@ $("#update_usr-reg-submit").click(function(){
 	$(".admin-reg-user").click(function(){
 		$("#usr-reg-submit-admin").data("step",1);
 		$("#type_admin").val("p");
-		$("section[data-step=2]").fadeOut( "fast", function() {  
+		$("section[data-step=2]").fadeOut( "fast", function() {
 					$("section[data-step=1]").fadeIn("fast");
 				});
 	});

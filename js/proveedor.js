@@ -595,6 +595,11 @@ $(document ).ready(function() {
 				loadingAjax(false);
 			}
 		});
+		
+		$(document).on('click',".admin-add-proveedor",function(e){
+			var proveedor=$(this).data("proveedor_id");
+			$('#reg-prod-form').find('#proveedor').val(proveedor).prop("disabled",true);
+		});
 	}	
 	
 });

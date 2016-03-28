@@ -30,6 +30,9 @@
                                     Email
                                 </th>
                                 <th colspan="2" class="text-center">
+                                    Mercancia
+                                </th>
+                                <th colspan="2" class="text-center">
                                     Editar
                                 </th>
                             </tr>

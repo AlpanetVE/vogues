@@ -26,7 +26,7 @@
 	                        <a href="#tab-shop-activo" data-toggle="tab" data-status="1" class="tab-shop" style="outline: inherit;">Disponible</a>
 	                    </li>
 	                    <li>
-	                        <a href="#tab-shop-garantia" data-toggle="tab" data-status="3" class="tab-shop" style="outline: inherit;">Garantia</a>
+	                        <a href="#tab-shop-garantia" data-toggle="tab" data-status="2" class="tab-shop" style="outline: inherit;">Garantia</a>
 	                    </li>
 	                    <li>
 	                        <a href="#tab-shop-facturado" data-toggle="tab" data-status="3" class="tab-shop" style="outline: inherit;">Facturado</a>
@@ -90,7 +90,7 @@
                                     Proveedor
                                 </th>
                                 <th colspan="1" class="text-center">
-                                    Acci&oacute;n
+                                   Estatus
                                 </th>
                             </tr>
                             <tbody id="ajaxContainer">
@@ -121,6 +121,12 @@
                                     Proveedor
                                 </th>
                                 <th colspan="1" class="text-center">
+                                    Cod. Venta
+                                </th>
+                                <th colspan="1" class="text-center">
+                                    Motivo
+                                </th>
+                                <th colspan="1" class="text-center">
                                     Acci&oacute;n
                                 </th>
                             </tr>
@@ -149,6 +155,9 @@
                                 </th>
                                 <th colspan="1" class="text-center">
                                     Proveedor
+                                </th>
+                                <th colspan="1" class="text-center">
+                                    Cod. Venta
                                 </th>
                                 <th colspan="1" class="text-center">
                                     Acci&oacute;n

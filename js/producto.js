@@ -123,6 +123,7 @@ $(document ).ready(function() {
 		var fv = form.data('formValidation');
 		var method = "&metodo="+$(this).data("method");
 		$(this).find('#categoria').prop("disabled",false); //line for inventarios.js
+		$(this).find('#proveedor').prop("disabled",false); //line for proveedor.js
 		console.log($(this).find('#categoria'));
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
@@ -384,4 +385,130 @@ $(document ).ready(function() {
 		});
 	}
 	
+	
+/******************************CAMBIO DE ESTATUS PRODUCTO************/
+	$("body").on('click', '.opciones-boton', function(e) {
+		console.log($(this));
+		$('#edit-statusxgarantia-form').data('producto_id',$(this).data('producto_id'));
+	});
+	$("body").on('click', '.send-status', function(e) {
+		var $btnpadre = $(this).parents('.opciones-boton');		 
+		data='metodo=modificarStatus&id='+$btnpadre.data('producto_id')+'&status='+$(this).data('status');
+		action='paginas/producto/fcn/f_producto.php';
+		title='Producto Modificado';
+		procesarStatus(action, data, title);
+	});
+	function procesarStatus(action, data, title){
+		$.ajax({
+			url: action, // la URL para la petición
+            data: data, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta		           
+            success: function (data) {
+	           	if (data.result === 'error') {
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	            	}
+	            }else{ //si registramos usuarios por backend            			
+            		swal({
+						title: title,
+						text: "&iexcl;Exito!",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+						 // location.reload();
+					});
+            	}
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+		
+		
+		
+	}
+	$('.edit-statusxgarantia-form').formValidation({
+		locale: 'es_ES',
+		framework : 'bootstrap',
+		icon : {
+			valid : 'glyphicon glyphicon-ok',
+			invalid : 'glyphicon glyphicon-remove',
+			validating : 'glyphicon glyphicon-refresh'
+		},
+		addOns: { i18n: {} },
+		err: { container: 'tooltip' },
+		fields : {
+            motivo: {
+                validators: {
+                	notEmpty: {}
+                }
+            },
+            codigo_venta: {
+                validators: {
+                	notEmpty: {}
+                }
+            }
+		}
+	}).on('success.form.fv', function(e) {
+		e.preventDefault();
+		var form = $(e.target);
+		var fv = form.data('formValidation');
+		var method = "&metodo="+$(this).data("method");		
+		var status = "&status="+$(this).data("status");
+		var id = "&id="+$(this).data("producto_id");
+		
+		$.ajax({
+			url: form.attr('action'), // la URL para la petición
+            data: form.serialize() + method+status+id, // la información a enviar
+            type: 'POST', // especifica si será una petición POST o GET
+            dataType: 'json', // el tipo de información que se espera de respuesta		           
+            success: function (data) {
+	           	if (data.result === 'error') {
+	            	for (var field in data.fields) {
+	        			fv
+	                    // Show the custom message
+	                    .updateMessage(field, 'blank', data.fields[field])
+	                    // Set the field as invalid
+	                    .updateStatus(field, 'INVALID', 'blank');
+	            	}
+	            }else{ //si registramos usuarios por backend            			
+            		swal({
+						title: "Producto Modificado",
+						text: "&iexcl;Exito!",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+						 // location.reload();
+					});
+            	}
+          	},// código a ejecutar si la petición falla;
+            error: function (xhr, status) {
+            	SweetError(status);
+            }
+        });
+           
+    });	
+	$("body").on('click', '.tab-shop', function(e) {
+		if($(this).data('status')=='2'){			
+			$('#menu-left-user').fadeOut( "fast", function() {
+					$('#menu-left-user').addClass('hide');
+					$('#container-producto-list').removeClass('col-lg-10 col-md-10').addClass('col-lg-12 col-md-12');
+				});
+		}else{
+			if($('#menu-left-user').hasClass('hide')){
+				$('#menu-left-user').hide();
+				$('#menu-left-user').removeClass('hide');
+				$('#menu-left-user').fadeIn();
+				$('#container-producto-list').addClass('col-lg-10 col-md-10').removeClass('col-lg-12 col-md-12');			
+			}
+		}
+		console.log($(this).data('status'));
+	});
 });

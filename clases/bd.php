@@ -88,7 +88,7 @@ class bd extends PDO {
 		if ($vars = $this->prepareParams ( $params )) {
 			$stament = "INSERT INTO {$table}({$vars['columns']}) VALUES ({$vars['values']})";
 			
-			//var_dump($stament.' - '. $params);
+			//var_dump($params);
 			try {
 				
 				$sql = $this->prepare ( $stament );
