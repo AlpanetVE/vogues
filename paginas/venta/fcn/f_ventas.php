@@ -69,8 +69,8 @@ function buscaPublicaciones(){
 					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Finalizar</a></li>";
 					break;
 				case 3:
-					$boton1="<li onclick='javascript:republicarPublicacion($publicacion->id)'><a class='pausar opciones pointer'  id='' data-toggle='modal' data-target='#info-publicacion' value='republicar'>Republicar</a></li>";			
-					$boton2="<li onclick='javascript:eliminarPublicacion($publicacion->id)'><a class='pausar opciones pointer'  id='' data-toggle='modal' value='eliminar'>Eliminar</a></li>";
+					$boton1="<li onclick='javascript:republicarPublicacion($publicacion->id," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id='' data-toggle='modal' data-target='#info-publicacion' value='republicar'>Republicar</a></li>";			
+					$boton2="<li onclick='javascript:eliminarPublicacion($publicacion->id," . $publicacion->productos_categorias_id . ",4)'><a class='pausar opciones pointer'  id='' data-toggle='modal' value='eliminar'>Eliminar</a></li>";
 					break;
 			}			
 			$cadena="<span id='general" . $valor["id"] . "' name='general" . $valor["id"] . "' class='general' data-titulo={$valor["titulo"]}>
