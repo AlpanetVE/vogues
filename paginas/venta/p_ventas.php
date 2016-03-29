@@ -14,6 +14,8 @@ $totalPaginas2=ceil($total2/25);
 $clasesP1="active";
 $clasesP2="";
 ?>
+<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" type="text/css" href="css/default.date.css">
 <div class="row" id="principal">
 	<!-- inicion del row principal  -->
 
@@ -26,7 +28,7 @@ $clasesP2="";
 			<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10   ">
 				<!-- inicio titulo y p  -->
 
-				<h4 class=" marL20 marR20 t20 negro" style="padding:10px;"><span class="marL10">Ventas</span></h4>
+				<h4 class=" marL20 marR20 t20 negro" style="padding:10px;"><span class="marL10 titulo">Ventas</span></h4>
 				<center>
 					<hr class='ancho95'>
 				</center>
@@ -34,10 +36,10 @@ $clasesP2="";
 
 				<ul class="nav nav-tabs marL30 marR30 t14 " >
 					<li role="presentation" class="<?php echo $clasesP1;?> pesta-ventas" id="irActivas">
-						<a class="pointer" class="grisO">Sin Concretar</a>
+						<a class="point" class="grisO">Sin Concretar <span class="badge badge-publicar-antes" id="titulo1" name="titulo1"><?php echo $total;?></span></a>
 					</li>
 					<li role="presentation" class="<?php echo $clasesP2;?> pesta-ventas" id="irPausadas">
-						<a class="pointer" class="grisO">Concretadas</a>
+						<a class="point" class="grisO">Concretadas <span class="badge badge-publicar-antes" id="titulo2" name="titulo2"><?php echo $total2;?></span></a>
 					</li>
 				</ul>
 			</div>
@@ -51,7 +53,7 @@ $clasesP2="";
 							<span class="glyphicon glyphicon-search"></span>
 						</button>
 					</span> <input style="margin-left: -10px; border: #ccc 1px solid; border-left:1px solid #FFF;  "
-						 type="text" class="form-control-header " placeholder="Buscar" id="txtBuscar" name="txtBuscar">						 
+						 type="text" class="form-control-header " placeholder="Buscar" id="txtBusqueda" name="txtBusqueda">							 
 				</div>
 				<div id="busqueda" name="busqueda" class="hidden  pad10  " style="   width: 308px; background: #FAFAFA;" data-usuario=''>Publicaciones:</div>
 			</form>
@@ -67,10 +69,10 @@ $clasesP2="";
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a class="pointer">Mas ventas</a>
+							<a class="point">Mas ventas</a>
 						</li>
 						<li>
-							<a class="pointer">Menos ventas </a>
+							<a class="point">Menos ventas </a>
 						</li>
 					</ul>
 				</div>
@@ -94,7 +96,7 @@ $clasesP2="";
 					<br>
 					<br>
 					<div class='alert alert-warning2  text-center' role='alert'  >                                        	
-	              		<span class="t16  "><i class="fa fa-info-circle"></i> No se encontraron compradores.</span>
+	              		<span class="t16 "><i class="fa fa-info-circle"></i> No se encontraron compradores.</span>
 	         		</div>
 	         		<br>
 	         	</div>  
@@ -135,33 +137,33 @@ $clasesP2="";
 //					$statusEnvio=$maximo>0?"Envio pendiente":"Envio en curso";
 //					$statusEnvio=$venta->getStatusEnvio();
 				?>
-				<div id="venta<?php echo $valor["id"];?>" class="general" data-titulo='<?php echo $usua->getNombre() . $usua->a_seudonimo;?>'>
+				<div id="venta<?php echo $valor["id"];?>" class="general" data-titulo='<?php echo $usua->a_email  . $usua->a_seudonimo;?>'>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14'>
 						 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 						<br>
 						<span class=''> <!-- <a class="ver-detalle-user" data-toggle="modal" data-target='#info-user-detail' data-usuarios_id="<?php echo $valor["usuarios_id"]; ?>" > </a> --> <?php echo $usua->a_seudonimo;?></span> 
 						<br>
-						<span class=" grisC t12"><?php echo $usua->a_email;?></span>
+						<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
 						<br>
 						<span class="t12"><?php echo $usua->u_telefono;?></span>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
 							<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
-							<a href="#"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
+							<a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
 							style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 						<div style="margin-left: 3%;">
 						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
-						<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 						<div class="t12 pad5 " style="background: #FAFAFA">	
-						 <span><a class="vinculopagos pointer" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+						 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
 						<br>
-						 <span ><a class="vinculoenvios pointer" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+						 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 						<br>
 						 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
 						<br>
@@ -176,8 +178,8 @@ $clasesP2="";
    										<i class="fa fa-cog"></i>
   								  </button>
   								  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    									<li><a class="vinculodescuento pointer" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
-    									<li><a class="vinculocomentario pointer" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+    									<li><a class="vinculodescuento point" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
+    									<li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
   								  </ul>
 							</div>						
 						</div>
@@ -194,7 +196,7 @@ $clasesP2="";
 			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10' id="paginacion" name="paginacion">
 				<nav class='text-center'>
 				  <ul class='pagination'><li class="hidden">
-				      <a class="pointer" aria-label='Previous'>
+				      <a class="point" aria-label='Previous'>
 				        <span aria-hidden='true'>&laquo;</span>
 				      </a>
 				    </li>
@@ -202,14 +204,14 @@ $clasesP2="";
 				    	$claseInicio="active";
 				    	for($i=1;$i<=$totalPaginas;$i++):							
 							?>
-								<li class="<?php echo $claseInicio;?>"><a class="botonPaginaventas pointer" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
+								<li class="<?php echo $claseInicio;?>"><a class="botonPaginaventas point" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
 							<?php
 							$claseInicio="";
 						endfor;
 						if($totalPaginas>10):
 							?>				
 								<li>
-							      <a class="pointer" aria-label='Next'>
+							      <a class="point" aria-label='Next'>
 							        <span aria-hidden='true'>&raquo;</span>
 							      </a>
 							    </li>
@@ -239,7 +241,7 @@ $clasesP2="";
 //					$statusEnvio=$maximo>0?"Envio pendiente":"Envio en curso";
 //					$statusEnvio=$venta->getStatusEnvio();
 				?>	
-			<div id="venta<?php echo $valor["id"];?>" class="general" data-titulo='<?php echo $usua->getNombre() . $usua->a_seudonimo;?>'>
+			<div id="venta<?php echo $valor["id"];?>" class="general" data-titulo='<?php echo $usua->a_email . $usua->a_seudonimo;?>'>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 					<br>
@@ -256,16 +258,16 @@ $clasesP2="";
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					<div style="margin-left: 3%;">
-					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
+					<span class=''> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
-					<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 					</div>
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 					<div class="t12 pad5 " style="background: #FAFAFA">	
-					 <span><a class="vinculopagos pointer" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
+					 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
 					<br>
-					 <span ><a class="vinculoenvios pointer" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 					<br>
 					 <span ></span><i class="fa fa-clock-o"></i> <span>despachado en <?php echo $venta->getTiempoCompra(2);?> </span>
 					<br>
@@ -280,7 +282,7 @@ $clasesP2="";
    							<i class="fa fa-cog"></i>
   							</button>
   								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							    <li><a class="vinculocomentario pointer" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+							    <li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
  								</ul>
 						</div>						
 						</div>
@@ -297,7 +299,7 @@ $clasesP2="";
 			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10 hidden' id="paginacion2" name="paginacion2">
 				<nav class='text-center'>
 				  <ul class='pagination'><li class="hidden">
-				      <a class="pointer" aria-label='Previous'>
+				      <a class="point" aria-label='Previous'>
 				        <span aria-hidden='true'>&laquo;</span>
 				      </a>
 				    </li>
@@ -305,14 +307,14 @@ $clasesP2="";
 				    	$claseInicio="active";
 				    	for($i=1;$i<=$totalPaginas2;$i++):							
 							?>
-								<li class="<?php echo $claseInicio;?>"><a class="botonPaginaventas pointer" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
+								<li class="<?php echo $claseInicio;?>"><a class="botonPaginaventas point" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
 							<?php
 							$claseInicio="";
 						endfor;
 						if($totalPaginas>10):
 							?>				
 								<li>
-							      <a class="pointer" aria-label='Next'>
+							      <a class="point" aria-label='Next'>
 							        <span aria-hidden='true'>&raquo;</span>
 							      </a>
 							    </li>
@@ -327,4 +329,5 @@ $clasesP2="";
 		<!-- fin contenido conte1-1 -->
 </div>
 <!-- fin de row principal  -->
-
+<!-- <script "text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.3/legacy.js"></script> -->
+<script type="text/javascript" src="js/picker.min.js"></script>

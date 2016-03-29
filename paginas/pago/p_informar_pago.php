@@ -133,7 +133,7 @@
 					<br>
 					<br>
 				</div>
-				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10'><br><br><br> <a target="_blank" href="https://docs.google.com/forms/d/1wx5IKO-pLao4WN9B3PJc1qpyHkFrlbFBLsS_rUX3I0w/viewform"><button class="btn btn-primary2 t18">Informar Pago</button></a></div>
+				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10'><br><br><br> <a target="_blank" href="compras.php?tipo=sinconcretar"><button class="btn btn-primary2 t18">Informar Pago</button></a></div>
 			</div>
 			</div>
 			<div class="contenedor text-justify pad20 marB20 sombra-div" >

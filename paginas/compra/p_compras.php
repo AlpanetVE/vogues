@@ -11,9 +11,28 @@ $total=$compras->contar(2);
 $total2=$compras->contar(4);
 $totalPaginas=ceil($total/25);
 $totalPaginas2=ceil($total2/25);
-$clasesP1="active";
-$clasesP2="";
+if(isset($_GET["tipo"])){
+	if($_GET["tipo"]=="concretadas"){
+		$clasesP1="";
+		$clasesP2="active";
+		$oculto1="hidden";
+	    $oculto2="";
+	}else{
+		$clasesP1="active";
+		$clasesP2="";
+		$oculto1="";
+	    $oculto2="hidden";						
+	}
+}
 ?>
+<?php include "modales/m_edit_publicacion.php";?>
+<?php include "modales/m_cropper.php";?>
+<?php include "modales/m_pagos_ven.php";?>
+<?php include "modales/m_pagos_ven2.php";?>
+<?php include "modales/m_envios_ven.php";?>
+<?php include "modales/m_descuento.php";?>
+<?php include "modales/m_comentario.php";?>
+<?php include "modales/m_informar_pago.php";?>
 <div class="row" id="principal">
 	<!-- inicion del row principal  -->
 
@@ -34,10 +53,10 @@ $clasesP2="";
 
 				<ul class="nav nav-tabs marL30 marR30 t14 " >
 					<li role="presentation" class="<?php echo $clasesP1;?> pesta-compras" >
-						<a class="grisO pointer">Sin Concretar</a>
+						<a class="grisO point">Sin Concretar <span class="badge badge-publicar-antes"><?php echo $total;?></span></a>
 					</li>
 					<li role="presentation" class="<?php echo $clasesP2;?> pesta-compras">
-						<a class="grisO pointer">Concretadas</a>
+						<a class="grisO point">Concretadas <span class="badge badge-publicar-antes"><?php echo $total2;?></span></a>
 					</li>
 				</ul>
 			</div>
@@ -67,10 +86,10 @@ $clasesP2="";
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a class="pointer">Mas compras</a>
+							<a class="point">Mas compras</a>
 						</li>
 						<li>
-							<a class="pointer">Menos compras </a>
+							<a class="point">Menos compras </a>
 						</li>
 					</ul>
 				</div>
@@ -82,8 +101,8 @@ $clasesP2="";
 							<td  width="75%"  align="right"><span class="marR10">compras 1 - <?php if($total<=25){ echo "$total de <b> $total"; }else{ echo "25 de <b>$total"; }?></span></td>
 							<td   width="15%"  align="right" height="40px;" >
 							<select id="filtro" class="form-control  input-sm " style="width:auto; margin-right:20px;">
-								<option value="desc" >Mas Recientes</option>
-								<option value="asc" >Menos Recientes </option>
+								<option value="id desc" >Mas Recientes</option>
+								<option value="id asc" >Menos Recientes </option>
 							</select></td>
 						</tr>
 					</table>
@@ -94,15 +113,15 @@ $clasesP2="";
 					<br>
 					<br>
 					<div class='alert alert-warning2  text-center' role='alert'  >                                        	
-	              		<span class="t16  "><i class="fa fa-info-circle"></i> No se encontraron publicaciones.</span>
+	              		<span class="t16  "><i class="fa fa-info-circle"></i> No se encontraron vendedores.</span>
 	         		</div>
 	         		<br>
 	         	</div>  
 	       
-			<div id="sin-concretar" name="sin-concretar" class="">	        
+			<div id="sin-concretar" name="sin-concretar" class="<?php echo $oculto1;?>">	        
 	        <?php
 	        if($listaCompras):
-				foreach ($listaCompras as $l => $valor):
+				foreach ($listaCompras as $l => $valor): 
 					$usua=new usuario($valor["vendedor"]);
 					$compra=new ventas($valor["id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
@@ -135,24 +154,32 @@ $clasesP2="";
 //					$statusEnvio=$maximo>0?"Envio pendiente":"Envio en curso";
 //					$statusEnvio=$compra->getStatusEnvio();
 				?>
-				<div id="compra<?php echo $valor["id"];?>">
+				<div id="compra<?php echo $valor["id"];?>" class="general" data-titulo="<?php echo $usua->a_email . $usua->a_seudonimo;?>">
+					
+					<!-- DATOS DEL USUARIO POR QUITAR
+					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+						
+					</div>-->
+					
+					
+					
 					<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
 							<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
 							<a href="detalle.php?id=<?php echo $publi->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
 							style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
 					</div>
-					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-5 vin-blue t14  '>
+					<div class='col-xs-12 col-sm-12 col-md-5 col-lg-5 vin-blue t14  '>
 						<div style="margin-left: 3%;">
 						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $compra->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
-						<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 						</div>
 					</div>
-					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-4 vin-blue t14  '>					
+					<div class='col-xs-12 col-sm-12 col-md-4 col-lg-4 vin-blue t14  '>
 						<div class="t12 pad5 " style="background: #FAFAFA">	
-						 <span><a class="vinculopagos pointer" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+						 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
 						<br>
-						 <span ><a class="vinculoenvios pointer" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+						 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 						<br>
 						 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $compra->getTiempoCompra();?> en espera</span>
 						<br>
@@ -162,12 +189,12 @@ $clasesP2="";
 					<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-right  t12 '>
 						<div class='btn-group '>
 							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"<button class="btn2 btn-default marB5">Ver detalle</button></a>
-							<button class="btn2 btn-default marB5 vinculopagos" data-toggle="modal" data-target="#informar-pago" data-id="<?php echo $valor["id"];?>">Informar pago</button> 
+							<button class="btn2 btn-default marB5 vinculopagos2" data-toggle="modal" data-target="#informar-pago" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>" data-id="<?php echo $valor["id"];?>">Informar pago</button> 
 						</div>
 					</div>
 									
 					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
-						<center><hr class='center-block'></center>
+						<center><hr class=' center-block'></center>
 					</div>
 				</div>
 				<?php
@@ -175,10 +202,10 @@ $clasesP2="";
 				endif;
 				?>  		
 			</div>
-			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10' id="paginacion" name="paginacion">
+			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10 <?php echo $oculto1;?>' id="paginacion" name="paginacion">
 				<nav class='text-center'>
 				  <ul class='pagination'><li class="hidden">
-				      <a class="pointer" aria-label='Previous'>
+				      <a class="point" aria-label='Previous'>
 				        <span aria-hidden='true'>&laquo;</span>
 				      </a>
 				    </li>
@@ -186,14 +213,14 @@ $clasesP2="";
 				    	$claseInicio="active";
 				    	for($i=1;$i<=$totalPaginas;$i++):							
 							?>
-								<li class="<?php echo $claseInicio;?>"><a class="botonPaginacompras pointer" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
+								<li class="<?php echo $claseInicio;?>"><a class="botonPaginacompras point" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
 							<?php
 							$claseInicio="";
 						endfor;
 						if($totalPaginas>10):
 							?>				
 								<li>
-							      <a class="pointer" aria-label='Next'>
+							      <a class="point" aria-label='Next'>
 							        <span aria-hidden='true'>&raquo;</span>
 							      </a>
 							    </li>
@@ -204,12 +231,12 @@ $clasesP2="";
 				</nav>
 			</div>			
 				<!-- FIN del detalle del listado -->
-			<div id="concretadas" name="concretadas" class="hidden">
+			<div id="concretadas" name="concretadas" class="<?php echo $oculto2;?>">
 	        <?php
 	        if($listaCompras2):
 				foreach ($listaCompras2 as $l => $valor):
 					$usua=new usuario($valor["usuarios_id"]);
-					$compra=new comprascompras($valor["id"]);
+					$compra=new ventas($valor["id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
 					$statusPago=$compra->getStatusPago();
 					$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
@@ -223,10 +250,11 @@ $clasesP2="";
 //					$statusEnvio=$maximo>0?"Envio pendiente":"Envio en curso";
 //					$statusEnvio=$compra->getStatusEnvio();
 				?>	
+			<div id="compra<?php echo $valor["id"];?>" class="general" data-titulo="<?php echo $usua->a_email . $usua->a_seudonimo;?>">
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 					<br>
-					<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+					<span class=''><a href="<?php echo $usua->a_seudonimo;?>"><?php echo $usua->a_seudonimo;?></a></span>
 					<br>
 					<span class=" grisC t12"><?php echo $usua->a_email;?></span>
 					<br>
@@ -241,14 +269,14 @@ $clasesP2="";
 					<div style="margin-left: 3%;">
 					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $compra->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
-					<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 					</div>
-			</div> 
+				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 					<div class="t12 pad5 " style="background: #FAFAFA">	
-					 <span><a class="vinculopagos pointer" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
+					 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
 					<br>
-					 <span ><a class="vinculoenvios pointer" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 					<br>
 					 <span ></span><i class="fa fa-clock-o"></i> <span>despachado en <?php echo $compra->getTiempoCompra(2);?> </span>
 					<br>
@@ -257,13 +285,13 @@ $clasesP2="";
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
 					<div class='btn-group pull-right marR10'>				
-							<button class="btn2 btn-default">Ver detalle</button> 
+							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"><button class="btn2 btn-default">Ver detalle</button></a> 
 							<div class="dropdown pull-right">
   							<button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
    							<i class="fa fa-cog"></i>
   							</button>
   								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							    <li><a class="vinculocomentario pointer" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+							    <li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
  								</ul>
 						</div>						
 						</div>
@@ -275,10 +303,10 @@ $clasesP2="";
 				endif;
 				?>
 			</div>
-			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10 hidden' id="paginacion2" name="paginacion2">
+			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10 <?php echo $oculto2;?>' id="paginacion2" name="paginacion2">
 				<nav class='text-center'>
 				  <ul class='pagination'><li class="hidden">
-				      <a class="pointer" aria-label='Previous'>
+				      <a class="point" aria-label='Previous'>
 				        <span aria-hidden='true'>&laquo;</span>
 				      </a>
 				    </li>
@@ -286,14 +314,14 @@ $clasesP2="";
 				    	$claseInicio="active";
 				    	for($i=1;$i<=$totalPaginas2;$i++):							
 							?>
-								<li class="<?php echo $claseInicio;?>"><a class="botonPaginacompras pointer" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
+								<li class="<?php echo $claseInicio;?>"><a class="botonPaginacompras point" data-pagina="<?php echo $i;?>"><?php echo $i;?></a></li>
 							<?php
 							$claseInicio="";
 						endfor;
 						if($totalPaginas>10):
 							?>				
 								<li>
-							      <a class="pointer" aria-label='Next'>
+							      <a class="point" aria-label='Next'>
 							        <span aria-hidden='true'>&raquo;</span>
 							      </a>
 							    </li>

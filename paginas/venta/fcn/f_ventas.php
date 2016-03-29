@@ -162,9 +162,9 @@ function buscaPublicaciones(){
 								for($i=$inicio;$i<=$totalPaginas;$i++){
 									$contador++;
 									if($i==$_POST["pagina"]){
-										echo "<li class='active' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+										echo "<li class='active point' ><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
 									}else{
-										echo "<li class='' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+										echo "<li class='point'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
 									}
 									if($contador==10){
 										break;
@@ -172,7 +172,7 @@ function buscaPublicaciones(){
 								}
 				 if($totalPaginas>0){
 				 echo "<li>
-				      <a href='#' aria-label='Next'>
+				      <a class='point' aria-label='Next'>
 				        <span aria-hidden='true'>&raquo;</span>
 				      </a>
 				    </li>
@@ -373,14 +373,14 @@ function pagina1(){
 						<div style="margin-left: 3%;">
 						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
-						<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 						<div class="t12 pad5 " style="background: #FAFAFA">	
-						 <span><a class="vinculopagos" href="#" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+						 <span><a class="vinculopagos point"  data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
 						<br>
-						 <span ><a class="vinculoenvios" href="#" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+						 <span ><a class="vinculoenvios point"  id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 						<br>
 						 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
 						<br>
@@ -396,7 +396,7 @@ function pagina1(){
   								</button>
   								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
     								<li><a class="vinculodescuento" href="#" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
-    								<li><a href="#" data-toggle="modal" data-target="#comentario">Agregar comentario</a></li>
+    								<li><a class="point" data-toggle="modal" data-target="#comentario">Agregar comentario</a></li>
   								</ul>
 							</div>						
 						</div>
@@ -451,9 +451,9 @@ function pagina2(){
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 					<div class="t12 pad5 " style="background: #FAFAFA">	
-					 <span><a class="vinculopagos" href="#" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
+					 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
 					<br>
-					 <span ><a class="vinculoenvios" href="#" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 					<br>
 					 <span ></span><i class="fa fa-clock-o"></i> <span>despachado en <?php echo $venta->getTiempoCompra(2);?> </span>
 					<br>
@@ -468,7 +468,7 @@ function pagina2(){
    							<i class="fa fa-cog"></i>
   							</button>
   								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-							    <li><a class="vinculocomentario" href="#" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+							    <li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
  								</ul>
 						</div>						
 						</div>
@@ -542,9 +542,9 @@ function ordena(){
 			</div>
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
 				<div class="t12 pad5 " style="background: #FAFAFA">	
-					 <span><a class="vinculopagos" href="#" data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+					 <span><a class="vinculopagos point"  data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
 					<br>
-					 <span ><a class="vinculoenvios" href="#" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
 					<br>
 					 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
 					<br>
@@ -559,8 +559,8 @@ function ordena(){
    								<i class="fa fa-cog"></i>
   						  </button>
   						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-    							<li><a class="vinculodescuento" href="#" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
-    							<li><a class="vinculocomentario" href="#" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+    							<li><a class="vinculodescuento point" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
+    							<li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
   						  </ul>
 					</div>						
 				</div>

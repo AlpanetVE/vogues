@@ -3,11 +3,13 @@ include_once "fcn/varlogin.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
+<link rel="stylesheet" href="js/cropit/cropit.css">
 <?php include "fcn/incluir-css-js.php";?>
 <!-- include adicional (editor) debe ir antes del body -->
-<link rel="stylesheet" href="js/cropit/cropit.css">
-<script type="text/javascript" src="js/tinymce/tinymce.min.js"> </script> 
-<body>
+<link rel="stylesheet" href="js/htmledit/ui/trumbowyg.css">
+<script type="text/javascript" src="js/htmledit/trumbowyg.min.js"></script>
+<script type="text/javascript" src="js/htmledit/langs/es.min.js"></script>
+<body >
 <?php include "temas/header.php";?>
 <div class="container">	
 	<div class="row">
@@ -30,14 +32,16 @@ include_once "fcn/varlogin.php";
 <?php include "modales/m_edit_publicacion.php";?>
 <?php include "modales/m_cropper.php";?>
 <?php include "modales/m_pagos_ven.php";?>
+<?php include "modales/m_envios_ven.php";?>
 <?php include "modales/m_pagos_ven2.php";?>
 <?php include "modales/m_descuento.php";?>
-<?php include "modales/m_comentario.php";
-	  include"modales/m_info_user.php";
-?>
+<?php include "modales/m_comentario.php";?>
+<?php include "modales/m_vincular_fan.php";?>
+<?php include"modales/m_info_user.php";?>
 
 <script type="text/javascript" src="js/autoNumeric/autoNumeric-min.js"></script>
 <script type="text/javascript" src="js/ventas.js"></script>
+<script src="js/datevin.js"></script>
 <div class="modal-backdrop fade in cargador" style="display:none"></div>
 </body>
 </html>

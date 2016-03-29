@@ -20,10 +20,10 @@
 							
 							<div class="alert alert-info " role="alert"
 						style="width: 100%; margin: 0px; padding: 2px; ">
-							<span class="marL5" style="font-size: 11px;"><i class="fa fa-info-circle marR5"></i> <b>Nota: </b> Si ya vendiste algun producto de esta publicacion, no podras cambiar el titulo.</span>
+							<span class="marL5" style="font-size: 11px;"><i class="fa fa-info-circle marR5"></i> <b>Nota: </b> Si ya vendiste algun producto de esta publicaci&oacute;n, no podras cambiar el t&iacute;tulo.</span>
 						</div>
 							<div class="col-xs-12 marT10 ">
-								 <span>Titulo</span>
+								 <span>T&iacute;tulo</span>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 								<input type="text" class=" form-input " id="titulo" name="titulo"
@@ -47,7 +47,7 @@
 									value="actualiza" />
 							<div class="col-xs-12 text-center marT10" id="masDetalles" name="masDetalles">
 								<br>
-								<i class="fa fa-pencil"></i> <span><a href="#" id="verMas">Modificar mas detalles, Fotos,descripcion ...</a></span>
+								<i class="fa fa-pencil"></i> <span><a class="point" id="verMas">Modificar m&aacute;s detalles, Fotos,descripci&oacute;n ...</a></span>
 							</div>
 						</div>
 					</section>

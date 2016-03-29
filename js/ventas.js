@@ -1,34 +1,28 @@
 // Plugin de editor HTML
 
 $(document).ready(function(){
-		$('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />');
-		/* BUSQUEDA CALIENTE NO UTILIZADA EN ESTE MOMENTO
-		 * 	usuarios_id=$("#busqueda").data("usuario");
-		 
-		if($(this).val()==""){
-			$("#busqueda").html("");
-			$("#busqueda").addClass("hidden");
-		}else{
-			palabra=$(this).val();
-			$.ajax({
-				url:"paginas/venta/fcn/f_ventas.php",
-				data:{metodo:"busquedaCaliente",usuarios_id:usuarios_id,palabra:palabra},
-				type:"POST",
-				dataType:"html",
-				success:function(data){
-					console.log(data);
-					$("#busqueda").html(data);
-					$("#busqueda").removeClass("hidden");
-				},
-				error:function(xhr,status){
-					console.log(status);
-				}
-			});
-		}*/
-	/*$('#editor').trumbowyg({
+	$(document).prop('title', $(".titulo").html());
+	var pagos="";
+	var actual=0;
+	var total=0;	
+	var swenvios=0;
+	$('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />');
+	$('#editor').trumbowyg({
 		lang : 'es'
-	});*/
+	});	
+	var tipo=$("#principal").data("tipo"); 
+	$.ajax({
+		url:"paginas/venta/fcn/f_ventas.php",
+		data:{metodo:"buscarPublicaciones",tipo:tipo,pagina:1},
+		type:"POST",
+		dataType:"html",
+		success:function(data){
+			$("#publicaciones").html(data);
+//				loadingAjax(false);
+		}
+	});
 	$("#monto").autoNumeric({aSep: '.', aDec: ','});
+	$("#btn-informar").addClass("hidden");
 	$("#ven-form-mod").formValidation({
 		locale: 'es_ES',
 		excluded: ':hidden',
@@ -76,7 +70,7 @@ $(document).ready(function(){
            		swal({
 					title: "Exito", 
 					text: mensaje,
-					imageUrl: "galeria/img-site/logos/bill-ok.png",
+					imageUrl: "galeria/img/logos/bill-ok.png",
 					timer: 2000, 
 					showConfirmButton: true
 					}, function(){
@@ -86,41 +80,29 @@ $(document).ready(function(){
 			}
 		});
 	});	
-	
-	
 	/*
-	 * Controlas la pesta&oacute;as de mis publicaciones (activas, pausadas, inactivas)
+	 * Controlas la pestanas de mis publicaciones (activas, pausadas, inactivas)
 	*/
 	
 	$(".pesta").click(function(){
 		switch($(this).attr("id")){
 			case "irActivas":				    
-			    $("#irPausadas").removeClass("active");
-			    $("#irFinalizadas").removeClass("active");
-			    $(this).addClass("active");
 			    var tipo=1;
 				break;
-			case "irPausadas":	
-			    $("#irActivas").removeClass("active");			
-			    $(this).addClass("active");
-			    $("#irFinalizadas").removeClass("active");
-			   
+			case "irPausadas":
 			    var tipo=2;				
 				break;
 			case "irFinalizadas":
-			    $("#irPausadas").removeClass("active");
-			    $("#irActivas").removeClass("active");
-			    $(this).addClass("active");
-			    
 			    var tipo=3;
 				break;
-		}	
-		var order= "id "+$("#filtro").val(); 
+		}
+		$(this).parent().children("li").removeClass("active");
+	    $(this).addClass("active");
 		var pagina=1;
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"buscarPublicaciones",tipo:tipo,pagina:pagina,order:order},
+			data:{metodo:"buscarPublicaciones",tipo:tipo,pagina:pagina},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -130,8 +112,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	
 	$(".pesta-ventas").click(function(){
 		if($("#sin-concretar").hasClass("hidden")){
 			$("#sin-concretar").removeClass("hidden");
@@ -147,31 +127,6 @@ $(document).ready(function(){
 		$(".pesta-ventas").removeClass("active");
 		$(this).addClass("active");
 	});
-	
-	$("#filtro").change(function(){	 
-		var tipo;
-		if($("#irActivas").hasClass('active')){
-			tipo=1; 
-		}else if($("#irPausadas").hasClass('active')){
-			tipo=2;
-		}else if($("#irFinalizadas").hasClass('active')){
-			tipo=3;
-		}  
-		var order= "id "+$("#filtro").val();
-		var pagina=1;
-		loadingAjax(true);
-		$.ajax({
-			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"buscarPublicaciones",tipo:tipo,order:order,pagina:pagina},
-			type:"POST",
-			dataType:"html",
-			success:function(data){
-				console.log(data);
-				$("#publicaciones").html(data);
-				loadingAjax(false);
-			}
-		});
-	});
 	$("#verMas").click(function(e){
 		montoFormateado=$("#monto").val();
 	//	montoFormateado=montoFormateado.replace(".",",");
@@ -184,9 +139,10 @@ $(document).ready(function(){
 		var precio=$("#monto").val();
 		var precio=montoFormateado;
 		var titulo=$("#titulo").val();
-		var descripcion=$("#descripcion_"+id).val();
+		var fb = $("#fb").data("");
+		var descripcion=$("#btn-social-act").data("descripcion");
 		$.ajax({
-			url:"paginas/venta/fcn/f_edit_publicaciones.php",
+			url:"paginas/venta/p_edit_publicaciones.php",
 			data:{id:id,cantidad:cantidad,precio:precio,titulo:titulo,descripcion:descripcion},
 			type:"POST",
 			dataType:"html",
@@ -194,19 +150,9 @@ $(document).ready(function(){
 				console.log(data);
 				$("#primero").html(data);
 				$("#btn-social-act").data("dismiss","modal");
-				tinymce.init({
-				  	selector:'div#editor',
-				  	language:'es_MX',
-				  	height: 450,
-				  	statusbar: false,
-				  	menubar: false,
-				  	default_link_target: "_blank",
-				  	plugins: "charmap, hr, lists, preview, searchreplace, table, wordcount, anchor, code, fullpage, image, media, visualblocks, imagetools, fullscreen, link, textcolor",
-				  	toolbar:[
-				  	 'styleselect, formatselect, fontselect, fontsizeselect, undo, charmap, hr, preview, ',
-				  	 ' bold, italic,underline,alignleft, aligncenter, alignright, alignjustify, bullist, numlist, outdent, indent,  link, media, image, visualblocks, forecolor, backcolor' 	
-				  		]
-				   });
+				$('#editor').trumbowyg({
+					lang : 'es'
+				});
 				$("#txtPrecio").autoNumeric({aSep: '.', aDec: ','});
 				//Validator del formulario
 				$("#pub-form-reg").formValidation({
@@ -243,7 +189,8 @@ $(document).ready(function(){
 					monto=monto.replace(/\./g,"");
 					monto=monto.replace(",",".");
 //					form = $("#pub-form-reg").serialize() + "&id=" + id +"&fecha=" + $("#txtFecha").val()+"&monto="+$("#txtPrecio").autoNumeric("get")+"&metodo=actualizarPub"+fotos;
-					form = $("#pub-form-reg").serialize() + "&id=" + id + "&monto=" + monto + "&metodo=actualizarPub"+fotos;
+					form = $("#pub-form-reg").serialize() + "&id=" + id + "&monto=" + monto + "&metodo=actualizarPub"+fotos+"&fb="+$("#fb").data("fb")+"&tt="+$("#tt").data("tt")+"&fp="+$("#fp").data("fp")+"&gr="+$("#gr").data("gr");
+					loadingAjax(true);
 					$.ajax({
 						url:"paginas/venta/fcn/f_ventas.php",
 						data:form,
@@ -255,16 +202,17 @@ $(document).ready(function(){
 	            		swal({
 							title: "Exito", 
 							text: "Se actualizo correctamente.",
-							imageUrl: "galeria/img-site/logos/bill-ok.png",
+							imageUrl: "galeria/img/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
-								window.open("detalle.php?id=" + id,"_self");
-							});							
-						}						
+								window.open("ventas/admin","_self");
+							});
+							loadingAjax(false);							
+						}			
 					});
 		        }).on('prevalidate.form.fv',function(e){				
-					if($("#1").attr("src") === undefined){
+					if($(".foto").children("img#1").attr("src")===undefined){
 						$("#fotoprincipal").val("false");
 						$(".foto").first().tooltip("show");
 						return false;
@@ -272,7 +220,27 @@ $(document).ready(function(){
 						$("#fotoprincipal").val("true");
 						$(".foto").first().tooltip("destroy");
 					}
-				});
+				}).on('err.field.fv', function(e, data) {
+		            if (data.fv.getSubmitButton()) {
+		                data.fv.disableSubmitButtons(false);
+		            }
+		            if($("#txtTitulo").val().length<10){
+		        		$("#rs_acpt").css("visibility","hidden");
+		        		$("#redes").hide();
+		        		$("#i"+rs).hide("swing");
+		        		}	        	
+		        })
+		        .on('success.field.fv', function(e, data) {
+		            if (data.fv.getSubmitButton()) {
+		                data.fv.disableSubmitButtons(false);
+		            }
+		        }).on('success.field.fv', function(e){
+		        	if($("#txtTitulo").val().length>=10 && $("#txtTitulo").val().length<=60){
+		        		$("#rs_acpt").css("visibility","visible");
+		        		if($("#checkbox").is(":checked"))
+							$("#redes").show();
+		        	}
+		        });;
 				//Final del validator
 				$("#txtPrecio").keydown(function(){
 					$('#pub-form-reg').formValidation('revalidateField', 'txtPrecio');
@@ -289,6 +257,26 @@ $(document).ready(function(){
 				});	
 			}
 		});
+	});
+	
+	$("#primero").on('click','#checkbox',function(){
+		if($("#checkbox").is(":checked")){
+		$("#redes").show();
+		}else{
+		$("#redes").css("display","none");
+		}
+	});
+	
+	$("#primero").on('click','.btn-default',function(e){
+		e.preventDefault();
+		var rs= $(this).data("rs");
+		if($("#i"+rs).css("display")=="none"){
+			$("#"+rs).attr("data-"+rs,"1");
+			$("#i"+rs).show("swing");
+		}else{
+			$("#"+rs).attr("data-"+rs,"0");
+			$("#i"+rs).hide("swing");
+		}
 	});
 	//Inicia el cropit
 	$("#primero").on("click", ".foto", function(e) {
@@ -365,9 +353,150 @@ $(document).ready(function(){
 			$("#cmbGarantia").css("display", "none");
 		}
 	});
+	
+/*	$('#primero').on('click',"#fp",function(){
+		alert("ok");
+				if(manager_tiene_fbp || gettin_fbp_add)
+					return false;
+				gettin_fbp_add=true;
+				$.ajax({
+					url: "fcn/f_manager/fb_get_pages.php",
+					method: "GET",
+					cache:false,
+					dataType: "json"
+				}).done(function(d){
+					gettin_fbp_add=false;
+					switch(d.e){
+						case 0:
+							var ll=d.p.length,arr=d.p,item=false,i=0,j=0,str=[];
+							if(ll>0){
+								for(;i<ll;i++){
+									item=arr[i];
+									str[j++]='<li><input type="radio" style="width: 20px; height: 20px;" value="'+item.i+'" name="fan-page" /><img src="'+item.p+'" style="width: 50px; height: 50px;" class="marL10" /><span class="marL10">'+item.n+'</span></li>';
+								}
+								$("ul#fan_page_list").html(str.join(''));
+							}else{
+								//no hay fan pages
+							}
+							break;
+						case 1:
+							//usuario no tiene cuenta de fb
+							break;
+						case 2:
+							//usuario ya tiene un fan page
+							break;
+						case 3:
+							//error del sdk
+							break;
+					}
+				}).fail(function(a,b,d){
+					gettin_fbp_add=false;
+				});
+				vincularfanpage();				
+			});
+	
+	$('#primero').on('click',"#fb",function(){
+				if(doing_fb_app || manager_tiene_fb)
+					return false;
+				else
+					doing_fb_app=true;
+			
+				FB.login(function(response){
+					if (response.status === 'connected') {
+						$.ajax({
+							url: "fcn/f_manager/fbjscb.php",
+							method: "GET",
+							data:{
+								state:2,
+							},
+							cache:false,
+							dataType: "json"
+						}).done(function(d){
+							doing_fb_app=false;
+							switch(d.e){
+								case 0:
+									manager_tiene_fb={
+										i : d.d,
+										n : d.fn + " "+ d.ln,
+										p : d.p
+									};
+									//updateFbButton();
+									break;
+								case 1:
+									//cuenta no pertenece a nadie
+									break;
+								case 2:
+									//cuenta no dio los permisos requeridos
+									break;
+								case 3:
+									//error al insertar cuenta en la base de datos
+									break;
+								case 4:
+									//error del sdk
+									break;
+								case 5:
+									//El usuario ya tiene otra cuenta de fb vinculada
+									break;
+							}
+						}).fail(function(a,b,d){
+							doing_fb_app=false;
+							//mostrar mensaje de error de conexi�n correspondiente
+						});
+					} else if (response.status === 'not_authorized') {
+						//mostrar error de autorizaci�n
+						doing_fb_app=false;
+					} else {
+						//mostrar error de conexi�n a fb
+						doing_fb_app=false;
+					}
+				},{auth_type:'reauthenticate',scope:scopes});
+				return false;
+			});
+
+	
+	ap_twa_cb = function(d){
+				clearInterval(twapt);
+				switch(d.e){
+					case 0:
+						manager_tiene_tw = {
+							i : d.d,
+							n : d.n,
+							p : d.i
+						};
+						//updateTwButton();
+						break;
+					case 1:
+						//cuenta no pertenece a nadie
+						break;
+					case 2:
+						//cuenta no dio los permisos requeridos
+						break;
+					case 3:
+						//error al insertar cuenta en la base de datos
+						break;
+					case 4:
+						//error del sdk
+						break;	
+				}
+			};
+	function vincularfanpage(){
+		$("#fan-page").modal("show");
+	}
+	function checkTwapC(){
+		if(twapt.closed){
+			clearInterval(twapt);
+		}
+	}
+	
+	$("#primero").on("click", "#tt", function() {
+		var left = (screen.width/2)-(500/2),top = (screen.height/2)-(500/2);
+		twapc=window.open('//apreciodepana.com/fcn/f_manager/add_tw.php?state=2','','toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=500, height=500, top='+top+', left='+left);
+		twapt=setInterval(checkTwapC,500);
+	});*/
+	
 	$("#publicaciones").on("click",".imagen",function(){
-		window.open("detalle.php?id=" + $(this).data("id"),"_self");
-	});		
+		window.open("publicacion-" + $(this).data("id"),"_self");
+	});
 	$(document).on("click",".botonPagina",function(){
 		var orden=$("#filter").val();
 		var pagina=$(this).data("pagina");
@@ -375,13 +504,12 @@ $(document).ready(function(){
 		var metodo=$("#paginas").data("metodo");
 		var id=$("#paginas").data("id");
 		var tipo=$("#paginas").data("tipo");
-		var order= "id "+$("#filtro").val();
 		$(".pagination li").removeClass("active");
 		$(this).parent().addClass("active");
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:metodo,orden:orden,palabra:palabra,pagina:pagina,id:id,tipo:tipo,order:order},
+			data:{metodo:metodo,orden:orden,palabra:palabra,pagina:pagina,id:id,tipo:tipo},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
@@ -393,7 +521,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
 	$(document).on("click",".botonPaginaventas",function(){
 		var pagina=$(this).data("pagina");
 		var elemento=$(this);
@@ -425,49 +552,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	$("body").on('click', '.ver-detalle-user', function(e) {
-	 	
-	 	var usuarios_id= $(this).data("usuarios_id");
-		usuarios_id = parseInt(usuarios_id);
-		  
-		if(usuarios_id>0){
-			$.ajax({
-				url: "fcn/f_usuarios.php", // la URL para la petici&oacute;n
-	            data: {method:"get", id:usuarios_id}, // la informaci&oacute;n a enviar
-	            type: 'POST', // especifica si ser&aacute; una petici&oacute;n POST o GET
-	            dataType: 'json', // el tipo de informaci&oacute;n que se espera de respuesta
-	            success: function (data) {
-	            	// c&oacute;digo a ejecutar si la petici&oacute;n es satisfactoria; 
-	            	if (data.result === 'OK') {  
-	            		console.log(data.campos);
-	            				$('.modal-datail-user .fotoperfil').attr("src", data.campos.ruta); 
-	            				if(data.campos.n_nombre!=null){  
-				            		$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
-				            	}
-				            	else {
-				            		$('.modal-datail-user .nombre').html(data.campos.j_razon_social);
-				            	}
-				            	
-				            	if(data.campos.n_identificacion!=null){
-				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 	
-				            	}
-				            	else{
-				            	$('.modal-datail-user .rif').html(data.campos.j_rif); 	
-				            	}
-				            	
-				            	$('.modal-datail-user .direccion').html(data.campos.u_direccion);
-				            	$('.modal-datail-user .telefono').html(data.campos.u_telefono);
-				            	$('.modal-datail-user .correo').html(data.campos.a_email);
-		            }
-	          	},// c&oacute;digo a ejecutar si la petici&oacute;n falla;
-	            error: function (xhr, status) {
-	            	SweetError(status);
-	            }
-	        });
-	    }
-	 	
-	});	
-	
 	$(document).on("click",".vinculopagos",function(){
 		var id=$(this).attr("id").substr(4);
 		if($(this).data("target")==="#pagos-ven2"){
@@ -488,19 +572,18 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
 	$("#ventas").css("display","block");	
-				switch($('body').data("tipo")){
-					case 1:
-						$("#uno1").addClass("active");
-						break;
-					case 2:
-						$("#uno2").addClass("active");
-						break;
-					case "":
-						$("#uno1").addClass("active");
-						break;		
-				}
+	switch($('body').data("tipo")){
+		case 1:
+			$("#uno1").addClass("active");
+			break;
+		case 2:
+			$("#uno2").addClass("active");
+			break;
+//		case 3:
+//			$("#uno3").addClass("active");
+//			break;		
+	}
 	$("#ajaxcontainer").on("click",".boton-status",function(e){
 		//fa fa-clock-o naranja-apdp
 		//fa fa-thumbs-o-up verde-apdp
@@ -551,7 +634,6 @@ $(document).ready(function(){
 			$(this).prev().data("texto","Pendiente");
 		}
 	});
-	
 	$("#btn-guardar").click(function(){
 		if(pagos!=""){
 			loadingAjax(true);
@@ -584,7 +666,6 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
 	$(document).on("click",".vinculoenvios",function(e){
 		e.preventDefault();
 		var id=$(this).attr("id").substr(5);
@@ -605,87 +686,21 @@ $(document).ready(function(){
 				$("#p_cantidad").attr("max",maximo);
 				actual=id;
 				if(maximo<=0){
-					$("#btn-agregar-guia").addClass("hidden");					
+					$("#btn-agregar-guia").addClass("hidden");
 				}else{
 					$("#btn-agregar-guia").removeClass("hidden");
 				}
-				$("#frm-reg-envios").formValidation({
-					locale: 'es_ES',
-					excluded: ':hidden',
-					framework : 'bootstrap',
-					icon : {
-						valid : 'glyphicon glyphicon-ok',
-						invalid : 'glyphicon glyphicon-remove',
-						validating : 'glyphicon glyphicon-refresh'
-					},
-					addOns: { i18n: {} },
-					err: { container: 'tooltip',  },
-					fields:{
-						p_cantidad:{validators:{
-							notEmpty:{}}},
-						p_agencia:{validators:{
-							notEmpty:{}}},
-						p_numero:{validators:{
-							notEmpty:{}}},							
-						p_direccion:{validators:{
-							notEmpty:{}}}
-						}
-				}).on('success.form.fv',function(e){
-					e.preventDefault();
-					var form = $(e.target);
-					form=$("#frm-reg-envios").serialize() + "&metodo=guardarEnvio&id=" + actual;
-					$.ajax({
-						url : "paginas/venta/fcn/f_ventas.php",
-						data : form,
-						type : "POST",
-						dataType : "html",
-						success : function(data){
-							console.log(data);
-							$("#ajaxcontainer3").load("paginas/venta/fcn/f_envios.php",{id:actual});
-							var faltante=$("#p_cantidad").attr("max") - $("#p_cantidad").val();
-							$("#envio" + actual).data("maximo",faltante);
-							if(faltante==0){
-								$("#p_cantidad").attr("max",faltante);
-								$("#p_cantidad").val("");
-								$("#p_direccion").val("");
-								$("#p_numero").val("");
-								$("#p_fecha").val("");
-								$("#p_monto").val("");
-								$("#p_agencia").val("");				
-								swal({
-									title: "Envio realizado",
-									text: "Se completo el envio",
-									imageUrl: "galeria/img/logos/bill-ok.png",
-									showConfirmButton: true
-								});
-								$("#envios-ven").modal("hide");						
-								$("#envio" + actual + ">span").first().text("Enviado");
-								$("#envio" + actual + ">i").first().removeClass("rojo-apdp naranja-apdp");
-								$("#envio" + actual + ">i").first().addClass("verde-apdp");
-								$("#concretadas").append($("#venta" + actual));
-								return false;
-							}
-							$("#p_cantidad").attr("max",faltante);
-							$("#p_cantidad").val("");
-							$("#p_direccion").val("");
-							$("#p_numero").val("");
-							$("#p_fecha").val("");
-							$("#p_monto").val("");
-							$("#p_agencia").val("");
-							$("#btn-agregar-guia").removeClass("hidden");
-							$("#btn-guardar2").removeClass("hidden");
-							$("#btn-guardar-guia").addClass("hidden");
-							$("#envio" + actual + ">span").first().text("En camino");
-							$("#envio" + actual + ">i").first().removeClass("naranja-apdp rojo-apdp");
-							$("#envio" + actual + ">i").first().addClass("naranja-apdp");							
-						}
-					});
-					$("#frm-envios").slideUp();
-		       });
+				if(swenvios==0){
+					vincularEnvios();
+					swenvios=1;
+				}
 			}
 		});
 	});
-	
+	$("#envios-ven").on("hidden.bs.modal",function(){
+		$("#btn-guardar-guia").addClass("hidden");
+		$("#frm-envios").slideUp();
+	});
 	$(document).on("click",".vinculodescuento",function(){
 		actual=$(this).attr("id").substr(4);
 		total=$(this).data("monto");
@@ -735,7 +750,6 @@ $(document).ready(function(){
 					$("#descuento").modal('hide');
 			});		
 	});
-	
 	$(document).on("click",".vinculocomentario",function(){
 		$("#p_comentario").val($(this).data("nota"));
 		actual=$(this).attr("id").substr(5);
@@ -749,7 +763,7 @@ $(document).ready(function(){
 				validating : 'glyphicon glyphicon-refresh'
 			},
 			addOns: { i18n: {} },
-			err: { container: 'tooltip',  },
+			err: { container: 'tooltip'  },
 			fields:{
 				p_comentario:{validators:{
 					notEmpty:{}}}
@@ -770,7 +784,6 @@ $(document).ready(function(){
 				});
 		});
 	});
-	
 	$("#btn-agregar-guia").click(function(e){
 		e.preventDefault();
 		$(this).addClass("hidden");
@@ -778,7 +791,6 @@ $(document).ready(function(){
 		$("#btn-guardar-guia").removeClass("hidden");
 		$("#frm-envios").slideDown();
 	});
-	
 	function validacion(){
 		swal({
 			title: "Falta datos importantes",
@@ -789,8 +801,112 @@ $(document).ready(function(){
 				//document.location.href = 'detalle.php?id='+data.id;
 			});
 	}
-	
-	
+	function vincularEnvios(){
+			$("#frm-reg-envios").formValidation({
+				locale: 'es_ES',
+				excluded: ':hidden',
+				framework : 'bootstrap',
+				icon : {
+					valid : 'glyphicon glyphicon-ok',
+					invalid : 'glyphicon glyphicon-remove',
+					validating : 'glyphicon glyphicon-refresh'
+				},
+				addOns: { i18n: {} },
+				err: { container: 'tooltip',  },
+				fields:{
+					p_cantidad:{validators:{
+						digits:{},
+						notEmpty:{}}},
+					p_agencia:{validators:{					
+						callback:{
+							message:"Seleccione una agencia de la lista",
+							callback:function(value,validator,$field){
+							if($("#p_agencia").val()=='0')
+								return false;
+							else
+								return true;
+							}
+							}
+						}
+					},
+					p_numero:{validators:{
+						digits:{},							
+						notEmpty:{}}},
+					p_direccion:{validators:{
+						notEmpty:{}}}
+					}
+			}).on('success.form.fv',function(e){
+				e.preventDefault();
+				var form = $(e.target);
+				form=$("#frm-reg-envios").serialize() + "&metodo=guardarEnvio&id=" + actual;
+				$.ajax({
+					url : "paginas/venta/fcn/f_ventas.php",
+					data : form,
+					type : "POST",
+					dataType : "html",
+					success : function(data){
+						console.log(data);
+						$("#ajaxcontainer3").load("paginas/venta/fcn/f_envios.php",{id:actual});
+						var faltante=$("#p_cantidad").attr("max") - $("#p_cantidad").val();
+						$("#envio" + actual).data("maximo",faltante);
+						if(faltante==0){
+							$("#p_cantidad").attr("max",faltante);
+							$("#p_cantidad").val("");
+							$("#p_direccion").val("");
+							$("#p_numero").val("");
+							$("#p_fecha").val("");
+							$("#p_monto").val("");
+							$("#p_agencia").val("0");
+							swal({
+								title: "Envio cargado",
+								text: "El comprador sera notificado.",
+								imageUrl: "galeria/img/logos/bill-ok.png",
+								showConfirmButton: true
+							});
+							$("#envios-ven").modal("hide");						
+							$("#envio" + actual + ">span").first().text("Enviado");
+							$("#envio" + actual + ">i").first().removeClass("rojo-apdp naranja-apdp");
+							$("#envio" + actual + ">i").first().addClass("verde-apdp");
+							$("#concretadas").append($("#venta" + actual));
+							var t1=parseInt($("#titulo1").text());
+							$("#titulo1").text(t1-1);
+							var t2=parseInt($("#titulo2").text());
+							$("#titulo2").text(t2+1);								
+							return false;
+						}
+						$("#p_cantidad").attr("max",faltante);
+						$("#p_cantidad").val("");
+						$("#p_direccion").val("");
+						$("#p_numero").val("");
+						$("#p_fecha").val("");
+						$("#p_monto").val("");
+						$("#p_agencia").val("0");
+						$("#btn-agregar-guia").removeClass("hidden");
+						$("#btn-guardar2").removeClass("hidden");
+						$("#btn-guardar-guia").addClass("hidden");
+						$("#envio" + actual + ">span").first().text("En camino");
+						$("#envio" + actual + ">i").first().removeClass("naranja-apdp rojo-apdp");
+						$("#envio" + actual + ">i").first().addClass("naranja-apdp");							
+					}
+				});
+				$("#frm-envios").slideUp();
+	       });		
+	}
+	$(document).on("change","#filtro-pub",function(){
+		var orden=$(this).val();
+		var tipo=$("#principal").data("tipo");
+		loadingAjax(true);
+		$.ajax({
+			url:"paginas/venta/fcn/f_ventas.php",
+			data:{metodo:"buscarPublicaciones",tipo:tipo,orden:orden},
+			type:"POST",
+			dataType:"html",
+			success:function(data){
+				$("#publicaciones").html(data);
+				loadingAjax(false);
+			}
+		});
+	});
 	$(document).on("change","#filtro",function(){
 		if($("#sin-concretar").hasClass("hidden")){
 			var eldiv=$("#concretadas");
@@ -820,7 +936,7 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
+	/*
 	$("#principal").on("keyup","#txtBuscar",function(){
 		if($(this).val()!=""){
 			var c=0;
@@ -852,40 +968,5 @@ $(document).ready(function(){
 			}
 		}		
 	});
-	
-	var input1 = $('#p_fecha').pickadate({editable: false, container: '#date-picker',
-  monthsFull: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-  weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab'],
-  today: 'Hoy',
-  clear: 'Limpiar',
-  close: 'Cerrar',
-  
-  format: 'yyyy-mm-dd',
-  formatSubmit: 'y-m-d'});
-var picker1 = input1.pickadate('picker');
-picker1.set('min', true);
-picker1.set('max', 30);
-//Fecha desde
-$('#p_fecha').off('click focus');
-
-$('#calendario').on('click', function(e) {
-  if (picker1.get('open')) { 
-    picker1.close();
-  } else {
-    picker1.open();
-  }
-  
-  e.stopPropagation();    
-});
-
-
-$('#p_fecha').on('click', function(e) {
-  if (picker1.get('open')) { 
-    picker1.close();
-  } else {
-    picker1.open();
-  }
-  
-  e.stopPropagation();    
-});
+	*/
 });

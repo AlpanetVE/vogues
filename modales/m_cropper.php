@@ -2,7 +2,7 @@
 	<div class="modal-dialog " >
 		<div id="content" class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
+				<button id="cerrar" type="button" class="close " data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -16,7 +16,7 @@
 					<input type="file" class="cropit-image-input">
 					<!-- .cropit-image-preview-container is needed for background image to work -->
 					<div class="cropit-image-preview-container " style="top:0px; left:100px;">
-						<div class="cropit-image-preview " ></div>
+						<div class="cropit-image-preview " > <div class="error-msg" style="display:none;"></div></div>
 					</div>
 					<br>
 					<br>
@@ -33,5 +33,5 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/cropit/jquery.cropit.js"></script>
 <script type="text/javascript" src="js/cropit/cropit.js"></script>
+<script type="text/javascript" src="js/cropit/jquery.cropit.js"></script>

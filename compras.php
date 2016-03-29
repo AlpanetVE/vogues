@@ -20,33 +20,31 @@ include_once "fcn/varlogin.php";
 <?php include "fcn/incluir-css-js.php";?>
 <!-- include adicional (editor) debe ir antes del body -->
 <link rel="stylesheet" href="js/htmledit/ui/trumbowyg.css">
-<!-- <link rel="stylesheet" href="js/cropit/cropit.css"> 
+<link rel="stylesheet" href="js/cropit/cropit.css">
+<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" type="text/css" href="css/default.date.css">
 <script type="text/javascript" src="js/htmledit/trumbowyg.min.js"></script>
-<script type="text/javascript" src="js/htmledit/langs/es.min.js"></script> -->
+<script type="text/javascript" src="js/htmledit/langs/es.min.js"></script>
+<!--<script "text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.3/legacy.js"></script>-->
+<script type="text/javascript" src="js/picker.min.js"></script>
 <body data-tipo='<?php echo $tipo2;?>'>
 <?php include "temas/header.php";?>
 <div class="container">	
 	<div class="row">
-		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 ">
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 ">
 			<?php include "temas/menu-left-usr.php";?>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 ">
-			<div class="marL20 " id="segundo" name="segundo">
+			<div class="marL20">
+			<div  id="segundo" name="segundo">
 				<?php include "paginas/compra/p_compras.php";?>
 			</div>
 		</div>
+		</div>
 	</div>
 </div>
-<?php include "modales/m_edit_publicacion.php";?>
-<?php include "modales/m_cropper.php";?>
-<?php include "modales/m_pagos_ven.php";?>
-<?php include "modales/m_pagos_ven2.php";?>
-<?php include "modales/m_envios_ven.php";?>
-<?php include "modales/m_descuento.php";?>
-<?php include "modales/m_comentario.php";?>
-<?php include "modales/m_informar_pago.php";?>
-<script type="text/javascript" src="js/autoNumeric/autoNumeric-min.js"></script>
-<script type="text/javascript" src="js/compras.js"></script>
 <div class="modal-backdrop fade in cargador" style="display:none"></div>
+<script type="text/javascript" src="js/compras.js"></script>
+<script type="text/javascript" src="js/autoNumeric/autoNumeric-min.js"></script>
 </body>
 </html>

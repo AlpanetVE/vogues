@@ -1,7 +1,4 @@
 <?php
-if (!headers_sent()) {
-	header('Content-Type: text/html; charset=ISO-8859-15');
-}
 include_once '../../clases/publicaciones.php';
 $publi=new publicaciones($_POST["id"]);
 $precio = str_replace(".", "", $_POST["precio"]);
@@ -19,7 +16,7 @@ $foto6=$publi->getFotoN(6);
 			<form id="pub-form-reg" name="pub-form-reg" action"ventas.php" method="get">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
 					<h3 class="  negro text-left">
-					<span class="">Actualizacion de la publicacion <span class="opacity grisO t16"># <?php if(isset($publi)){ echo $publi->id;}?></span></span>
+					<span class="titulo">Actualizacion de la publicacion <span class="opacity grisO t16"># <?php if(isset($publi)){ echo $publi->id;}?></span></span>
 					<span class="pull-right marR20 t12"><a href="ventas.php">Volver</a></span>
 					<hr>
 					</h3>
@@ -29,7 +26,7 @@ $foto6=$publi->getFotoN(6);
 						Fotos de tu producto
 						<div class="alert alert-info " role="alert"
 						style="width: 80%; margin: 0px; padding: 2px; font-size: 11px;">
-							<span class="marL5"><i class="fa fa-info-circle marR5"></i> <b>Recomendación: </b>Procura que la imagen sea de buena calidad y obtendras mejores
+							<span class="marL5"><i class="fa fa-info-circle marR5"></i> <b>Recomendaciï¿½n: </b>Procura que la imagen sea de buena calidad y obtendras mejores
 								resultados en tus ventas.</span>
 						</div>
 					</div>
@@ -129,37 +126,54 @@ $foto6=$publi->getFotoN(6);
 						<br>
 						<div class="alert alert-warning " role="alert"
 						style="width: 80%; margin: 0px; padding: 2px; font-size: 11px;">
-							<span class="marL5"><i class="fa fa-exclamation-triangle"></i> <b>Advertencia: </b>no debes de ingresar ninguna información de contacto, de lo
-								contrario tu publicación sera excluida de las listas.</span>
+							<span class="marL5"><i class="fa fa-exclamation-triangle"></i> <b>Advertencia: </b>no debes de ingresar ninguna informaciï¿½n de contacto, de lo
+								contrario tu publicaciï¿½n sera excluida de las listas.</span>
 						</div>
-					</div>
+					</div>  
 				</div>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 marT10">
 					<div class="form-group input-group" style="width: 60%">
-						<input type="text" placeholder="Titulo de la publicación" name="txtTitulo" id="txtTitulo"
-						class=" form-control " value="<?php echo utf8_decode($_POST['titulo']);?>">
+						<input type="text" placeholder="Titulo de la publicaci&oacute;n" name="txtTitulo" id="txtTitulo"
+						class=" form-control " value="<?php echo ($_POST['titulo']);?>">
 					</div>
 				</div>
+				<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 marT10  marB10 ">
+					<div class="input-group" id="rs_acpt" style=" border-radius: 0px; ">
+				      <span class="input-group-addon" style="border-radius: 0px;">
+				        <input type="checkbox" id="checkbox" <?php if($shared==1) echo "checked='true'"; ?> style="width: 20px; height: 20px;">
+				      </span>
+				      <input type="text" class="form-control" readonly="true"  value="Aceptas compartir automaticamente en tus Redes Sociales">				      
+				    </div>	
+				    <br>
+				    <div id="redes" class="text-center" <?php if($shared==0): echo "style='display:none;'"; endif; ?>>
+				    	<button class="btn btn-default" id="fb" data-fb="<?php echo $publi->fb;?>" data-rs="fb" style=""><i class="fa fa-facebook-f"></i> Facebook <i class="fa fa-check" id="ifb" style="<?php if($publi->fb==0): echo "display: none;"; endif;?> color: green"></i></button> 
+				    	<button class="btn btn-default" id="tt" data-tt="<?php echo $publi->tw;?>" data-rs="tt" style=""><i class="fa fa-twitter"></i> Twitter <i class="fa fa-check" id="itt" style="<?php if($publi->tt==0): echo "display: none;"; endif;?> color: green"></i></button> 
+				    	<button class="btn btn-default" id="fp" data-fp="<?php echo $publi->fp;?>" data-rs="fp" style=""><i class="fa fa-thumbs-o-up"></i> Fan Page <i class="fa fa-check" id="ifp"  style="<?php if($publi->fp==0): echo "display: none;"; endif; ?> color: green"></i></button> 
+				    	<button class="btn btn-default" id="gr" data-gr="<?php echo $publi->gr;?>" data-rs="gr" style=""><i class="fa fa-users"></i> Grupo <i class="fa fa-check" id="igr"  style="<?php if($publi->gr==0): echo "display: none;"; endif;?> color: green"></i></button>
+				    </div>
+				</div>
+				
+				
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class=""  style="width: 100%; ">
 						<div class="t16">
-							Detalle de la publicación:
+							Detalle de la publicaci&oacute;n:
 						</div>
 						<div class="alert alert-info " role="alert"
 						style="width: 80%; margin: 0px; margin-left:0px; margin-bottom:5px; padding: 2px; font-size: 11px;">
-							<span class="marL5"><i class="fa fa-info-circle marR5"></i> <b>Recomendación: </b> para mejor exposición utiliza mas imagenes que tenxto en el detalle de tu publicación.</span>
+							<span class="marL5"><i class="fa fa-info-circle marR5"></i> <b>Recomendaciï¿½n: </b> para mejor exposiciï¿½n utiliza mas imagenes que tenxto en el detalle de tu publicaciï¿½n.</span>
 						</div>
 						<div id="editor" name="editor"><?php echo utf8_decode($_POST["descripcion"]); ?></div>					
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT20 marB10">
 					<div class="t16">
-						Más especificaciones
+						Mï¿½s especificaciones
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
 					<div class="input-group marB10">
-						<span class="input-group-addon">Condición</span>
+						<span class="input-group-addon">Condiciï¿½n</span>
 						<select
 						name="cmbCondicion" class="form-control" id="cmbCondicion">
 						       <?php
@@ -219,7 +233,7 @@ $foto6=$publi->getFotoN(6);
 								</div></td>
 								<td valign="middle">
 								<div class="t12 marR10" style="margin-top:22px">
-									¿Tu producto cuenta con
+									ï¿½Tu producto cuenta con
 									garantia?
 								</div></td>
 								<td valign="bottom">
@@ -232,10 +246,10 @@ $foto6=$publi->getFotoN(6);
 									$cadena.=$publi->dias_garantia=='3 meses de '?"<option value='3 meses de ' selected>3 Meses</option>":"<option value='3 meses de '>3 Meses</option>";
 									$cadena.=$publi->dias_garantia=='6 meses de '?"<option value='6 meses de ' selected>6 Meses</option>":"<option value='6 meses de '>6 Meses</option>";
 									$cadena.=$publi->dias_garantia=='9 meses de '?"<option value='9 meses de ' selected>9 Meses</option>":"<option value='9 meses de '>9 Meses</option>";
-									$cadena.=$publi->dias_garantia=='1 año de '?"<option value='1 agno de ' selected>1 Año</option>":"<option value='1 agno de '>1 Año</option>";
-									$cadena.=$publi->dias_garantia=='2 años de '?"<option value='2 agnos de ' selected>2 Años</option>":"<option value='2 agnos de '>2 Años</option>";
-									$cadena.=$publi->dias_garantia=='3 años de '?"<option value='3 agnos de ' selected>3 Años</option>":"<option value='3 agnos de '>3 Años</option>";
-									$cadena.=$publi->dias_garantia=='5 años de '?"<option value='5 agnos de ' selected>5 Años</option>":"<option value='5 agnos de '>5 Años</option>";
+									$cadena.=$publi->dias_garantia=='1 aï¿½o de '?"<option value='1 agno de ' selected>1 Aï¿½o</option>":"<option value='1 agno de '>1 Aï¿½o</option>";
+									$cadena.=$publi->dias_garantia=='2 aï¿½os de '?"<option value='2 agnos de ' selected>2 Aï¿½os</option>":"<option value='2 agnos de '>2 Aï¿½os</option>";
+									$cadena.=$publi->dias_garantia=='3 aï¿½os de '?"<option value='3 agnos de ' selected>3 Aï¿½os</option>":"<option value='3 agnos de '>3 Aï¿½os</option>";
+									$cadena.=$publi->dias_garantia=='5 aï¿½os de '?"<option value='5 agnos de ' selected>5 Aï¿½os</option>":"<option value='5 agnos de '>5 Aï¿½os</option>";
 								    $cadena.="</select></td>";
 								echo $cadena;
 								?>
@@ -259,7 +273,7 @@ $foto6=$publi->getFotoN(6);
 									}
 								?>
 								</div></td>
-								<td valign="bottom"><span class="t12">¿Entregas factura fiscal?</span></td>
+								<td valign="bottom"><span class="t12">ï¿½Entregas factura fiscal?</span></td>
 							</tr>
 						</table>
 					</div>
@@ -282,7 +296,7 @@ $foto6=$publi->getFotoN(6);
 									</div>
 								</td>
 								<td valign="bottom">
-									<span class="t12">¿Eres tienda fisica?</span>
+									<span class="t12">ï¿½Eres tienda fisica?</span>
 								</td>
 							</tr>
 						</table>

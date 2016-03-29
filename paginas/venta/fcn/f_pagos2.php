@@ -66,7 +66,7 @@
                     		<br>
                     	</div>
                     	<div class=" col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
-                    		<span class="grisC"><?php echo $valor["monto"];?></span>
+                    		<span class="grisC"><?php echo number_format($valor["monto"],2,',','.');?></span>
                     		<br>
                     	</div>
                     	<div class=" col-xs-12 col-sm-2 col-md-2 col-lg-2 text-center">
@@ -92,6 +92,6 @@
          <?php
 		endforeach;
 else:
-	echo "klakldklaskldklaskldkl";
+	echo "No hay pagos";
 endif;
 ?>

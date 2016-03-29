@@ -1,6 +1,7 @@
 <?php
-	require_once "../../../config/core.php";
+	require '../../../config/core.php';
 	include_once "../../../clases/ventas.php";
+	$venta=new ventas($_POST["id"]);
 	$venta=new ventas($_POST["id"]);
 	$maximo=$venta->getCantFaltante();
 	$listaPagos=$venta->getEnvios();

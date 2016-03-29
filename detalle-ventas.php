@@ -29,7 +29,7 @@ if (!isset ( $_GET ["id"] )) {
 <?php include "fcn/incluir-css-js.php";?>
 <link rel="stylesheet" href="css/default.css">
 <link rel="stylesheet" type="text/css" href="css/default.date.css">
-<script "text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.3/legacy.js"></script>
+<!--<script "text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.5.3/legacy.js"></script>-->
 <script type="text/javascript" src="js/picker.min.js"></script>
 <body >
 <?php include "temas/header.php";?>

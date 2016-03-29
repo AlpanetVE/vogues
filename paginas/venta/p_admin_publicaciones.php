@@ -1,16 +1,22 @@
 <?php
 include_once "clases/publicaciones.php";
 if(isset($_GET["tipo"])){
-	$tipo=$_GET["tipo"];
+	if($_GET["tipo"]=='activas' or $_GET["tipo"]=='admin')
+	$tipo=1;
+	if($_GET["tipo"]=='pausadas')
+	$tipo=2;
+	if($_GET["tipo"]=='finalizadas')
+	$tipo=3;
 }else{
 	$tipo=1;
 }
+$pagina=1;
+$total=$usua->getCantidadPub($tipo);
 switch($tipo){
 	case 1:
 		$clasesP1="active pesta";
 		$clasesP2="pesta";
 		$clasesP3="pesta";
-		$pagina=1;
 		break;
 	case 2:
 		$clasesP1="pesta";
@@ -188,6 +194,25 @@ switch($tipo){
 			}
 		});
 	}
+	
+	function actualizarTitulo(origen,destino,bandera){
+		if(origen<3){
+			var t1=parseInt($("#titulo" + destino).text());
+			$("#titulo" + destino).text(t1+1);		
+			if(origen!=destino){			
+				var t2=parseInt($("#titulo" + origen).text());			
+				$("#titulo" + origen).text(t2-1);
+			}else{				
+				var t2=parseInt($("#titulo" + bandera).text());			
+				$("#titulo" + bandera).text(t2-1);
+			}
+		}else{
+			var t1=parseInt($("#titulo3").text());			
+			$("#titulo3").text(t1-1);		
+		}
+	}
+	
+	
 	function eliminarPublicacion(elId,categ,tipo){
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
@@ -208,7 +233,7 @@ switch($tipo){
 		});		
 	}
 </script>
-<div class="row" id="principal">
+<div class="row" id="principal" data-tipo="<?php echo $tipo;?>">
 	<!-- inicion del row principal  -->
 
 	<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 maB10  " >
@@ -220,21 +245,21 @@ switch($tipo){
 			<div class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10   ">
 				<!-- inicio titulo y p  -->
 
-				<h4 class=" marL20 marR20 t20 negro" style="padding:10px;"><span class="marL10">Mis publicaciones</span></h4>
+				<h4 class=" marL20 marR20 t20 negro" style="padding:10px;"><span class="marL10 titulo">Mis publicaciones</span></h4>
 				<center>
 					<hr class='ancho95'>
 				</center>
 				<br>
 
-				<ul class="nav nav-tabs marL30 marR30 t14 " >
+		<ul class="nav nav-tabs marL30 marR30 t14 " >
 					<li role="presentation" class="<?php echo $clasesP1;?>" id="irActivas">
-						<a href="#"  class="grisO">Activas</a>
+						<a class="point" class="grisO">Activas <span class="badge badge-publicar-antes" id="titulo1" name="titulo1"><?php echo $usua->getCantidadPub(1);?></span></a>
 					</li>
 					<li role="presentation" class="<?php echo $clasesP2;?>" id="irPausadas">
-						<a href="#" class="grisO">Pausadas</a>
+						<a class="point" class="grisO">Pausadas <span class="badge badge-publicar-antes" id="titulo2" name="titulo2"><?php echo $usua->getCantidadPub(2);?></span></a>
 					</li>
 					<li role="presentation" class="<?php echo $clasesP3;?>" id="irFinalizadas">
-						<a href="#" class="grisO">Finalizadas</a>					
+						<a class="point" class="grisO">Finalizadas <span class="badge badge-publicar-antes" id="titulo3" name="titulo3"><?php echo $usua->getCantidadPub(3);?></span></a>
 					</li>
 				</ul>
 
@@ -259,19 +284,19 @@ switch($tipo){
 
 			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marB10 marT15" >
 				<div class=" btn-group marL30 ">
-					<button type="button" class="btn btn-default hidden ">
+					<button type="button" class="btn btn-default">
 						Filtrar
 					</button>
-					<button type="button" class="btn btn-default dropdown-toggle hidden" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span class="caret"></span>
 						<span class="sr-only">Toggle Dropdown</span>
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<a href="#">Mas ventas</a>
+							<a class="point">Mas ventas</a>
 						</li>
 						<li>
-							<a href="#">Menos ventas </a>
+							<a class="point">Menos ventas </a>
 						</li>
 
 					</ul>
@@ -285,18 +310,11 @@ switch($tipo){
 
 					<table width="100%" class="alto50" border="0" cellspacing="0" cellpadding="0" >
 						<tr>
-							 <?php
-							 $hijos=$usua->getPublicaciones($tipo);
-							 $total=$hijos->rowCount(); 
-							 $ac=$usua->getCantidadPub(1);
-							 
-							 
-							 ?>
-							<td  width="75%"  align="right">
-								<span class="marR5 "> Publicaciones</span> <span id="inicio" name="inicio">1</span> - <span id="final" name="final"><?php if($total>=25){ echo "25"; }else{ echo $total;}?>  de </span>
-								<span><b><?php echo $ac;?></b></span> 
-								
-							</td>
+						
+						<td  width="75%"  align="right">
+							<span class="marR10">Publicaciones <?php if($total==0){ echo "0 - 0"; }else{ if($total>=25) echo "25"; else echo $total;}?> de <b><?php echo $total;?></b>		
+							</span>
+						</td>
 							
 							
 									
@@ -326,6 +344,10 @@ switch($tipo){
 				<!-- INICIO de detalle del listado de publicaciones -->
 			<div id="noresultados" name="noresultados" class="container center-block col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">	
 			<br>
+				<br>
+			<div class='alert alert-warning2  text-center' role='alert'  >                                        	
+	              	<span class="t16  "><i class="fa fa-info-circle"></i> No se encontraron publicaciones.</span>
+	         </div>
 	         <br>  
 	        </div>				
 			<div id="publicaciones">
