@@ -58,18 +58,15 @@ class inventario extends bd {
 	 
 	 public function getCategorias2($campos = null,$nombre=null,$status=null){
 		$campos=is_null($campos)?"*":$campos;
-		$status=is_null($status)?"0":$status;
 		$consulta="select $campos FROM productos_categorias WHERE 1 ";
 		if(!is_null($nombre)){
 			$consulta.="AND nombre LIKE '%".$nombre."%'";
 		}
-		if(!is_null($status)){
-			if($status!=0)
-				$consulta.="AND status<>0";		
-			else
-			$consulta.="AND status=0";
+		if(!empty($status) || $status=='0'){
+			$consulta.="AND status='$status'";
 		}
 		//echo $consulta;
+		$consulta.=" order by status asc, id desc";
         $result=$this->query($consulta);
 		return $result;
 	}

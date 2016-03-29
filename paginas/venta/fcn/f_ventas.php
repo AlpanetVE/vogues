@@ -207,14 +207,13 @@ function cambiaStatus(){
 	$publi=new publicaciones($_POST["id"]);
 	$categ=new inventario();
 	$publi->setStatus($_POST["tipo"],$_POST["anterior"]);
-	
-	if($_POST["tipo"]=='1'){
-		$status_prod='1';
-	}else{
+	$status_prod=$_POST["tipo"];
+	if($status_prod=='4'){
 		$status_prod='0';
 	}
+	
 	$categ->setStatus($_POST["categ"],$status_prod);
-	$amigos = new amigos();
+	/*$amigos = new amigos();
 	/*$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
 	foreach ($panas as $p => $value) {
 		$mostrar = $publi -> deletePanaNoti($_POST["id"],4,$value["numero"]);
