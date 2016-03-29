@@ -1,6 +1,5 @@
-
-<?php include "clases/inventario.php";
-	include "clases/proveedor.php"; 
+<?php include_once "clases/inventario.php";
+	include "clases/proveedor.php";
 	 ?>
 <div class="pad20 contenedor row">
             <div class="marB20">
@@ -24,10 +23,13 @@
 				</div>  
 			 <div class="text-right">
 		        <select id="filtrostatus" class="form-control input-sm " style="display: inline;">
+		        				<option value="" >Estatus</option>
 								<option value="0" >Sin Publicar</option>
-								<option value="1" >Publicadas</option>					
+								<option value="1" >Publicadas</option>
+								<option value="2" >Pausadas</option>
+								<option value="3" >Finalizadas</option>
 		         </select> 
-		</div> 
+			</div> 
 			
 			 
             </div>       

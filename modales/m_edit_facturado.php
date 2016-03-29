@@ -15,15 +15,16 @@
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
 			<form action="paginas/producto/fcn/f_producto.php" data-method="modificarStatus" data-status='3' class="edit-statusxgarantia-form" id="edit-statusxfacturar-form" method="post"  >			
-				<div class="modal-body marL20 marR20 ">
+				<div class="modal-body marL20 marR20">
 					<br>
-					<section class="form-apdp" >
+					<section class="form-apdp">
 						<span class="marL10">Codigo de Venta</span>
 					<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">						
 							<input type="text"
 								placeholder="Ingrese Codigo de venta..." name="codigo_venta"
 								class=" form-input" id="codigo_venta">
 					</div>
+					</section>
 				</div>
 				<div class="modal-footer">
 				<button id="edit-statusxproducto-form" type="submit" class="btn btn-primary2">Aceptar</button>
