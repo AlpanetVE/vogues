@@ -131,7 +131,7 @@
 			}else{
 				$condicion="p.compras_publicaciones_id=$id and p.status_pago=$status";
 			}
-			$consulta="select p.*,b.nombre,b.siglas,f.nombre as fp from pagosxcompras as p,bancos as b,formas_pagos as f where p.bancos_id=b.id and $condicion and p.formas_pagos_id=f.id";
+			$consulta="select p.*,b.nombre,b.siglas,f.nombre as fp from pagosxcompras as p,bancos as b,formas_pagos as f where p.bancos_id=b.id and $condicion and p.formas_pagos_id=f.id order by p.fecha desc";
 			//$result=$bd->doFullSelect("pagosxcompras",$condicion);
 			$result=$this->query($consulta);
 			return $result;
@@ -332,6 +332,52 @@
 					return " $dias dias";
 			}			
 		}
+public function getDatosFacturacion($id=NULL){
+			if(is_null($id)){
+				$id=$this->id;
+			}
+			$bd=new bd();
+			$consulta="select d.* from datos_facturacion as d,compras_datos_facturacion as c where c.datos_facturacion_id=d.id and c.compras_id=$id limit 1";
+			$result=$bd->query($consulta);
+			if($result->rowCount()>0){
+				return $result->fetch();
+			}else{
+				if(!isset($_SESSION))
+				session_start();
+				$consulta="select -1 as id,documento,nombre,direccion from datos_facturacion where usuarios_id={$_SESSION["id"]} limit 1";
+				$result2=$bd->query($consulta);
+				if(!empty($result2)){
+					$devolver=$result2->fetch();
+				}else{
+					$devolver=array();
+				}
+				return $devolver;
+			}
+		}
+		public function getDatosEnvio($id=NULL){
+			if(is_null($id)){
+				$id=$this->id;
+			}
+			$bd=new bd();
+			$consulta="select d.*,a.nombre as agencia from datos_envios as d,compras_datos_envios as c,agencias_envios as a where c.datos_envios_id=d.id and c.compras_id=$id and d.agencias_id=a.id limit 1";
+			$result=$bd->query($consulta);
+			if($result->rowCount()>0){
+				return $result->fetch();
+			}else{
+				if(!isset($_SESSION))
+				session_start();
+				$consulta="select -1 as id,d.documento,d.nombre,d.direccion,d.agencias_id,a.nombre as agencia from datos_envios as d,agencias_envios as a where usuarios_id={$_SESSION["id"]} limit 1";
+				$result2=$bd->query($consulta);
+				if(!empty($result2)){
+					$devolver=$result2->fetch();
+				}else{
+					$devolver=array();
+				}
+				return $devolver;				
+			}
+		}	
+
+
 /*****************************END GETTING*************************************/
 	}
 ?>

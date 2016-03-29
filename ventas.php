@@ -7,8 +7,6 @@ include_once "fcn/varlogin.php";
 <!-- include adicional (editor) debe ir antes del body -->
 <link rel="stylesheet" href="js/cropit/cropit.css">
 <script type="text/javascript" src="js/tinymce/tinymce.min.js"> </script> 
-<!--<script type="text/javascript" src="js/htmledit/trumbowyg.min.js"></script>-->
-<!-- <script type="text/javascript" src="js/htmledit/langs/es.min.js"> </script> -->
 <body>
 <?php include "temas/header.php";?>
 <div class="container">	
