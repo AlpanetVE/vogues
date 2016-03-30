@@ -3,21 +3,20 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pad20 marB10" style="background: #f5f5f5;  border: solid 1px #ccc;">		
 						<div class=" t22 ">
 							<i class="fa fa-shopping-cart"></i>  Detalle de la <?php echo $operacion;?> <span class="opacity"># <?php echo $_GET["id"];?></span>
-							<span class="pull-right t14"><a href="javascript:history.back(-1);">Volver a mis <?php echo $operacion;?>s</a></span>
+							<span class="pull-right t14"><a href="javascript:history.back();">Volver a mis <?php echo $operacion;?>s</a></span>
 						</div>
 						
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 pad20 marB10" style="background: #f5f5f5;  border: solid 1px #ccc;">
-						
+					<div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 pad20 marB10" style="background: #f5f5f5;  border: solid 1px #ccc;">						
 						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><img src="<?php echo $publicacion->getFotoPrincipal();?>" class="center-block" width="200px" height="200px" style="border: solid 1px #ccc"  /></a>
 						<br>
 						<br>
 						<a href="detalle.php?id=<?php echo $publicacion->id;?>"><?php echo $publicacion->titulo;?></a>
 						<br>
-						<span class="red">Bs <?php echo $publicacion->getMonto();?></span> x <span class="grisO"><?php echo $venta->getAtributo("cantidad");?> und</span>
+						<span class="red"><?php echo $publicacion->getMonto();?></span> x <span class="grisO"><?php echo $venta->getAtributo("cantidad");?> und</span>
 						<br>
 						<b>Total: </b><span class="red"><?php $totalGeneral=$publicacion->monto * $venta->getAtributo("cantidad"); echo number_format($totalGeneral,2,',','.');?></span>
-						<br>	
+						<br>
 						<span class="grisC">Fecha de compra: <?php echo date("d-m-Y",strtotime($venta->getAtributo("fecha")));?></span>
 						<br>
 						<br>
@@ -32,7 +31,7 @@
 						<?php echo $comprador->u_telefono;?>
 						<br>
 						<br>
-						<span><i class="fa fa-comment grisC"></i> &nbsp; <a id="ver-preguntas" name="ver-preguntas" style="cursor: pointer;"> Ver Preguntas de la venta</a></span>
+						<span><i class="fa fa-comment grisC"></i> &nbsp; <a id="ver-preguntas" name="ver-preguntas" class="point"> Ver Preguntas de la venta</a></span>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ">
 						<div class="mar10" id="lista-pagos" data-id="<?php echo $_GET["id"];?>" data-pub="<?php echo $publicacion->id;?>">
@@ -67,7 +66,7 @@
 							?>
 							<div class="t18 negro marB10 marL5">Pagos <span class="pull-right t16 marR5"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <?php echo $statusPago;?></span></div>
 							
-			<div class="row tabla-detalle" >
+								<div class="row tabla-detalle" >
 									<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 " >
 										<b>Fecha</b>
 										</div>
@@ -215,7 +214,7 @@
 								<?php
 								if($operacion=="compra"):
 									?>								
-										<a class="point"><button class="btn btn-default vinculopagos2" id="pago<?php echo $venta->getAtributo("id");?>" data-toggle="modal" data-target="#informar-pago">Informar Pago</button></a>
+										<a class="point"><button class="btn btn-default vinculopagos2" id="pago<?php echo $venta->getAtributo("id");?>" data-toggle="modal" data-target="#informar-pago" data-id="<?php echo $venta->getAtributo("id");?>">Informar Pago</button></a>
 									<?php
 								else:
 									?>
@@ -331,5 +330,7 @@
 			
 		</div>
 		
+				
+      
 
 		

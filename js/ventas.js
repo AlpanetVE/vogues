@@ -70,7 +70,7 @@ $(document).ready(function(){
            		swal({
 					title: "Exito", 
 					text: mensaje,
-					imageUrl: "galeria/img/logos/bill-ok.png",
+					imageUrl: "galeria/img-site/logos/bill-ok.png",
 					timer: 2000, 
 					showConfirmButton: true
 					}, function(){
@@ -142,7 +142,7 @@ $(document).ready(function(){
 		var fb = $("#fb").data("");
 		var descripcion=$("#btn-social-act").data("descripcion");
 		$.ajax({
-			url:"paginas/venta/p_edit_publicaciones.php",
+			url:"paginas/venta/fcn/f_edit_publicaciones.php",
 			data:{id:id,cantidad:cantidad,precio:precio,titulo:titulo,descripcion:descripcion},
 			type:"POST",
 			dataType:"html",
@@ -202,7 +202,7 @@ $(document).ready(function(){
 	            		swal({
 							title: "Exito", 
 							text: "Se actualizo correctamente.",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
@@ -267,7 +267,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#primero").on('click','.btn-default',function(e){
+	$("#primero").on('click','.btn-default-rs',function(e){
 		e.preventDefault();
 		var rs= $(this).data("rs");
 		if($("#i"+rs).css("display")=="none"){
@@ -795,7 +795,7 @@ $(document).ready(function(){
 		swal({
 			title: "Falta datos importantes",
 			text: "Algunos de los valores necesarios estan vacios",
-			imageUrl: "galeria/img/logos/bill-ok.png",
+			imageUrl: "galeria/img-site/logos/bill-ok.png",
 			showConfirmButton: true
 			}, function(){		
 				//document.location.href = 'detalle.php?id='+data.id;
@@ -860,7 +860,7 @@ $(document).ready(function(){
 							swal({
 								title: "Envio cargado",
 								text: "El comprador sera notificado.",
-								imageUrl: "galeria/img/logos/bill-ok.png",
+								imageUrl: "galeria/img-site/logos/bill-ok.png",
 								showConfirmButton: true
 							});
 							$("#envios-ven").modal("hide");						

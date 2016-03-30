@@ -46,7 +46,7 @@
 				?>
 				<tr>
                     <td><?php echo $fila["documento"]; ?></td>
-                    <td ><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><i class="fa fa-eye"  ></i> <?php echo $fila["nombre"]; ?></a></td>
+                    <td ><a href="#mod" class="admin-ver-prov"  data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['id']; ?>" ><?php echo $fila["nombre"]; ?></a></td>
                     <td><?php echo $fila["telefono"]; ?></td>
                     <td><?php echo $fila["email"]; ?></td>        
                     <td><a href="producto.php?proveedor=<?php echo $fila['id']; ?>"  ><i class="fa fa-eye"  ></i> Ver </a></td>

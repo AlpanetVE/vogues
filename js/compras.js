@@ -411,7 +411,7 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				$("span#facturacion1").text($("input#p_identificacion").val());
+				$("span#facturacion1").text($("input#p_documento").val());
 				$("span#facturacion2").text($("input#p_nombre").val());
 				$("span#facturacion3").text($("input#p_direccion").val());			
 				$("#datos-facturacion").modal("hide");
@@ -466,8 +466,8 @@ $(document).ready(function(){
   	today: 'Hoy',
   	clear: 'Limpiar',
   	close: 'Cerrar',
-  	format: 'yyyy-mm-dd',
-  	formatSubmit: 'y-m-d'});
+  	format: 'dd-mm-yyyy',
+  	formatSubmit: 'd-m-y'});
 	var picker1 = input1.pickadate('picker');
 	picker1.set('min', false);
 	picker1.set('max', true);

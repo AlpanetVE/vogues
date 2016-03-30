@@ -1,5 +1,5 @@
 <?php include "clases/proveedor.php"; ?>
-<div class="pad20 contenedor">
+<div class="pad20 contenedor row">
             <div class="marB20">
                 <h4>
                     Panel administrativo de Proveedores

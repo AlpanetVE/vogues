@@ -146,10 +146,10 @@ $foto6=$publi->getFotoN(6);
 				    </div>	
 				    <br>
 				    <div id="redes" class="text-center" <?php if($shared==0): echo "style='display:none;'"; endif; ?>>
-				    	<button class="btn btn-default" id="fb" data-fb="<?php echo $publi->fb;?>" data-rs="fb" style=""><i class="fa fa-facebook-f"></i> Facebook <i class="fa fa-check" id="ifb" style="<?php if($publi->fb==0): echo "display: none;"; endif;?> color: green"></i></button> 
-				    	<button class="btn btn-default" id="tt" data-tt="<?php echo $publi->tw;?>" data-rs="tt" style=""><i class="fa fa-twitter"></i> Twitter <i class="fa fa-check" id="itt" style="<?php if($publi->tt==0): echo "display: none;"; endif;?> color: green"></i></button> 
-				    	<button class="btn btn-default" id="fp" data-fp="<?php echo $publi->fp;?>" data-rs="fp" style=""><i class="fa fa-thumbs-o-up"></i> Fan Page <i class="fa fa-check" id="ifp"  style="<?php if($publi->fp==0): echo "display: none;"; endif; ?> color: green"></i></button> 
-				    	<button class="btn btn-default" id="gr" data-gr="<?php echo $publi->gr;?>" data-rs="gr" style=""><i class="fa fa-users"></i> Grupo <i class="fa fa-check" id="igr"  style="<?php if($publi->gr==0): echo "display: none;"; endif;?> color: green"></i></button>
+				    	<button class="btn btn-default btn-default-rs" id="fb" data-fb="<?php echo $publi->fb;?>" data-rs="fb" style=""><i class="fa fa-facebook-f"></i> Facebook <i class="fa fa-check" id="ifb" style="<?php if($publi->fb==0): echo "display: none;"; endif;?> color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="tt" data-tt="<?php echo $publi->tw;?>" data-rs="tt" style=""><i class="fa fa-twitter"></i> Twitter <i class="fa fa-check" id="itt" style="<?php if($publi->tt==0): echo "display: none;"; endif;?> color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="fp" data-fp="<?php echo $publi->fp;?>" data-rs="fp" style=""><i class="fa fa-thumbs-o-up"></i> Fan Page <i class="fa fa-check" id="ifp"  style="<?php if($publi->fp==0): echo "display: none;"; endif; ?> color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="gr" data-gr="<?php echo $publi->gr;?>" data-rs="gr" style=""><i class="fa fa-users"></i> Grupo <i class="fa fa-check" id="igr"  style="<?php if($publi->gr==0): echo "display: none;"; endif;?> color: green"></i></button>
 				    </div>
 				</div>
 				

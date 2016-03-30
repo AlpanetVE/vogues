@@ -21,7 +21,9 @@
 	function guardaPago(){
 		$compra=new ventas($_POST["id"]);
 		$publicacion = new publicaciones($compra->publicaciones_id);
-		$result=$compra->setPagos($_POST["p_referencia"], $_POST["p_monto"], $_POST["p_fecha_pago"], $_POST["p_forma_pago"], $_POST["p_banco"],$_POST["id"]);	
+		$arrfecha = explode("-", $_POST["p_fecha_pago"]);
+        $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0];
+		$result=$compra->setPagos($_POST["p_referencia"], $_POST["p_monto"], $fecha , $_POST["p_forma_pago"], $_POST["p_banco"],$_POST["id"]);	
 		$publicacion->setNotificacion($compra->publicaciones_id,5,$publicacion->usuarios_id,$_POST["id"]);
 		echo $result;
 	}
@@ -116,8 +118,8 @@
 	function actualizaDatosF(){
 		$bd=new bd();
 		if($_POST["id"]>-1){
-			$valores=array("nombre"=>$_POST["p_nombre"],"direccion"=>$_POST["p_direccion"]);
-			$result=$bd->doUpdate("datos_facturacion",$valores,"id={$_POST["id"]}");
+			$valores=array("nombre"=>$_POST["p_nombre"],"direccion"=>$_POST["p_direccion"],"documento"=>$_POST["p_documento"]);
+			var_dump($result=$bd->doUpdate("datos_facturacion",$valores,"id={$_POST["id"]}"));
 		}else{
 			if(!isset($_SESSION))
 			session_start();

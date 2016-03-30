@@ -103,6 +103,10 @@ class producto extends bd {
 		$result=$this->doUpdate($this->p_table,$listaValores_producto,"id=$this->id");		
 		return $result;
 	}
+	public function buscarCompraFacturar($listaValores_producto){
+		$result=$this->doUpdate($this->p_table,$listaValores_producto,"id=$this->id");		
+		return $result;
+	}	
 	public function modificarStatus($listaValores){
 		$result=$this->doUpdate($this->p_table,array("status"=>$listaValores["status"]),'id='.$listaValores['productos_id']);
 		if($result){
@@ -113,6 +117,10 @@ class producto extends bd {
 	public function agregarHistorico($listaValores){
 		return $this->doInsert ( $this->s_table,$listaValores);
 	}
+	public function VerificarPublicacion($publicaciones_id){
+		return $result = $this->doSingleSelect('publicaciones',"id = $publicaciones_id and productos_categorias_id = {$this->p_productos_categorias_id}",'id');
+	}
+	
 	
 	/* * * * * * * * * * * * * * * * * * *
 	 * =========--- Getters ---========= *
@@ -146,6 +154,8 @@ class producto extends bd {
 		$this->temp_precio_compra = $precio_compra;
 		$this->temp_descripcion = $descripcion;
 	}
+	
+	
 	
 	/* * * * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Private Methods ---=========== *

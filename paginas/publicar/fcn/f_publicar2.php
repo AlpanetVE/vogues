@@ -126,10 +126,10 @@ $categorias= new inventario();
 				    </div>	
 				    <br>
 				    <div class="text-center">
-				    	<button class="btn btn-default" id="fb" data-fb="0" data-rs="fb" style="display: none;"><i class="fa fa-facebook-f"></i> Facebook <i class="fa fa-check" id="ifb" style="display: none; color: green"></i></button> 
-				    	<button class="btn btn-default" id="tt" data-tt="0" data-rs="tt" style="display: none;"><i class="fa fa-twitter"></i> Twitter <i class="fa fa-check" id="itt" style="display: none; color: green"></i></button> 
-				    	<button class="btn btn-default" id="fp" data-fp="0" data-rs="fp" style="display: none;"><i class="fa fa-thumbs-o-up"></i> Fan Page <i class="fa fa-check" id="ifp"  style="display: none; color: green"></i></button> 
-				    	<button class="btn btn-default" id="gr" data-gr="0" data-rs="gr" style="display: none;"><i class="fa fa-users"></i> Grupo <i class="fa fa-check" id="igr"  style="display: none; color: green"></i></button>
+				    	<button class="btn btn-default btn-default-rs" id="fb" data-fb="0" data-rs="fb" style="display: none;"><i class="fa fa-facebook-f"></i> Facebook <i class="fa fa-check" id="ifb" style="display: none; color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="tt" data-tt="0" data-rs="tt" style="display: none;"><i class="fa fa-twitter"></i> Twitter <i class="fa fa-check" id="itt" style="display: none; color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="fp" data-fp="0" data-rs="fp" style="display: none;"><i class="fa fa-thumbs-o-up"></i> Fan Page <i class="fa fa-check" id="ifp"  style="display: none; color: green"></i></button> 
+				    	<button class="btn btn-default btn-default-rs" id="gr" data-gr="0" data-rs="gr" style="display: none;"><i class="fa fa-users"></i> Grupo <i class="fa fa-check" id="igr"  style="display: none; color: green"></i></button>
 				    	</div>
 				   </div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">

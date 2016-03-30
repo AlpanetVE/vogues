@@ -306,7 +306,9 @@ function actualizaPagos(){
 }
 function guardaEnvio(){
 	$venta=new ventas($_POST["id"]);
-	$result=$venta->setEnvios($_POST["p_fecha"], $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
+	$arrfecha = explode("-", $_POST["p_fecha"]);
+    $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0];
+	$result=$venta->setEnvios($fecha, $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
 }
 function guardaDescuento(){
 	$venta=new ventas($_POST["id"]);
@@ -433,7 +435,7 @@ function pagina2(){
 					<br>
 					<span class=''><?php echo $usua->a_seudonimo;?></span>
 					<br>
-					<span class=" grisC t12"><?php echo $usua->a_email;?></span>
+					<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
 					<br>
 					<span class="t12"><?php echo $usua->u_telefono;?></span>
 				</div>

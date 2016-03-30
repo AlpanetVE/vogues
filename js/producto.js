@@ -497,7 +497,17 @@ $(document ).ready(function() {
 	                    // Set the field as invalid
 	                    .updateStatus(field, 'INVALID', 'blank');
 	            	}
-	            }else{ //si registramos usuarios por backend            			
+	            }else if(data.result === 'cod_no_valid'){ //si registramos usuarios por backend            			
+            		swal({
+						title: "Facturacion de Producto",
+						text: "&iexcl;Codigo Incorrecto!",
+						imageUrl: "galeria/img-site/logos/bill-error.png",
+						timer: 2000, 
+						showConfirmButton: true
+						}, function(){
+						
+					});
+            	}else{ //si registramos usuarios por backend            			
             		swal({
 						title: "Producto Modificado",
 						text: "&iexcl;Exito!",

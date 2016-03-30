@@ -1,6 +1,7 @@
 <?php
 	require '../../../config/core.php';
 	include '../../../clases/producto_p.php';
+	include '../../../clases/ventas.php';
 	switch($_POST["metodo"]){
 		case "buscar":
 			buscar();
@@ -42,7 +43,7 @@
 		$producto=new producto();		
 		//TRAEMOS LOS DATOS QUE USAREMOS
 		
-		$campos='productos.codigo, descripcion, precio_compra, productos_categorias.nombre, productos.id, proveedores.nombre as proveedor, proveedores.id as prov_id';
+		$campos='productos.compras_publicaciones_id,productos.codigo, descripcion, precio_compra, productos_categorias.nombre, productos.id, proveedores.nombre as proveedor, proveedores.id as prov_id';
 		$result=$producto->getProductos($campos, $orden,$pagina, $status, $categoria, $proveedor, $busqueda);		
 		switch($status){
 				case 1:
@@ -68,15 +69,24 @@
 				<td><?php echo $fila['descripcion']; ?></td>
 				<td><?php echo $fila['codigo']; ?></td>				
 				<td><?php echo $fila['precio_compra']; ?></td>
-				<td><a class="admin-ver-prov" data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['prov_id']; ?>" ><i class="fa fa-eye"  ></i> <?php echo $fila['proveedor']; ?></a></td>
+				<td><a class="admin-ver-prov" data-toggle="modal" data-target="#ver-prov"  data-proveedor_id="<?php echo $fila['prov_id']; ?>" ><?php echo $fila['proveedor']; ?></a></td>
            		
            		<?php 
+           			
+				if($status=='2' || $status=='3'){
+					echo '<td>';
+					if(!empty($fila['compras_publicaciones_id'])){
+						echo $fila['compras_publicaciones_id'];
+					}else{
+						echo '-';
+					}						
+					echo '</td>';
+				}      
            		if($status=='2'){
-					echo '<td> - </td>';           			
-				$campos='statusxproductos.motivo';
-				$id_prod=$fila['id'];
-				$historico=$producto->getHistorico($campos, 'id desc',null, $status, $id_prod);			 
-					echo '<td>'.$historico["motivo"].'</td>';
+					$campos='statusxproductos.motivo';
+					$id_prod=$fila['id'];
+					$historico=$producto->getHistorico($campos, 'id desc',null, $status, $id_prod);			 
+						echo '<td>'.$historico["motivo"].'</td>';
 				} ?>
            		<td><div data-producto_id="<?php echo $fila['id']; ?>" class="opciones-boton col-xs-12">
 					<button id='btnOpciones'  type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
@@ -207,11 +217,12 @@
 	}
 	function modificarStatus()
 	{
-		$producto = new producto();
 		$id = filter_input ( INPUT_POST, "id" );
+		$producto = new producto($id);
 		$motivo = isset($_POST["motivo"])?filter_input ( INPUT_POST, "motivo" ):'';
 		$status = filter_input ( INPUT_POST, "status" );
 		$fecha = date("Y-m-d H:i:s",time());
+		$compras_publicaciones = filter_input ( INPUT_POST, "codigo_venta" );
 		
 		$listaValores_statusxproductos=array(
 			"productos_id"=>$id,
@@ -220,11 +231,35 @@
 			"motivo"=>$motivo
 			);
 		
-		$producto->modificarStatus($listaValores_statusxproductos);
 		
+		if($status=='3'){
+			$ventas = new ventas($compras_publicaciones);
+			$exist=$ventas->id;
+
+			$ProductoxCategoria=$producto->VerificarPublicacion($ventas->publicaciones_id);
+			
+			if(!empty($exist) && $ProductoxCategoria){
+				$result=$ventas->buscarCompraFacturar();
+				if($result){
+					$listaValores_producto=array("compras_publicaciones_id"=>$compras_publicaciones);
+					$resut=$producto->modificarProducto($listaValores_producto);
+					if($resut)
+						$producto->modificarStatus($listaValores_statusxproductos);
+				}else{
+					echo json_encode ( array ("result" => "cod_no_valid") );die();
+				}
+			}else{
+				echo json_encode ( array ("result" => "cod_no_valid") );die();
+			}			
+		}else{
+			$producto->modificarStatus($listaValores_statusxproductos);
+		}
 		echo json_encode ( array (
 					"result" => "ok"
 			) );
+			
+		die();
+		
 	}
 
 ?>

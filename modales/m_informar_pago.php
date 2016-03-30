@@ -28,7 +28,7 @@
 				</div>
 				
 				<div class=" form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 " >
-					<input id="p_fecha_pago" name="p_fecha_pago" type="text" class="form-input marB10" value="<?php echo date("Y-m-d");?>"/>
+					<input id="p_fecha_pago" name="p_fecha_pago" type="text" class="form-input marB10" value="<?php echo date("d-m-Y");?>"/>
 					<div id="date-picker2"> </div>
 				</div>
 				<div class="col-xs-12">

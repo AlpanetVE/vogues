@@ -235,7 +235,7 @@ if(isset($_GET["tipo"])){
 	        <?php
 	        if($listaCompras2):
 				foreach ($listaCompras2 as $l => $valor):
-					$usua=new usuario($valor["usuarios_id"]);
+					$usua=new usuario($valor["vendedor"]);
 					$compra=new ventas($valor["id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
 					$statusPago=$compra->getStatusPago();

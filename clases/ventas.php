@@ -131,7 +131,7 @@
 			}else{
 				$condicion="p.compras_publicaciones_id=$id and p.status_pago=$status";
 			}
-			$consulta="select p.*,b.nombre,b.siglas,f.nombre as fp from pagosxcompras as p,bancos as b,formas_pagos as f where p.bancos_id=b.id and $condicion and p.formas_pagos_id=f.id order by p.fecha desc";
+			$consulta="select p.*,b.nombre,b.siglas,f.nombre as fp from pagosxcompras as p,bancos as b,formas_pagos as f where p.bancos_id=b.id and $condicion and p.formas_pagos_id=f.id order by p.status_pago asc, p.fecha desc";
 			//$result=$bd->doFullSelect("pagosxcompras",$condicion);
 			$result=$this->query($consulta);
 			return $result;
@@ -264,6 +264,34 @@
 				return "Algo paso";
 			}
 		}
+		public function buscarCompraFacturar($id=NULL,$monto=NULL){
+			if(is_null($id)){
+				$id=$this->id;
+			}
+			if(is_null($monto)){
+				$res=$this->doSingleSelect("publicaciones","id=$this->publicaciones_id","monto");
+				//echo $this->id."hi";
+				$monto=$res["monto"];
+			}
+			$result=$this->query("select (select COALESCE(sum(monto),0) from pagosxcompras where compras_publicaciones_id=$id and status_pago=2) as tota2,
+									   (select COALESCE(sum(monto),0) from pagosxcompras where compras_publicaciones_id=$id and status_pago=3) as tota3");
+			if($result){
+				$row=$result->fetch();
+				if($row["tota2"]==0){
+					if($row["tota3"]==0){
+						return false;
+					}else{
+						return false;
+					}
+				}elseif($row["tota2"]>=($monto - $this->descuento)){
+					return true;
+				}else{
+					return false;					
+				}
+			}else{
+				return false;
+			}
+		}
 		public function getStatusEnvio($id=NULL){
 			if(is_null($id)){
 				$id=$this->id;
@@ -376,7 +404,11 @@ public function getDatosFacturacion($id=NULL){
 				return $devolver;				
 			}
 		}	
-
+public function __get($property) {
+		if (property_exists ( $this, $property )) {
+			return $this->$property;
+		}
+	}
 
 /*****************************END GETTING*************************************/
 	}

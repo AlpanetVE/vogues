@@ -81,8 +81,8 @@ $clasesP2="";
 				<div class="marL30 marR20" style="background: #F2F2F2;">
 					<table width="100%" class="alto50" border="0" cellspacing="0" cellpadding="0" >
 						<tr>
-							<td  width="75%"  align="right"><span class="marR10">Ventas 1 - <?php if($total<=25){ echo "$total de <b> $total"; }else{ echo "25 de <b>$total"; }?></span></td>
-							<td   width="15%"  align="right" height="40px;" >
+							<td width="75%"  align="right"><span class="marR10">Ventas 1 - <?php if($total<=25){ echo "$total de <b> $total"; }else{ echo "25 de <b>$total"; }?></span></td>
+							<td width="15%"  align="right" height="40px;" >
 							<select id="filtro" class="form-control  input-sm " style="width:auto; margin-right:20px;">
 								<option value="id desc" >Mas Recientes</option>
 								<option value="id asc" >Menos Recientes </option>
@@ -172,7 +172,7 @@ $clasesP2="";
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
 						<div class='btn-group pull-right marR10'>
-							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"><button class="btn2 btn-default">Ver detalle</button></a> 
+							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"<button class="btn2 btn-default marB5">Ver detalle</button></a>
 							<div class="dropdown pull-right">
 								  <button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
    										<i class="fa fa-cog"></i>
@@ -182,8 +182,9 @@ $clasesP2="";
     									<li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
   								  </ul>
 							</div>						
-						</div>
+						</div>			
 					</div>
+					<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>
 					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 						<center><hr class='center-block'></center>
 					</div>
@@ -229,6 +230,7 @@ $clasesP2="";
 					$usua=new usuario($valor["usuarios_id"]);
 					$publi=new publicaciones($valor["publicaciones_id"]);
 					$venta=new ventas($valor["id"]);
+					
 					$statusPago=$venta->getStatusPago();
 					$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
 					if($maximo==0){
@@ -245,13 +247,13 @@ $clasesP2="";
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
 					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
 					<br>
-					<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+					<span class=''><?php echo $usua->a_seudonimo;?></span>
 					<br>
-					<span class=" grisC t12"><?php echo $usua->a_email;?></span>
+					<span class=" grisC t12"><?php echo $usua->a_email;?> </span> &nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
 					<br>
 					<span class="t12"><?php echo $usua->u_telefono;?></span>
 				</div>
-				<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
+				<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1'>
 						<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
 						<a href="perfil.php?id=<?php echo $usua->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
 						style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
@@ -261,6 +263,7 @@ $clasesP2="";
 					<span class=''> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
 					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+				
 					</div>
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
@@ -276,7 +279,7 @@ $clasesP2="";
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
 					<div class='btn-group pull-right marR10'>				
-							<button class="btn2 btn-default">Ver detalle</button> 
+							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"><button class="btn2 btn-default">Ver detalle</button></a> 
 							<div class="dropdown pull-right">
   							<button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
    							<i class="fa fa-cog"></i>
@@ -285,8 +288,13 @@ $clasesP2="";
 							    <li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
  								</ul>
 						</div>						
-						</div>
-				</div>		
+						<br>
+						<div class="marT5"><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>	
+						
+					</div> 
+					
+				</div>	
+				
 				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 					<center><hr class=' center-block'></center>
 				</div>
