@@ -450,9 +450,6 @@ $(document ).ready(function() {
             	SweetError(status);
             }
         });
-		
-		
-		
 	}
 	$('.edit-statusxgarantia-form').formValidation({
 		locale: 'es_ES',
@@ -525,7 +522,7 @@ $(document ).ready(function() {
         });
            
     });	
-	$("body").on('click', '.tab-shop', function(e) {
+	/*$("body").on('click', '.tab-shop', function(e) {
 		if($(this).data('status')=='2'){			
 			$('#menu-left-user').fadeOut( "fast", function() {
 					$('#menu-left-user').addClass('hide');
@@ -540,5 +537,5 @@ $(document ).ready(function() {
 			}
 		}
 		console.log($(this).data('status'));
-	});
+	});*/
 });

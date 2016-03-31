@@ -36,7 +36,7 @@
 		$status=isset($_POST['filtrostatus'])?$_POST['filtrostatus']:null;
 		$result=$categoria->getCategorias2(null,$nombre,$status);
 		foreach($result as $r=>$fila){
-				$cantidad=$categoria->getProductos('count(id) as total',$fila['id']);
+				$cantidad=$categoria->getProductosDisponibles('count(id) as total',$fila['id']);
 				?>
 				<tr>
                     <td><?php echo $fila["nombre"]; ?> <a href="#mod" class="admin-edit-categ   hide" data-toggle="modal" data-target="#edit-categoria" data-nombre-cate="<?php echo $fila['nombre']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><i style="font-size: larger;" class="fa fa-pencil"></i> </a></td>

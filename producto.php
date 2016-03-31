@@ -13,7 +13,7 @@ include ("fcn/incluir-css-js.php");
 <?php
 include ("temas/header.php"); 
 ?> 
-<div class="container pad-top70">
+<div class="container-fluid pad-top70">
 	<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 " id="menu-left-user">
 		<?php include("temas/menu-left-usr.php"); ?>
 	</div>

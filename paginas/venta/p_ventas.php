@@ -3,6 +3,7 @@ include_once "clases/ventas.php";
 include_once "clases/publicaciones.php";
 include_once "clases/usuarios.php";
 include_once "clases/fotos.php";
+include_once "clases/inventario.php";
 $ventas=new ventas();
 $foto=new fotos();
 $listaVentas=$ventas->listarPorUsuario(); //Ventas sin concretar
@@ -103,6 +104,7 @@ $clasesP2="";
 	       
 			<div id="sin-concretar" name="sin-concretar" class="">	        
 	        <?php
+	         $inventario = new inventario();
 	        if($listaVentas):
 				foreach ($listaVentas as $l => $valor):
 					$usua=new usuario($valor["usuarios_id"]);
@@ -157,6 +159,8 @@ $clasesP2="";
 						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
 						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<br>
+					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
@@ -168,6 +172,7 @@ $clasesP2="";
 						 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
 						<br>
 						 <span><i class="fa fa-exclamation-triangle"></i> Reclamo abierto</span>
+						 
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
@@ -224,7 +229,7 @@ $clasesP2="";
 			</div>			
 				<!-- FIN del detalle del listado -->
 			<div id="concretadas" name="concretadas" class="hidden">
-	        <?php
+	        <?php 
 	        if($listaVentas2):
 				foreach ($listaVentas2 as $l => $valor):
 					$usua=new usuario($valor["usuarios_id"]);
@@ -263,7 +268,7 @@ $clasesP2="";
 					<span class=''> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
 					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
-				
+					
 					</div>
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					

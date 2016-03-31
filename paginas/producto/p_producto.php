@@ -5,7 +5,7 @@
 	$proveedores_id=isset($_GET["proveedor"])?$_GET["proveedor"]:"";
 	
 ?>
-<div class="pad20 contenedor row">
+<div class="pad20 marL10 contenedor row">
             <div class="marB15">
                 <h4>
                     Panel administrativo de Articulos

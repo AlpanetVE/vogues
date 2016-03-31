@@ -46,6 +46,8 @@ class inventario extends bd {
 	 * =========--- Getters ---========= *
 	 * * * * * * * * * * * * * * * * * * */
 	 
+	
+	 
 	 public function getCategorias(){
 	 	$result=$this->doFullSelect($this->c_table);
 	 	if($result){ 
@@ -82,9 +84,19 @@ class inventario extends bd {
 	 	$this->doUpdate($this->c_table, $actualizar, "id=$id");
 	 }
 	 
-	 public function getProductos($campos=null,$categoria){
+	public function getCategPub($id){
+	 	$consulta="SELECT publicaciones.id, productos_categorias_id FROM 
+	 	publicaciones Inner Join productos_categorias ON 
+	 	publicaciones.productos_categorias_id = productos_categorias.id
+	 	WHERE publicaciones.id =  '$id'";
+		$result=$this->query($consulta)->fetch();
+		return $result["productos_categorias_id"];
+	 	
+	 }
+	 
+	 public function getProductosDisponibles($campos=null,$categoria){
 	 	$campos=is_null($campos)?"*":$campos;
-		$consulta="select $campos FROM productos where productos.productos_categorias_id=$categoria";
+		$consulta="select $campos FROM productos where productos.productos_categorias_id=$categoria and status=1";
         $result=$this->query($consulta)->fetch();
 		return $result['total']; 		
 	 }
