@@ -74,6 +74,11 @@
 					<li>
 						<a href="informar_pago.php" class="marT10 li-icon-top" > Informar Pago&nbsp; <i class="fa fa-credit-card"></i> </a>
 					</li>
+					<li>
+					<div class="vertical-line "
+						style="height: 25px; margin-top: 18px;"></div>
+				</li>
+				<li><a href="ayuda.php" class="marT10 " > Ayuda <i class="fa fa-info-circle"></i> </a></li>
 				</ul>
 			</form>
 		</div>

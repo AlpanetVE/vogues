@@ -88,7 +88,9 @@
 					$historico=$producto->getHistorico($campos, 'id desc',null, $status, $id_prod);			 
 						echo '<td>'.$historico["motivo"].'</td>';
 				} ?>
-           		<td><div class="col-xs-1" ><div data-producto_id="<?php echo $fila['id']; ?>" class="opciones-boton  col-xs-4 col-xs-offset-4">
+           		<td>
+           			<div class="row" >
+           			<div data-producto_id="<?php echo $fila['id']; ?>" class="opciones-boton  col-xs-4 col-xs-offset-4">
 					<button id='btnOpciones'  type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
 						<?php echo $boton0;?>
 						<span class='caret'></span>
@@ -100,6 +102,7 @@
 						?>
 					</ul>
 					</div>
+					
 					</div>
 				</td>					
            </tr>

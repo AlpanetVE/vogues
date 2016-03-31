@@ -23,11 +23,13 @@
 		$publicacion = new publicaciones($compra->publicaciones_id);
 		$arrfecha = explode("-", $_POST["p_fecha_pago"]);
         $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0];
-		$result=$compra->setPagos($_POST["p_referencia"], $_POST["p_monto"], $fecha , $_POST["p_forma_pago"], $_POST["p_banco"],$_POST["id"]);	
-		$publicacion->setNotificacion($compra->publicaciones_id,5,$publicacion->usuarios_id,$_POST["id"]);
+		$p_banco=isset($_POST["p_banco"])?$_POST["p_banco"]:null;
+		$result=$compra->setPagos($_POST["p_referencia"], $_POST["p_monto"], $fecha , $_POST["p_forma_pago"], $p_banco,$_POST["id"]);	
+		
+		//var_dump($compra->publicaciones_id).var_dump($publicacion->usuarios_id).var_dump($_POST["id"]).
+		$publicacion->setNotificacion($compra->publicaciones_id,5,$publicacion->usuarios_id);
 		echo $result;
-	}
-	
+	}	
 	function ordena(){
 		$compras=new ventas();
 		if($_POST["origen"]==1){

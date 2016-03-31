@@ -453,7 +453,7 @@ function newUser() {
 		$usr = new usuario($_POST["id"]);
 		if($usr->a_id_rol=='1' || $usr->a_id_rol=='2'){
 			$id=null;
-			$tipos_notificaciones_id='1';
+			$tipos_notificaciones_id='1,3,4,5,6';
 		}			
 		else{
 			$id=$_POST["id"];

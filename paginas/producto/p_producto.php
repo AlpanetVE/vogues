@@ -11,13 +11,11 @@
                     Panel administrativo de Articulos
                 </h4>
                 <hr>
-	                	<div class="text-right col-xs-4 col-xs-offset-8 marT5">
-		                   <a class="admin-reg-prod" href="#" data-toggle='modal' data-target='#reg-prod' data-rol-type='select'  data-tipo='1' >
-								<button class="btn2 btn-default t16 " style="">Agregar Mercanc&iacute;a</button>
-							</a>
-						</div>
-	               
-	              
+                	<div class="text-right col-xs-4 col-xs-offset-8 marT5">
+	                   	<a class="admin-reg-prod" href="#" data-toggle='modal' data-target='#reg-prod' data-rol-type='select'  data-tipo='1' >
+							<button class="btn2 btn-default t16 " style="">Agregar Mercanc&iacute;a</button>
+						</a>
+					</div>
             </div>
             <div class="col-xs-12"> 
 	            <div class="tabbable tabs-up">
@@ -89,18 +87,15 @@
                                 <th colspan="1" class="text-center">
                                     Proveedor
                                 </th>
-                                <th colspan="1" class="text-center">
+                                <th colspan="1" class="text-center" width="20%">
                                    Estatus
                                 </th>
                             </tr>
                             <tbody id="ajaxContainer">
                             </tbody>
-                        </table>
-                    
-                    <div id="paginacion" name="paginacion" class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' data-paginaActual='1' >
-                    	
-					</div>
-					
+                        </table>                    
+                    <div id="paginacion" name="paginacion" class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' data-paginaActual='1' >                    	
+					</div>					
                 </div>
                 <div class="tab-pane" id="tab-shop-garantia" data-status="2">                    
                         <table class="table text-center table-hover">
@@ -127,7 +122,7 @@
                                     Motivo
                                 </th>
                                 <th colspan="1" class="text-center">
-                                    Acci&oacute;n
+                                    Estatus
                                 </th>
                             </tr>
                             <tbody id="ajaxContainer">                                
@@ -160,7 +155,7 @@
                                     Cod. Venta
                                 </th>
                                 <th colspan="1" class="text-center">
-                                    Acci&oacute;n
+                                    Estatus
                                 </th>
                             </tr>
                             <tbody id="ajaxContainer">

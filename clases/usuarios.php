@@ -715,7 +715,30 @@ public function setNewPassword($user,$clave){
   		}
 		return $preguntas;
 	}
-	
+	public function getCantNotiCompras($id = NULL){//Compras hechas por un usuario
+		/*if(is_null($id)){
+			$id=$this->id;
+		}*/
+		$compra=array();				
+        $consulta="select count(*) as cant from notificaciones where leida=0 and tipos_notificaciones_id=6";
+        $result=$this->query($consulta);
+        
+        foreach ($result as $r){
+        	$compra[]=array("cant"=>$r["cant"]);
+  		}
+		return $compra;
+	}
+	public function getCantNotiPago($id = NULL){//Compras hechas por un usuario
+		/*if(is_null($id)){
+			$id=$this->id;
+		}*/
+		$pago=array();
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and tipos_notificaciones_id=5 ");	
+        foreach ($result as $r){
+        	$pago[]=array("cant"=>$r["cant"]);
+  		}
+		return $pago;
+	}
 	public function getCantidadPub($status=1,$id=NULL){
 		
 		$consulta="select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null)";
@@ -800,7 +823,7 @@ public function setNewPassword($user,$clave){
 			$condicion.=" and usuarios_id=$id";
 		}
 		if(!empty($tipos_notificaciones_id)){
-			$condicion.=" and tipos_notificaciones_id=$tipos_notificaciones_id";
+			$condicion.=" and tipos_notificaciones_id in ($tipos_notificaciones_id)";
 		}
 		$this->doUpdate("notificaciones",$actualizar,$condicion);
 	}
@@ -928,5 +951,6 @@ public function setNewPassword($user,$clave){
 			$result =$this->query($consulta);
 			return $result;	
 	}
+	
 	
 }

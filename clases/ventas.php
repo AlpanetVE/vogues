@@ -323,9 +323,10 @@
 			}else{
 				$result=$this->query("select fecha from compras_envios where compras_publicaciones_id=$id order by fecha desc limit 1");
 				$row=$result->fetch();
-				$segundos=strtotime($row["fecha"]) - strtotime($this->fecha);
+				$segundos=strtotime($row["fecha"])-strtotime($this->fecha);	
 			}
 			$dias=intval($segundos/60/60/24);
+			
 			if($dias<1){
 				$dias = intval($segundos/60/60);
 				if($dias<1){
@@ -336,7 +337,7 @@
 							if($dias==1){
 								return " 1 segundo";
 							}else{
-								return " $segundos segundos";
+								return " $dias segundos";
 							}
 						}
 					}elseif($dias<60){//minutos

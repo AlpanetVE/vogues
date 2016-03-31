@@ -24,7 +24,7 @@ if (!isset ( $_GET ["token"] )) {
 	<form id="restablecer-password" data-user="<?php echo $idusuario ?>" name="restablecer-password" action="fcn/f_usuarios.php" method="POST">				 			
  		<div style="background: #FFF; border: solid 1px #ccc; border-radius: 5px; -webkit-box-shadow: 0px 0px 28px -2px rgba(204,12,NaN,0); -moz-box-shadow: 0px 0px 28px -2px rgba(204,12,NaN,0); box-shadow: 0px 0px 28px -2px rgba(204,12,NaN,0); padding: 20px;">			 			
  			<div class="center" style=""> 
- 				<img class="center-block" src="galeria/img-site/logos/logo-modal2.png" height="150px" width="auto" />
+ 				<img class="center-block" src="galeria/img-site/logos/logo-modal.png" height="150px" width="auto" />
  			</div>					
 			<div class="text-center"><h2>Restablecer Contrase&ntilde;a</h2>
 			</div>

@@ -179,9 +179,8 @@ class publicaciones extends bd {
 		$this->doInsert("preguntas_publicaciones",$valores);	
 		$nuevoid=$this-> lastInsertId();
 		return $nuevoid;
-	}
-	
-	public function setNotificacion($id=NULL,$tipo=NULL,$id_usr=NULL,$nuevoid){
+	}	
+	public function setNotificacion($id=NULL,$tipo=NULL,$id_usr=NULL,$nuevoid=NULL){
 		if($id==null)
 			$id=$this->id;
 		
@@ -196,11 +195,14 @@ class publicaciones extends bd {
 			"fecha"=>$tiempo,
 			"tipos_notificaciones_id"=>$tipo,
 			"usuarios_id"=>$id_usr,
-			"publicaciones_id"=>$id,
-			"preguntas_publicaciones_id"=> $nuevoid
+			"publicaciones_id"=>$id			
 		);
-		$not = $this->doInsert("notificaciones",$notificacion);	
 		
+		if(!is_null($nuevoid))
+			$notificacion["preguntas_publicaciones_id"]=$nuevoid;
+		//var_dump($notificacion);
+		$not = $this->doInsert("notificaciones",$notificacion);	
+		return $not;
 	}
 
 	

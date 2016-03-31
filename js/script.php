@@ -947,8 +947,13 @@ $("#enviar").click(function(e){
 	$(document).on("click",".perfil",function(e){
 		window.open("perfil.php?id=" + $(this).data("id"),"_self");
 	});
-	
-	
-	
+	$(document).on("click",".compra-noti , .venta-noti",function(){
+		var id = $(this).attr("id");
+		if($(this).hasClass('compra'))
+			window.open("compras.php?publicacion=" + $(this).data("id_pub"),"_self");
+		else
+			window.open("ventas.php?type=2&publicacion=" + $(this).data("id_pub"),"_self");
+	});
+
 });
 </script>

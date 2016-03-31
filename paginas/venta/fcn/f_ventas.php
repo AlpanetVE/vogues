@@ -309,6 +309,8 @@ function guardaEnvio(){
 	$arrfecha = explode("-", $_POST["p_fecha"]);
     $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0];
 	$result=$venta->setEnvios($fecha, $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
+	
+	$publicacion->setNotificacion($venta->publicaciones_id,7,$venta->usuarios_id);
 }
 function guardaDescuento(){
 	$venta=new ventas($_POST["id"]);

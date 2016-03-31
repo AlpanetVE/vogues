@@ -93,12 +93,16 @@ if(!isset($_SESSION)){
 	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2'){
 		$cant_ventas = $usr -> getCantNotificacionPregunta(null);
 		$alerts = $usr -> getAllNotificaciones(NULL);
-		$cant_compras = 0;
+		$cant_compras = 0;		
+		$cant_noticompra = $usr -> getCantNotiCompras(); //Notificaciones de compra
+		$cant_notipago = $usr -> getCantNotiPago();
 	}
 	else {
 		$cant_compras = $usr->getCantRespuestas();
-		$alerts = $usr -> getAllNotificaciones();
-		$cant_ventas = 0;
+		$cant_ventas = 0;		
+		$cant_notipago = 0;
+		$cant_noticompra = 0;
+		$alerts = $usr -> getAllNotificaciones($_SESSION["id"]);		
 	}
 	$cant_panas = 0;
 	$cant_pub = 0;
@@ -107,7 +111,7 @@ if(!isset($_SESSION)){
 	
 	$visto=0;	
 	
-	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"];
+	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"]+$cant_noticompra[0]["cant"] + $cant_notipago[0]["cant"];
  
 ?>
 			 		
@@ -165,6 +169,27 @@ if(!isset($_SESSION)){
 								$tema = "Nuevos Articulos";
 								$id   = $id_pub;
 								$link = "detalle";
+							}
+							if($tipo==5){//Pagos
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Recibiste un pago.";
+								$id   = $id_pub;
+								$link = "venta-noti";
+							}
+							if($tipo==6){//Compras
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Tienes una Compra.";
+								$id   = $id_pub;
+								$link = "venta-noti";
+							}
+							if($tipo==7){//Envios
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Tienes un envio nuevo.";
+								$id   = $id_pub;
+								$link = "compra-noti";
 							}
 						?>
 						<li data-id="<?php echo $id; ?>" data-id_pub="<?php echo $id_pub; ?>"  class="<?php echo $link; ?> noti-hover pointer">
