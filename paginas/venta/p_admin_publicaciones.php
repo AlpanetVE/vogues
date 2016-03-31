@@ -91,13 +91,22 @@ switch($tipo){
         eliminarPublicacion(elId,categ,1);
 	}	
 	function modificarOpciones(elId,tipo,origen,categ){
+		var bandera=0;
 		if(tipo!=origen){
 			$("#btnOpciones" + elId).addClass("hidden");
 			$("#b" + elId).addClass("hidden");
 		}else{
 			$("#btnOpciones" + elId).removeClass("hidden");
-			$("#b" + elId).removeClass("hidden");			
+			$("#b" + elId).removeClass("hidden");
+			if(!$("#menFin" + elId).hasClass("hidden")){
+				bandera=3;
+			}else if(!$("#menPau" + elId).hasClass("hidden")){
+				bandera=2;
+			}else if(!$("#menAct" + elId).hasClass("hidden")){
+				bandera=1;
+			}						
 		}
+		
 		if(origen==1){
 			if(origen!=tipo){
 				$("#btnReactivar" + elId).removeClass("hidden");
@@ -190,10 +199,11 @@ switch($tipo){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				console.log(data);
+				//console.log(data);
+				actualizarTitulo(origen,tipo,bandera);
 			}
 		});
-	}
+	}	
 	
 	function actualizarTitulo(origen,destino,bandera){
 		if(origen<3){
@@ -227,6 +237,7 @@ switch($tipo){
 					dataType:"html",
 					success:function(data){
 						$("#publicaciones").html(data);
+						actualizarTitulo(3,4,0);
 					}
 				});					
 			}

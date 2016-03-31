@@ -61,8 +61,8 @@ function buscaPublicaciones(){
 			$publicacion=new publicaciones($valor["id"]);
 			switch($_POST["tipo"]){
 				case 1:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,111," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,122," . $publicacion->productos_categorias_id . ")'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,1," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,1," . $publicacion->productos_categorias_id . ")'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
 					break;
 				case 2:
 					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Reactivar</a></li>";
