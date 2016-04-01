@@ -6,8 +6,18 @@ include_once "clases/fotos.php";
 include_once "clases/inventario.php";
 $ventas=new ventas();
 $foto=new fotos();
-$listaVentas=$ventas->listarPorUsuario(); //Ventas sin concretar
-$listaVentas2=$ventas->listarPorUsuario(3); //Ventas concretadas
+
+
+
+$show_filtro='';
+$compra_id='';
+if(isset($_GET["compra"])){
+	$compra_id=$_GET["compra"];
+	$show_filtro='hide';
+}
+
+$listaVentas=$ventas->listarPorUsuario(1,1,"id desc",NULL,$compra_id); //Ventas sin concretar
+$listaVentas2=$ventas->listarPorUsuario(3,1,"id desc",NULL,$compra_id); //Ventas concretadas
 $total=$ventas->contar();
 $total2=$ventas->contar(3);
 $totalPaginas=ceil($total/25);
@@ -44,7 +54,7 @@ $clasesP2="";
 					</li>
 				</ul>
 			</div>
-			<div class='col-sm-12 col-md-5 col-lg-4 marB10 '>
+			<div class='col-sm-12 col-md-5 col-lg-4 marB10 <?php echo $show_filtro;?> '>
 				<form action="" method="GET"
 				class="navbar-form navbar-left  marT15 marL30 " role="search">
 				<div class="input-group" style="">
@@ -59,7 +69,7 @@ $clasesP2="";
 				<div id="busqueda" name="busqueda" class="hidden  pad10  " style="   width: 308px; background: #FAFAFA;" data-usuario=''>Publicaciones:</div>
 			</form>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marB10 marT15" >
+			<div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marB10 marT15 <?php echo $show_filtro;?>" >
 				<div class=" btn-group marL30 ">
 					<button type="button" class="btn btn-default">
 						Filtrar
@@ -78,7 +88,7 @@ $clasesP2="";
 					</ul>
 				</div>
 			</div>
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10 <?php echo $show_filtro;?> ">
 				<div class="marL30 marR20" style="background: #F2F2F2;">
 					<table width="100%" class="alto50" border="0" cellspacing="0" cellpadding="0" >
 						<tr>

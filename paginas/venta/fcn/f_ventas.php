@@ -306,11 +306,19 @@ function actualizaPagos(){
 }
 function guardaEnvio(){
 	$venta=new ventas($_POST["id"]);
+	$publi=new publicaciones();
+	$hora="00:00:00";
+	$hoy=date("d-m-Y");
+	$fechaactual = getdate();
+	if($hoy==$_POST["p_fecha"]){
+		$hora=$fechaactual["hours"].":".$fechaactual["minutes"].":".$fechaactual["seconds"];
+	}
+	var_dump($hora2);
 	$arrfecha = explode("-", $_POST["p_fecha"]);
-    $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0];
+    $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0]. " ".$hora;
 	$result=$venta->setEnvios($fecha, $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
 	
-	$publicacion->setNotificacion($venta->publicaciones_id,7,$venta->usuarios_id);
+	$publi->setNotificacion($venta->publicaciones_id,7,$venta->usuarios_id,$_POST["id"]);
 }
 function guardaDescuento(){
 	$venta=new ventas($_POST["id"]);
@@ -322,6 +330,7 @@ function guardaComentario(){
 }
 function pagina1(){
 	$ventas=new ventas();
+	 $inventario = new inventario();
 	$listaVentas=$ventas->listarPorUsuario(1,$_POST["pagina"],$_POST["orden"]);
 	$foto=new fotos();
     if($listaVentas):
@@ -364,7 +373,7 @@ function pagina1(){
 						<br>
 						<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
 						<br>
-						<span class=" grisC t12"><?php echo $usua->a_email;?></span>
+						<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
 						<br>
 						<span class="t12"><?php echo $usua->u_telefono;?></span>
 					</div>
@@ -378,6 +387,8 @@ function pagina1(){
 						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 						<br>
 						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<br>
+					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
@@ -405,6 +416,7 @@ function pagina1(){
 							</div>						
 						</div>
 					</div>
+				<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>	
 					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 						<center><hr class=' center-block'></center>
 					</div>
@@ -415,6 +427,7 @@ function pagina1(){
 }
 function pagina2(){
 	$ventas=new ventas();
+	 $inventario = new inventario();
 	$listaVentas=$ventas->listarPorUsuario(3,$_POST["pagina"],$_POST["orden"]);
 	$foto=new fotos();	
 		if($listaVentas):
@@ -450,7 +463,7 @@ function pagina2(){
 					<div style="margin-left: 3%;">
 					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
-					<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 					</div>
 				</div>
 				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
@@ -476,7 +489,8 @@ function pagina2(){
  								</ul>
 						</div>						
 						</div>
-				</div>		
+				</div>	
+				<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>	
 				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 					<center><hr class=' center-block'></center></div>
 				<?php
@@ -485,12 +499,14 @@ function pagina2(){
 }
 function ordena(){
 	$ventas=new ventas();
+	
 	if($_POST["origen"]==1){
 		$listaVentas=$ventas->listarPorUsuario(1,1,$_POST["orden"]); //Ventas sin concretar
 	}else{
 		$listaVentas=$ventas->listarPorUsuario(3,1,$_POST["orden"]); //Ventas concretadas
 	}
     if($listaVentas):
+		 $inventario = new inventario();
 		foreach ($listaVentas as $l => $valor):
 			$usua=new usuario($valor["usuarios_id"]);
 			$publi=new publicaciones($valor["publicaciones_id"]);
@@ -514,7 +530,10 @@ function ordena(){
 					break;											
 			}
 			$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
-			if($maximo<$valor["cantidad"]){
+			if($maximo==0){
+					$statusEnvio="Enviado";
+				$claseColor2="verde-apdp";				
+			}elseif($maximo<$valor["cantidad"]){
 				$statusEnvio="Envio en camino";
 				$claseColor2="naranja-apdp";
 			}else{
@@ -528,7 +547,7 @@ function ordena(){
 				<br>
 				<span class=''><?php echo $usua->a_seudonimo;?></span>
 				<br>
-				<span class=" grisC t12"><?php echo $usua->a_email;?></span>
+				<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
 				<br>
 				<span class="t12"><?php echo $usua->u_telefono;?></span>
 			</div>
@@ -541,7 +560,9 @@ function ordena(){
 					<div style="margin-left: 3%;">
 					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
 					<br>
-					<span class='red t14' id='#'>Bs <?php echo $valor["monto"];?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<br>
+					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
 				</div>
 			</div>
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
@@ -569,6 +590,7 @@ function ordena(){
 					</div>						
 				</div>
 			</div>
+			<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>
 			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 				<center><hr class=' center-block'></center>
 			</div>

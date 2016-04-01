@@ -106,7 +106,7 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				console.log(data);
+				
 				$("#publicaciones").html(data);
 				loadingAjax(false);
 			}
@@ -147,7 +147,7 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				console.log(data);
+				
 				$("#primero").html(data);
 				$("#btn-social-act").data("dismiss","modal");
 				$('#editor').trumbowyg({
@@ -645,7 +645,7 @@ $(document).ready(function(){
 				success:function(data){
 					loadingAjax(false);
 					pagos="";
-					console.log(data);					
+										
 					$("#pago" + actual + ">span").html(data);
 					$("#pago" + actual + ">i").first().removeClass();
 					switch(data){
@@ -777,7 +777,7 @@ $(document).ready(function(){
 					type:"POST",
 					dataType:"html",
 					success:function(data){
-						console.log(data);
+						
 						$("#comen" + actual).data("nota",nota);
 						$("#comentario").modal('hide');
 					}
@@ -845,7 +845,7 @@ $(document).ready(function(){
 					type : "POST",
 					dataType : "html",
 					success : function(data){
-						console.log(data);
+						
 						$("#ajaxcontainer3").load("paginas/venta/fcn/f_envios.php",{id:actual});
 						var faltante=$("#p_cantidad").attr("max") - $("#p_cantidad").val();
 						$("#envio" + actual).data("maximo",faltante);
@@ -887,6 +887,7 @@ $(document).ready(function(){
 						$("#envio" + actual + ">span").first().text("En camino");
 						$("#envio" + actual + ">i").first().removeClass("naranja-apdp rojo-apdp");
 						$("#envio" + actual + ">i").first().addClass("naranja-apdp");							
+					location.reload();
 					}
 				});
 				$("#frm-envios").slideUp();
@@ -923,7 +924,7 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				console.log(data);				
+								
 				eldiv.html(data);				
 				if(origen==1){
 					$('#paginacion').find('li').removeClass("active");

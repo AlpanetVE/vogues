@@ -27,7 +27,7 @@
 		$result=$compra->setPagos($_POST["p_referencia"], $_POST["p_monto"], $fecha , $_POST["p_forma_pago"], $p_banco,$_POST["id"]);	
 		
 		//var_dump($compra->publicaciones_id).var_dump($publicacion->usuarios_id).var_dump($_POST["id"]).
-		$publicacion->setNotificacion($compra->publicaciones_id,5,$publicacion->usuarios_id);
+		$publicacion->setNotificacion($compra->publicaciones_id,5,$publicacion->usuarios_id,$_POST["id"]);
 		echo $result;
 	}	
 	function ordena(){

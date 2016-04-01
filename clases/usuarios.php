@@ -739,6 +739,17 @@ public function setNewPassword($user,$clave){
   		}
 		return $pago;
 	}
+	public function getCantEnvios($id = NULL){//Compras hechas por un usuario
+		if(is_null($id)){
+			$id=$this->id;
+		}
+		$cant=array();
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=7 ");	
+        foreach ($result as $r){
+        	$cant[]=array("cant"=>$r["cant"]);
+  		}
+		return $cant;
+	}
 	public function getCantidadPub($status=1,$id=NULL){
 		
 		$consulta="select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null)";
@@ -924,11 +935,11 @@ public function setNewPassword($user,$clave){
 		}
 		if(!empty($tipos_notificaciones_id)){
 			##si envia filtro de ID es porque es usuario
-			$consulta.= " and tipos_notificaciones_id='$tipos_notificaciones_id' ";	
+			$consulta.= " and tipos_notificaciones_id in ($tipos_notificaciones_id) ";	
 		}
 		$consulta .= " ORDER BY `notificaciones`.`fecha`  DESC ";
 		
-		
+		//var_dump($consulta);
 		if(empty($pagina)){
 			$consulta.= " limit 25";
 		}else{

@@ -30,7 +30,7 @@
                     	<form id="frm-reg-envios" name="frm-reg-envios" action="">
                        	<div style="background:#00468E; color: #FFF; border-radius: 5px; display: block" class="pad5 marB10 text-center sombra-div marL5 marR5"><span class="">Ingresa los datos de la gu&iacute;a</span></div>                        	
                        	<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left t12 '>
-	                       	<input id="p_fecha" name="p_fecha" type="text" placeholder="Fecha de envio" class="form-input marB10" value="<?php echo date("Y-m-d");?>"/>
+	                       	<input id="p_fecha" name="p_fecha" type="text" placeholder="Fecha de envio" class="form-input marB10" value="<?php echo date("d-m-Y");?>"/>
              	            <div id="date-picker"> </div>
                        	</div>
                        	<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left t12 '>                       	

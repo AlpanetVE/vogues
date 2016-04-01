@@ -12,17 +12,18 @@ if (!isset ( $_GET ["id"] )) {
 	header ( "Location: index" );	
 }else{
 	$venta=new ventas($_GET["id"]);
-	$datosFac=$venta->getDatosFacturacion();
+	
 	$datosEnv=$venta->getDatosEnvio();
 	$publicacion=new publicaciones($venta->publicaciones_id);
 	$operacion=$_SESSION["id"]==$venta->getAtributo("usuarios_id")?"compra":"venta";
 	if($_SESSION["id"]==$venta->getAtributo("usuarios_id")){
 		$comprador=new usuario($publicacion->usuarios_id);
-	}elseif($_SESSION["id"]==$publicacion->usuarios_id){
+	}elseif($_SESSION["id"]==$publicacion->usuarios_id or $_SESSION["id_rol"]<=2){
 		$comprador=new usuario($venta->getAtributo("usuarios_id"));
 	}else{
 		header ( "Location: index" );
 	}
+	$datosFac=$venta->getDatosFacturacion(null);
 }
 ?>
 <!DOCTYPE html>

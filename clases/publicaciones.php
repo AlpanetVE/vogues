@@ -195,11 +195,10 @@ class publicaciones extends bd {
 			"fecha"=>$tiempo,
 			"tipos_notificaciones_id"=>$tipo,
 			"usuarios_id"=>$id_usr,
-			"publicaciones_id"=>$id			
+			"publicaciones_id"=>$id,
+			"preguntas_publicaciones_id"=>$nuevoid,
 		);
 		
-		if(!is_null($nuevoid))
-			$notificacion["preguntas_publicaciones_id"]=$nuevoid;
 		//var_dump($notificacion);
 		$not = $this->doInsert("notificaciones",$notificacion);	
 		return $not;

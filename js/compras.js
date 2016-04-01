@@ -178,6 +178,7 @@ $(document).ready(function(){
 					$("#envios-ven").modal("hide");
 					$("#frm-envios").slideUp();
 					$("#tabla-envios").append(nuevaFila);
+				location.reload();
 				}
 			});
 

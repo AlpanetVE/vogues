@@ -189,7 +189,7 @@
 			}
 			return $this->$name;
 		}			
-		public function listarPorUsuario($tipo=1,$pagina=1,$orden="id desc",$usuario=NULL){
+		public function listarPorUsuario($tipo=1,$pagina=1,$orden="id desc",$usuario=NULL,$compra_id=NULL){
 			//$bd = new bd();
 			if(is_null($usuario)){
 				if(!isset($_SESSION))
@@ -197,17 +197,21 @@
 				$usuario=$_SESSION["id"];
 			}
 			
-			if($tipo==1){    //Las ventas sin concretar
-				$condicion="publicaciones_id in (select id from publicaciones where usuarios_id=$usuario) and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
+			if($tipo==1){      //Las ventas sin concretar
+				$condicion="c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
 			}elseif($tipo==2){ //Las compras sin concretadas 
 				$condicion="c.usuarios_id = $usuario and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
 			}elseif($tipo==3){ //Las ventas concretadas
-				$condicion="publicaciones_id in (select id from publicaciones where usuarios_id=$usuario) and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";				
+				$condicion="c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";			
 			}elseif($tipo==4){ //Las compras concretadas
 				$condicion="c.usuarios_id = $usuario and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";
 			}
+			
+			if(!empty($compra_id))
+				$condicion.=" and c.id='$compra_id' ";
+			
 			$inicio=($pagina - 1) * 25;
-			$consulta="select c.*,p.titulo,p.monto,p.usuarios_id as vendedor, c.cantidad- (select sum(cantidad) from compras_envios where compras_publicaciones_id=c.id) as maximo from compras_publicaciones as c,publicaciones as p where $condicion order by $orden limit 25 OFFSET $inicio";
+			 $consulta="select c.*,p.titulo,p.monto,p.usuarios_id as vendedor, c.cantidad- (select sum(cantidad) from compras_envios where compras_publicaciones_id=c.id) as maximo from compras_publicaciones as c,publicaciones as p where $condicion order by $orden limit 25 OFFSET $inicio";
 		//$consulta=	"select c.*,p.titulo,p.monto,p.usuarios_id as vendedor, 100 as maximo from compras_publicaciones as c,publicaciones as p order by $orden limit 25 OFFSET $inicio";
 		//	var_dump($consulta);
 			$result=$this->query($consulta);
@@ -221,11 +225,11 @@
 			}
 			//$bd = new bd();
 			if($tipo==1){    //Las ventas sin concretar
-				$condicion="publicaciones_id in (select id from publicaciones where usuarios_id=$usuario) and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
+				$condicion="c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
 			}elseif($tipo==2){ //Las compras sin concretadas 
 				$condicion="c.usuarios_id = $usuario and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))<>0";
 			}elseif($tipo==3){ //Las ventas concretadas
-				$condicion="publicaciones_id in (select id from publicaciones where usuarios_id=$usuario) and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";				
+				$condicion="c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";				
 			}elseif($tipo==4){ //Las compras concretadas
 				$condicion="c.usuarios_id = $usuario and c.publicaciones_id=p.id and (c.cantidad- (select COALESCE(sum(cantidad),0) from compras_envios where compras_publicaciones_id=c.id))=0";
 			}
@@ -365,16 +369,16 @@ public function getDatosFacturacion($id=NULL){
 			if(is_null($id)){
 				$id=$this->id;
 			}
-			$bd=new bd();
+			//$bd=new bd();
 			$consulta="select d.* from datos_facturacion as d,compras_datos_facturacion as c where c.datos_facturacion_id=d.id and c.compras_id=$id limit 1";
-			$result=$bd->query($consulta);
+			$result=$this->query($consulta);
 			if($result->rowCount()>0){
 				return $result->fetch();
-			}else{
-				if(!isset($_SESSION))
-				session_start();
-				$consulta="select -1 as id,documento,nombre,direccion from datos_facturacion where usuarios_id={$_SESSION["id"]} limit 1";
-				$result2=$bd->query($consulta);
+			}else{				
+					if(!isset($_SESSION))
+						session_start();
+				$consulta="select -1 as id,documento,nombre,direccion from datos_facturacion where usuarios_id={$user_id} limit 1";
+				$result2=$this->query($consulta);
 				if(!empty($result2)){
 					$devolver=$result2->fetch();
 				}else{
@@ -387,16 +391,16 @@ public function getDatosFacturacion($id=NULL){
 			if(is_null($id)){
 				$id=$this->id;
 			}
-			$bd=new bd();
+			//$bd=new bd();
 			$consulta="select d.*,a.nombre as agencia from datos_envios as d,compras_datos_envios as c,agencias_envios as a where c.datos_envios_id=d.id and c.compras_id=$id and d.agencias_id=a.id limit 1";
-			$result=$bd->query($consulta);
+			$result=$this->query($consulta);
 			if($result->rowCount()>0){
 				return $result->fetch();
 			}else{
 				if(!isset($_SESSION))
 				session_start();
 				$consulta="select -1 as id,d.documento,d.nombre,d.direccion,d.agencias_id,a.nombre as agencia from datos_envios as d,agencias_envios as a where usuarios_id={$_SESSION["id"]} limit 1";
-				$result2=$bd->query($consulta);
+				$result2=$this->query($consulta);
 				if(!empty($result2)){
 					$devolver=$result2->fetch();
 				}else{

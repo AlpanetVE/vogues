@@ -42,18 +42,21 @@ class proveedor extends bd {
 		if(array_key_exists("documento", $titular)){
 			$result = $this->doInsert ( $this->p_table, $titular );
 			$this->p_proveedores_id = $this->lastInsertId ();
-		}		
+	
+		}	
+			
 		$result = $this->doInsert ( $this->p_table, $this->serializarDatos ( "p_" ) );
 		$this->id = $this->lastInsertId ();
 		if (empty ( $this->p_proveedores_id)) {				 
-			$this->doUpdate($this->p_table,array("proveedores_id"=>$this->id),"id=$this->id");
+			$resultupdate=$this->doUpdate($this->p_table,array("proveedores_id"=>$this->id),"id=$this->id");
 		}
 		
 		$count=count($bancos['nro_cuentas']);			
 		for($i=0;$i<$count;$i++){
 			$this->datosBancos($bancos['tipos_bancos_id'][$i], $bancos['bancos_id'][$i], $bancos['nro_cuentas'][$i]);
 			$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
-		}		
+		}
+		
 	}
 	public function modificarProveedor($listaValores_proveedor){
 		$result=$this->doUpdate($this->p_table,$listaValores_proveedor,"id=$this->id");		

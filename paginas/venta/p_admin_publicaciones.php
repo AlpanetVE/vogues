@@ -87,8 +87,13 @@ switch($tipo){
  		$("#btn-social-act").data("metodo","republicar");
         $("#tituloVentana").html("Republicar");
         $("#masDetalles").css("display","none");
-        $("#comando").text("Guardar");
-        eliminarPublicacion(elId,categ,1);
+        $("#comando").text("Guardar");        
+        
+       // actualizarTitulo(3,1,3); /**no se quien programo esto, pero si puedes, borralo y construyelo <-- si te sientes igual, comenta abajo */
+        
+       eliminarPublicacion(elId,categ,1);
+       actualizarTitulo(1,1,4);
+        
 	}	
 	function modificarOpciones(elId,tipo,origen,categ){
 		var bandera=0;
@@ -199,20 +204,20 @@ switch($tipo){
 			type:"POST",
 			dataType:"html",
 			success:function(data){
-				//console.log(data);
+				//console.log(data);	
 				actualizarTitulo(origen,tipo,bandera);
 			}
 		});
 	}	
 	
 	function actualizarTitulo(origen,destino,bandera){
-		if(origen<3){
-			var t1=parseInt($("#titulo" + destino).text());
-			$("#titulo" + destino).text(t1+1);		
-			if(origen!=destino){			
+		if(destino!=4){
+			var t1=parseInt($("#titulo" + destino).text());console.log(t1);
+			$("#titulo" + destino).text(t1+1);
+			if(origen!=destino){
 				var t2=parseInt($("#titulo" + origen).text());			
 				$("#titulo" + origen).text(t2-1);
-			}else{				
+			}else{	
 				var t2=parseInt($("#titulo" + bandera).text());			
 				$("#titulo" + bandera).text(t2-1);
 			}
@@ -222,17 +227,17 @@ switch($tipo){
 		}
 	}
 	
-	
 	function eliminarPublicacion(elId,categ,tipo){
 		$.ajax({
 			url:"paginas/venta/fcn/f_ventas.php",
-			data:{metodo:"cambiarStatus",id:elId,tipo:1,anterior:3,categ:categ},
+			data:{metodo:"cambiarStatus",id:elId,tipo:tipo,anterior:3,categ:categ},
 			type:"POST",
 			dataType:"html",
 			success:function(data){
+				var pagina=1;
 				$.ajax({
 					url:"paginas/venta/fcn/f_ventas.php",
-					data:{metodo:"buscarPublicaciones",tipo:tipo},
+					data:{metodo:"buscarPublicaciones",tipo:3,pagina:pagina},
 					type:"POST",
 					dataType:"html",
 					success:function(data){
@@ -243,6 +248,7 @@ switch($tipo){
 			}
 		});		
 	}
+	
 </script>
 <div class="row" id="principal" data-tipo="<?php echo $tipo;?>">
 	<!-- inicion del row principal  -->

@@ -20,6 +20,7 @@
 						<span class="grisC">Fecha de compra: <?php echo date("d-m-Y",strtotime($venta->getAtributo("fecha")));?></span>
 						<br>
 						<br>
+						<?php if($operacion!="compra") {   ?>
 						<span> <b><?php echo $operacion=="compra"?"Vendedor":"Comprador";?></b></span>
 						<br>
 						<span><?php echo $comprador->a_seudonimo;?></span>
@@ -31,6 +32,7 @@
 						<?php echo $comprador->u_telefono;?>
 						<br>
 						<br>
+						<?php } ?>
 						<span><i class="fa fa-comment grisC"></i> &nbsp; <a id="ver-preguntas" name="ver-preguntas" class="point"> Ver Preguntas de la venta</a></span>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 ">

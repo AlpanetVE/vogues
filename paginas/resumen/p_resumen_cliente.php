@@ -1,4 +1,6 @@
 <?php
+include_once "clases/ventas.php";
+$venta=new ventas();
 	$usr = new usuario();
 	$usr_publicaciones = $usr -> getPreguntasCompra($_SESSION["id"]);
 	$cant_preg_usr = $usr -> getCantCompras($_SESSION["id"]);
@@ -22,11 +24,11 @@
 			 </div ><!-- Fin Titulo de Productos -->
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(1,$_SESSION["id"]);?></span> <a href="#"><span class="marL10 " >Compras concretadas</span></span></a></div>
+			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $venta->contar(4);?></span> <a href="compras.php?tipo=concretadas"><span class="marL10 " >Compras concretadas</span></span></a></div>
 			 </div>
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(2,$_SESSION["id"]);?></span> <a href="preguntas.php?tipo=2"><span class="marL10 " >Compras sin concretar</span></span></a></div>
+			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $venta->contar(2);?></span> <a href="compras.php?tipo=sinconcretar"><span class="marL10 " >Compras sin concretar</span></span></a></div>
 			 </div>
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>

@@ -17,7 +17,7 @@
 		else 
 			$id_user_noti=$_SESSION["id"];
 		
-		 $alerts = $usr -> getAllNotificaciones($id_user_noti, $_POST['pagina']);
+		 $alerts = $usr -> getAllNotificaciones($id_user_noti, $_POST['pagina'],'1,3,4,5,6');
 		 
 		if(TRUE):	
 			$notificaciones='';
@@ -60,6 +60,27 @@
 				$tema = "Nueva Publicacion";
 				$id   = $id_pub;
 				$link = "detalle";
+			}
+			if($tipo==5){//Pagos
+				$foto = $pub -> getFotoPrincipal();
+				$title= $pub -> tituloFormateado();
+				$tema = "Recibiste un pago.";
+				$id   = $id_pre;
+				$link = "venta-noti";
+			}
+			if($tipo==6){//Compras
+				$foto = $pub -> getFotoPrincipal();
+				$title= $pub -> tituloFormateado();
+				$tema = "Tienes una Compra.";
+				$id   = $id_pre;
+				$link = "venta-noti";
+			}
+			if($tipo==7){//Envios
+				$foto = $pub -> getFotoPrincipal();
+				$title= $pub -> tituloFormateado();
+				$tema = "Tienes un envio nuevo.";
+				$id   = $id_pre;
+				$link = "compra-noti";
 			}
 			
 			$img_noti=$foto;

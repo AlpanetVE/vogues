@@ -99,7 +99,7 @@
 					
 		$proveedor->datosProveedor($tipo, $documento, $nombre, $telefono, $email, $direccion);
 		
-		$proveedor->crearProveedor($proveedor_bancos, $proveedor_titular);
+	$proveedor->crearProveedor($proveedor_bancos, $proveedor_titular);
 				
 		echo json_encode ( array (
 					"result" => "ok"
