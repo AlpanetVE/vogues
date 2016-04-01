@@ -107,7 +107,7 @@ $foto=new fotos();
         </div>
         <br> 
         <br>
-        <a href="#" class="t18 " style="text-decoration: underline;">Ver mas</a>
+        <a href="listado.php" class="t18 " style="text-decoration: underline;">Ver mas</a>
         <br>
         <br>
         <br>

@@ -143,9 +143,9 @@ class bd extends PDO {
 			return $ex->getMessage ();
 		}
 	}
-	public function getDatosBase($table, $id = NULL) {
+	public function getDatosBase($table, $id = NULL, $condicion = '1') {
 		if (isset ( $id )) {
-			$sql = $this->query ( "SELECT * FROM $table WHERE paises_id = $id" );
+			$sql = $this->query ( "SELECT * FROM $table WHERE paises_id = $id and $condicion" );
 			$this->rowcount = $sql->rowCount ();
 			return $sql->fetchAll ();
 		} else {

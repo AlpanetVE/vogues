@@ -61,26 +61,19 @@
 							</div>
 							<div class="col-xs-12">
 								<span class="marL10"><i class="fa fa-map-marker"></i>
-									Sambil</span>
+									Ubicacion</span>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 								<select class=" form-select " id="e_estado_admin" name="e_estado_admin">
-									<option value="" disabled selected>Seleccione un Estado</option>
 								<?php								
 								$estados = new bd ();
-								foreach ( $estados->getDatosBase ( "estados", 1 ) as $estado ) :
+								foreach ( $estados->getDatosBase ( "estados", 1 ,'id=21') as $estado ) :
 									?>
 								<option value="<?php echo $estado["id"]; ?>"><?php echo $estado["nombre"]; ?></option>
 								<?php endforeach;?>
 								</select>
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
-								 
-							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
-								<textarea rows="4" cols="" placeholder=" Direccion del Local" id="e_direccion_admin" name="e_direccion_admin"
-									class="form-textarea"></textarea>
-							</div>
+							
 						</div>
 					</section>				
 					<section class="form-apdp" style="display: none" data-title="Informaci&oacute;n de acceso"
