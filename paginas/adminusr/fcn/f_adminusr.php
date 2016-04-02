@@ -30,12 +30,15 @@
                     <td><?php echo $fila["rol"]; ?></td>
                     
                    <?php if($status=='1'){ ?>  
-                        <td><a href="#mod" class="update_user show-select-rol" data-toggle="modal" data-target="#usr-update-info" data-rol-type="select" data-tipo="1" data-method="actualizar" data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a></td>
-                        <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
+                        <td><a href="#mod" id="updateuser" class="update_user show-select-rol" data-toggle="modal" data-target="#usr-update-info" data-rol-type="select" data-tipo="1" data-method="actualizar" data-session-id="<?php echo $_SESSION["id"]; ?>"
+                        	 data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a></td>
+                        <?php }?>
+                        
+                     <?php if ($fila["id"]!=$_SESSION["id"]): ?>   <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                         		<i class="fa fa-remove"></i> Eliminar
                         	</a> 
                         </td>
-                   <?php }else if($status=='3'){ ?>
+                   <?php endif;  if($status=='3'){ ?>
                    		<td><a href="#del" class="select-usr-active" data-toggle="modal" data-target='#msj-activar' data-status='1'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                         		<i class="fa fa-check"></i> Activar
                         	</a>

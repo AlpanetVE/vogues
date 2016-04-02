@@ -45,7 +45,7 @@
             	</div>
             	<div class="col-xs-3 col-xs-offset-4">
 					<select class="form-select form-control search-submit" id="filter_categoria">
-						<option value="" >Categoria</option>
+						<option value="" >Producto</option>
 						<?php
 						$proveedores_obj = new proveedor();
 						$categorias=$proveedores_obj->getAllDatos ("productos_categorias");
@@ -73,7 +73,7 @@
                         <table class="table text-center table-hover">
                             <tr style="background: #D8DFEA">
                             	<th colspan="1" class="text-center">
-                                    Categoria
+                                    Producto
                                 </th>
                                 <th class="text-center">
                                     Descripcion
@@ -101,7 +101,7 @@
                         <table class="table text-center table-hover">
                             <tr style="background: #D8DFEA">
                             	<th colspan="1" class="text-center">
-                                    Categoria
+                                    Producto
                                 </th>
                                 <th class="text-center">
                                     Descripcion
@@ -137,7 +137,7 @@
                         <table class="table text-center table-hover">
                             <tr style="background: #D8DFEA">
                             	<th colspan="1" class="text-center">
-                                    Categoria
+                                    Producto
                                 </th>
                                 <th class="text-center">
                                     Descripcion
