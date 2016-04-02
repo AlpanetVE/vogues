@@ -17,6 +17,17 @@ $(document ).ready(function() {
 	   		$container.find(".diff-titular-field input, .diff-titular-field select").prop("disabled",true);
 	   }
 	});
+	
+	/********** Buscador **********/
+	
+	$(document).on('keyup',"#txtBusquedaProveed",function(e){
+	var nombre=$(this).val();
+		paginar(1, '#lista-prov-active',0,nombre);
+       //paginar(1, '#lista-prov-active',0);
+	});	
+	
+	
+	
 		/**BANCOS DINAMICOS**/
 	
 	/**FUNCTION FOR DINAMICAL BANK**/
@@ -559,13 +570,15 @@ $(document ).ready(function() {
        }
 	});
 	/********************FUNCIONES REALIZADAS PARA OPTIMIZAR EL LISTADO**************/
-	function paginar(pagina, container, status){
+	function paginar(pagina, container, status,nombre){
 		var $container=$(container);
 		var total=$container.find(" #paginacion").data("total"); 
+		
+		nombre=$("#txtBusquedaProveed").val();
 		loadingAjax(true);
 		$.ajax({
 			url:"paginas/proveedor/fcn/f_proveedor.php",
-			data:{metodo:"buscar",pagina:pagina,total:total,orden:" ",status:status},
+			data:{metodo:"buscar",pagina:pagina,total:total,orden:" ",status:status,nombre:nombre},
 			type:"POST",
 			dataType:"html",
 			success:function(data){

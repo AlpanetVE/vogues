@@ -11,6 +11,15 @@
 						<button class="btn2 btn-default t16 " style="">Agregar Proveedor</button>
 					</a>
                 </div>
+              
+            <div class="input-group" style="width: 19%;">
+					<span class="input-group-btn">
+						<button class="btn-header btn-default-header" style="border: #ccc 1px solid; border-right:transparent;">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</span> 
+	<input style="margin-left: -10px; border: #ccc 1px solid; border-left:1px solid #FFF;  " class="form-control-header " placeholder="Buscar" id="txtBusquedaProveed" name="txtBusquedaProveed" type="text">						 
+				</div>       
             </div>       
             <div class="tab-content">
                 <div class="tab-pane active" id="tab-shop-active">
@@ -39,7 +48,7 @@
                             <tbody id="ajaxContainer">
                                 <?php                               
                                 $proveedor = new proveedor();								
-                                $result=$proveedor->getProveedores('count(id) as total')->fetch();
+                                $result=$proveedor->getProveedores('count(id) as total',null)->fetch();
 								$total=$result['total'];
                                 $totalPaginas=ceil($total/25);
                                 ?>
