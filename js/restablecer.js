@@ -64,7 +64,7 @@ $('#recover-password').formValidation({
 	            	swal({
 						title: "Excelente", 
 						text: "&iexcl;Revisa tu correo!",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){
@@ -136,7 +136,7 @@ $('#recover-password').formValidation({
 	            	swal({
 						title: "Exito", 
 						text: "Se actualizo correctamente.",
-						imageUrl: "galeria/img/logos/bill-ok.png",
+						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
 						}, function(){

@@ -1,7 +1,11 @@
 <?php
+require '../../../config/core.php';
 include_once "../../../clases/usuarios.php";
 include_once "../../../clases/publicaciones.php";
-include_once "../../../clases/bd.php";
+include_once "../../../clases/inventario.php";
+include_once "../../../clases/amigos.php";
+include_once "../../../clases/ventas.php";
+include_once "../../../clases/fotos.php";
 switch($_POST["metodo"]){
 	case "buscarPublicaciones":
 		buscaPublicaciones();
@@ -18,45 +22,55 @@ switch($_POST["metodo"]){
 	case "republicar":
 		republica();
 		break;
+	case "actualizarPagos":
+		actualizaPagos();
+		break;
 	case "busquedaCaliente":
-		buscarCaliente();		
+		buscarCaliente();
+		break;
+	case "guardarEnvio":
+		guardaEnvio();
+		break;
+	case "guardarDescuento":
+		guardaDescuento();
+		break;
+	case "guardarComentario":
+		guardaComentario();
+		break;		
+	case "paginar1":
+		pagina1();
+		break;
+	case "paginar2":
+		pagina2();
+		break;		
+	case "ordenar":
+		ordena();
+		break;
 }
 function buscaPublicaciones(){
+		if(!isset($_POST["pagina"]))
+		$_POST["pagina"]=1;
 		session_start();
 	    $usua2=new usuario($_SESSION["id"]);
-		if(isset($_POST["pagina"]))
-			$pagina=$_POST["pagina"];
-		else
-			$pagina=1;		
-		
-		if(isset($_POST["order"]))
-			$order=$_POST["order"];
-		else
-			$order='id desc';
-		
-		if(isset($_POST["tipo"]))
-			$tipo=$_POST["tipo"];
-		else
-			$tipo='1';
-		
-		$hijos2=$usua2->getPublicaciones($tipo,$pagina, NULL, $order);		
+		$hijos2=$usua2->getPublicaciones($_POST["tipo"],$_POST["pagina"]);
 		$contador=0;
-		$des=$tipo==1?"":"disabled";		 
+		$des=$_POST["tipo"]==1?"":"disabled";
+		$pagina=$_POST["pagina"];
 		foreach ($hijos2 as $key => $valor) {
 			$contador++;
 			$publicacion=new publicaciones($valor["id"]);
-			switch($tipo){
+			switch($_POST["tipo"]){
 				case 1:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,1)'><a class='pausar opciones'  id='' href='' data-toggle='modal' value='pausar'>Pausar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,1)'><a class='finalizar opciones' id='' href='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,2,1," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='pausar'>Pausar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,1," . $publicacion->productos_categorias_id . ")'><a class='finalizar opciones pointer' id='' data-toggle='modal' value='finalizar'>Finalizar</a></li>";
 					break;
 				case 2:
-					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2)'><a class='pausar opciones'  id='' href='' data-toggle='modal' value='reactivar'>Reactivar</a></li>";
-					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,2)'><a class='pausar opciones'  id='' href='' data-toggle='modal' value='reactivar'>Finalizar</a></li>";
+					$boton1="<li onclick='javascript:modificarOpciones($publicacion->id,1,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Reactivar</a></li>";
+					$boton2="<li onclick='javascript:modificarOpciones($publicacion->id,3,2,$publicacion->productos_categorias_id)'><a class='pausar opciones pointer'  id=''  data-toggle='modal' value='reactivar'>Finalizar</a></li>";
 					break;
 				case 3:
-					$boton1="<li onclick='javascript:republicarPublicacion($publicacion->id)'><a class='pausar opciones'  id='' href='' data-toggle='modal' data-target='#info-publicacion' value='republicar'>Republicar</a></li>";			
-					$boton2="<li onclick='javascript:eliminarPublicacion($publicacion->id)'><a class='pausar opciones'  id='' href='' data-toggle='modal' value='eliminar'>Eliminar</a></li>";
+					$boton1="<li onclick='javascript:republicarPublicacion($publicacion->id," . $publicacion->productos_categorias_id . ")'><a class='pausar opciones pointer'  id='' data-toggle='modal' data-target='#info-publicacion' value='republicar'>Republicar</a></li>";			
+					$boton2="<li onclick='javascript:eliminarPublicacion($publicacion->id," . $publicacion->productos_categorias_id . ",4)'><a class='pausar opciones pointer'  id='' data-toggle='modal' value='eliminar'>Eliminar</a></li>";
 					break;
 			}			
 			$cadena="<span id='general" . $valor["id"] . "' name='general" . $valor["id"] . "' class='general' data-titulo={$valor["titulo"]}>
@@ -65,7 +79,7 @@ function buscaPublicaciones(){
 					style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='" . $valor["id"] . "'> </div>				
 			</div>
 			<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 vin-blue t14  '>
-				<span class='detalle.php'> <a href='detalle.php?id={$valor["id"]}'><span id='titulo" . $valor["id"] . "'>" .  ($valor["titulo"]) . "</span> </a>
+				<span class='detalle.php'> <a href='detalle.php?id={$valor["id"]}'><span id='titulo" . $valor["id"] . "'>" . utf8_encode($valor["titulo"]) . "</span> </a>
 				<br>
 				<span class='opacity'># $publicacion->id</span>
 			</div>
@@ -80,19 +94,19 @@ function buscaPublicaciones(){
 			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center t12 '>
 				<div class='btn-group pull-right marR10'>					
 					<button id='b" . $publicacion->id . "' type='button' class='btn2 btn-warning boton' data-toggle='modal' data-target='#info-publicacion' onclick='javascript:pasavalores($publicacion->id)'
-					data-id='$publicacion->id' data-titulo='" .  ($publicacion->titulo) . "' data-stock='$publicacion->stock'  data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-listado='{$tipo}' $des>
+					data-id='$publicacion->id' data-titulo='" . utf8_encode($publicacion->titulo) . "' data-stock='$publicacion->stock' data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-listado='{$_POST["tipo"]}' $des>
 						Modificar
-					</button>
-					<textarea  class='hidden' id='descripcion_" . $publicacion->id . "'>
-								$publicacion->descripcion
-					</textarea >
-					<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1)'>
+					</button> 
+						<div id='descripcion" . $publicacion->id ."' name='descripcion" . $publicacion->id . "' class='hidden'>
+							$publicacion->descripcion
+						</div>
+					<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1," . $publicacion->productos_categorias_id . ")'>
 						Reactivar
 					</button> 
-					<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2)'>
+					<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2," . $publicacion->productos_categorias_id . ")'>
 						Pausar
 					</button>						
-					<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3)'>
+					<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3," . $publicacion->productos_categorias_id . ")'>
 						Finalizar
 					</button>					
 					<button id='btnOpciones" . $publicacion->id . "' type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
@@ -126,13 +140,13 @@ function buscaPublicaciones(){
 		echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 			<nav class='text-center'>
 			  <ul class='pagination'>";
-								$ac=$usua2->getCantidadPub($tipo);
+								$ac=$usua2->getCantidadPub($_POST["tipo"]);
 								$totalPaginas=floor($ac/25);
 								$restantes=$ac-($totalPaginas*25);
 								if($restantes>0){
 									$totalPaginas++;
 								}
-								echo"</div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' id='paginas' name='paginas' data-metodo='buscarPublicaciones' data-tipo='" . $tipo . "' data-id='" . $usua2->id . "' > <center><nav><ul class='pagination'>";
+								echo"</div><div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 ' id='paginas' name='paginas' data-metodo='buscarPublicaciones' data-tipo='" . $_POST["tipo"] . "' data-id='" . $usua2->id . "' > <center><nav><ul class='pagination'>";
 								$contador=0;
 								if($pagina<=10){
 									$inicio=1;
@@ -147,10 +161,10 @@ function buscaPublicaciones(){
 								 								 
 								for($i=$inicio;$i<=$totalPaginas;$i++){
 									$contador++;
-									if($i==$pagina){ 
-										echo "<li class='active' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+									if($i==$_POST["pagina"]){
+										echo "<li class='active point' ><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
 									}else{
-										echo "<li class='' style='cursor:pointer'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
+										echo "<li class='point'><a class='botonPagina' data-pagina='" . $i ."'>$i</a></li>";
 									}
 									if($contador==10){
 										break;
@@ -158,7 +172,7 @@ function buscaPublicaciones(){
 								}
 				 if($totalPaginas>0){
 				 echo "<li>
-				      <a href='#' aria-label='Next'>
+				      <a class='point' aria-label='Next'>
 				        <span aria-hidden='true'>&raquo;</span>
 				      </a>
 				    </li>
@@ -187,11 +201,24 @@ function actualiza(){
 	$publi=new publicaciones($_POST["id"]);
 	$monto=$_POST["monto"];
 	$publi->setMonto($monto);
-	$bd->doUpdate("publicaciones", array("titulo"=> ($_POST["titulo"]),"stock"=>$_POST["stock"],"monto"=>$monto), "id={$_POST["id"]}");
+	$bd->doUpdate("publicaciones", array("titulo"=>utf8_decode($_POST["titulo"]),"stock"=>$_POST["stock"],"monto"=>$monto), "id={$_POST["id"]}");
 }
 function cambiaStatus(){
 	$publi=new publicaciones($_POST["id"]);
+	$categ=new inventario();
 	$publi->setStatus($_POST["tipo"],$_POST["anterior"]);
+	$status_prod=$_POST["tipo"];
+	if($status_prod=='4'){
+		$status_prod='0';
+	}
+	
+	$categ->setStatus($_POST["categ"],$status_prod);
+	/*$amigos = new amigos();
+	/*$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
+	foreach ($panas as $p => $value) {
+		$mostrar = $publi -> deletePanaNoti($_POST["id"],4,$value["numero"]);
+	}*/
+	//echo $mostrar;	
 }
 function instancia(){
 	$publi=new publicaciones($_POST["id"]);
@@ -207,9 +234,7 @@ function actualizaPub(){
 			"estienda"=>isset($_POST["chkEresTienda"])?'S':'N',
 			"condiciones_publicaciones_id"=>$_POST["cmbCondicion"],
 			"monto"=>$_POST["monto"],
-			"vencimientos_publicaciones_id"=>2);
-			
-			
+			"vencimientos_publicaciones_id"=>2);	
 	$monto = $_POST["monto"];
 	$fecha=time();
 	for ($i=0; $i < 6 ; $i++) {
@@ -217,18 +242,30 @@ function actualizaPub(){
 			$fotos[] = $_POST["foto-".$i];
 		}
 	} 	
-	$listaValores["dias_garantia"]=str_replace("gn", "&ntilde;", $listaValores["dias_garantia"]);
-	$listaValores["titulo"]= ($listaValores["titulo"]);
-	$publi->actualizarPublicacion($listaValores,$monto,$fotos);
+	$listaValores["dias_garantia"]=str_replace("gn", "�", $listaValores["dias_garantia"]);
+	$listaValores["titulo"]=utf8_decode($listaValores["titulo"]);
+	$publi->actualizarPublicacion($listaValores,$monto,$fotos); 
 	echo "OK";
 }
 function republica(){
 	$publi=new publicaciones($_POST["id"]);	
+	$amigos = new amigos();
+	$bd = new bd();
 	$listaValores=array(
 			"titulo"=>$_POST["titulo"],
 			"monto"=>$_POST["monto"],
 			"stock"=>$_POST["stock"]);
-	$resultado=$publi->volveraPublicar($listaValores);			
+	//$resultado=$publi->volveraPublicar($listaValores);
+	 
+	$publi->setMonto($monto);
+	$bd->doUpdate("publicaciones", $listaValores , "id={$_POST["id"]}");
+	 
+	 
+	/*$panas = $amigos -> buscarAmigos2($publi -> usuarios_id);
+	foreach ($panas as $p => $value) {
+		$publi-> setPanaPublicacion($resultado,4,$value["numero"]);
+	}*/
+	
 	echo $resultado;
 }
 function buscarCaliente(){
@@ -241,5 +278,325 @@ function buscarCaliente(){
 	}
 	echo $devolver;
 }
-
+function actualizaPagos(){
+	$bd=new bd();
+	$venta=new ventas($_POST["id"]);
+	$pagos=explode(",",$_POST["pagos"]);
+	foreach ($pagos as $p => $valor) {
+		$pago=explode(" ",$valor);
+		$id=$pago[0];
+		switch($pago[1]){
+			case "Pendiente":
+				$status=1;
+				break;
+			case "Verificado":
+				$status=2;
+				break;
+			case "Rechazado":
+				$status=3;
+				break;
+			case "guardarEnvio":
+				guardaEnvio();
+				break;
+		}
+		$result=$bd->doUpdate("pagosxcompras",array("status_pago"=>$status),"id=$id");
+	}
+	$sta=$venta->getStatusPago();
+	echo $sta;
+}
+function guardaEnvio(){
+	$venta=new ventas($_POST["id"]);
+	$publi=new publicaciones();
+	$hora="00:00:00";
+	$hoy=date("d-m-Y");
+	$fechaactual = getdate();
+	if($hoy==$_POST["p_fecha"]){
+		$hora=$fechaactual["hours"].":".$fechaactual["minutes"].":".$fechaactual["seconds"];
+	}
+	var_dump($hora2);
+	$arrfecha = explode("-", $_POST["p_fecha"]);
+    $fecha = $arrfecha[2] . "-" . $arrfecha[1] . "-" . $arrfecha[0]. " ".$hora;
+	$result=$venta->setEnvios($fecha, $_POST["p_numero"], $_POST["p_cantidad"], $_POST["p_direccion"], $_POST["p_agencia"],$_POST["p_monto"]);
+	
+	$publi->setNotificacion($venta->publicaciones_id,7,$venta->usuarios_id,$_POST["id"]);
+}
+function guardaDescuento(){
+	$venta=new ventas($_POST["id"]);
+	echo $venta->setDescuento($_POST["monto"]);
+}
+function guardaComentario(){
+	$venta=new ventas($_POST["id"]);
+	echo $venta->setComentario($_POST["nota"]);
+}
+function pagina1(){
+	$ventas=new ventas();
+	 $inventario = new inventario();
+	$listaVentas=$ventas->listarPorUsuario(1,$_POST["pagina"],$_POST["orden"]);
+	$foto=new fotos();
+    if($listaVentas):
+		foreach ($listaVentas as $l => $valor):
+			$usua=new usuario($valor["usuarios_id"]);
+			$publi=new publicaciones($valor["publicaciones_id"]);			
+			$venta=new ventas($valor["id"]);
+			$statusPago=$venta->getStatusPago();
+			switch($statusPago){
+				case "Pago pendiente":
+					$claseColor="amarillo-apdp";
+					break;
+				case "Pago incompleto":
+					$claseColor="naranja-apdp";
+					break;
+				case "Pago verificado":
+					$claseColor="verde-apdp";
+					break;
+				case "Pago rechazado":
+					$claseColor="rojo-apdp";
+					break;	
+				default:
+					$claseColor="";
+					break;											
+			}
+			$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
+			if($maximo<$valor["cantidad"]){
+				$statusEnvio="Envio en camino";
+				$claseColor2="naranja-apdp";
+			}else{
+				$statusEnvio="Envio pendiente";
+				$claseColor2="rojo-apdp";
+			}
+//			$statusEnvio=$maximo>0?"Envio pendiente":"Envio en curso";
+//			$statusEnvio=$venta->getStatusEnvio();
+		?>
+				<div id="venta<?php echo $valor["id"];?>">
+					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+						 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
+						<br>
+						<span class=''><a href="perfil.php?id=<?php echo $usua->id;?>"><?php echo $usua->a_seudonimo;?></a></span>
+						<br>
+						<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
+						<br>
+						<span class="t12"><?php echo $usua->u_telefono;?></span>
+					</div>
+					<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
+							<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
+							<a href="detalle.php?id=<?php echo $publi->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
+							style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
+					</div>
+					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+						<div style="margin-left: 3%;">
+						<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
+						<br>
+						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+						<br>
+					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
+						</div>
+					</div>
+					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
+						<div class="t12 pad5 " style="background: #FAFAFA">	
+						 <span><a class="vinculopagos point"  data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+						<br>
+						 <span ><a class="vinculoenvios point"  id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+						<br>
+						 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
+						<br>
+						 <span><i class="fa fa-exclamation-triangle"></i> Reclamo abierto</span>
+						</div>
+					</div>
+					<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
+						<div class='btn-group pull-right marR10'>				
+							<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"><button class="btn2 btn-default">Ver detalle</button></a> 
+							<div class="dropdown pull-right">
+  								<button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+   									<i class="fa fa-cog"></i>
+  								</button>
+  								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    								<li><a class="vinculodescuento" href="#" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
+    								<li><a class="point" data-toggle="modal" data-target="#comentario">Agregar comentario</a></li>
+  								</ul>
+							</div>						
+						</div>
+					</div>
+				<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>	
+					<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
+						<center><hr class=' center-block'></center>
+					</div>
+				</div>
+				<?php
+					endforeach;
+				endif;	
+}
+function pagina2(){
+	$ventas=new ventas();
+	 $inventario = new inventario();
+	$listaVentas=$ventas->listarPorUsuario(3,$_POST["pagina"],$_POST["orden"]);
+	$foto=new fotos();	
+		if($listaVentas):
+				foreach ($listaVentas as $l => $valor):
+					$usua=new usuario($valor["usuarios_id"]);
+					$publi=new publicaciones($valor["publicaciones_id"]);
+					$venta=new ventas($valor["id"]);
+					$statusPago=$venta->getStatusPago();
+					$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
+					if($maximo==0){
+						$statusEnvio="Enviado";
+					}elseif($maximo<$valor["cantidad"]){
+						$statusEnvio="Envio en camino";
+					}else{
+						$statusEnvio="Envio pendiente";
+					}
+				?>	
+				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+					 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
+					<br>
+					<span class=''><?php echo $usua->a_seudonimo;?></span>
+					<br>
+					<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
+					<br>
+					<span class="t12"><?php echo $usua->u_telefono;?></span>
+				</div>
+				<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
+						<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
+						<a href="detalle.php?id=<?php echo $publi->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
+						style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
+				</div>
+				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+					<div style="margin-left: 3%;">
+					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
+					<br>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					</div>
+				</div>
+				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
+					<div class="t12 pad5 " style="background: #FAFAFA">	
+					 <span><a class="vinculopagos point" data-toggle="modal" data-target="#pagos-ven2" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card verde-apdp"></i> <span><?php echo $statusPago;?></span></a></span> 
+					<br>
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck verde-apdp"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					<br>
+					 <span ></span><i class="fa fa-clock-o"></i> <span>despachado en <?php echo $venta->getTiempoCompra(2);?> </span>
+					<br>
+					 <span><i class="fa fa-exclamation-triangle"></i> Reclamo abierto</span>
+					</div>
+				</div>
+				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
+					<div class='btn-group pull-right marR10'>				
+							<button class="btn2 btn-default">Ver detalle</button> 
+							<div class="dropdown pull-right">
+  							<button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+   							<i class="fa fa-cog"></i>
+  							</button>
+  								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							    <li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+ 								</ul>
+						</div>						
+						</div>
+				</div>	
+				<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>	
+				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
+					<center><hr class=' center-block'></center></div>
+				<?php
+					endforeach;
+				endif;	
+}
+function ordena(){
+	$ventas=new ventas();
+	
+	if($_POST["origen"]==1){
+		$listaVentas=$ventas->listarPorUsuario(1,1,$_POST["orden"]); //Ventas sin concretar
+	}else{
+		$listaVentas=$ventas->listarPorUsuario(3,1,$_POST["orden"]); //Ventas concretadas
+	}
+    if($listaVentas):
+		 $inventario = new inventario();
+		foreach ($listaVentas as $l => $valor):
+			$usua=new usuario($valor["usuarios_id"]);
+			$publi=new publicaciones($valor["publicaciones_id"]);
+			$venta=new ventas($valor["id"]);
+			$statusPago=$venta->getStatusPago();
+			switch($statusPago){
+				case "Pago pendiente":
+					$claseColor="amarillo-apdp";
+					break;
+				case "Pago incompleto":
+					$claseColor="naranja-apdp";
+					break;
+				case "Pago verificado":
+					$claseColor="verde-apdp";
+					break;
+				case "Pago rechazado":
+					$claseColor="rojo-apdp";
+					break;	
+				default:
+					$claseColor="";
+					break;											
+			}
+			$maximo=is_null($valor["maximo"])?$valor["cantidad"]:$valor["maximo"];
+			if($maximo==0){
+					$statusEnvio="Enviado";
+				$claseColor2="verde-apdp";				
+			}elseif($maximo<$valor["cantidad"]){
+				$statusEnvio="Envio en camino";
+				$claseColor2="naranja-apdp";
+			}else{
+				$statusEnvio="Envio pendiente";
+				$claseColor2="rojo-apdp";
+			}
+		?>
+		<div id="venta<?php echo $valor["id"];?>">
+			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+				 <span id='#' class="negro t14"><?php echo $usua->getNombre();?></span>
+				<br>
+				<span class=''><?php echo $usua->a_seudonimo;?></span>
+				<br>
+				<span class=" grisC t12"><?php echo $usua->a_email;?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $usua->a_email;?>');"></i>
+				<br>
+				<span class="t12"><?php echo $usua->u_telefono;?></span>
+			</div>
+			<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
+				<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
+					<a href="detalle.php?id=<?php echo $publi->id;?>"><img src='<?php echo $publi->getFotoPrincipal();?>' width='100%' height='100%;' 
+						style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='#'> </div>
+				</div>
+				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>
+					<div style="margin-left: 3%;">
+					<span class='detalle.php'> <a href='detalle.php?id=<?php echo $venta->publicaciones_id;?>'> <span id='#'><?php echo $valor["titulo"];?></span></a></span>
+					<br>
+					<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
+					<br>
+					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
+				</div>
+			</div>
+			<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					
+				<div class="t12 pad5 " style="background: #FAFAFA">	
+					 <span><a class="vinculopagos point"  data-toggle="modal" data-target="#pagos-ven" id="pago<?php echo $valor["id"];?>" name="pago<?php echo $valor["id"];?>"><i class="fa fa-credit-card <?php echo $claseColor;?>"></i> <span><?php echo $statusPago;?></span></a></span> 
+					<br>
+					 <span ><a class="vinculoenvios point" id="envio<?php echo $valor["id"];?>" name="envio<?php echo $valor["id"];?>" data-maximo="<?php echo $maximo;?>"> <i class="fa fa-truck <?php echo $claseColor2;?>"></i> <span><?php echo $statusEnvio;?></span></a></span> 
+					<br>
+					 <span ></span><i class="fa fa-clock-o"></i> <span><?php echo $venta->getTiempoCompra();?> en espera</span>
+					<br>
+					 <span><i class="fa fa-exclamation-triangle"></i> Reclamo abierto</span>
+				</div>
+			</div>
+			<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2 text-center t12 '>
+				<div class='btn-group pull-right marR10'>
+					<a href="detalle-ventas.php?id=<?php echo $valor["id"];?>"><button class="btn2 btn-default">Ver detalle</button></a> 
+					<div class="dropdown pull-right">
+						  <button class="btn2 btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+   								<i class="fa fa-cog"></i>
+  						  </button>
+  						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    							<li><a class="vinculodescuento point" data-toggle="modal" data-target="#descuento" id="desc<?php echo $valor["id"];?>" name="desc<?php echo $valor["id"];?>" data-monto=<?php echo $valor["monto"];?>>Agregar descuento</a></li>
+    							<li><a class="vinculocomentario point" data-toggle="modal" data-target="#comentario" id="comen<?php echo $valor["id"];?>" name="comen<?php echo $valor["id"];?>" data-nota="<?php echo $valor["nota"];?>">Agregar comentario</a></li>
+  						  </ul>
+					</div>						
+				</div>
+			</div>
+			<div><span class="t12 opacity" style="margin-left: 7%;">#<?php echo $valor["id"]; ?></span>&nbsp;<i class="fa fa-files-o t10 point" onClick="copyPortaPapeles('<?php echo $valor["id"];?>');"></i> </div>
+			<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
+				<center><hr class=' center-block'></center>
+			</div>
+		</div>
+		<?php
+		endforeach;
+	endif;	
+}
 ?>

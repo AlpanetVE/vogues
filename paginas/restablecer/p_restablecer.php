@@ -2,7 +2,7 @@
 <form id="recover-password" data-url="admin" name="recover-password" action="fcn/f_usuarios.php" method="POST">
 					<ul >
 				 			<div class="center" style=""> 
-				 				<img class="img-responsive" src="galeria/img/logos/logo-login.png" />
+				 				<img class="img-responsive" src="galeria/img-site/logos/logo-login.png" />
 				 				</div>
 						
 							<li style="padding: 10px;">

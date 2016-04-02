@@ -9,15 +9,19 @@
 $(document).ready(function() {
 //	var a=jQuery.noConflict(true);
 	$('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" />');
+	
+	var categ = $(".catg").data('categprod');
 	/*
 	 * 1er Paso: Pasar a publicar1-2.php
 	 */
 	$(".catg").click(function() {
 		var laimagen = $(this).children("img").attr("src");
-		$.ajax({
-			url : "paginas/publicar/p_publicar1-2.php",
+		
+	$.ajax({
+			url : "paginas/publicar/fcn/f_publicar1-2.php",
 			data : {
 				id_clasificados : $(this).data("idcatg")
+				
 			},
 			type : "POST",
 			dataType : "html",
@@ -86,12 +90,15 @@ $(document).ready(function() {
 	 */
 	$("#ajaxContainer").on('click', '#btnOk', function() {
 		//Guardar imagen actual
+		//alert("categoria"+categ);
 		var laimagen = $("#imagenclasificado").attr("src");
+		//console.log(categ+laimagen);
 		//ejecutamos ajax para pasar a 2.
 		$.ajax({
-			url : "paginas/publicar/p_publicar2.php",
+			url : "paginas/publicar/fcn/f_publicar2.php",
 			data : {
-				id : $("#ajaxListas > div").last().find(".form-select-publicar").val()				
+				id : $("#ajaxListas > div").last().find(".form-select-publicar").val(),
+				id_categ_prod:categ
 			},
 			type : "POST",
 			dataType : "html",
@@ -111,9 +118,20 @@ $(document).ready(function() {
 				$("#imagentipo").attr("src", laimagen);
 				$("#txtPrecio").autoNumeric({aSep: '.', aDec: ','});
 				//Inicializacion del editor HTML				
-					$('#editor').trumbowyg({
-						lang : 'es'
-					});				
+				tinymce.init({
+				  	selector:'div#editor',
+				  	language:'es_MX',
+				  	height: 450,
+				  	statusbar: false,
+				  	menubar: false,
+				  	default_link_target: "_blank",
+				  	plugins: "charmap, hr, lists, preview, searchreplace, table, wordcount, anchor, code, fullpage, image, media, visualblocks, imagetools, fullscreen, link, textcolor",
+				  	toolbar:[
+				  	 'styleselect, formatselect, fontselect, fontsizeselect, undo, charmap, hr, preview, ',
+				  	 ' bold, italic,underline,alignleft, aligncenter, alignright, alignjustify, bullist, numlist, outdent, indent,  link, media, image, visualblocks, forecolor, backcolor' 	
+				  		]
+				   });	
+				   			
 				if($("#cmbCondicion").val()==3){
 					$("#txtCantidad").attr("readonly","true");
 				}else{
@@ -195,7 +213,7 @@ $(document).ready(function() {
 									fotos = "&foto-"+index+"="+$(this).children("img").attr("src")+fotos;
 								}
 							});
-							form = $("#pub-form-reg").serialize() +"&fecha=" + $("#txtFecha").val()+"&idclas="+$(".form-select-publicar").last().val()+"&monto="+$("#txtPrecio").autoNumeric("get")+
+							form = $("#pub-form-reg").serialize() +"&fecha=" + $("#txtFecha").val()+"&categoria="+$("#categ").val()+"&idclas="+$(".form-select-publicar").last().val()+"&monto="+$("#txtPrecio").autoNumeric("get")+
 							"&fb="+$("#fb").data("fb")+"&tt="+$("#tt").data("tt")+"&fp="+$("#fp").data("fp")+"&gr="+$("#gr").data("gr")+"&metodo=guardar"+fotos;
 							$.ajax({
 								url:'paginas/publicar/fcn/f_publicaciones.php',
@@ -215,7 +233,7 @@ $(document).ready(function() {
 										swal({
 											title: "Exito",
 											text: text,
-											imageUrl: "galeria/img/logos/bill-ok.png",
+											imageUrl: "galeria/img-site/logos/bill-ok.png",
 											showConfirmButton: true
 											}, function(){			
 												document.location.href = 'detalle.php?id='+data.id;

@@ -1,10 +1,10 @@
 <?php
+require 'config/core.php';
 include_once "clases/publicaciones.php";
 if (!isset ( $_GET ["id"] )) {
 	header ( "Location: index.php" );
 }else{
-	$existe=$publicacion=new publicaciones($_GET["id"]);
-	
+	$existe=$publicacion=new publicaciones($_GET["id"]);	
 }
 ?>
 <!DOCTYPE html>

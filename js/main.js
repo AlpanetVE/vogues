@@ -30,11 +30,11 @@ $(function() {
 		
 		//#######USUARIO ROL 1#######
 		if(id_rol==1){
-			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .admin-usuarios").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .admin-usuarios, .inventario, .compras-tienda").removeClass("hidden");
 		}
 		//#######USUARIO ROL 2#######
 		else if(id_rol==2){
-			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar").removeClass("hidden");
+			$(".resumen, .venta, .factura, .fact-pagar, .red, .configurar, .compras-tienda").removeClass("hidden");
 		}
 		//#######USUARIO ROL 3#######
 		else if(id_rol==3 || id_rol==0){
@@ -48,7 +48,7 @@ function SweetError(text){
 	swal({
 		title: "Error, intenta de nuevo", 
 		text: "Codigo:"+  text,
-		imageUrl: "galeria/img/logos/bill-error.png",
+		imageUrl: "galeria/img-site/logos/bill-error.png",
 		showConfirmButton: true
 		});
 }
@@ -77,4 +77,20 @@ function getQuerystringValue(sQueryName, bCaseSensitive) {
 		}
 	}
 	return QueryValue;
+}
+
+
+function copyPortaPapeles(valor){
+		// Crea un campo de texto "oculto"
+  		var aux = document.createElement("input");
+	  	// Asigna el contenido del elemento especificado al valor del campo
+  		aux.setAttribute("value", valor);
+  		// Añade el campo a la página
+  		document.body.appendChild(aux);
+  		// Selecciona el contenido del campo
+  		aux.select();
+  		// Copia el texto seleccionado
+  		document.execCommand("copy");
+  		// Elimina el campo de la página
+  		document.body.removeChild(aux);
 }

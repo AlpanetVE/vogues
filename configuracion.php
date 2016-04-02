@@ -1,3 +1,4 @@
+<?php require 'config/core.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <?php
@@ -5,7 +6,7 @@ include 'fcn/varlogin.php';
 include ("fcn/incluir-css-js.php");
 ?>
 <body>
-<?php
+<?php 
 include ("temas/header.php");
 ?>
 <div class="container">
@@ -18,12 +19,11 @@ include ("temas/header.php");
 </div>
 <?php
 include ("temas/footer.php");
-include ("modales/m_edit_info_personal_n.php");
-include ("modales/m_edit_info_personal_j.php");
 include ("modales/m_edit_info_seudonimo.php");
 include ("modales/m_edit_info_correo.php");
 include ("modales/m_edit_info_pass.php");
-
+include ("modales/m_edit_info_personal_n.php");
+include ("modales/m_edit_info_personal_j.php");
 ?>
 <script type="text/javascript" src="js/configuracion.js"></script>
 </body>

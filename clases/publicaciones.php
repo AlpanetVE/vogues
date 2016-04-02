@@ -1,6 +1,6 @@
 <?php
-include_once 'bd.php';
 include_once 'fotos.php';
+include_once 'inventario.php';
 require_once __DIR__ .'/manager/autoload.php';
 use OneAManager\Handler_Soat;
 
@@ -19,7 +19,7 @@ use OneAManager\Handler_Soat;
  * @property int condiciones_publicaciones_id;
  * @property double monto;
  */
-class publicaciones{
+class publicaciones extends bd {
 	protected $table="publicaciones";
 	private $id;
 	private $titulo;
@@ -34,24 +34,25 @@ class publicaciones{
 	private $condiciones_publicaciones_id;
 	private $clasificados_id;
 	private $monto;
+	private $productos_categorias_id;
 	public function publicaciones($id = NULL){
+		parent::__construct();
 		if(!is_null($id)){
 			$this->buscarPublicacion($id);
 		}
 	}
-	public function nuevaPublicacion($params,$monto,$fecha,$fotos){
-		$bd = new bd();
+	public function nuevaPublicacion($params,$monto,$fecha,$fotos,$idcategoria){
+		$categoria= new inventario();
 		$foto = new fotos();
 		$idVisita = $this->setVisitas();
 		$params["visitas_publicaciones_id"] = $idVisita;
 		$params["monto"] =$monto;
 		$largo=strlen($params["titulo"]);
 		$params["titulo"] = strtoupper(substr($params["titulo"],0,1)) . strtolower(substr($params["titulo"],1,$largo-1));
-		// ucwords(strtolower($params["titulo"]));
-		$result = $bd->doInsert($this->table, $params);
+		$result = $this->doInsert($this->table, $params);
 		//return $result;
 		if($result){
-			$this->id = $bd->lastInsertId();
+			$this->id = $this->lastInsertId();
 			$hso = new Handler_Soat();
 			$soat_params=array(
 				"u"=>"http://apreciodepana.com/detalle.php?id=".$this->id,
@@ -61,11 +62,12 @@ class publicaciones{
 			$short_url=$hso->encode($soat_params);
 			$this->setMonto($monto);
 			$this->setStatus(1,1,$fecha);
+			$categoria->setStatus($idcategoria, 1);
 			$foto->path = "../../".$foto->path;
 			foreach($fotos as $data){
 				$foto->crearFotoPublicacion($this->id, $data);
 			}
-			$result=$bd->doUpdate($this->table,array("short_id"=>$short_url),"id=$this->id");
+			$result=$this->doUpdate($this->table,array("short_id"=>$short_url),"id=$this->id");
 			return $this->id;
 		}else{
 			return false;
@@ -73,8 +75,8 @@ class publicaciones{
 	}
 	public function buscarPublicacion($id){
 		$this->id = $id;
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->table,"id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->table,"id = {$this->id}");
 		if($result){
 			$valores["id"] = $result["id"];
 			$valores["titulo"] = $result["titulo"];
@@ -89,6 +91,8 @@ class publicaciones{
 			$valores["condiciones_publicaciones_id"] = $result["condiciones_publicaciones_id"];
 			$valores["clasificados_id"]=$result["clasificados_id"];
 			$valores["monto"]=$result["monto"];
+			$valores["productos_categorias_id"]=$result["productos_categorias_id"];
+			
 			$this->setPublicacion($valores);
 			return true;
 		}else {
@@ -113,20 +117,20 @@ class publicaciones{
 	}
 	
 	public function setLastShare($id,$time){
-		$bd = new bd();
+		
 		$actualizar = array("last_share"=>$time);
 		$condicion = "id = {$id}";
-		$bd->doUpdate("publicaciones", $actualizar , $condicion);
+		$this->doUpdate("publicaciones", $actualizar , $condicion);
 	}
 	
 	public function setMonto($monto){
-		$bd = new bd();
+		
 		$tiempo = date("Y-m-d H:i:s",time());
 		$actualizar = array("fecha_fin"=>$tiempo);
 		$condicion = "publicaciones_id = {$this->id} AND fecha_fin IS NULL";
-		$bd->doUpdate("publicaciones_montos", $actualizar , $condicion);
+		$this->doUpdate("publicaciones_montos", $actualizar , $condicion);
 		$valores = array("monto"=>$monto,"publicaciones_id"=>$this->id, "fecha" => $tiempo);
-		$bd->doInsert("publicaciones_montos",$valores);
+		$this->doInsert("publicaciones_montos",$valores);
 	}
 	public function setStatus($sta_nue=NULL,$sta_ant=NULL,$fecha=NULL){
 		if(is_null($fecha)){
@@ -136,33 +140,33 @@ class publicaciones{
 		}
 		$sta_ant=is_null($sta_ant)?1:$sta_ant;
 		$sta_nue=is_null($sta_nue)?2:$sta_nue;
-		$bd=new bd();
+		
 		$tiempo=date("Y-m-d H:i:s",$fecha);
 		$actualizar = array("fecha_fin"=>$tiempo);
 		$condicion = "publicaciones_id = {$this->id} AND fecha_fin IS NULL";
-		$bd->doUpdate("publicacionesxstatus",$actualizar,$condicion);
+		$this->doUpdate("publicacionesxstatus",$actualizar,$condicion);
 		$valores=array("fecha"=>$tiempo,"publicaciones_id"=>$this->id,"status_publicaciones_id"=>$sta_nue);
-		$bd->doInsert("publicacionesxstatus", $valores);
+		$this->doInsert("publicacionesxstatus", $valores);
 	}
 	public function setVisitas(){
-		$bd=new bd();
+		
 		$valores=array("numero"=>0);
-		$bd->doInsert("visitas_publicaciones",$valores)	;
-		return $bd->lastInsertId();
+		$this->doInsert("visitas_publicaciones",$valores)	;
+		return $this->lastInsertId();
 	}
 //	public 
 	public function updateVisitas(){
-		$bd=new bd();
+		
 		$total=$this->getVisitas();
 		$total++;
 		$actualizar=array("numero"=>$total);
 		$condicion="id={$this->visitas_publicaciones_id}";
-		$bd->doUpdate("visitas_publicaciones",$actualizar,$condicion);		
+		$this->doUpdate("visitas_publicaciones",$actualizar,$condicion);		
 		return "visita";
 	}
 	
 	public function setPreguntas($pregunta,$id=NULL){
-		$bd=new bd();
+		
 		session_start();
 		$tiempo = date("Y-m-d H:i:s",time());
 		$valores=array(
@@ -172,15 +176,14 @@ class publicaciones{
 			"preguntas_publicaciones_id"=>$id,
 			"fecha"=>$tiempo
 		);	
-		$bd->doInsert("preguntas_publicaciones",$valores);	
-		$nuevoid=$bd -> lastInsertId();
+		$this->doInsert("preguntas_publicaciones",$valores);	
+		$nuevoid=$this-> lastInsertId();
 		return $nuevoid;
-	}
-	
-	public function setNotificacion($id=NULL,$tipo=NULL,$id_usr=NULL,$nuevoid){
+	}	
+	public function setNotificacion($id=NULL,$tipo=NULL,$id_usr=NULL,$nuevoid=NULL){
 		if($id==null)
 			$id=$this->id;
-		$bd=new bd();
+		
 		if(!isset($_SESSION["id"]))
 		session_start();
 		if($id_usr==null){
@@ -193,25 +196,27 @@ class publicaciones{
 			"tipos_notificaciones_id"=>$tipo,
 			"usuarios_id"=>$id_usr,
 			"publicaciones_id"=>$id,
-			"preguntas_publicaciones_id"=> $nuevoid
+			"preguntas_publicaciones_id"=>$nuevoid,
 		);
-		$not = $bd->doInsert("notificaciones",$notificacion);	
 		
+		//var_dump($notificacion);
+		$not = $this->doInsert("notificaciones",$notificacion);	
+		return $not;
 	}
 
 	
 	public function getMonto($admin=0){
-		$bd=new bd();
+		
 		if($admin==0){
 			$consulta="select * from clasificados where ruta like '%I4F%' and id=$this->clasificados_id";
-			$result=$bd->query($consulta);
+			$result=$this->query($consulta);
 			foreach ($result as $r => $valor) {
 				return "Consultar";
 			}
 	}
 //		$strCondicion="publicaciones_id = $this->id AND fecha_fin IS NULL";
 		$strCondicion="id = $this->id";		
-		$result=$bd->doSingleSelect("publicaciones"," $strCondicion ","monto");
+		$result=$this->doSingleSelect("publicaciones"," $strCondicion ","monto");
 		$parteEntera=floor($result["monto"]);
 		$parteDecimal=$result["monto"] - $parteEntera;
 		$parteDecimal=floor($parteDecimal*100);
@@ -222,24 +227,24 @@ class publicaciones{
 //		return number_format($result["monto"],0,",",".") . " <sup>" . $parteDecimal . "</sup>";
 	}
 	public function getFechaStatus(){
-		$bd=new bd();
+		
 		$strCondicion="publicaciones_id=$this->id AND fecha_fin IS NULL";
-		$result=$bd->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");
+		$result=$this->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");
 		return $result["fecha"];
 	}
 	public function getVisitas(){
-		$bd=new bd();
+		
 		$strCondicion="id=$this->visitas_publicaciones_id";
-		$result=$bd->doSingleSelect("visitas_publicaciones"," $strCondicion ","numero");
+		$result=$this->doSingleSelect("visitas_publicaciones"," $strCondicion ","numero");
 		return $result["numero"];
 	}
 	public function getExpiredDate(){
-		$bd=new bd();
+		
 		$strCondicion="id=$this->vencimientos_publicaciones_id";
-		$result=$bd->doSingleSelect("vencimientos_publicaciones"," $strCondicion ","dias");
+		$result=$this->doSingleSelect("vencimientos_publicaciones"," $strCondicion ","dias");
 		$dias=$result["dias"];
 		$strCondicion="publicaciones_id=$this->id order by fecha asc";
-		$result=$bd->doFullSelect("publicacionesxstatus"," $strCondicion ","fecha");
+		$result=$this->doFullSelect("publicacionesxstatus"," $strCondicion ","fecha");
 		$fecha=date("Y-m-d",strtotime("{$result[0]["fecha"]} +$dias days"));
 		return $fecha . "\n";	
 	}	
@@ -252,9 +257,9 @@ class publicaciones{
 	}
 	
 	public function getTiempoPublicacion(){
-		$bd=new bd();
+		
 		$strCondicion="publicaciones_id=$this->id";
-		$result=$bd->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");
+		$result=$this->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");
 		$segundos=strtotime('now')-strtotime($result["fecha"]);
 		$dias=intval($segundos/60/60/24);
 		if($dias<1){
@@ -292,20 +297,20 @@ class publicaciones{
 		}	
 	}
 	/*public function getTiempoPublicacion(){		
-		$bd=new bd();		
+				
 		$strCondicion="publicaciones_id=$this->id";		
-		$result=$bd->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");		
+		$result=$this->doSingleSelect("publicacionesxstatus"," $strCondicion ","fecha");		
 		$segundos=strtotime('now')-strtotime($result["fecha"]);		
 		return $this -> getTiempo($segundos);		
 	}*/
 	
 	public function getFotos(){
-		$bd=new bd();
+		
 		$condicion="publicaciones_id=$this->id";
-		$result=$bd->doFullSelect("fotosxpublicaciones",$condicion);
+		$result=$this->doFullSelect("fotosxpublicaciones",$condicion);
 		if(!empty($result)){
 			foreach ($result as $r) {
-				 $busqueda=$bd->doSingleSelect("fotos","id={$r['fotos_id']}","ruta");			 
+				 $busqueda=$this->doSingleSelect("fotos","id={$r['fotos_id']}","ruta");			 
 				 $rutas[]=$busqueda["ruta"].$r["fotos_id"].".png";
 			}
 			return $rutas;
@@ -314,17 +319,17 @@ class publicaciones{
 		}
 	}
 	public function getFotoPrincipal(){
-		$bd=new bd();
+		
 		$condicion="publicaciones_id=$this->id order by fotos_id";
-		$result=$bd->doSingleSelect("fotosxpublicaciones",$condicion);
- 		$busqueda=$bd->doSingleSelect("fotos","id={$result['fotos_id']}","ruta");
+		$result=$this->doSingleSelect("fotosxpublicaciones",$condicion);
+ 		$busqueda=$this->doSingleSelect("fotos","id={$result['fotos_id']}","ruta");
 		$r=$busqueda["ruta"].$result["fotos_id"].".png";
 		return $r;
 	}
 	public function getCondicion(){
-		$bd=new bd();
+		
 		$condicion="id=$this->condiciones_publicaciones_id";
-		$result=$bd->doSingleSelect("condiciones_publicaciones",$condicion,"condicion");
+		$result=$this->doSingleSelect("condiciones_publicaciones",$condicion,"condicion");
 		if($result){
 			return $result["condicion"];
 		}else{
@@ -333,9 +338,9 @@ class publicaciones{
 	}
 	
 	public function getRespuestaPregunta($id_pregunta){
-		$bd=new bd();
+		
         $condicion="preguntas_publicaciones_id=$id_pregunta";
-		$result=$bd->doSingleSelect("preguntas_publicaciones",$condicion,"contenido,fecha");
+		$result=$this->doSingleSelect("preguntas_publicaciones",$condicion,"contenido,fecha");
 		$segundos=strtotime('now') - strtotime($result["fecha"]);
 		$dias=intval($segundos/60/60/24);
 		if($dias<1){
@@ -384,19 +389,19 @@ class publicaciones{
 	}
 	
 	public function getPreguntasUsuario(){
-		$bd=new bd();
+		
 		$condicion="usuarios_id=$this->usuarios_id";
         $resultado=array();
-		$result=$bd->doFullSelect("publicaciones",$condicion,"id,titulo");
+		$result=$this->doFullSelect("publicaciones",$condicion,"id,titulo");
 		$i=-1;
 		foreach ($result as $r) {
 			$i++;
 			$resultado[$i]=array("publicacion_id"=>$r["id"],"titulo"=>$r["titulo"]);
-            $result2=$bd->query("SELECT * FROM preguntas_publicaciones p WHERE preguntas_publicaciones_id IS NULL and publicaciones_id={$r['id']} and NOT EXISTS (SELECT * FROM preguntas_publicaciones r WHERE r.preguntas_publicaciones_id = p.id)");			
+            $result2=$this->query("SELECT * FROM preguntas_publicaciones p WHERE preguntas_publicaciones_id IS NULL and publicaciones_id={$r['id']} and NOT EXISTS (SELECT * FROM preguntas_publicaciones r WHERE r.preguntas_publicaciones_id = p.id)");			
 			if(!empty($result2)){
 				foreach ($result2 as $row){
 					$condicion="usuarios_id={$row["usuarios_id"]}";
-					$usuario=$bd->doSingleSelect("usuarios_accesos",$condicion);
+					$usuario=$this->doSingleSelect("usuarios_accesos",$condicion);
 					$resultado[$i]["preguntas"][]=array("pregunta"=>$row["contenido"],"usuario"=>$usuario["seudonimo"]);
 				}
 			}else{	
@@ -410,10 +415,10 @@ class publicaciones{
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$preguntas=array();
 		$condicion="publicaciones_id=$id AND preguntas_publicaciones_id IS NULL";
-        $result=$bd->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id and status <> 2 order by fecha desc");	
+        $result=$this->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id and status <> 2 order by fecha desc");	
         foreach ($result as $r){
         $segundos=strtotime('now') - strtotime($r["fecha"]);
 		$tiempo = $this -> getTiempo($segundos);
@@ -426,10 +431,10 @@ class publicaciones{
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$preguntas=array();
 		$condicion="publicaciones_id=$id AND preguntas_publicaciones_id IS NULL";
-        $result=$bd->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id and usuarios_id=$usr_id order by fecha desc");	
+        $result=$this->query("SELECT * FROM preguntas_publicaciones WHERE preguntas_publicaciones_id IS NULL and publicaciones_id=$id and usuarios_id=$usr_id order by fecha desc");	
         foreach ($result as $r){
         	$preguntas[]=array("id"=>$r["id"],"pregunta"=>$r["contenido"],"pre_pub_id"=>$r["preguntas_publicaciones_id"],"usr_id"=>$r["usuarios_id"]);
   		}
@@ -440,10 +445,10 @@ class publicaciones{
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$preguntas=array();
 		$condicion="publicaciones_id=$id AND preguntas_publicaciones_id IS NULL";
-        $result=$bd->query("select * from preguntas_publicaciones pp, usuarios_accesos u where pp.usuarios_id=u.usuarios_id and 
+        $result=$this->query("select * from preguntas_publicaciones pp, usuarios_accesos u where pp.usuarios_id=u.usuarios_id and 
         id not in (SELECT preguntas_publicaciones_id FROM `preguntas_publicaciones` WHERE preguntas_publicaciones_id is not null) 
         and pp.preguntas_publicaciones_id is NULL and pp.publicaciones_id=$id order by fecha");	
         foreach ($result as $r){
@@ -456,14 +461,14 @@ class publicaciones{
 	
 
 	public function listarPublicaciones($criterios=NULL){		
-		$bd=new bd();
+		
 		if(!is_null($criterios)){			
 			$condicion="";
 			foreach ($criterios as $r=>$valor) {
 				$condicion.=$r . $valor . " AND ";
 			}
 			$condicion=substr($condicion,0,strlen($condicion)-4);
-	        $result=$bd->doFullSelect("publicaciones",$condicion);
+	        $result=$this->doFullSelect("publicaciones",$condicion);
 			if(!empty($result)){
 				return $result;
 			}else{		
@@ -471,7 +476,7 @@ class publicaciones{
 			}
 	        	        
 		}else{	
-			$result=$bd->doFullSelect("publicaciones");
+			$result=$this->doFullSelect("publicaciones");
 			if(!empty($result)){
 				return $result;
 			}else{
@@ -494,9 +499,9 @@ class publicaciones{
 		}
 	}
 	public function getFavoritos($devuelveVacio=false){
-		$bd=new bd();
+		
 		$consulta="select count(*) as tota from publicaciones_favoritos where visitas_publicaciones_id=$this->visitas_publicaciones_id";
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			foreach ($result as $key => $value) {
 				if($value["tota"]>0){
@@ -514,13 +519,13 @@ class publicaciones{
 		}
 	}
 	public function isFavorito($id=NULL){
-		$bd=new bd();
+		
 		if(is_null($id)){
 			$id=$this->id;
 		}
 		$consulta="select * from publicaciones_favoritos where 
 		usuarios_id={$_SESSION['id']} and visitas_publicaciones_id in (select visitas_publicaciones_id from publicaciones where id=$id)";
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			foreach ($result as $r => $valor) {
 				return true;
@@ -532,10 +537,10 @@ class publicaciones{
 		//Si tipo=1 devuelve las veces compartido en facebook
 		//Si tipo=2 devuelve las veces compartido en twitter
 		//Si tipo=3 devuelve la suma de los 2
-		$bd=new bd();
+		
 		$condicion="";
 		$condicion="id=$this->visitas_publicaciones_id";
-		$result=$bd->doSingleSelect("visitas_publicaciones",$condicion);
+		$result=$this->doSingleSelect("visitas_publicaciones",$condicion);
 		if(!empty($result)){
 			switch($tipo){
 				case 1:
@@ -557,14 +562,14 @@ class publicaciones{
 		return $devolver;
 	}
 	public function getFotoN($n){
-		$bd=new bd();
+		
 		$condicion="publicaciones_id=$this->id";
-		$result=$bd->doFullSelect("fotosxpublicaciones",$condicion);
+		$result=$this->doFullSelect("fotosxpublicaciones",$condicion);
 		if(!empty($result)){
 			$contador=0;
 			foreach ($result as $r) {
 				 $contador++;
-				 $busqueda=$bd->doSingleSelect("fotos","id={$r['fotos_id']}","ruta");			 
+				 $busqueda=$this->doSingleSelect("fotos","id={$r['fotos_id']}","ruta");			 
 				 $ruta=$busqueda["ruta"].$r["fotos_id"].".png";
 				 if($contador==$n){
 				 	break;
@@ -581,17 +586,17 @@ class publicaciones{
 		}
 	}
 	public function actualizarPublicacion($parametros,$monto,$fotos){
-		$bd=new bd();
+		
 		$foto = new fotos();
 		$condicion="id=$this->id";
 		$params["titulo"] = ucwords(strtolower($params["titulo"]));
-		$result=$bd->doUpdate("publicaciones",$parametros,$condicion);
+		$result=$this->doUpdate("publicaciones",$parametros,$condicion);
 		$params["monto"]=$monto;
 		$this->setMonto($monto);
 		$foto->path = "../../".$foto->path;
-		$listaFotos=$bd->doFullSelect("fotosxpublicaciones","publicaciones_id=$this->id");
-		$result=$bd->query("delete from fotosxpublicaciones where publicaciones_id=$this->id");
-		$ultimafoto=$bd->query("select MAX(id) as ultimo from fotos");
+		$listaFotos=$this->doFullSelect("fotosxpublicaciones","publicaciones_id=$this->id");
+		$result=$this->query("delete from fotosxpublicaciones where publicaciones_id=$this->id");
+		$ultimafoto=$this->query("select MAX(id) as ultimo from fotos");
 		foreach ($ultimafoto as $key) {
 			$ultima=$key["ultimo"];
 		}		
@@ -606,20 +611,20 @@ class publicaciones{
 				$filteredData=substr($data_url, strpos($data_url, ",")+1);			
 				//Decodificar la dataurl
 				$unencodedData=base64_decode($filteredData);
-				$bd->doInsert("fotos",array("id"=>$nueva,"ruta"=>"galeria/fotos/2015/12/"));
-				$bd->doInsert("fotosxpublicaciones",array("fotos_id"=>$nueva,"publicaciones_id"=>$this->id));
+				$this->doInsert("fotos",array("id"=>$nueva,"ruta"=>"galeria/fotos/2015/12/"));
+				$this->doInsert("fotosxpublicaciones",array("fotos_id"=>$nueva,"publicaciones_id"=>$this->id));
 				//subir la imagen
 				$ruta="../../../galeria/fotos/2015/12/{$nueva}.png";
 				file_put_contents($ruta, $unencodedData);
 			}else{				
-				$bd->doInsert("fotosxpublicaciones",array("fotos_id"=>$listaFotos[$fila]["fotos_id"],"publicaciones_id"=>$listaFotos[$fila]["publicaciones_id"]));
+				$this->doInsert("fotosxpublicaciones",array("fotos_id"=>$listaFotos[$fila]["fotos_id"],"publicaciones_id"=>$listaFotos[$fila]["publicaciones_id"]));
 				$fila++;
 			}
 		}
 		return true;
 	}
 	public function volveraPublicar($parametros){
-		$bd=new bd();		
+				 
 		$parametros["descripcion"]=$this->descripcion;
 		$parametros["dias_garantia"]=$this->dias_garantia;
 		$parametros["dafactura"]=$this->dafactura;
@@ -631,15 +636,15 @@ class publicaciones{
 		$parametros["clasificados_id"]=$this->clasificados_id;
 		$parametros["vencimientos_publicaciones_id"]=$this->vencimientos_publicaciones_id;
 		$parametros["titulo"] = ucwords(strtolower($parametros["titulo"]));
-		$result = $bd->doInsert($this->table, $parametros);
+		$result = $this->doInsert($this->table, $parametros);
 		if($result){
-			$ultimoId=$bd->lastInsertId();
+			$ultimoId=$this->lastInsertId();
 			$tiempo = date("Y-m-d H:i:s",time());			
-			$bd->doInsert("publicaciones_montos",array("fecha"=>$tiempo,"monto"=>$parametros["monto"],"publicaciones_id"=>$ultimoId));
-			$bd->doInsert("publicacionesxstatus",array("fecha"=>$tiempo,"publicaciones_id"=>$ultimoId,"status_publicaciones_id"=>1));
-			$fotos=$bd->doFullSelect("fotosxpublicaciones","publicaciones_id=$this->id","fotos_id");
+			$this->doInsert("publicaciones_montos",array("fecha"=>$tiempo,"monto"=>$parametros["monto"],"publicaciones_id"=>$ultimoId));
+			$this->doInsert("publicacionesxstatus",array("fecha"=>$tiempo,"publicaciones_id"=>$ultimoId,"status_publicaciones_id"=>1));
+			$fotos=$this->doFullSelect("fotosxpublicaciones","publicaciones_id=$this->id","fotos_id");
 			foreach($fotos as $f){
-				$bd->doInsert("fotosxpublicaciones",array("fotos_id"=>$f['fotos_id'],"publicaciones_id"=>$ultimoId));
+				$this->doInsert("fotosxpublicaciones",array("fotos_id"=>$f['fotos_id'],"publicaciones_id"=>$ultimoId));
 			}
 			return $result;
 		}

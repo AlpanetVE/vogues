@@ -1,4 +1,4 @@
-<?php
+<?php require 'config/core.php';
 if(!isset($_GET["tipo"])){
 	header ( "Location: index.php" );
 }
@@ -67,8 +67,8 @@ switch($_GET["tipo"]){
 				$('.ctw_manager').hide();
 				$('#vin_tw_red_kill').hide();
 				$('#vin_tw_red_img').attr('src',"prueba");
-				$('#c-tw').attr('src',"galeria/img/logos/silueta-bill.png");
-				$('#f-tw').attr('src',"galeria/img/logos/silueta-bill.png");
+				$('#c-tw').attr('src',"galeria/img-site/logos/silueta-bill.png");
+				$('#f-tw').attr('src',"galeria/img-site/logos/silueta-bill.png");
 				$('#vin_tw_red_button').text("Vincula tu cuenta de Twitter");
 				$('#vin_tw_red_button').attr('href','http://apreciodepana.com/fcn/f_manager/add_tw_alt.php');
 				$('#vin_tw_red_kill').attr('pid',0);
@@ -89,8 +89,8 @@ switch($_GET["tipo"]){
 				$('.cfb_manager').hide();
 				$('#vin_fb_red_kill').hide();
 				$('#vin_fb_red_img').attr('src',"prueba");
-				$('#c-fb').attr('src',"galeria/img/logos/silueta-bill.png");
-				$('#f-fb').attr('src',"galeria/img/logos/silueta-bill.png");
+				$('#c-fb').attr('src',"galeria/img-site/logos/silueta-bill.png");
+				$('#f-fb').attr('src',"galeria/img-site/logos/silueta-bill.png");
 				$('#vin_fb_red_button').text("Vincula tu cuenta de Facebook");
 				$('#vin_fb_red_button').attr('disabled',false);
 				$('#vin_fb_red_kill').attr('pid',0);
@@ -111,8 +111,8 @@ switch($_GET["tipo"]){
 				$('.cfp_manager').hide();
 				$('#vin_fbp_red_kill').hide();
 				$('#vin_fbp_red_img').attr('src',"prueba");
-				$('#c-fp').attr('src',"galeria/img/logos/silueta-bill.png");
-				$('#f-fp').attr('src',"galeria/img/logos/silueta-bill.png");
+				$('#c-fp').attr('src',"galeria/img-site/logos/silueta-bill.png");
+				$('#f-fp').attr('src',"galeria/img-site/logos/silueta-bill.png");
 				$('#vin_fbp_red_button').text("Vincula tu fan page");
 				$('#vin_fbp_red_button').attr('disabled',false);
 				$('#vin_fbp_red_kill').attr('pid',0);

@@ -8,7 +8,7 @@
 				<br>
 			<div class="row">
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/banceso.jpg">
+					<img src="galeria/img-site/bancos/banceso.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -26,7 +26,7 @@
 					<br>
 				</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/mercantil.jpg">
+					<img src="galeria/img-site/bancos/mercantil.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -35,7 +35,7 @@
 					<br>
 					Titular
 					<br>
-					Vogue's Company, C.A.
+					<?php echo COMPANY_NAME; ?>, C.A.
 					<br>
 					RIF: J-402930810 
 					<br>
@@ -44,7 +44,7 @@
 					<br>
 					</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/provincial.jpg">
+					<img src="galeria/img-site/bancos/provincial.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -62,7 +62,7 @@
 					<br>
 				</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/bodlogo1.jpg">
+					<img src="galeria/img-site/bancos/bodlogo1.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -80,7 +80,7 @@
 					<br>
 				</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/bicentenaroio.jpg">
+					<img src="galeria/img-site/bancos/bicentenaroio.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -98,7 +98,7 @@
 					<br>
 				</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/sofitasajpg.jpg">
+					<img src="galeria/img-site/bancos/sofitasajpg.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -116,7 +116,7 @@
 					<br>
 				</div>
 				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10 t12'>
-					<img src="galeria/img/bancos/venezuela.jpg">
+					<img src="galeria/img-site/bancos/venezuela.jpg">
 					<br>
 					<br>
 					Cuenta Corriente
@@ -133,7 +133,7 @@
 					<br>
 					<br>
 				</div>
-				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10'><br><br><br> <a target="_blank" href="https://docs.google.com/forms/d/1wx5IKO-pLao4WN9B3PJc1qpyHkFrlbFBLsS_rUX3I0w/viewform"><button class="btn btn-primary2 t18">Informar Pago</button></a></div>
+				<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 text-center marB10'><br><br><br> <a target="_blank" href="compras.php?tipo=sinconcretar"><button class="btn btn-primary2 t18">Informar Pago</button></a></div>
 			</div>
 			</div>
 			<div class="contenedor text-justify pad20 marB20 sombra-div" >

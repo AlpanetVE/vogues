@@ -1,81 +1,4 @@
-
-
 @CHARSET "UTF-8";
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "FontAwesome";
-	src: url("../fonts/fontawesome-webfont.ttf") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues";
-	src: url("../fonts/vogues.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues2";
-	src: url("../fonts/vogues2.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues3";
-	src: url("../fonts/vogues3.OTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues4";
-	src: url("../fonts/vogues4.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues5";
-	src: url("../fonts/vogues5.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues6";
-	src: url("../fonts/vogues6.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "vogues7";
-	src: url("../fonts/vogues7.TTF") format("truetype");
-}
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "handy";
-	src: url("../fonts/comesinhandy.TTF") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "sharpie";
-	src: url("../fonts/HollySharpie.ttf") format("truetype");
-}
-
-@font-face {
-	/*R Definir fuentes del sitio*/
-	font-family: "magic";
-	src: url("../fonts/Magic Pies.otf") format("truetype");
-}
-
-
-/* fieldset y checkbox*/
-
-
-
-/* fieldset y checkbox----------------------------------------------------------------------------------------*/
-
-
-body {
-	margin: 0; 
-	font-size: 12px;
-	margin-top: 100px;
-	margin-bottom:100px;
-	font-family: "vogues7";
-}
 
 header {
 	position: fixed;
@@ -85,8 +8,6 @@ header {
 	z-index: 999;
 	margin:0 auto;
 }
-
-
 
 .text-dec-none:hover,  .text-dec-none:active, .text-dec-none, .text-dec-none:visited, .text-dec-none:before, .text-dec-none:focus, .text-dec-none:after
 {
@@ -185,6 +106,10 @@ box-shadow: 2px 2px 12px -5px rgba(0,0,0,0.75);
 .borBD
 {
 	border-bottom: #ccc 1px dashed;
+}
+.borBS
+{
+	border-bottom: 1px solid rgb(238, 238, 238);
 }
 
 .mar-perfil-amigos {
@@ -1025,12 +950,12 @@ select::-webkit-scrollbar-thumb {
 	color: #333;
 }
 
-.form-group>.form-control-feedback {
+.form-group .form-control-feedback {
 	margin-right: 8px;
-	margin-top: 0.5px;
+	margin-top: 1.8px;
 	background: #FFF;
 	width: 25px;
-	height: 25px;
+	height: 27px;
 	line-height: 30px;
 }
 
@@ -1041,7 +966,6 @@ select::-webkit-scrollbar-thumb {
 .form-apdp>div>div {
 	margin-bottom: 5px;
 }
-
 .form-apdp>div>.input {
 	margin-bottom: 10px;
 }
@@ -1300,7 +1224,7 @@ color: #06C;
 }
 
 .cargador {
-	background-image: url(../galeria/img/loading.gif); background-repeat :
+	background-image: url(../galeria/img-site/loading.gif); background-repeat :
 	no-repeat;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -1424,7 +1348,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1438,7 +1362,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1451,7 +1375,7 @@ width: 100px ;
 border: 1px dashed #999 ; 
 float: left ;
  margin-left: 10px ; 
-		background-image: url("../galeria/img/camara.png");
+		background-image: url("../galeria/img-site/camara.png");
 		background-size: 60px 60px ;
 	 background-repeat: no-repeat ;
 	  background-position: center center ;
@@ -1477,6 +1401,15 @@ float: left ;
 	margin-top: 5px;
 	margin-bottom: 0px;
 	text-aling: center;
+}
+
+
+.admin-elim-categ{
+	color: red;
+}
+
+.admin-elim-disabled{
+	color:gray;
 }
 
 /* ************* Fin Resumen ************* */
@@ -1745,7 +1678,7 @@ opacity: 1;
 	}
 	.portada {
 		height: 300px;
-		background-image: url("../galeria/img/fondos/portada2.jpg");
+		background-image: url("../galeria/img-site/fondos/portada2.jpg");
 		background-repeat: repeat;
 	}
 	.seu-nom-perfil-header {

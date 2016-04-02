@@ -15,7 +15,7 @@
         langs: {
             cs: {
                 foreColor: "Barva textu",
-                backColor: "Barva pozad&iacute;"
+                backColor: "Barva pozadí"
             },
             en: {
                 foreColor: "Text color",

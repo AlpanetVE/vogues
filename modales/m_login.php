@@ -1,4 +1,4 @@
-<?php include_once 'clases/bd.php';?>
+<?php ?>
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-log2">
 	<div class="modal-dialog modal-sm">
@@ -9,7 +9,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title">
-					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span
+					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span
 						class="marL15">Ingresa</span>
 				</h3>
 			</div>

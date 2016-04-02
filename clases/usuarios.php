@@ -1,6 +1,5 @@
 <?php
 include_once 'manager/autoload.php';
-include_once 'bd.php';
 include_once 'fotos.php';
 include_once 'email.php';
 use OneAManager\Handler_NewSocialConnection;
@@ -8,7 +7,7 @@ use OneAManager\Handler_NewSocialConnection;
 /**
  *
  */
-class usuario {
+class usuario extends bd {
 	/* * * * * * * * * * * * * * * * * * * * * * *
 	 * ===========--- Attributes ---============ *
 	 * * * * * * * * * * * * * * * * * * * * * * */
@@ -66,6 +65,7 @@ class usuario {
 	 * ===========--- Contructor ---============ *
 	 * * * * * * * * * * * * * * * * * * * * * * */
 	public function usuario($id = NULL) {
+		parent::__construct();
 		if ($id != NULL) {
 			// Hago consulta;
 			$this->buscarUsuario ( $id );
@@ -90,23 +90,23 @@ class usuario {
 	public function crearUsuario() {
 		if (isset ( $this->n_identificacion ) xor isset ( $this->j_rif )) {
 			if (isset ( $this->a_seudonimo )) {
-				$bd = new bd ();				
-				$result = $bd->doInsert ( $this->u_table, $this->serializarDatos ( "u_" ) );
+								
+				$result = $this->doInsert ( $this->u_table, $this->serializarDatos ( "u_" ) );
 				if ($result == true) {
 					$result = 0;
-					$this->id = $bd->lastInsertId ();
+					$this->id = $this->lastInsertId ();
 					$hnsc= new Handler_NewSocialConnection();
 					if($red_social=$hnsc->returnTableAndBody($this->id)){
-						if(!$bd->doInsert($red_social['table'],$red_social['fields']))
-							error_log('Error occurred:'.implode(":",$bd->errorInfo()));
+						if(!$this->doInsert($red_social['table'],$red_social['fields']))
+							error_log('Error occurred:'.implode(":",$this->errorInfo()));
 					}
 					if (isset ( $this->n_identificacion )) {
-						$result += $bd->doInsert ( $this->n_table, $this->serializarDatos ( "n_", $this->u_table ) );
+						$result += $this->doInsert ( $this->n_table, $this->serializarDatos ( "n_", $this->u_table ) );
 					} else {
-						$result += $bd->doInsert ( $this->j_table, $this->serializarDatos ( "j_", $this->u_table ) );
+						$result += $this->doInsert ( $this->j_table, $this->serializarDatos ( "j_", $this->u_table ) );
 					}
-						$result += $bd->doInsert ( $this->a_table, $this->serializarDatos ( "a_", $this->u_table ) );
-						$result += $bd->doInsert ( $this->s_table, $this->serializarDatos ( "s_", $this->u_table ) );
+						$result += $this->doInsert ( $this->a_table, $this->serializarDatos ( "a_", $this->u_table ) );
+						$result += $this->doInsert ( $this->s_table, $this->serializarDatos ( "s_", $this->u_table ) );
 					if ($result >= 3) {
 						return true;
 					} else {						 
@@ -125,7 +125,7 @@ class usuario {
 	
 	public function getAllPublishedWithinTimeFrame($uid,$sn,$frame,$timezone){
 		$min = $timezone-($frame*60);
-		$db = new bd();
+		
 		$statement = $db->prepare("SELECT * FROM manager_stats WHERE userid=? AND (time BETWEEN ? AND ?) AND type=?");
 		$statement->execute(array($uid,$min,$timezone,$sn));
 		$rowCount=$statement->rowCount();
@@ -135,22 +135,22 @@ class usuario {
 	}
 	
 	public function tieneFacebook(){
-		$bd = new bd();
-		return $bd->doSingleSelect("manager_fb_acc", " userid = ".$this->id);
+		
+		return $this->doSingleSelect("manager_fb_acc", " userid = ".$this->id);
 	}
 	
 	public function tieneTwitter(){
-		$bd = new bd();
-		return $bd->doSingleSelect("manager_tw_acc", " userid = ".$this->id);
+		
+		return $this->doSingleSelect("manager_tw_acc", " userid = ".$this->id);
 	}
 	
 	public function tieneFanpage(){
-		$bd = new bd();
-		return $bd->doSingleSelect("manager_fbp_acc", " userid = ".$this->id);
+		
+		return $this->doSingleSelect("manager_fbp_acc", " userid = ".$this->id);
 	}
 	
 	public function getLastPublishedTime($uid,$sn){
-		$db = new bd();
+		
 		$statement = $db->prepare("SELECT * FROM manager_stats WHERE userid=? AND social_network=? ORDER BY time DESC LIMIT 1");
 		if($statement->execute(array($uid,$sn))){
 			$fetch=$statement->fetchAll();
@@ -161,12 +161,12 @@ class usuario {
 	}
 	
 	public function listarUsuariosConPublicaciones($status=1){
-		$bd = new bd();
+		
 		$time = strtotime("00:00",time());
 		$consulta="select * from usuarios where id in (
 			select usuarios_id from publicaciones WHERE (publicar_twitter=1 OR publicar_facebook=1 OR publicar_fanpage=1 OR publicar_grupo=1) AND id in(
 			select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin IS NULL) AND last_share<$time ORDER BY last_share ASC )";
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		$devolver=array();
 		if(!empty($result)){
 			foreach($result as $r){
@@ -176,7 +176,7 @@ class usuario {
 				WHERE a.usuarios_id={$r["id"]} AND (a.stock>0 OR a.stock IS NULL) AND (a.publicar_twitter=1 OR a.publicar_facebook=1 OR a.publicar_fanpage=1 OR a.publicar_grupo=1)
 				ORDER BY a.last_share ASC
 				LIMIT 1";
-				if($res=$bd->query($statement)){
+				if($res=$this->query($statement)){
 					$publicaciones=$res;
 				}else $publicaciones=array();
 				$statement="SELECT COUNT(*) as total FROM publicaciones AS a
@@ -184,7 +184,7 @@ class usuario {
 				RIGHT JOIN publicacionesxstatus as c ON a.id=c.publicaciones_id AND c.status_publicaciones_id=1 AND c.fecha_fin IS NULL
 				WHERE a.usuarios_id={$r["id"]} AND (a.stock>0 OR a.stock IS NULL) AND (a.publicar_twitter=1 OR a.publicar_facebook=1 OR a.publicar_fanpage=1 OR a.publicar_grupo=1)
 				ORDER BY a.last_share ASC";
-				if($res=$bd->query($statement)){
+				if($res=$this->query($statement)){
 					$res=$res->fetchAll();
 					$total=$res[0]['total'];
 				}else $total=0;
@@ -201,10 +201,10 @@ class usuario {
 	}
 	
 	public function ingresoUsuarioPorID(){
-		$bd= new bd();
+		
 		$foto = new fotos();
 		$condicion = " usuarios_id = {$this->id}";
-		$result = $bd->doSingleSelect($this->a_table,$condicion);
+		$result = $this->doSingleSelect($this->a_table,$condicion);
 		if(!empty($result)){
 			session_start();
 			$_SESSION["id"] = $result["usuarios_id"];
@@ -225,7 +225,7 @@ class usuario {
 	}
 	
 	public function ingresoUsuario($login, $password, $url){
-		$bd= new bd();
+		
 		$foto = new fotos();
 		if(isset($login["seudonimo"])){
 			$condicion = "seudonimo = '{$login["seudonimo"]}'";
@@ -241,7 +241,7 @@ class usuario {
 			$condicion = "$condicion AND password = '$hash'";
 		}
 		
-		$result = $bd->doSingleSelect($this->a_table,$condicion);
+		$result = $this->doSingleSelect($this->a_table,$condicion);
 		if(!empty($result)){
 			if($result["bandera"]==0){ 
 				if($result["status_usuarios_id"]=='1'){ 
@@ -274,14 +274,14 @@ class usuario {
 
 	/********Funciones de restauracion de Claves**********/
 	public function recuperaClave($login){
-		$bd= new bd();
+		
 		$correo=new email();
 		if(isset($login["seudonimo"])){
 			$condicion = "seudonimo = '{$login["seudonimo"]}'";
 		}else{
 			$condicion = "email = '{$login["email"]}'";
 		}
-		$result = $bd->doSingleSelect($this->a_table,$condicion);
+		$result = $this->doSingleSelect($this->a_table,$condicion);
 		if(!empty($result)){
 			//if($result["status_usuarios_id"]=='1'){ 
 			$email=$result["email"];
@@ -302,14 +302,14 @@ class usuario {
 	}
 
 	function generaLinkTemporal($iduser,$seudonimo){
-		$bd= new bd();
+		
 		$cadena=$seudonimo.rand(1,99999).date('Y-m-d');
 		$token=sha1($cadena);
 		$this->r_id_usuario=$iduser;
 		$this->r_seudonimo=$seudonimo;
 		$this->r_token=$token;
 		$this->r_creado=date("Y-m-d H:i:s",time());	
-		$result=$bd->doInsert($this->r_table, $this->serializarDatos ( "r_" ));	
+		$result=$this->doInsert($this->r_table, $this->serializarDatos ( "r_" ));	
 		if($result==true){
      		 // Se devuelve el link que se enviara al usuario
 	      		$enlace = $_SERVER["SERVER_NAME"].'/restablecer.php?idusuario='.$iduser.'&token='.$token;
@@ -320,26 +320,26 @@ class usuario {
    		}     
 	}			
 	function comprobarToken($token){
-		$bd= new bd();
-		$result=$bd->doSingleSelect($this->r_table,"token = '$token'");
+		
+		$result=$this->doSingleSelect($this->r_table,"token = '$token'");
 		if($result)
 			return $result;
 		else 
 			return false;
 	}	
 
-public function setNewPassword($user,$clave){		
-		$bd=new bd();		
+public function setNewPassword($user,$clave){	
+				
 		$clave = hash ( "sha256", $clave );		
 				
 		$actualizar=array( 'password'=>$clave);		
 		//$parametro=$actualizar["password"]=$clave;		
 		$condicion="usuarios_id=$user";		
-		$result=$bd->doUpdate($this->a_table, $actualizar, $condicion);		
+		$result=$this->doUpdate($this->a_table, $actualizar, $condicion);		
 		return $result;		
 	}		
 /*public function ingresoUsuarioAdmin($login, $password){
-		$bd= new bd();
+		
 		$foto = new fotos();
 		if(isset($login["seudonimo"])){
 			$condicion = "seudonimo = '{$login["seudonimo"]}'";
@@ -348,7 +348,7 @@ public function setNewPassword($user,$clave){
 		}
 		$hash = hash ( "sha256", $password );
 		$condicion = "$condicion AND password = '$hash' AND id_rol <= 2";
-		$result = $bd->doSingleSelect($this->a_table,$condicion);
+		$result = $this->doSingleSelect($this->a_table,$condicion);
 		
 	 if(!empty($result)){
 			if($result["bandera"]==0){
@@ -410,8 +410,8 @@ public function setNewPassword($user,$clave){
 	 * =========--- Getters ---========= *
 	 * * * * * * * * * * * * * * * * * * */
 	public function getdatosUsuarios(){
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->u_table,"id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->u_table,"id = {$this->id}");
 		if($result){
 			$this->datosUsuario($result["direccion"], $result["telefono"], $result["descripcion"], $result["estados_id"], $result["facebook"], $result["twitter"],$result["website"]);
 			$this->id = $result["id"];
@@ -420,8 +420,8 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	public function getdatosJuridico(){
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->j_table, "usuarios_id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->j_table, "usuarios_id = {$this->id}");
 		if($result){
 			$this->datosJuridico($result["rif"], $result["razon_social"], $result["tipo"], $result["categorias_juridicos_id"]);
 		}else{
@@ -429,8 +429,8 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	public function getdatosNatural(){
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->n_table,"usuarios_id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->n_table,"usuarios_id = {$this->id}");
 		if($result){
 			$this->datosNatural($result["identificacion"], $result["nombre"], $result["apellido"], $result["tipo"]);
 		}else{
@@ -438,8 +438,8 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	public function getdatosAcceso(){
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->a_table,"usuarios_id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->a_table,"usuarios_id = {$this->id}");
 		if($result){ 
 			$this->datosAcceso($result["seudonimo"], $result["email"], $result["password"], $result["nivel"], $result["id_rol"], $result["status_usuarios_id"]); 
 				
@@ -448,8 +448,8 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	public function getdatosStatus(){
-		$bd = new bd();
-		$result = $bd->doSingleSelect($this->s_table,"usuarios_id = {$this->id}");
+		
+		$result = $this->doSingleSelect($this->s_table,"usuarios_id = {$this->id}");
 		if($result){
 			$this->datosStatus($result["fecha"],$result["status_usuarios_id"]);
 		}else{
@@ -519,17 +519,17 @@ public function setNewPassword($user,$clave){
 	/*Se puede borrar*/
 	public function __set($property, $value) {
 		if (property_exists ( $this, $property )) {
-			$bd = new bd ();
-			$bd->doUpdate ( $this->table, array (
+			
+			$this->doUpdate ( $this->table, array (
 					$property => $value 
 			) );
 			$this->$property = $value;
 		}
 	}
 	public function getEstado($formateado=NULL){
-		$bd=new bd();
+		
 		$condicion="id={$this->u_estados_id}";
-		$resultado=$bd->doSingleSelect("estados",$condicion,"nombre");
+		$resultado=$this->doSingleSelect("estados",$condicion,"nombre");
 		if(!empty($resultado)){
 			if(is_null($formateado)){
 				return  ($resultado["nombre"]);
@@ -542,9 +542,9 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	public function getTiempo(){
-		$bd=new bd();		
+				
 		$condicion="usuarios_id={$this->id}";
-		$resultado=$bd->doSingleSelect("usuariosxstatus",$condicion,"fecha");				
+		$resultado=$this->doSingleSelect("usuariosxstatus",$condicion,"fecha");				
 		if(!empty($resultado)){
 			$segundos=strtotime('now') - strtotime($resultado["fecha"]);
 			$dias=intval($segundos/60/60/24);
@@ -579,9 +579,9 @@ public function setNewPassword($user,$clave){
 			return false;		
 		}
 		/*
-		$bd=new bd();
+		
 		$condicion="id=$this->usuarios_id";
-		$resultado=$bd->doSingleSelect("usuariosxstatus",$condicion,"fecha");
+		$resultado=$this->doSingleSelect("usuariosxstatus",$condicion,"fecha");
 		if(!empty($resultado)){
 						
 			return "2 meses";
@@ -620,14 +620,14 @@ public function setNewPassword($user,$clave){
 		if(empty($order)){
 			$order='id desc';
 		}		
-		$bd=new bd();
+		
 		$limite = ($pagina-1) * 25;
 		$consulta="select * from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) ";
 		
 		$consulta.=" order by $order";
 		
 		$consulta.=" LIMIT 25 OFFSET $limite";
-		$result=$bd->query($consulta); 
+		$result=$this->query($consulta); 
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -636,7 +636,7 @@ public function setNewPassword($user,$clave){
 	}
 	
 	public function getAllPublicaciones($status=1,$id=NULL, $id_publicacion=NULL){		
-		$bd=new bd();
+		
 		$consulta="select * from publicaciones where 
 		id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null) ";
 				
@@ -645,7 +645,7 @@ public function setNewPassword($user,$clave){
 		}
 		
 		$consulta.=" order by id desc";  
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -654,9 +654,9 @@ public function setNewPassword($user,$clave){
 	}
 	
 	public function getCantPreguntasActivas($id = NULL){
-		$bd=new bd();
+		
 		$preguntas=array();
-        $result=$bd->query("select count(*) as cant from preguntas_publicaciones where id not in (SELECT preguntas_publicaciones_id FROM preguntas_publicaciones 
+        $result=$this->query("select count(*) as cant from preguntas_publicaciones where id not in (SELECT preguntas_publicaciones_id FROM preguntas_publicaciones 
         WHERE preguntas_publicaciones_id is not null) and preguntas_publicaciones_id is NULL and publicaciones_id in
          (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL )  ");	
         foreach ($result as $r){
@@ -669,9 +669,9 @@ public function setNewPassword($user,$clave){
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$preguntas=array();
-        $result=$bd->query("select count(*) as cant from preguntas_publicaciones where usuarios_id=$id and publicaciones_id in
+        $result=$this->query("select count(*) as cant from preguntas_publicaciones where usuarios_id=$id and publicaciones_id in
          (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL ) 
          and publicaciones_id not in ( SELECT id FROM publicaciones WHERE usuarios_id = $id ) ");	
         foreach ($result as $r){
@@ -685,37 +685,80 @@ public function setNewPassword($user,$clave){
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$preguntas=array();
-        $result=$bd->query("select count(*) as cant from preguntas_publicaciones where id in (select preguntas_publicaciones_id 
-        from notificaciones where leida=0 and usuarios_id=$id) and preguntas_publicaciones_id is not null ");	
+        $result=$this->query("select count(*) as cant from preguntas_publicaciones where id in (select preguntas_publicaciones_id 
+        from notificaciones where leida=0 and usuarios_id=$id) and preguntas_publicaciones_id is not null ");
+       			
         foreach ($result as $r){
         	$preguntas[]=array("cant"=>$r["cant"]);
   		}
 		return $preguntas;
 	}
 	
-	public function getCantNotificacionPregunta(){
-		$bd=new bd();
+	public function getCantNotificacionPregunta($id = NULL){
+		/*if(is_null($id)){
+			$id=$this->id;
+		}*/
 		$preguntas=array();
-		$consulta=" select count(*) as cant from preguntas_publicaciones where id in (select preguntas_publicaciones_id from notificaciones 
-		where leida=0) and preguntas_publicaciones_id is null ";
-        $result=$bd->query($consulta);	
+		
+		$listado= " select preguntas_publicaciones_id from notificaciones where leida=0 ";
+		if(!empty($id)){
+			##si envia filtro de ID es porque es usuario publico
+			$listado.= " and usuarios_id=$id";
+		}
+		
+		$consulta=" select count(*) as cant from preguntas_publicaciones where id in ($listado) and preguntas_publicaciones_id is null ";
+        $result=$this->query($consulta);	
         foreach ($result as $r){
         	$preguntas[]=array("cant"=>$r["cant"]);
   		}
 		return $preguntas;
 	}
-	
+	public function getCantNotiCompras($id = NULL){//Compras hechas por un usuario
+		/*if(is_null($id)){
+			$id=$this->id;
+		}*/
+		$compra=array();				
+        $consulta="select count(*) as cant from notificaciones where leida=0 and tipos_notificaciones_id=6";
+        $result=$this->query($consulta);
+        
+        foreach ($result as $r){
+        	$compra[]=array("cant"=>$r["cant"]);
+  		}
+		return $compra;
+	}
+	public function getCantNotiPago($id = NULL){//Compras hechas por un usuario
+		/*if(is_null($id)){
+			$id=$this->id;
+		}*/
+		$pago=array();
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and tipos_notificaciones_id=5 ");	
+        foreach ($result as $r){
+        	$pago[]=array("cant"=>$r["cant"]);
+  		}
+		return $pago;
+	}
+	public function getCantEnvios($id = NULL){//Compras hechas por un usuario
+		if(is_null($id)){
+			$id=$this->id;
+		}
+		$cant=array();
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=7 ");	
+        foreach ($result as $r){
+        	$cant[]=array("cant"=>$r["cant"]);
+  		}
+		return $cant;
+	}
 	public function getCantidadPub($status=1,$id=NULL){
-		$bd=new bd();
+		
 		$consulta="select count(*) as tota from publicaciones where id in (select publicaciones_id from publicacionesxstatus where status_publicaciones_id=$status and fecha_fin is null)";
 		
 		if(!empty($id)){
 			$consulta.=" and usuarios_id=$id";
 		}
 		$consulta.=" order by id desc";
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		foreach ($result as $key => $valor) {
 			//if($valor["tota"]<10){
 			//	return "0" . $valor["tota"];
@@ -726,7 +769,7 @@ public function setNewPassword($user,$clave){
 	}
 		
 	public function getPublicacionesFavoritas($orden=NULL,$pagina=NULL){
-		$bd=new bd();
+		
 		$orden=is_null($orden)?"":" order by $orden";
 //		$palabra=is_null($palabra)?"":" and titulo like '%{$_POST["palabra"]}%'";
 		$consulta="select * from publicaciones where 
@@ -738,15 +781,14 @@ public function setNewPassword($user,$clave){
 			$limite=($pagina - 1) * 25;
 			$consulta.=" LIMIT 25 OFFSET $limite";
 		}
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
 			return false;
 		}
 	}
-	public function getPreguntasCompra($id_usr, $id_publicacion=NULL){
-		$bd=new bd();
+	public function getPreguntasCompra($id_usr, $id_publicacion=NULL){		
 
 		$consulta="select * from publicaciones where 
 		id in (select publicaciones_id
@@ -761,7 +803,7 @@ public function setNewPassword($user,$clave){
 		
 		$consulta.=" order by id desc";  
 		
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -770,14 +812,14 @@ public function setNewPassword($user,$clave){
 		
 	}
 	
-	public function getAllDatos($id_usr){
-		$bd=new bd();
+	public function getAllDatosUsr($id_usr){
+		
 		$consulta="select * from publicaciones where 
 		id in (select publicaciones_id
 		from preguntas_publicaciones 
 		where usuarios_id=$id_usr and preguntas_publicaciones_id is null) and id in 
 		(select publicaciones_id from publicacionesxstatus where status_publicaciones_id=1 and fecha_fin IS NULL)";
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -785,26 +827,30 @@ public function setNewPassword($user,$clave){
 		}
 	}
 	
-	public function updateNotificaciones($id=NULL){
-		$id = $this->id;
-		$bd=new bd();
+	public function updateNotificaciones($id=NULL,$tipos_notificaciones_id=null){
 		$actualizar=array("leida"=>1);
-		$condicion="usuarios_id=$id and leida=0";
-		$bd->doUpdate("notificaciones",$actualizar,$condicion);	
+		$condicion="leida=0";
+		if(!empty($id)){
+			$condicion.=" and usuarios_id=$id";
+		}
+		if(!empty($tipos_notificaciones_id)){
+			$condicion.=" and tipos_notificaciones_id in ($tipos_notificaciones_id)";
+		}
+		$this->doUpdate("notificaciones",$actualizar,$condicion);
 	}
 	public function countFavoritos($id=NULL){
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
-		$result=$bd->query("select count(favoritos_id) as totaF from usuarios_favoritos where favoritos_id=$id");
+		
+		$result=$this->query("select count(favoritos_id) as totaF from usuarios_favoritos where favoritos_id=$id");
 		$row=$result->fetch();
 		return $row["totaF"];
 	}
 	
 	public function getUsuarios($status=NULL, $orden=NULL,$pagina=NULL){
 		
-		$bd=new bd();
+		
 		
 		$consulta="select usuarios.id, usuarios_accesos.seudonimo, usuarios_naturales.nombre, usuarios_naturales.apellido, roles.rol 
 		from usuarios inner join usuarios_accesos ON usuarios.id=usuarios_accesos.usuarios_id 
@@ -824,7 +870,7 @@ public function setNewPassword($user,$clave){
 			$consulta.=" limit 25 OFFSET $inicio"; 
 		}
 	
-		$result=$bd->query($consulta);
+		$result=$this->query($consulta);
 		if(!empty($result)){
 			return $result;
 		}else{
@@ -832,15 +878,15 @@ public function setNewPassword($user,$clave){
 		}
 	}	
 	public function updateStatus($usuarios_id=NULL, $status_usuarios_id=NULL){		 
-		$bd=new bd();
+		
 		$actualizar=array( 'status_usuarios_id'=>$status_usuarios_id);
 		$condicion="usuarios_id=$usuarios_id";
-		$result=$bd->doUpdate($this->a_table,$actualizar,$condicion);
+		$result=$this->doUpdate($this->a_table,$actualizar,$condicion);
 		return $result;
 	}
 	
 	public function updateUserGeneral($usuarios_id, $seudonimo=NULL, $email=NULL,$password=NULL,$id_rol=NULL){
-		$bd=new bd();		
+				
 		$actualizar=array( 'seudonimo'=>$seudonimo,'email'=>$email,'id_rol'=>$id_rol);
 		//si cambiaron la contrase�a	
 		if(!empty($password)){
@@ -848,7 +894,7 @@ public function setNewPassword($user,$clave){
 			$actualizar['password']=$password;
 		}		
 		$condicion="usuarios_id=$usuarios_id";
-		$result=$bd->doUpdate($this->a_table,$actualizar,$condicion);
+		$result=$this->doUpdate($this->a_table,$actualizar,$condicion);
 		return $result;
 	}
 	
@@ -856,9 +902,9 @@ public function setNewPassword($user,$clave){
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$panas=array();
-        $result=$bd->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=3 ");	
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=3 ");	
         foreach ($result as $r){
         	$panas[]=array("cant"=>$r["cant"]);
   		}
@@ -868,43 +914,43 @@ public function setNewPassword($user,$clave){
 		if(is_null($id)){
 			$id=$this->id;
 		}
-		$bd=new bd();
+		
 		$panas=array();
-        $result=$bd->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=4 ");	
+        $result=$this->query("select count(*) as cant from notificaciones where leida=0 and usuarios_id=$id and tipos_notificaciones_id=4 ");	
         foreach ($result as $r){
         	$panas[]=array("cant"=>$r["cant"]);
   		}
 		return $panas;
 	}
-	public function getAllNotificaciones($id=null, $pagina=null){
+	public function getAllNotificaciones($id=null, $pagina=null, $tipos_notificaciones_id=null){
 		/*if(is_null($id)){
 			$id=$this->id;
 		}*/
-			$bd = new bd();
-			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
-			pana_id pana from notificaciones where 1 ";
-			
-			if(!empty($id)){
-				##si envia filtro de ID es porque es usuario
-				$consulta.= " and usuarios_id=$id  ";
-			}else{
-				##traemos notifs tipo pregunta
-				$consulta.= " and tipos_notificaciones_id='1' ";				
-			}
-			$consulta .= " ORDER BY `notificaciones`.`fecha`  DESC ";
-			
-			
-			if(empty($pagina)){
-				$consulta.= " limit 25";
-			}else{
-				$start=($pagina - 1) * 25;
-				$consulta.=" LIMIT 25 OFFSET $start";
-			}
-			$result =$bd->query($consulta);
-			return $result;	
+		$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
+		pana_id pana from notificaciones where 1 ";
+		
+		if(!empty($id)){
+			##si envia filtro de ID es porque es usuario
+			$consulta.= " and usuarios_id=$id  ";
+		}
+		if(!empty($tipos_notificaciones_id)){
+			##si envia filtro de ID es porque es usuario
+			$consulta.= " and tipos_notificaciones_id in ($tipos_notificaciones_id) ";	
+		}
+		$consulta .= " ORDER BY `notificaciones`.`fecha`  DESC ";
+		
+		//var_dump($consulta);
+		if(empty($pagina)){
+			$consulta.= " limit 25";
+		}else{
+			$start=($pagina - 1) * 25;
+			$consulta.=" LIMIT 25 OFFSET $start";
+		}
+		$result =$this->query($consulta);
+		return $result;
 	}
 	public function getAllNotificacionesAdmin(){ 
-			$bd = new bd();
+			
 			$consulta = "select fecha, tipos_notificaciones_id tipo, usuarios_id usr, publicaciones_id pub, preguntas_publicaciones_id pregunta, 
 			pana_id pana from notificaciones where tipos_notificaciones_id='1' ORDER BY `notificaciones`.`fecha`  DESC limit 25";
 			if(empty($pagina)){
@@ -913,8 +959,9 @@ public function setNewPassword($user,$clave){
 				$start=($pagina - 1) * 25;
 				$consulta.=" LIMIT 25 OFFSET $start";
 			}
-			$result =$bd->query($consulta);
+			$result =$this->query($consulta);
 			return $result;	
 	}
+	
 	
 }

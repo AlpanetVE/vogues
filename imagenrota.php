@@ -1,5 +1,5 @@
 <?php
-include "clases/bd.php";
+require 'config/core.php';
 $bd=new bd();
 $c1=0;
 $c2=0;
@@ -14,7 +14,7 @@ foreach($result as $r=>$valor){
 	}else{
 		$c2++;
 		echo "<br>NO EXISTE EL ARCHIVO: $file";
-		copy("galeria/img/actualizar_foto.png",$file);
+		copy("galeria/img-site/actualizar_foto.png",$file);
 	}
 }
 echo "<br>Existen $c1 <br>";

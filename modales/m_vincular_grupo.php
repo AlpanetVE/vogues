@@ -7,7 +7,7 @@ aria-labelledby="myLargeModalLabel" id="grupo">
 				aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h3 class="modal-title " ><img src="galeria/img/logos/mascota.png" width="50" height="51"><span
+				<h3 class="modal-title " ><img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span
 				class="marL15">Vincular Grupo</span></h3>
 			</div>
 

@@ -1,4 +1,5 @@
 <?php 
+	require '../../../config/core.php';
 	include_once "../../../clases/usuarios.php";
 	switch($_POST["metodo"]){
 		case "buscar": 

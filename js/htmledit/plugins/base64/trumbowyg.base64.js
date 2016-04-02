@@ -21,7 +21,7 @@
                 file:   "Fichier"
             },
             cs: {
-              base64: "Vložit obr&aacute;zek",
+              base64: "Vložit obrázek",
               file: "Soubor"
             }
         },

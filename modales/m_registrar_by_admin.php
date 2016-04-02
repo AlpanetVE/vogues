@@ -1,5 +1,4 @@
-<?php include_once 'clases/bd.php';?>
-<?php include 'modales/m_cropper.php';?>
+<?php include_once 'modales/m_cropper.php';?>
 <div class="modal fade bs-example-modal-lg modal-conf-user" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-reg-admin">
 	<div class="modal-dialog modal-sm">
@@ -10,7 +9,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title " >
-					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span id="usr-reg-title-admin"
+					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="usr-reg-title-admin"
 						class="marL15">Registrar administrador</span>
 				</h3>
 			</div>
@@ -62,26 +61,19 @@
 							</div>
 							<div class="col-xs-12">
 								<span class="marL10"><i class="fa fa-map-marker"></i>
-									Sambil</span>
+									Ubicacion</span>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 								<select class=" form-select " id="e_estado_admin" name="e_estado_admin">
-									<option value="" disabled selected>Seleccione un Estado</option>
 								<?php								
 								$estados = new bd ();
-								foreach ( $estados->getDatosBase ( "estados", 1 ) as $estado ) :
+								foreach ( $estados->getDatosBase ( "estados", 1 ,'id=21') as $estado ) :
 									?>
 								<option value="<?php echo $estado["id"]; ?>"><?php echo $estado["nombre"]; ?></option>
 								<?php endforeach;?>
 								</select>
 							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
-								 
-							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
-								<textarea rows="4" cols="" placeholder=" Direccion del Local" id="e_direccion_admin" name="e_direccion_admin"
-									class="form-textarea"></textarea>
-							</div>
+							
 						</div>
 					</section>				
 					<section class="form-apdp" style="display: none" data-title="Informaci&oacute;n de acceso"

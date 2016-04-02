@@ -81,7 +81,6 @@ function verDetalle(elId){
 <?php
 include_once "clases/publicaciones.php";
 include_once "clases/usuarios.php";
-include_once "clases/bd.php";
 include_once "clases/fotos.php";
 $foto=new fotos();
 ?>
@@ -108,7 +107,7 @@ $foto=new fotos();
         </div>
         <br> 
         <br>
-        <a href="#" class="t18 " style="text-decoration: underline;">Ver mas</a>
+        <a href="listado.php" class="t18 " style="text-decoration: underline;">Ver mas</a>
         <br>
         <br>
         <br>

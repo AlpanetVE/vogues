@@ -7,17 +7,37 @@
 			<div class="link"  ><a href="#" class=""><i class="glyphicon glyphicon-thumbs-up hvr-icon"></i>Reputacion</a></div>
 			
 		</li>-->
+		
+		
+		<!--  El main.js elimina los hidden de este menu -->
 		<li class="hidden admin-usuarios">
 			<a href="admin-usr.php" class=""><div class="link"> <i class="fa fa-user "></i>Administraci&oacute;n de Usuarios</div></a>			 
-		</li>
-		
+		</li>		
 		<li class="hidden venta">
 			<div class="link"><i class="fa fa-tags" ></i>Ventas<i class="fa fa-chevron-down"></i></div>
 			<ul class="submenu submenu-active" id="ventas" name="ventas">
-				<li  ><a href="ventas.php" class="" id="uno1"> Publicaciones</a></li>
-				<li><a href="#" >Ventas</a></li>
+				<li  ><a href="ventas.php?type=1" class="" id="uno1"> Publicaciones</a></li>
+				<li><a href="ventas.php?type=2" >Ventas</a></li>
 				<li ><a href="preguntas.php?tipo=1">Preguntas</a></li>
                 <li> <a href="#">Reclamos</a></li>
+			</ul>
+		</li>
+		
+	<!--	<li class="hidden inventario">
+			<div class="link"><i class="fa fa-archive" ></i>Inventario<i class="fa fa-chevron-down"></i></div>
+			<ul class="submenu submenu-active" id="ventas" name="ventas">
+				<li  ><a href="inventario.php?type=1" class="" id="uno1"> Categorias</a></li>
+				<li><a href="inventario.php?type=2" >Productos</a></li>
+			</ul>
+	</li> -->
+		
+		<li class="hidden compras-tienda">
+			<div class="link"><i class="fa fa-shopping-cart"></i>Compras<i class="fa fa-chevron-down"></i></div>
+			<ul class="submenu">
+				<li><a href="proveedor.php"> Proveedores</a></li>
+				<li><a href="producto.php">Inventario</a></li>
+				<li><a href="mercancia.php?type=1">Productos</a></li>
+				
 			</ul>
 		</li>
 		<li class="hidden compra">
@@ -25,7 +45,7 @@
 			<ul class="submenu ">
 				<li class="" ><a href="favoritos.php">Favoritos</a></li>
 				<li class=""><a href="preguntas.php?tipo=2">Preguntas</a></li>
-				<li class="" ><a href="#">Compras</a></li>
+				<li class="" ><a href="compras.php?tipo=sinconcretar">Compras</a></li>
 				
 			</ul>
 		</li>

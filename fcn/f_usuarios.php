@@ -1,7 +1,7 @@
 <?php
+require '../config/core.php';
 include_once '../clases/fotos.php';
 include_once '../clases/usuarios.php';
-include_once '../clases/bd.php';
 
 switch ($_POST["method"]) {
 	case "new" :
@@ -90,7 +90,7 @@ function getUser() {
 	}
 	/***no poseen foto los usuarios de la tienda**/
 	/*$foto = new fotos();*/
-	$valores ['ruta'] = 'galeria/img/logos/silueta-bill.png';
+	$valores ['ruta'] = 'galeria/img-site/logos/silueta-bill.png';
 	echo json_encode ( array (
 			"result" => "OK",
 			"campos" => $valores
@@ -451,7 +451,16 @@ function newUser() {
 	
 	function updateNot(){
 		$usr = new usuario($_POST["id"]);
-		$act = $usr ->updateNotificaciones($_POST["id"]);
+		if($usr->a_id_rol=='1' || $usr->a_id_rol=='2'){
+			$id=null;
+			$tipos_notificaciones_id='1,3,4,5,6';
+		}			
+		else{
+			$id=$_POST["id"];
+			$tipos_notificaciones_id=null;
+		}			
+		
+		$act = $usr ->updateNotificaciones($id,$tipos_notificaciones_id);
 		echo "ok";
 	}	
 

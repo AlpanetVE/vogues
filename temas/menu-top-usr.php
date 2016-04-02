@@ -1,4 +1,6 @@
-<?php if(!isset($_SESSION)){
+<?php
+include_once "clases/publicaciones.php";
+if(!isset($_SESSION)){
     session_start();	
 }
 /*else{
@@ -19,7 +21,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a href="index.php" class="navbar-brand"> <img style=""
-				class=" marT5 marB5 marL5" src="galeria/img/logos/logo-header.png"
+				class=" marT5 marB5 marL5" src="galeria/img-site/logos/logo-header.png"
 				width="auto" height="50px">
 			</a>
 		</div>
@@ -87,25 +89,31 @@
 				
 	<?php
 	$usr = new usuario($_SESSION["id"]);
-	$cant_compras = $usr->getCantRespuestas();
-	$cant_ventas = $usr -> getCantNotificacionPregunta();
-	/*$cant_panas = $usr -> getCantPanas();
-	$cant_pub = $usr -> getCantNotiPublicaciones();*/
+	
+	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2'){
+		$cant_ventas = $usr -> getCantNotificacionPregunta(null);
+		$alerts = $usr -> getAllNotificaciones(NULL,NULL,'1,3,4,5,6');
+		$cant_compras = 0;		
+		$cant_noticompra = $usr -> getCantNotiCompras(); //Notificaciones de compra
+		$cant_notipago = $usr -> getCantNotiPago();
+		$cant_envios = 0;
+	}
+	else {
+		$cant_compras = $usr->getCantRespuestas();
+		$cant_ventas = 0;		
+		$cant_notipago = 0;
+		$cant_noticompra = 0;
+		$cant_envios = $usr->getCantEnvios();
+		$alerts = $usr -> getAllNotificaciones($_SESSION["id"]);		
+	}
 	$cant_panas = 0;
 	$cant_pub = 0;
 	
 	$status = $usr -> s_status_usuarios_id;
 	
-	if($_SESSION['id_rol']=='1' || $_SESSION['id_rol']=='2')
-		$id_user_noti=null;
-	else 
-		$id_user_noti=$_SESSION["id"];
+	$visto=0;	
 	
-	$alerts = $usr -> getAllNotificaciones($id_user_noti);
-	$visto=0;
-	include_once "clases/publicaciones.php";
-	
-	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"];
+	$alertas = $cant_compras[0]["cant"] + $cant_ventas[0]["cant"] + $cant_panas[0]["cant"] + $cant_pub[0]["cant"]+$cant_noticompra[0]["cant"] + $cant_notipago[0]["cant"]+ $cant_envios[0]["cant"];
  
 ?>
 			 		
@@ -163,6 +171,27 @@
 								$tema = "Nuevos Articulos";
 								$id   = $id_pub;
 								$link = "detalle";
+							}
+							if($tipo==5){//Pagos
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Recibiste un pago.";
+								$id   = $id_pre;
+								$link = "venta-noti";
+							}
+							if($tipo==6){//Compras
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Tienes una Compra.";
+								$id   = $id_pre;
+								$link = "venta-noti";
+							}
+							if($tipo==7){//Envios
+								$foto = $pub -> getFotoPrincipal();
+								$title= $pub -> tituloFormateado();
+								$tema = "Tienes un envio nuevo.";
+								$id   = $id_pre;
+								$link = "compra-noti";
 							}
 						?>
 						<li data-id="<?php echo $id; ?>" data-id_pub="<?php echo $id_pub; ?>"  class="<?php echo $link; ?> noti-hover pointer">

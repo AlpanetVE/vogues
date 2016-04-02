@@ -19,11 +19,11 @@
 			 </div ><!-- Fin Titulo de Publicaciones -->
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(1);?></span> <a href="ventas.php"><span class="marL10 " >Activa</span></span></a></div>
+			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(1);?></span> <a href="ventas.php?type=1"><span class="marL10 " >Activa</span></span></a></div>
 			 </div>
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>
-			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(2);?></span> <a href="ventas.php?tipo=2"><span class="marL10 " >Pausadas</span></span></a></div>
+			 	<div class=" pad-left-20  t16"><span class="marL20"><span class="badge badge-publicar "><?php echo $usua->getCantidadPub(2);?></span> <a href="ventas.php?type=1"><span class="marL10 " >Pausadas</span></span></a></div>
 			 </div>
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  ">
 			 	<hr>

@@ -1,4 +1,3 @@
-<?php include_once 'clases/bd.php';?>
 <?php include 'modales/m_cropper.php';?>
 <div class="modal fade bs-example-modal-lg  modal-update-user" tabindex="-1" role="dialog"
 	aria-labelledby="myLargeModalLabel" id="usr-update-info">
@@ -10,7 +9,7 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title " >
-					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span 
+					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span 
 						class="marL15">Actualizar Datos</span>
 				</h3>
 			</div>

@@ -22,7 +22,7 @@
             },
             sk: {
                 upload: "Nahrať",
-                file:   "S&uacute;bor",
+                file:   "Súbor",
                 uploadError: "Chyba"
             },
             fr: {
@@ -31,7 +31,7 @@
                 uploadError: "Erreur"
             },
             cs: {
-                upload: "Nahr&aacute;t obr&aacute;zek",
+                upload: "Nahrát obrázek",
                 file:   "Soubor",
                 uploadError: "Chyba"
             }

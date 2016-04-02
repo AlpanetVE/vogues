@@ -24,7 +24,7 @@ if(isset($_SESSION["id"])){
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<br>
-				<img alt="" src="galeria/img/icono_contacto.png"
+				<img alt="" src="galeria/img-site/icono_contacto.png"
 					class="center-block img-responsive">
 				<h1 class="text-center me-p_contenido" style="color: #000;">Cont&aacute;ctanos</h1>
 				<br>

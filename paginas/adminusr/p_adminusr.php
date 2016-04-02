@@ -1,4 +1,4 @@
-<div class="pad20 contenedor">
+<div class="pad20 contenedor marL10 row">
             <div class="marB20">
                 <h4>
                     Panel administrativo de Usuarios

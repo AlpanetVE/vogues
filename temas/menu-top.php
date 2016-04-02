@@ -1,3 +1,4 @@
+
 <nav class="navbar menu-cabecera navbar-inverse navbar-static-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header ">
@@ -8,7 +9,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a href="index.php" class="navbar-brand"> <img style=""
-				class="marT5 marB5 marL5" src="galeria/img/logos/logo-header.png"
+				class="marT5 marB5 marL5" src="galeria/img-site/logos/logo-header.png"
 				width="auto" height="50px">
 			</a>
 		</div>
@@ -73,6 +74,11 @@
 					<li>
 						<a href="informar_pago.php" class="marT10 li-icon-top" > Informar Pago&nbsp; <i class="fa fa-credit-card"></i> </a>
 					</li>
+					<li>
+					<div class="vertical-line "
+						style="height: 25px; margin-top: 18px;"></div>
+				</li>
+				<li><a href="ayuda.php" class="marT10 " > Ayuda <i class="fa fa-info-circle"></i> </a></li>
 				</ul>
 			</form>
 		</div>

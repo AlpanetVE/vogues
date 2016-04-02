@@ -11,7 +11,7 @@ $("#update_usr-reg-submit").click(function(){
 	$(".admin-reg-user").click(function(){
 		$("#usr-reg-submit-admin").data("step",1);
 		$("#type_admin").val("p");
-		$("section[data-step=2]").fadeOut( "fast", function() {  
+		$("section[data-step=2]").fadeOut( "fast", function() {
 					$("section[data-step=1]").fadeIn("fast");
 				});
 	});
@@ -139,7 +139,7 @@ $("#update_usr-reg-submit").click(function(){
 	            				swal({
 							title: "Registro de Usuario", 
 							text: "&iexcl;Usuario Creado Exitosamente!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
@@ -216,7 +216,7 @@ $('#usr-update-form').formValidation({
 	            	swal({
 							title: "Usuario Actualizado", 
 							text: "&iexcl;Usuario Actualizado Exitosamente!",
-							imageUrl: "galeria/img/logos/bill-ok.png",
+							imageUrl: "galeria/img-site/logos/bill-ok.png",
 							timer: 2000, 
 							showConfirmButton: true
 							}, function(){
@@ -333,7 +333,21 @@ $('#usr-update-form').formValidation({
 	            	if (data.result === 'OK') {  
 	            		console.log(data.campos);
 	            				$('.modal-datail-user .fotoperfil').attr("src", data.campos.ruta); 
-				            	$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	
+				            	if(data.campos.n_nombre!=null){  
+				            		$('.modal-datail-user .nombre').html(data.campos.n_nombre+' '+data.campos.n_apellido);
+				            	}
+				            	else {
+				            		$('.modal-datail-user .nombre').html(data.campos.j_razon_social);
+				            	}
+				            	
+				            	if(data.campos.n_identificacion!=null){
+				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 	
+				            	}
+				            	else{
+				            	$('.modal-datail-user .rif').html(data.campos.j_rif); 	
+				            	}
+				            	
 				            	$('.modal-datail-user .rif').html(data.campos.n_identificacion); 
 				            	$('.modal-datail-user .direccion').html(data.campos.u_direccion);
 				            	$('.modal-datail-user .telefono').html(data.campos.u_telefono);
@@ -349,7 +363,7 @@ $('#usr-update-form').formValidation({
 	});	
 	
     /* ============================----- Mostrar Detalle Tienda -----=========================*/	 
-	$('.modal-detalle-user').on('show.bs.modal', function (e) { 
+	$('.modal-detalle-user').on('show.bs.modal', function (e  ) { 
 		 
 		var usuarios_id= $(this).data("usuarios_id");
 		usuarios_id = parseInt(usuarios_id);

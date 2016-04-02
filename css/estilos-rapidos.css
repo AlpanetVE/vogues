@@ -85,14 +85,6 @@
 {
 	margin:0px;
 }
-.marL0
-{
-	margin-left:0px;
-}
-.marR0
-{
-	margin-right:0px;
-}
 .mar10
 {
 	margin: 10px 10px 10px 10px;
@@ -105,13 +97,21 @@
 {
 	margin: 5px 5px 5px 5px;
 }
-.marL10
+.marR0
 {
-	margin-left:10px;
+	margin-right:0px;
 }
-.marL5
+.marB5
 {
-	margin-left:5px;
+	margin-bottom: 5px;
+}
+.marB15
+{
+	margin-bottom: 15px;
+}
+.marB20
+{
+	margin-bottom: 20px;
 }
 .marB10		
 {		
@@ -121,7 +121,7 @@
 {		
 	margin-bottom:40px;		
 }		
-.marB30		
+.marB30
 {		
 	margin-bottom:30px;		
 }
@@ -129,39 +129,22 @@
 {
 	margin-bottom: 100px;
 }
-.marL40
+.marL0
 {
-	margin-left:40px;
+	margin-left:0px;
 }
-
-.marL30
+.marL5
 {
-	margin-left:30px;
+	margin-left:5px;
 }
-
-.marR5
+.marL10
 {
-	margin-right:5px;
+	margin-left:10px;
 }
-
-.marR10
-{
-	margin-right:10px;
-}
-.marR20
-{
-	margin-right:20px;
-}
-.marR30
-{
-	margin-right:30px;
-}
-
 .marL15
 {
 	margin-left:15px;
 }
-
 .marL20
 {
 	margin-left:20px;
@@ -189,6 +172,59 @@
 .marL250
 {
 	margin-left:250px;
+}
+.marL40
+{
+	margin-left:40px;
+}
+.marR5
+{
+	margin-right:5px;
+}
+.marR10
+{
+	margin-right:10px;
+}
+.marR20
+{
+	margin-right:20px;
+}
+.marR30
+{
+	margin-right:30px;
+}
+.marT100
+{
+	margin-top: 100px;
+}
+.marT5
+{
+	margin-top: 5px;
+
+}
+.marT10
+{
+	margin-top: 10px;
+}
+.marT15
+{
+	margin-top: 15px;
+}
+.marT20
+{
+	margin-top: 20px;
+}
+.marT20
+{
+	margin-top: 20px;
+}
+.marT25
+{
+	margin-top: 25px;
+}
+.marT40
+{
+	margin-top: 40px;
 }
 .alto50
 {
@@ -239,60 +275,6 @@
 {
 	width:80%;
 }
-
-.marB10
-{
-	margin-bottom: 10px;
-}
-
-.marB5
-{
-	margin-bottom: 5px;
-}
-.marB15
-{
-	margin-bottom: 15px;
-}
-.marB20
-{
-	margin-bottom: 20px;
-}
-
-.marT100
-{
-	margin-top: 100px;
-}
-
-.marT5
-{
-	margin-top: 5px;
-
-}
-
-.marT10
-{
-	margin-top: 10px;
-}
-.marT15
-{
-	margin-top: 15px;
-}
-.marT20
-{
-	margin-top: 20px;
-}
-.marT20
-{
-	margin-top: 20px;
-}
-.marT25
-{
-	margin-top: 25px;
-}
-.marT40
-{
-	margin-top: 40px;
-}
 .pad15
 {
 	padding: 15px;
@@ -341,6 +323,10 @@
 {
 	padding-right: 0px;
 }
+.pad-right5
+{
+	padding-right: 0px;
+}
 .pad-left0
 {
 	padding-left: 0px;
@@ -349,11 +335,6 @@
 {
 	padding-left: -20px;
 }
-.mar-top100
-{
-	margin-top: 100px;
-}
-
 
 .talign-left
 {
@@ -462,6 +443,25 @@
 .vino-apdp
 {
  color:#890014;
+}
+
+.rojo-apdp
+{
+	color:#EE2200;
+}
+
+.verde-apdp
+{
+	color:#25A25A;
+}
+.naranja-apdp
+{
+	color:#FFCC00;
+}
+
+.amarillo-apdp
+{
+	color:#FFF000;
 }
 
 .yellow-apdp

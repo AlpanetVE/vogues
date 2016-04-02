@@ -2,12 +2,12 @@
 	<div class="modal-dialog " >
 		<div id="content" class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"
+				<button id="cerrar" type="button" class="close " data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 				<h3 class="modal-title ">
-					<img src="galeria/img/logos/mascota.png" width="50" height="51"><span
+					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span
 						id="usr-reg-title" class="marL15">Edita tu foto de perfil</span>
 				</h3>
 			</div>
@@ -16,7 +16,7 @@
 					<input type="file" class="cropit-image-input">
 					<!-- .cropit-image-preview-container is needed for background image to work -->
 					<div class="cropit-image-preview-container " style="top:0px; left:100px;">
-						<div class="cropit-image-preview " ></div>
+						<div class="cropit-image-preview " > <div class="error-msg" style="display:none;"></div></div>
 					</div>
 					<br>
 					<br>
@@ -33,5 +33,5 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="js/cropit/jquery.cropit.js"></script>
 <script type="text/javascript" src="js/cropit/cropit.js"></script>
+<script type="text/javascript" src="js/cropit/jquery.cropit.js"></script>

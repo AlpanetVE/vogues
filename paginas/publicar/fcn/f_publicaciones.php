@@ -2,8 +2,8 @@
 if (!headers_sent()) {
 	header('Content-Type: text/html; charset=UTF-8');
 }
+require '../../../config/core.php';
 include_once "../../../clases/clasificados.php";
-include_once "../../../clases/bd.php";
 include_once "../../../clases/publicaciones.php";
 switch($_POST["metodo"]){
 	case "traerClasificados":
@@ -59,6 +59,7 @@ function guardarPublicacion(){
 			"publicar_facebook"=>$_POST["fb"],
 			"publicar_twitter"=>$_POST["tt"],
 			"publicar_fanpage"=>$_POST["fp"],
+			"productos_categorias_id"=>$_POST["categoria"],
 			"publicar_grupo"=>$_POST["gr"]);
 	$monto = $_POST["monto"];
 	$fecha = date("Y-m-d H:i:s",time());;
@@ -69,7 +70,8 @@ function guardarPublicacion(){
 		}		
 	}
 	$listaValores["titulo"]=($listaValores["titulo"]);
-	$idPub = $publicacion->nuevaPublicacion($listaValores,$monto,$fecha,$fotos);
+	$idcategoria = $_POST["categoria"];
+	$idPub = $publicacion->nuevaPublicacion($listaValores,$monto,$fecha,$fotos,$idcategoria);
 	//echo json_encode(array("result" => "error","query" => $idPub ));
 	if($idPub){
 		echo json_encode(array("result" => "OK", "id" => $idPub));
