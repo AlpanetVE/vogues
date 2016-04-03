@@ -39,7 +39,7 @@
 				$cantidad=$categoria->getProductosDisponibles('count(id) as total',$fila['id']);
 				?>
 				<tr>
-                    <td><?php echo $fila["nombre"]; ?> <a href="#mod" class="admin-edit-categ   hide" data-toggle="modal" data-target="#edit-categoria" data-nombre-cate="<?php echo $fila['nombre']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><i style="font-size: larger;" class="fa fa-pencil"></i> </a></td>
+                    <td> <a href="#mod" class="admin-edit-categ" data-toggle="modal" data-target="#edit-categoria" data-nombre-cate="<?php echo $fila['nombre']; ?>" data-categoria_id="<?php echo $fila['id']; ?>" ><?php echo $fila["nombre"]; ?> </a></td>
                     <td><?php echo  $cantidad?> </td>
                     <td><a href="producto.php?producto=<?php echo $fila['id']; ?>"  ><i class="fa fa-eye"  ></i> Ver </a></td>
                      <td ><a href="#mod" class="admin-add-categoria"  data-toggle='modal' data-target='#reg-prod'  data-categoria_id="<?php echo $fila['id']; ?>" ><i class="fa fa-plus"  ></i> Agregar </a></td>
@@ -64,23 +64,55 @@
 	
 	function crearCategoria(){
 		$categoria=new inventario();
+		$validado=	true;
 		$nombre= filter_input ( INPUT_POST, "categ_nombre" );
-		$res=$categoria->crearCategoria($nombre);
-		if($res)
-		echo json_encode ( array (
-					"result" => "ok"
-			) );
+		//$res=$categoria->crearCategoria($nombre);
+		if($categoria->valueExist("productos_categrias", $nombre, "nombre")){
+			$fields ["categ_nombre"] = "Seleccione otro nombre";	 
+		$validado=false;
+		}
+		
+		if($validado) {
+			$res=$categoria->crearCategoria($nombre);
+			 
+				echo json_encode ( array (
+						"result" => "OK" 
+				) );
+		 
+	}else{
+		echo json_encode ( array (		
+					"result" => "error",		
+					"fields" => $fields 		
+			) );		
+			exit ();
 	}
+}
 
 	function updateCategoria(){
 		$categoria=new inventario();
 		$nombre= filter_input ( INPUT_POST, "upd_categ_nombre" );
 		$id= filter_input ( INPUT_POST, "id" );
-		$res=$categoria->actualizarCategoria($nombre, $id);
-		if($res){
-			echo json_encode (array ("result"=>"ok"));
-			
+		if($categoria->valueExist("productos_categrias", $nombre, "nombre")){
+			$fields ["upd_categ_nombre"] = "Seleccione otro nombre";	 
+		$validado=false;
 		}
+		
+		if($validado) {
+			$res=$categoria->actualizarCategoria($nombre, $id);;
+			 
+				echo json_encode ( array (
+						"result" => "OK" 
+				) );
+		 
+	}else{
+		echo json_encode ( array (		
+					"result" => "error",		
+					"fields" => $fields 		
+			) );		
+			exit ();
+	}
+		
+		
 	}
 
 	function eliminarCategoria(){

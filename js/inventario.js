@@ -17,6 +17,7 @@ $(document ).ready(function() {
 		fields : {
 			categ_nombre : {validators : {
 				notEmpty : {},
+				blank: {},
 				stringLength : {min : 5, max : 512}}}
 		
 		}
@@ -83,6 +84,7 @@ $(document ).ready(function() {
 		fields : {
 			upd_categ_nombre : {validators : {
 				notEmpty : {},
+				blank: {},
 				stringLength : {min : 5, max : 512}}}
 		
 		}
