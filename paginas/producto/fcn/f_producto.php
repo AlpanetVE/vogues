@@ -118,12 +118,10 @@
 		$categoria = filter_input ( INPUT_POST, "categoria" );
 		
 		$codigo = $_POST['codigo'];
-		$i=1;
 		foreach ( $codigo as $val ) {
 			if ($producto->valueExist ( $producto->p_table, $val, "codigo" )) {
-				$fields ["input#codigo_$i"] = "Codigo ya esta en uso";
+				$fields [$val] = "Codigo ya esta en uso";
 			}
-			$i++;
 		}
 		
 		$precio = $_POST['precio'];

@@ -10,7 +10,7 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="title-modal-prov"
-						class="marL15">Datos del Producto</span>
+						class="marL15">Datos de la Mercanc&iacute;a</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->

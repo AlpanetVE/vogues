@@ -1,5 +1,5 @@
 $(document ).ready(function() {
-/**PRODUCTOS DINAMICOS**/
+/**Mercanc&iacute;a DINAMICOS**/
 	
 	if($('#tab-shop-facturado').length != 0) {
 		paginar(1,$('#tab-shop-activo'),1,true);
@@ -79,7 +79,7 @@ $(document ).ready(function() {
      }
      /**FIN BANCOS DINAMICOS**/
     
-	/******************AGREGAR PRODUCTO*******************/
+	/******************AGREGAR Mercanc&iacute;a*******************/
 	$(".btn-reg-prod-submit").click(function(){
 		var $container    = $(this).parents('.form-producto');
 		$container.data('formValidation').validate();
@@ -129,24 +129,30 @@ $(document ).ready(function() {
 		}
 	})
 	.on('blur', ':visible[name="codigo[]"]', function() {
-            var productos=$('#reg-prod-form').find(':visible[name="codigo[]"]').length,
-			field='#codigo_';
-			console.log(productos);
-			var principal,subprincipal;
-			for (j = 1; j <= productos; j++) {
-				principal=parseInt($(field+j).val());
-				console.log(principal);
-				for (i = 1; i <= productos; i++) {
-					subprincipal=parseInt($(field+i).val());
-					if(principal==subprincipal && i!=j){
-						$('#reg-prod-form').data('formValidation')
-							.updateMessage($(field+i), 'blank', 'Codigo no puede ser repetido')
-							.updateStatus($(field+i), 'INVALID', 'blank');
-					}
+		var principal,subprincipal,same;
+		$(':visible[name="codigo[]"]').each(function() {
+			$obj=$(this);
+			principal=$obj.val();
+			id=$obj.attr('id');
+			same=0;
+			$(':visible[name="codigo[]"]').each(function() {
+				$objsub=$(this);
+				subprincipal=$objsub.val();
+				subid=$objsub.attr('id');
+				if(principal==subprincipal && id!=subid && principal!=''){
+					same++;
+					$('#reg-prod-form').data('formValidation')
+						.updateMessage($obj, 'blank', 'Codigo no puede ser repetido')
+						.updateStatus($obj, 'INVALID', 'blank');
 				}
+				
+			});			
+			if(same==0){
+				$('#reg-prod-form').data('formValidation')
+						.updateStatus($obj, 'VALID', 'blank');
 			}
-        })
-	
+		});
+     })	
 	.on('success.form.fv', function(e) {
 		e.preventDefault();
 		var form = $(e.target);
@@ -172,15 +178,19 @@ $(document ).ready(function() {
             success: function (data) {
 	           	if (data.result === 'error') {
 	            	for (var field in data.fields) {
-	        			fv
-	                    // Show the custom message
-	                    .updateMessage($(field), 'blank', data.fields[field])
-	                    // Set the field as invalid
-	                    .updateStatus($(field), 'INVALID', 'blank');
+						$(':visible[name="codigo[]"]').each(function() {
+							if(field==$(this).val()){
+								fv
+									// Show the custom message
+									.updateMessage($(this), 'blank', data.fields[field])
+									// Set the field as invalid
+									.updateStatus($(this), 'INVALID', 'blank');
+							}
+						});	        			
 	            	}
 	            }else{             			
             		swal({
-						title: "Registro de Productos",
+						title: "Registro de Mercanc&iacute;a",
 						text: "&iexcl;Exito!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
@@ -204,7 +214,7 @@ $(document ).ready(function() {
         });
            
     });
-  /******************************FIN AGREGAR PRODUCTO*********************************/  
+  /******************************FIN AGREGAR Mercanc&iacute;a*********************************/  
   
 	/**********************MODIFICAR PROVEEDORES INFO*********************/
 	$("body").on('click', '.admin-edit-prod', function(e) {
@@ -299,8 +309,8 @@ $(document ).ready(function() {
 	            	}
 	            }else{ //si registramos usuarios por backend            			
             		swal({
-						title: "Edici&oacute;n de Producto",
-						text: "&iexcl;Producto Modificado Exitosamente!",
+						title: "Edici&oacute;n de Mercanc&iacute;a",
+						text: "&iexcl;Mercanc&iacute;a Modificada Exitosamente!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -433,7 +443,7 @@ $(document ).ready(function() {
 	}
 	
 	
-/******************************CAMBIO DE ESTATUS PRODUCTO************/
+/******************************CAMBIO DE ESTATUS Mercanc&iacute;a************/
 	var id_prod;
 	$("body").on('click', '.opciones-boton', function(e) {
 		id_prod=$(this).data('producto_id');
@@ -442,7 +452,7 @@ $(document ).ready(function() {
 		var $btnpadre = $(this).parents('.opciones-boton');		 
 		data='metodo=modificarStatus&id='+$btnpadre.data('producto_id')+'&status='+$(this).data('status');
 		action='paginas/producto/fcn/f_producto.php';
-		title='Producto Modificado';
+		title='Mercanc&iacute;a Modificada';
 		procesarStatus(action, data, title);
 	});
 	function procesarStatus(action, data, title){
@@ -522,7 +532,7 @@ $(document ).ready(function() {
 	            	}
 	            }else if(data.result === 'cod_no_valid'){ //si registramos usuarios por backend            			
             		swal({
-						title: "Facturacion de Producto",
+						title: "Facturacion de Mercanc&iacute;a",
 						text: "&iexcl;Codigo Incorrecto!",
 						imageUrl: "galeria/img-site/logos/bill-error.png",
 						timer: 2000, 
@@ -532,7 +542,7 @@ $(document ).ready(function() {
 					});
             	}else{ //si registramos usuarios por backend            			
             		swal({
-						title: "Producto Modificado",
+						title: "Mercanc&iacute;a Modificada",
 						text: "&iexcl;Exito!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 

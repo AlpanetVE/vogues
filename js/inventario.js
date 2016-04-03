@@ -2,7 +2,7 @@ $(document ).ready(function() {
 	 
 	paginar(1, '#lista-prov-active');
 	
-	/****************Agregar Categoria**************/
+	/****************Agregar Producto**************/
 	
 	$('#reg-categoria-form').formValidation({
 		locale: 'es_ES',
@@ -43,8 +43,8 @@ $(document ).ready(function() {
 	            }else{
 	            	if(data.result==='ok'){     			
             		swal({
-						title: "Registro de Categoria",
-						text: "&iexcl;Categoria Creada Exitosamente!",
+						title: "Registro de Producto",
+						text: "&iexcl;Producto Creado Exitosamente!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -61,9 +61,9 @@ $(document ).ready(function() {
            
     });
 	
-  /******************************Fin agregar Categoria********************************/
+  /******************************Fin agregar Producto********************************/
  
-  /**********************Modificar Categoria*********************/
+  /**********************Modificar Producto*********************/
  $("body").on('click', '.admin-edit-categ', function(e) {
 	//	btnModalProveedor('#edit-prov-form');
 		$('#update-categoria-form').data("categoria_id",$(this).data("categoria_id"));	
@@ -111,8 +111,8 @@ $(document ).ready(function() {
 	            }else{
 	            	if(data.result==='ok'){     			
             		swal({
-						title: "Modificacion de Categoria",
-						text: "&iexcl;Categoria Modificada Exitosamente!",
+						title: "Modificacion de Producto",
+						text: "&iexcl;Producto Modificado Exitosamente!",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -129,7 +129,7 @@ $(document ).ready(function() {
            
     });
  
-/***** Eliminar Categoria *****/
+/***** Eliminar Producto *****/
 
  $("body").on('click', '.admin-elim-categ', function(e) {
 		$('#delete-categoria-form').data("categoria_id",$(this).data("categoria_id"));	 
@@ -152,8 +152,8 @@ $(document ).ready(function() {
             success: function (data) {
 	           	if(data.result==='ok'){     			
             		swal({
-						title: "Eliminado de Categoria",
-						text: "&iexcl;Categoria Eliminada",
+						title: "Eliminado de Producto",
+						text: "&iexcl;Producto Eliminado",
 						imageUrl: "galeria/img-site/logos/bill-ok.png",
 						timer: 2000, 
 						showConfirmButton: true
@@ -174,7 +174,7 @@ $(document ).ready(function() {
 
  
  
-/******** Fin eliminar Categoria  */
+/******** Fin eliminar Producto  */
 
 
 /********** Buscador **********/

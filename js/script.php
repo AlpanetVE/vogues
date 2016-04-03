@@ -766,19 +766,19 @@ $("#enviar").click(function(e){
 				}
 			});
 			if(c==0){
-				$("#noresultados").removeClass("hidden");
+				$("#noresultados").removeClass("hidden").show();
 				$("#publicaciones").addClass("hidden");
 			}else{
-				$("#noresultados").addClass("hidden");
+				$("#noresultados").addClass("hidden").hide();
 				$("#publicaciones").removeClass("hidden");				
 			}
 		}else{		
 			if($(".general").length>0){
-				$("#noresultados").addClass("hidden");
+				$("#noresultados").addClass("hidden").hide();
 				$("#publicaciones").removeClass("hidden");
 				$(".general").css("display","block");				
 			}else{
-				$("#noresultados").removeClass("hidden");
+				$("#noresultados").removeClass("hidden").show();
 				$("#publicaciones").addClass("hidden");				
 			}
 		}

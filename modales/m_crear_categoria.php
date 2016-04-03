@@ -17,7 +17,7 @@
 			<form action="paginas/mercancia/fcn/f_categorias.php" data-method="crearCategoria" id="reg-categoria-form" class="form-proveedor reg-prov-form" method="post"  >			
 				<div class="modal-body marL20 marR20 ">
 					<br>
-					<section class="form-apdp" data-title="Informaci&oacute;n de la Categoria"  >
+					<section class="form-apdp" data-title="Informaci&oacute;n del Producto"  >
 						<span class="marL10">Nombre</span>
 					<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input">
 							

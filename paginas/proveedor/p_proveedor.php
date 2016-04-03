@@ -39,7 +39,7 @@
                                     Email
                                 </th>
                                 <th colspan="2" class="text-center">
-                                    Mercancia
+                                    Mercanc&iacute;a
                                 </th>
                                 <th colspan="2" class="text-center">
                                     Editar

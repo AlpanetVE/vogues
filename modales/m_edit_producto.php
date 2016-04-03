@@ -39,11 +39,11 @@
 					            </div>         
 					            <div class="col-xs-7">
 					            	<div class="col-xs-12">
-										<span><i class="fa fa-list"></i> <label for="codigo">Categoria</label></span>
+										<span><i class="fa fa-list"></i> <label for="codigo">Producto</label></span>
 									</div>
 									<div class="col-xs-12">
 						                <select class="form-select" id="categoria" name="categoria">
-											<option value="" selected>Seleccione una Categoria</option>
+											<option value="" selected>Seleccione un Producto</option>
 											<?php
 												$categorias=$proveedores_obj->getAllDatos ("productos_categorias");
 												foreach ($categorias as $categoria ) :

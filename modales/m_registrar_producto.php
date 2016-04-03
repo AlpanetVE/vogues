@@ -10,7 +10,7 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="title-modal-prod"
-						class="marL15">Agregar Productos</span>
+						class="marL15">Agregar Mercanc&iacute;a</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
@@ -40,11 +40,11 @@
 					            </div>         
 					            <div class="col-xs-6">
 					            	<div class="col-xs-12">
-										<span><i class="fa fa-list"></i> <label for="codigo">Categoria</label></span>
+										<span><i class="fa fa-list"></i> <label for="codigo">Producto</label></span>
 									</div>
 									<div class="col-xs-12">
 						                <select class="form-select" id="categoria" name="categoria">
-											<option value="" disabled selected>Seleccione una Categoria</option>
+											<option value="" disabled selected>Seleccione un Producto</option>
 											<?php
 												$categorias=$proveedores_obj->getAllDatos ("productos_categorias");
 												foreach ($categorias as $categoria ) :

@@ -8,7 +8,7 @@ include ("fcn/incluir-css-js.php");
 <script type="text/javascript" src="js/producto.js"></script>
 <script type="text/javascript" src="js/proveedor.js"></script>
 <link href="css/producto.css" rel="stylesheet">
-<link href="css/proveedores.css" rel="stylesheet">
+<link href="css/proveedor.css" rel="stylesheet">
 <body>
 <?php
 include ("temas/header.php"); 

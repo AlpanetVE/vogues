@@ -34,11 +34,11 @@
                         	 data-usuarios_id="<?php echo $fila['id']; ?>"  ><i class="fa fa-lock" ></i> Modificar</a></td>
                         <?php }?>
                         
-                     <?php if ($fila["id"]!=$_SESSION["id"]): ?>   <td><a href="#del" class="select-usr-delete " data-toggle="modal" data-target='#msj-eliminar' data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
+                        <td><a href="#del" class="select-usr-delete <?php if ($fila["id"]==$_SESSION["id"]){ echo 'grisC';}?> "    <?php if ($fila["id"]!=$_SESSION["id"]){  ?> data-toggle="modal" data-target='#msj-eliminar'  <?php }?> data-status='3'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                         		<i class="fa fa-remove"></i> Eliminar
                         	</a> 
                         </td>
-                   <?php endif;  if($status=='3'){ ?>
+                    <?php if($status=='3'){ ?>
                    		<td><a href="#del" class="select-usr-active" data-toggle="modal" data-target='#msj-activar' data-status='1'  data-usuarios_id="<?php echo $fila['id']; ?>"   >
                         		<i class="fa fa-check"></i> Activar
                         	</a>
