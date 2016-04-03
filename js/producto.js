@@ -28,7 +28,7 @@ $(document ).ready(function() {
                 $clone.find("input, select, textarea").prop("disabled",false);
 				
 				$clone.find('[name="codigo[]"]').attr('id', 'codigo_'+$form.find(':visible[name="codigo[]"]').length);
-				console.log($form.find(':visible[name="codigo[]"]').length);
+				 
 				
                 var $optionA   = $clone.find('[name="codigo[]"]');
                 $optionB  = $clone.find('[name="precio[]"]');
@@ -104,18 +104,10 @@ $(document ).ready(function() {
                 validators: {
                 	notEmpty: {},
 					blank: {},
-					callback: {
-                             message: 'Codigos no pueden estar repetidos',
-                            callback: function (value, validator, $field) {
-                                // Determine the numbers which are generated in captchaOperation
-                                var items = $form.find(':visible[name="codigo[]"]').length,
-                                    sum   = parseInt(items[0]) + parseInt(items[2]);
-                                return value == sum;
-                            }
-                        },
 					different: {
-                        field: 'codigo[]',
-                    }
+						enabled: false,
+					   	field: 'codigo[]',
+					}
                 },
 				
             },
@@ -135,7 +127,27 @@ $(document ).ready(function() {
                 }
             }
 		}
-	}).on('success.form.fv', function(e) {
+	})
+	.on('blur', ':visible[name="codigo[]"]', function() {
+            var productos=$('#reg-prod-form').find(':visible[name="codigo[]"]').length,
+			field='#codigo_';
+			console.log(productos);
+			var principal,subprincipal;
+			for (j = 1; j <= productos; j++) {
+				principal=parseInt($(field+j).val());
+				console.log(principal);
+				for (i = 1; i <= productos; i++) {
+					subprincipal=parseInt($(field+i).val());
+					if(principal==subprincipal && i!=j){
+						$('#reg-prod-form').data('formValidation')
+							.updateMessage($(field+i), 'blank', 'Codigo no puede ser repetido')
+							.updateStatus($(field+i), 'INVALID', 'blank');
+					}
+				}
+			}
+        })
+	
+	.on('success.form.fv', function(e) {
 		e.preventDefault();
 		var form = $(e.target);
 		var fv = form.data('formValidation');
@@ -159,7 +171,7 @@ $(document ).ready(function() {
             dataType: 'json', // el tipo de información que se espera de respuesta		           
             success: function (data) {
 	           	if (data.result === 'error') {
-	            	for (var field in data.fields) { console.log(); 
+	            	for (var field in data.fields) {
 	        			fv
 	                    // Show the custom message
 	                    .updateMessage($(field), 'blank', data.fields[field])
