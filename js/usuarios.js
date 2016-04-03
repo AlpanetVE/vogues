@@ -263,6 +263,11 @@ $('#usr-update-form').formValidation({
 		{
 		$(".roluser").addClass("hidden");	
 		}
+		else{
+			if($(".roluser").hasClass("hidden")){
+				$(".roluser").removeClass("hidden");
+			}
+		}
 				  
 		if(usuarios_id>0){  
 			$.ajax({
