@@ -10,7 +10,7 @@
                 <br>
                 <div class="text-right">
                    <a class="admin-reg-prov" href="#" data-toggle='modal' data-target='#reg-categoria' data-rol-type='select'  data-tipo='1' >
-						<button class="btn2 btn-default t16 " style="">Agregar Productos</button>
+						<button class="btn2 btn-default t16 " style="">Agregar Producto</button>
 					</a>
 		        </div>  
                <div class="input-group" style="width: 19%;">

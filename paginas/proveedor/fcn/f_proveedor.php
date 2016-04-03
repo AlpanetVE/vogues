@@ -40,7 +40,8 @@
 		$proveedor=new proveedor();
 		$orden='id desc';
 		$pagina=$_POST["pagina"];
-		$result=$proveedor->getProveedores(null, $orden ,$pagina);
+		$nombre=isset($_POST['nombre'])?$_POST['nombre']:null;
+		$result=$proveedor->getProveedores(null,$nombre);
 		foreach($result as $r=>$fila){
 
 				?>

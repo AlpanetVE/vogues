@@ -170,7 +170,9 @@ $clasesP2="";
 						<br>
 						<span class='red t14' id='#'>Bs <?php echo number_format($valor["monto"],2,',','.');?> </span>  <span class='t12 opacity' id='#'> x <?php echo $valor["cantidad"];?> und</span>
 						<br>
+						<?php if ($inventario->getCategPub($venta->publicaciones_id)): ?>
 					<span class="t12 grisC" > <a class="link" href="producto.php?producto=<?php echo $inventario->getCategPub($venta->publicaciones_id); ?>"> Ver Productos Disponibles</a> </span>
+						<?php endif; ?>
 						</div>
 					</div>
 					<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 vin-blue t14  '>					

@@ -100,7 +100,7 @@ $categorias= new inventario();
 		         
 		       <?php  } else { $result=$categorias->getCategorias2(null,null,0);
 			  ?>  <select id="categ" name="categoria" class="form-control input-sm " style="display: inline;">
-			 <option value="" disabled selected>Seleccione Categoria</option>
+			 <option value="" disabled selected>Seleccione Producto</option>
 			  <?php foreach ($result as $resultado):
 			  
 			      ?> 
@@ -133,7 +133,7 @@ $categorias= new inventario();
 				    	</div>
 				   </div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
-					<div id="contenedor-editor" class=""  style="width: 100%; ">
+					<div class=""  style="width: 100%; ">
 						<div class="t16">
 							<b>Describe tu producto</b>
 						<br>
@@ -150,22 +150,19 @@ $categorias= new inventario();
 						<b>M&aacute;s especificaciones</b>
 					</div>
 				</div>
-			<!--	<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
+			<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
 					<div class="input-group marB10">
 						<span class="input-group-addon">Condici&oacute;n</span>
 						<select
 						name="cmbCondicion" class="form-control" id="cmbCondicion">
 						    <?php 
-						    if($clasificado->buscarPadre()=="I2F"){
-						    	echo "<option value='3'>Servicio</option>";
-							}else{
 								echo "<option value='1'>Nuevo</option>";
 								echo "<option value='2'>Usado</option>";
-							}
+							
 							?>
 						</select>
 					</div>
-			</div> -->
+			</div> 
 				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 ">
 					<div class="input-group marB10">
 						<span class="input-group-addon">Unidades</span>

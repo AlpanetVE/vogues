@@ -255,7 +255,7 @@ function buscaRuta(){
 									            <!--publicaci&oacute;n-->
 												<div class=' col-xs-12 col-sm-6 col-md-2 col-lg-2'>
 											    	<div class='marco-foto-conf  point marL20  ' style='height:130px; width: 130px;'  >
-											    		<div style='position:absolute; left:40px; top:10px; ' class='f-condicion'> </div>			 
+											    		<div style='position:absolute; left:40px; top:10px; ' class='f-condicion'> <?php echo $publi->getCondicion();?></div>			 
 											    		<img src='<?php echo $publi->getFotoPrincipal();?>' class='img img-responsive center-block img-apdp imagen' style='width:100%;height:100%;'
 											    		data-id='<?php echo $publi->id;?>'>				
 													</div>

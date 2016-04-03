@@ -254,7 +254,16 @@ $('#usr-update-form').formValidation({
 		 
 		var usuarios_id= $(this).data("usuarios_id");
 		usuarios_id = parseInt(usuarios_id);
-		  
+		var session_id=$("#updateuser").data("session-id");
+		session_id=parseInt(session_id);
+		console.log(usuarios_id);
+		console.log(session_id);
+		
+		if(usuarios_id==session_id)
+		{
+		$(".roluser").addClass("hidden");	
+		}
+				  
 		if(usuarios_id>0){  
 			$.ajax({
 				url: "fcn/f_usuarios.php", // la URL para la petici&oacute;n

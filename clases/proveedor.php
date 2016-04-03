@@ -90,9 +90,12 @@ class proveedor extends bd {
 			$this->doInsert ( $this->b_table, $this->serializarDatos ( "b_", $this->p_table ) );
 		}
 	}
-	public function getProveedores($campos = null){
+	public function getProveedores($campos = null,$nombre=null){
 		$campos=is_null($campos)?"*":$campos;
 		$consulta="select $campos FROM proveedores WHERE proveedores_id IS NOT NULL";
+		if(!is_null($nombre)){
+			$consulta.=" AND nombre LIKE '%".$nombre."%'";
+		}
         $result=$this->query($consulta);
 		return $result;
 	}
