@@ -26,6 +26,10 @@ $(document ).ready(function() {
                                 .insertBefore($template);
                                 
                 $clone.find("input, select, textarea").prop("disabled",false);
+				
+				$clone.find('[name="codigo[]"]').attr('id', 'codigo_'+$form.find(':visible[name="codigo[]"]').length);
+				console.log($form.find(':visible[name="codigo[]"]').length);
+				
                 var $optionA   = $clone.find('[name="codigo[]"]');
                 $optionB  = $clone.find('[name="precio[]"]');
                 $optionC  = $clone.find('[name="descripcion[]"]');
@@ -98,8 +102,22 @@ $(document ).ready(function() {
 				blank: {}}},
             'codigo[]': {
                 validators: {
-                	notEmpty: {}
-                }
+                	notEmpty: {},
+					blank: {},
+					callback: {
+                             message: 'Codigos no pueden estar repetidos',
+                            callback: function (value, validator, $field) {
+                                // Determine the numbers which are generated in captchaOperation
+                                var items = $form.find(':visible[name="codigo[]"]').length,
+                                    sum   = parseInt(items[0]) + parseInt(items[2]);
+                                return value == sum;
+                            }
+                        },
+					different: {
+                        field: 'codigo[]',
+                    }
+                },
+				
             },
             'descripcion[]': {
                 validators: {
@@ -134,10 +152,6 @@ $(document ).ready(function() {
 			sendProveedor=true;
 		}
 		
-		
-		
-		
-		
 		$.ajax({
 			url: form.attr('action'), // la URL para la petición
             data: form.serialize() + method , // la información a enviar
@@ -145,14 +159,14 @@ $(document ).ready(function() {
             dataType: 'json', // el tipo de información que se espera de respuesta		           
             success: function (data) {
 	           	if (data.result === 'error') {
-	            	for (var field in data.fields) {
+	            	for (var field in data.fields) { console.log(); 
 	        			fv
 	                    // Show the custom message
-	                    .updateMessage(field, 'blank', data.fields[field])
+	                    .updateMessage($(field), 'blank', data.fields[field])
 	                    // Set the field as invalid
-	                    .updateStatus(field, 'INVALID', 'blank');
+	                    .updateStatus($(field), 'INVALID', 'blank');
 	            	}
-	            }else{ //si registramos usuarios por backend            			
+	            }else{             			
             		swal({
 						title: "Registro de Productos",
 						text: "&iexcl;Exito!",

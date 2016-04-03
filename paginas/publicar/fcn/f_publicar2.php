@@ -122,7 +122,7 @@ $categorias= new inventario();
 				      <span class="input-group-addon" style="border-radius: 0px;">
 				        <input type="checkbox" id="checkbox" style="width: 20px; height: 20px;">
 				      </span>
-				      <input type="text" class="form-control" readonly="true"  value="Aceptas compartir automaticamente en tus Redes Sociales">				      
+				      <input type="text" class="form-control" readonly  value="Aceptas compartir automaticamente en tus Redes Sociales">				      
 				    </div>	
 				    <br>
 				    <div class="text-center">
@@ -133,7 +133,7 @@ $categorias= new inventario();
 				    	</div>
 				   </div>
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 marT10">
-					<div class=""  style="width: 100%; ">
+					<div id="contenedor-editor" class=""  style="width: 100%; ">
 						<div class="t16">
 							<b>Describe tu producto</b>
 						<br>

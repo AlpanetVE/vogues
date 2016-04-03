@@ -564,7 +564,8 @@ $(document ).ready(function() {
 			$("#tituloCategoria").css("display","none");			
 		}		
 	});	
-	$(".publicaciones1,.publicaciones2").click(function(e){
+	$(document).on("click",".publicaciones1,.publicaciones2",function(e){
+		  console.log($(this).attr("id"));
 		window.open("detalle.php?id=" + $(this).attr("id"),"_self");
 	});
 	$(".vendedores").click(function(e){

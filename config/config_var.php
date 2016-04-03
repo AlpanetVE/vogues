@@ -16,6 +16,6 @@
 	
 	define("SERVER_ROOT", $server_root);
 	define("DOMAIN_ROOT", $domain_root);
-	define("DB_NAME", 'vogues');
+	define("DB_NAME", 'vogues_db');
 	define("DB_USER", 'root');
 	define("DB_PASS", '');
