@@ -10,11 +10,12 @@
 				</button>
 				<h3 class="modal-title " >
 					<img src="galeria/img-site/logos/mascota.png" width="50" height="51"><span id="title-modal-prod"
-						class="marL15">Agregar Productos</span>
+						class="marL15">Agregar Mercanc&iacute;a</span>
 				</h3>
 			</div>
 			<!--<img class="hidden" src="" id="foto-usuario" name="foto-usuario"></img>-->
-			<form action="paginas/producto/fcn/f_producto.php" data-method="crearProducto" id="reg-prod-form" class="form-producto reg-prod-form" method="post"  >			
+			<form action="paginas/producto/fcn/f_producto.php" data-method="crearProducto" id="reg-prod-form" class="form-producto reg-prod-form form-inline" method="post"  >
+            
 				<div class="modal-body marL20 marR20 ">
 					<br>
 					<section class="form-apdp" data-title="Informaci&oacute;n del Proveedor" data-step="1"  >
@@ -39,11 +40,11 @@
 					            </div>         
 					            <div class="col-xs-6">
 					            	<div class="col-xs-12">
-										<span><i class="fa fa-list"></i> <label for="codigo">Categoria</label></span>
+										<span><i class="fa fa-list"></i> <label for="codigo">Producto</label></span>
 									</div>
 									<div class="col-xs-12">
 						                <select class="form-select" id="categoria" name="categoria">
-											<option value="" disabled selected>Seleccione una Categoria</option>
+											<option value="" disabled selected>Seleccione un Producto</option>
 											<?php
 												$categorias=$proveedores_obj->getAllDatos ("productos_categorias");
 												foreach ($categorias as $categoria ) :
@@ -63,7 +64,7 @@
 										<span><i class="fa fa-lock"></i> Codigo</span>
 									</div>
 									<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 input" >
-										<input type="text" placeholder="Ingresa codigo del producto..." name="codigo[]" class="form-input" >
+										<input id="codigo_1" type="text" placeholder="Ingresa codigo del producto..." name="codigo[]" class="codigo form-input" >
 									</div>
 									<div class="col-xs-12">
 										<span><i class="fa fa-money"></i> Precio</span>

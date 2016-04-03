@@ -118,10 +118,24 @@
 		$categoria = filter_input ( INPUT_POST, "categoria" );
 		
 		$codigo = $_POST['codigo'];
+		foreach ( $codigo as $val ) {
+			if ($producto->valueExist ( $producto->p_table, $val, "codigo" )) {
+				$fields [$val] = "Codigo ya esta en uso";
+			}
+		}
+		
 		$precio = $_POST['precio'];
 		$descripcion = $_POST['descripcion'];
 		
 		
+		
+		if (isset ( $fields )) {
+			echo json_encode ( array (
+					"result" => "error",
+					"fields" => $fields 
+			) );
+			exit ();
+		} 
 		$producto->datosRelacionProducto($proveedor, $categoria);
 		$producto->datosTempProducto($codigo, $precio, $descripcion);
 		$producto->crearProducto();

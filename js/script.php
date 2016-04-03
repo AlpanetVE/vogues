@@ -564,7 +564,8 @@ $(document ).ready(function() {
 			$("#tituloCategoria").css("display","none");			
 		}		
 	});	
-	$(".publicaciones1,.publicaciones2").click(function(e){
+	$(document).on("click",".publicaciones1,.publicaciones2",function(e){
+		  console.log($(this).attr("id"));
 		window.open("detalle.php?id=" + $(this).attr("id"),"_self");
 	});
 	$(".vendedores").click(function(e){
@@ -765,19 +766,19 @@ $("#enviar").click(function(e){
 				}
 			});
 			if(c==0){
-				$("#noresultados").removeClass("hidden");
+				$("#noresultados").removeClass("hidden").show();
 				$("#publicaciones").addClass("hidden");
 			}else{
-				$("#noresultados").addClass("hidden");
+				$("#noresultados").addClass("hidden").hide();
 				$("#publicaciones").removeClass("hidden");				
 			}
 		}else{		
 			if($(".general").length>0){
-				$("#noresultados").addClass("hidden");
+				$("#noresultados").addClass("hidden").hide();
 				$("#publicaciones").removeClass("hidden");
 				$(".general").css("display","block");				
 			}else{
-				$("#noresultados").removeClass("hidden");
+				$("#noresultados").removeClass("hidden").show();
 				$("#publicaciones").addClass("hidden");				
 			}
 		}

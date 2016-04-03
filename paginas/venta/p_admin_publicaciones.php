@@ -11,7 +11,7 @@ if(isset($_GET["tipo"])){
 	$tipo=1;
 }
 $pagina=1;
-$total=$usua->getCantidadPub($tipo);
+$total=$usua->getCantidadPub($tipo); 
 switch($tipo){
 	case 1:
 		$clasesP1="active pesta";
@@ -357,9 +357,10 @@ switch($tipo){
 						<INPUT TYPE=CHECKBOX  style=' width:100% ; height:100%;  '>
 					</div>
 				</div>-->
+ 
 
 				<!-- INICIO de detalle del listado de publicaciones -->
-			<div id="noresultados" name="noresultados" class="container center-block col-xs-12 col-sm-12 col-md-12 col-lg-12 hidden">	
+			<div id="noresultados" name="noresultados" class="container center-block col-xs-12 col-sm-12 col-md-12 col-lg-12 " <?php if($total>0) echo 'style="display:none"';?>  >	
 			<br>
 				<br>
 			<div class='alert alert-warning2  text-center' role='alert'  >                                        	
@@ -372,80 +373,7 @@ switch($tipo){
 				
 				
 				$contador=0;
-				foreach ($hijos as $key => $valor) {
-					$contador++;
-				$publicacion=new publicaciones($valor["id"]);
-				
-				$cadena="<span id='general" . $valor["id"] . "' name='general" . $valor["id"] . "' class='general' data-titulo='{$valor["titulo"]}'>
-				<div class='col-xs-12 col-sm-12 col-md-1 col-lg-1  '>
-						<div class='marco-foto-publicaciones  point ' style='width: 65px; height: 65px;' > 
-						<img src='" . $publicacion->getFotoPrincipal() . "' width='100%' height='100%;' 
-						style='border: 1px solid #ccc;' class='img img-responsive center-block imagen' data-id='" . $valor["id"] . "'> </div>
-				</div>
-				<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 vin-blue t14  '>
-					<span class='detalle.php'> <a href='detalle.php?id={$valor["id"]}'> <span id='titulo" . $valor["id"] . "'>{$valor["titulo"]}</span></a></span>
-					<br>
-					<span class='opacity'># $publicacion->id</span>
-				</div>
-				<div class='col-xs-12 col-sm-12 col-md-2 col-lg-2  text-left '>
-					<span class='red t14' id='monto" . $valor["id"] . "'>" . $publicacion->getMonto(1) . " </span>
-					<span class='t12 opacity' id='stock" . $valor["id"] . "'> x  " . $publicacion->stock . " und</span>
-					<br>
-					<span> " . $publicacion->getVisitas() . " Visitas</span>
-					<span class='opacity hidden'> / </span>
-					<span class=' blue-vin hidden'> 30 ventas </span>
-				</div>
-				<div class='col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center t12 '>
-					<div class='btn-group pull-right marR10'>
-						<button id='b" . $publicacion->id . "' type='button' class='btn2 btn-warning boton' data-toggle='modal' data-target='#info-publicacion' onclick='javascript:pasavalores($publicacion->id)'
-						data-id='$publicacion->id' data-url_video='$publicacion->url_video' data-titulo='$publicacion->titulo' data-stock='$publicacion->stock' data-monto='" . number_format($publicacion->monto,2,',','.') . "' data-id='b" . $publicacion->id . "' data-listado='1' >
-						    Modificar  
-					    </button>
-					    <textarea  class='hidden' id='descripcion_" . $publicacion->id . "'>
-								$publicacion->descripcion
-						</textarea >
-						<button id='btnReactivar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",1,1," . $publicacion->productos_categorias_id . ")'>
-							Reactivar
-						</button>
-						<button id='btnPausar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",2,2," . $publicacion->productos_categorias_id . ")'>
-							Pausar
-						</button>						
-						<button id='btnFinalizar" . $publicacion->id . "' type='button' class='btn2 btn-warning hidden' data-toggle='modal' onclick='javascript:modificarOpciones(" . $publicacion->id . ",3,3," . $publicacion->productos_categorias_id . ")'>
-							Finalizar
-						</button>
-						<button id='btnOpciones" . $publicacion->id . "' type='button' class='btn2 btn-warning dropdown-toggle  ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' >
-							<span class='glyphicon glyphicon-cog '></span>
-							<span class='caret'></span>
-						</button>
-						<ul  class='  dropdown-menu'>
-							<li onclick='javascript:modificarOpciones($publicacion->id,2,1,$publicacion->productos_categorias_id)'>
-								<a class='pausar opciones'  id='' href='' data-toggle='modal' value='pausar'>Pausar</a>
-							</li>
-							<li onclick='javascript:modificarOpciones($publicacion->id,3,1,$publicacion->productos_categorias_id)'>
-								<a class='finalizar opciones' id='' href='' data-toggle='modal' value='finalizar'>Finalizar</a>
-							</li>
-						</ul>
-						<div id='menPau" . $publicacion->id . "' class='alert alert-success t10 hidden' style='padding:3px;margin-bottom:0px; margin-top:3px;' role='alert'>
-							Publicacion pausada
-						</div>
-						<div id='menAct" . $publicacion->id . "' class='  alert alert-success t10 hidden' style='padding:3px;margin-bottom:0px; margin-top:3px;' role='alert'>
-							Publicacion activa
-						</div>
-						<div id='menFin" . $publicacion->id . "' class='  alert alert-success t10 hidden' style='padding:3px;margin-bottom:0px; margin-top:3px;' role='alert'>
-							Publicacion finalizada
-						</div>
-						<div id='menRep" . $publicacion->id . "' class='  alert alert-success t10 hidden' style='padding:3px;margin-bottom:0px; margin-top:3px;' role='alert'>
-							Republicada
-						</div>
-						<div id='menEli" . $publicacion->id . "' class='  alert alert-success t10 hidden' style='padding:3px;margin-bottom:0px; margin-top:3px;' role='alert'>
-							Eliminar
-						</div>
-					</div></div>		
-				<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
-					<center><hr class=' center-block'></center></div>
-				</span>";
-				echo $cadena;
-				}
+				//foreach ($hijos as $key => $valor) {}
 				echo "<div class='col-xs-12 col-sm-12 col-md-12 col-lg-12 marB10 marT10'>
 				<nav class='text-center'>
 				  <ul class='pagination'>";

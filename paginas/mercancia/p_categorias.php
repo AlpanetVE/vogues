@@ -45,7 +45,7 @@
                                     Stock
                                 </th>
                               <th colspan="2" class="text-center">
-                                    Mercancia
+                                    Mercanc&iacute;a
                                 </th>
                                  <th class="text-center">
                                     Eliminar

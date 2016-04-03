@@ -122,7 +122,7 @@ $categorias= new inventario();
 				      <span class="input-group-addon" style="border-radius: 0px;">
 				        <input type="checkbox" id="checkbox" style="width: 20px; height: 20px;">
 				      </span>
-				      <input type="text" class="form-control" readonly="true"  value="Aceptas compartir automaticamente en tus Redes Sociales">				      
+				      <input type="text" class="form-control" readonly  value="Aceptas compartir automaticamente en tus Redes Sociales">				      
 				    </div>	
 				    <br>
 				    <div class="text-center">

@@ -117,6 +117,8 @@ $(document).ready(function() {
 				$("#ajaxContainer").css("display", "none");
 				$("#imagentipo").attr("src", laimagen);
 				$("#txtPrecio").autoNumeric({aSep: '.', aDec: ','});
+				
+				
 				//Inicializacion del editor HTML				
 				tinymce.init({
 				  	selector:'div#editor',
@@ -130,7 +132,7 @@ $(document).ready(function() {
 				  	 'styleselect, formatselect, fontselect, fontsizeselect, undo, charmap, hr, preview, ',
 				  	 ' bold, italic,underline,alignleft, aligncenter, alignright, alignjustify, bullist, numlist, outdent, indent,  link, media, image, visualblocks, forecolor, backcolor' 	
 				  		]
-				   });	
+				   });
 				   			
 				if($("#cmbCondicion").val()==3){
 					$("#txtCantidad").attr("readonly","true");
